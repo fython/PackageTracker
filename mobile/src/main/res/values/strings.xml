@@ -1,0 +1,13 @@
+<resources>
+
+	<string name="app_name">Package Tracker</string>
+
+	<!-- Home design -->
+	<string name="navigation_item_all">All</string>
+	<string name="navigation_item_delivered">Delivered</string>
+	<string name="navigation_item_on_the_way">On the way</string>
+
+	<string name="action_search">Search</string>
+	<string name="action_settings">Settings</string>
+
+</resources>

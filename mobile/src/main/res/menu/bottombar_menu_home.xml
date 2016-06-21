@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<item android:id="@+id/menu_item_all"
+	      android:title="@string/navigation_item_all"
+		  android:icon="@drawable/ic_home_black_24dp"/>
+	<item android:id="@+id/menu_item_delivered"
+	      android:title="@string/navigation_item_delivered"
+		  android:icon="@drawable/ic_assignment_turned_in_black_24dp"/>
+	<item android:id="@+id/menu_item_on_the_way"
+	      android:title="@string/navigation_item_on_the_way"
+		  android:icon="@drawable/ic_local_shipping_black_24dp"/>
+
+</menu>
