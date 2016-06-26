@@ -21,12 +21,42 @@
 
 	</moe.feng.material.statusbar.AppBarLayout>
 
-	<android.support.v7.widget.RecyclerView
+	<FrameLayout
 		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:id="@+id/recycler_view"
-		android:paddingTop="8dp"
-		android:paddingBottom="8dp"
-		android:clipToPadding="false"/>
+		android:layout_height="match_parent">
+
+		<android.support.v7.widget.RecyclerView
+			android:layout_width="match_parent"
+			android:layout_height="match_parent"
+			android:id="@+id/recycler_view"
+			android:paddingTop="8dp"
+			android:paddingBottom="8dp"
+			android:clipToPadding="false"/>
+
+		<LinearLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="vertical"
+			android:layout_gravity="center"
+			android:gravity="center"
+			android:visibility="gone"
+			android:id="@+id/empty_view">
+
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:src="@drawable/ic_highlight_remove_black_36dp"/>
+
+			<Space android:layout_width="match_parent" android:layout_height="16dp"/>
+
+			<android.support.v7.widget.AppCompatTextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/search_no_result"
+				android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
+		</LinearLayout>
+
+	</FrameLayout>
 
 </LinearLayout>

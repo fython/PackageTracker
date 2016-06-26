@@ -34,5 +34,6 @@
 	<!-- Choose company -->
 	<string name="activity_choose_company">Choose company</string>
 	<string name="search_hint_company">Search company....</string>
+	<string name="search_no_result">No result.</string>
 
 </resources>

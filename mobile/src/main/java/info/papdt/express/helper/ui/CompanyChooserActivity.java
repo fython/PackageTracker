@@ -8,6 +8,8 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.widget.AppCompatEditText;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +29,7 @@ public class CompanyChooserActivity extends AbsActivity {
 
 	private RecyclerView mList;
 	private AppCompatEditText mSearchEdit;
+	private View mEmptyView;
 
 	private CompanyListAdapter mAdapter;
 	private ArrayList<PackageApi.CompanyInfo.Company> data;
@@ -57,6 +60,7 @@ public class CompanyChooserActivity extends AbsActivity {
 	protected void setUpViews() {
 		mList = $(R.id.recycler_view);
 		mSearchEdit = new AppCompatEditText(this);
+		mEmptyView = $(R.id.empty_view);
 
 		/** Create search edit widget */
 		mSearchEdit.setTextAppearance(this, R.style.TextAppearance_AppCompat_Widget_ActionBar_Title);
@@ -64,10 +68,20 @@ public class CompanyChooserActivity extends AbsActivity {
 		mSearchEdit.setBackgroundColor(Color.TRANSPARENT);
 		mSearchEdit.setHint(R.string.search_hint_company);
 		mSearchEdit.setImeOptions(EditorInfo.IME_ACTION_DONE);
-		mSearchEdit.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+		mSearchEdit.addTextChangedListener(new TextWatcher() {
 			@Override
-			public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-				return false;
+			public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+			}
+
+			@Override
+			public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+				new CompanyFilterTask().execute(charSequence.toString());
+			}
+
+			@Override
+			public void afterTextChanged(Editable editable) {
+
 			}
 		});
 
@@ -96,6 +110,23 @@ public class CompanyChooserActivity extends AbsActivity {
 			}
 		});
 		mList.setAdapter(mAdapter);
+	}
+
+	class CompanyFilterTask extends info.papdt.express.helper.asynctask.CompanyFilterTask {
+
+		@Override
+		public void onPostExecute(ArrayList<PackageApi.CompanyInfo.Company> data) {
+			if (data.size() == 0) {
+				mEmptyView.setVisibility(View.VISIBLE);
+				mList.setVisibility(View.GONE);
+			} else {
+				mEmptyView.setVisibility(View.GONE);
+				mList.setVisibility(View.VISIBLE);
+				mAdapter.setList(data);
+				mAdapter.notifyDataSetChanged();
+			}
+		}
+
 	}
 
 }
