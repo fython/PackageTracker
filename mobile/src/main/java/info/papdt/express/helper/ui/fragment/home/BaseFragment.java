@@ -1,5 +1,6 @@
 package info.papdt.express.helper.ui.fragment.home;
 
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -8,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import info.papdt.express.helper.R;
+import info.papdt.express.helper.dao.PackageDatabase;
 import info.papdt.express.helper.ui.common.AbsFragment;
 
 public abstract class BaseFragment extends AbsFragment implements SwipeRefreshLayout.OnRefreshListener {
@@ -16,7 +18,13 @@ public abstract class BaseFragment extends AbsFragment implements SwipeRefreshLa
 	private RecyclerView mRecyclerView;
 	private RecyclerView.Adapter mAdapter;
 
+	private PackageDatabase mDatabase;
+
 	private final static int FLAG_REFRESH_LIST = 0, FLAG_UPDATE_ADAPTER_ONLY = 1;
+
+	public BaseFragment(PackageDatabase database) {
+		this.mDatabase = database;
+	}
 
 	@Override
 	protected int getLayoutResId() {
@@ -66,11 +74,29 @@ public abstract class BaseFragment extends AbsFragment implements SwipeRefreshLa
 					if (!mRefreshLayout.isRefreshing()) {
 						mRefreshLayout.setRefreshing(true);
 					}
+					new RefreshTask().execute();
 					break;
 				case FLAG_UPDATE_ADAPTER_ONLY:
+					mAdapter.notifyDataSetChanged();
 					break;
 			}
 		}
 	};
+
+	public class RefreshTask extends AsyncTask<Void, Void, Void> {
+
+		@Override
+		protected Void doInBackground(Void... voids) {
+			mDatabase.pullDataFromNetwork(false);
+			return null;
+		}
+
+		@Override
+		protected void onPostExecute(Void msg) {
+			mRefreshLayout.setRefreshing(false);
+			mHandler.sendEmptyMessage(FLAG_UPDATE_ADAPTER_ONLY);
+		}
+
+	}
 
 }

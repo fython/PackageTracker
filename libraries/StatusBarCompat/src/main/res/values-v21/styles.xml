@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<style name="Theme.AppCompat.TranslucentStatusBar" parent="Base.Theme.AppCompat.FengMoe">
+		<item name="android:statusBarColor">@android:color/transparent</item>
+	</style>
+
+	<style name="Theme.AppCompat.Light.TranslucentStatusBar" parent="Base.Theme.AppCompat.Light.FengMoe">
+		<item name="android:statusBarColor">@android:color/transparent</item>
+	</style>
+
+	<style name="Theme.AppCompat.Light.DarkActionBar.TranslucentStatusBar"
+	       parent="Base.Theme.AppCompat.Light.DarkActionBar.FengMoe">
+		<item name="android:statusBarColor">@android:color/transparent</item>
+	</style>
+
+</resources>

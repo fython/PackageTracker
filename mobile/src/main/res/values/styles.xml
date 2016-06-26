@@ -6,4 +6,12 @@
 		<item name="colorAccent">@color/colorAccent</item>
 	</style>
 
+	<!-- Widget -->
+	<style name="Widget.ButtonBar" parent="">
+		<item name="leftText">@string/buttonbar_default_left</item>
+		<item name="rightText">@string/buttonbar_default_right</item>
+		<item name="leftEnabled">true</item>
+		<item name="rightEnabled">true</item>
+	</style>
+
 </resources>

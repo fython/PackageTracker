@@ -10,4 +10,25 @@
 	<string name="action_search">Search</string>
 	<string name="action_settings">Settings</string>
 
+	<!-- Add -->
+	<string name="activity_add">Add package</string>
+	<string name="text_field_number">Package number</string>
+	<string name="text_field_company">Shipment company</string>
+	<string name="toast_number_wrong">Your number is wrong. Check it and try again.</string>
+	<string name="operation_scan">Scan code</string>
+	<string name="operation_manually_choose_company">This is not the correct company?</string>
+	<string name="operation_manually_choose_company_when_cannot_find">Choose company manually</string>
+	<string name="action_next">Next</string>
+	<string name="action_prev">Previous</string>
+	<string name="message_no_internet_connection">No Internet connection.</string>
+	<string name="description_no_internet_connection">Please turn on Wi-Fi or mobile network and retry.</string>
+	<string name="message_no_found">The package seems not exist.</string>
+	<string name="description_no_found">Check your package number or choose the correct company manually.</string>
+	<string name="text_field_name">Package name (Optional)</string>
+	<string name="message_successful_format">The package \"%s\" has been successfully added to track list. Now you can give it a name as recognition.</string>
+
+	<!-- Widget ButtonBar -->
+	<string name="buttonbar_default_left">PREVIOUS</string>
+	<string name="buttonbar_default_right">NEXT</string>
+
 </resources>

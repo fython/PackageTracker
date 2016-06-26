@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<declare-styleable name="ButtonBar">
+		<attr name="leftText" format="string"/>
+		<attr name="rightText" format="string"/>
+		<attr name="leftEnabled" format="boolean"/>
+		<attr name="rightEnabled" format="boolean"/>
+	</declare-styleable>
+
+</resources>

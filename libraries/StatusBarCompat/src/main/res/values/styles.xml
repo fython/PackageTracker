@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<style name="Widget.FengMoe.StatusBarHeaderView" parent="">
+		<item name="colorNormal">@android:color/transparent</item>
+		<item name="enableMode">All</item>
+	</style>
+
+	<style name="Base.Theme.AppCompat.FengMoe" parent="Theme.AppCompat">
+		<item name="windowActionBar">false</item>
+		<item name="windowNoTitle">true</item>
+	</style>
+
+	<style name="Base.Theme.AppCompat.Light.FengMoe" parent="Theme.AppCompat.Light">
+		<item name="windowActionBar">false</item>
+		<item name="windowNoTitle">true</item>
+	</style>
+
+	<style name="Base.Theme.AppCompat.Light.DarkActionBar.FengMoe" parent="Theme.AppCompat.Light.DarkActionBar">
+		<item name="windowActionBar">false</item>
+		<item name="windowNoTitle">true</item>
+	</style>
+
+	<style name="Theme.AppCompat.TranslucentStatusBar" parent="Base.Theme.AppCompat.FengMoe"/>
+
+	<style name="Theme.AppCompat.Light.TranslucentStatusBar" parent="Base.Theme.AppCompat.Light.FengMoe"/>
+
+	<style name="Theme.AppCompat.Light.DarkActionBar.TranslucentStatusBar"
+	       parent="Base.Theme.AppCompat.Light.DarkActionBar.FengMoe"/>
+
+</resources>

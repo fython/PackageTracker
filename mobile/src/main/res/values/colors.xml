@@ -10,6 +10,7 @@
 	<color name="pink_300">#F06292</color>
 	<color name="pink_500">#E91E63</color>
 	<color name="pink_700">#C2185B</color>
+	<color name="pink_900">#880E4F</color>
 
 	<color name="indigo_400">#5C6BC0</color>
 
@@ -33,5 +34,10 @@
 		<item>@color/yellow_500</item>
 		<item>@color/deep_orange_500</item>
 	</array>
+
+	<!-- UI -->
+	<color name="button_pressed_color">#9e9e9e</color>
+
+	<color name="button_bar_color">#D1D1D1</color>
 
 </resources>

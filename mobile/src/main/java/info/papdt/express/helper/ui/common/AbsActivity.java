@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
 
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.support.Settings;
@@ -43,6 +44,15 @@ public abstract class AbsActivity extends AppCompatActivity {
 
 	protected Settings getSettings() {
 		return this.mSettings;
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == android.R.id.home) {
+			this.onBackPressed();
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 }
