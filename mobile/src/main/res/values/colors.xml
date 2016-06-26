@@ -39,5 +39,6 @@
 	<color name="button_pressed_color">#9e9e9e</color>
 
 	<color name="button_bar_color">#D1D1D1</color>
+	<color name="lollipop_status_bar_grey">#616161</color>
 
 </resources>

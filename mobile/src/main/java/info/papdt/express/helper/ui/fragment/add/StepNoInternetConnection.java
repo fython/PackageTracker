@@ -4,7 +4,6 @@ import android.view.View;
 
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.ui.AddActivity;
-import info.papdt.express.helper.widget.ButtonBar;
 
 public class StepNoInternetConnection extends AbsStepFragment {
 
@@ -15,8 +14,7 @@ public class StepNoInternetConnection extends AbsStepFragment {
 
 	@Override
 	protected void doCreateView(View rootView) {
-		ButtonBar buttonBar = $(R.id.button_bar);
-		buttonBar.setOnLeftButtonClickListener(new View.OnClickListener() {
+		mButtonBar.setOnLeftButtonClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				getAddActivity().step(AddActivity.STEP_INPUT);

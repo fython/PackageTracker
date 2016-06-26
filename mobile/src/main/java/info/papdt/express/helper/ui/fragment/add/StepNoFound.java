@@ -1,58 +1,53 @@
 package info.papdt.express.helper.ui.fragment.add;
 
-import android.view.KeyEvent;
+import android.app.Activity;
+import android.content.Intent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import com.rengwuxian.materialedittext.MaterialEditText;
 
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.asynctask.GetPackageTask;
 import info.papdt.express.helper.model.BaseMessage;
 import info.papdt.express.helper.model.Package;
 import info.papdt.express.helper.ui.AddActivity;
+import info.papdt.express.helper.ui.CompanyChooserActivity;
 
-public class StepInput extends AbsStepFragment {
+public class StepNoFound extends AbsStepFragment {
 
-	private MaterialEditText mEditText;
-
-	private String number;
+	public final static int REQUEST_CODE_CHOOSE_COMPANY = 1001;
+	public final static String RESULT_EXTRA_COMPANY_CODE = "company_code";
 
 	@Override
 	protected int getLayoutResId() {
-		return R.layout.fragment_add_step_input;
+		return R.layout.fragment_add_step_no_found;
 	}
 
 	@Override
 	protected void doCreateView(View rootView) {
-		mEditText = $(R.id.et_number);
-
-		mEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-			@Override
-			public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
-				if (i == EditorInfo.IME_ACTION_DONE) {
-					mButtonBar.onRightButtonClick();
-				}
-				return false;
-			}
-		});
-		mButtonBar.setOnRightButtonClickListener(new View.OnClickListener() {
+		mButtonBar.setOnLeftButtonClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				if (!checkNumberInput()) {
-					Toast.makeText(getContext(), R.string.toast_number_wrong, Toast.LENGTH_SHORT).show();
-				} else {
-					number = mEditText.getText().toString();
-					new FindPackageTask().execute(number);
-				}
+				getAddActivity().step(AddActivity.STEP_INPUT);
+			}
+		});
+		$(R.id.btn_choose_company).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Intent intent = new Intent(getActivity(), CompanyChooserActivity.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+				getActivity().startActivityFromFragment(StepNoFound.this, intent, REQUEST_CODE_CHOOSE_COMPANY);
 			}
 		});
 	}
 
-	private boolean checkNumberInput() {
-		return mEditText.getText().toString().trim().length() > 4;
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+		if (requestCode == REQUEST_CODE_CHOOSE_COMPANY) {
+			if (resultCode == Activity.RESULT_OK) {
+				String companyCode = intent.getStringExtra(RESULT_EXTRA_COMPANY_CODE);
+				new FindPackageTask().execute(getAddActivity().getNumber(), companyCode);
+			}
+		}
 	}
 
 	private class FindPackageTask extends GetPackageTask {
@@ -72,8 +67,6 @@ public class StepInput extends AbsStepFragment {
 					getAddActivity().step(AddActivity.STEP_SUCCESS);
 				} else {
 					Toast.makeText(getContext(), p.message, Toast.LENGTH_SHORT).show();
-					getAddActivity().setNumber(number);
-					getAddActivity().step(AddActivity.STEP_NO_FOUND);
 				}
 			} else {
 				getAddActivity().step(AddActivity.STEP_NO_INTERNET_CONNECTION);
@@ -81,4 +74,5 @@ public class StepInput extends AbsStepFragment {
 		}
 
 	}
+
 }

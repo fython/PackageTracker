@@ -7,6 +7,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.view.View;
 
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.support.Settings;
@@ -38,7 +39,7 @@ public abstract class AbsActivity extends AppCompatActivity {
 	protected abstract void setUpViews();
 
 	@Nullable
-	protected <T> T $(int viewId) {
+	protected <T extends View> T $(int viewId) {
 		return (T) findViewById(viewId);
 	}
 

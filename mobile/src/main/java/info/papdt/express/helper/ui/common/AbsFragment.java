@@ -15,7 +15,7 @@ import info.papdt.express.helper.support.Settings;
 
 public abstract class AbsFragment extends Fragment {
 
-	private View rootView;
+	protected View rootView;
 	private Settings mSettings;
 	private Context mContext;
 
@@ -48,7 +48,7 @@ public abstract class AbsFragment extends Fragment {
 	}
 
 	@Nullable
-	protected <T> T $(@IdRes int viewId) {
+	protected <T extends View> T $(@IdRes int viewId) {
 		return rootView != null ? (T) rootView.findViewById(viewId) : null;
 	}
 

@@ -1,7 +1,6 @@
 package info.papdt.express.helper.ui;
 
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.graphics.Color;
 import android.os.Build;
@@ -13,6 +12,7 @@ import info.papdt.express.helper.R;
 import info.papdt.express.helper.model.Package;
 import info.papdt.express.helper.ui.common.AbsActivity;
 import info.papdt.express.helper.ui.fragment.add.StepInput;
+import info.papdt.express.helper.ui.fragment.add.StepNoFound;
 import info.papdt.express.helper.ui.fragment.add.StepNoInternetConnection;
 
 public class AddActivity extends AbsActivity{
@@ -20,10 +20,11 @@ public class AddActivity extends AbsActivity{
 	public static final int STEP_INPUT = 0, STEP_NO_INTERNET_CONNECTION = 1, STEP_NO_FOUND = 2,
 			STEP_SUCCESS = 3;
 
-	private Fragment mStepInput, mStepNoInternetConnection;
+	private Fragment mStepInput, mStepNoInternetConnection, mStepNoFound, mStepSuccess;
 	private ProgressBar mProgressBar;
 
 	private Package pack;
+	private String number;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +68,10 @@ public class AddActivity extends AbsActivity{
 				fm.replace(R.id.container, mStepNoInternetConnection).commit();
 				break;
 			case STEP_NO_FOUND:
+				if (mStepNoFound == null) {
+					mStepNoFound = new StepNoFound();
+				}
+				fm.replace(R.id.container, mStepNoFound).commit();
 				break;
 			case STEP_SUCCESS:
 				break;
@@ -83,6 +88,18 @@ public class AddActivity extends AbsActivity{
 
 	public void setPackage(Package pack) {
 		this.pack = pack;
+	}
+
+	public void setNumber(String number) {
+		this.number = number;
+	}
+
+	public Package getPackage() {
+		return this.pack;
+	}
+
+	public String getNumber() {
+		return this.number;
 	}
 
 }

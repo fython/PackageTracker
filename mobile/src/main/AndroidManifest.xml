@@ -24,6 +24,14 @@
 			</intent-filter>
 		</activity>
 
+		<activity android:name=".ui.CompanyChooserActivity"
+		          android:label="@string/activity_choose_company"
+		          android:theme="@style/AppTheme">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN"/>
+			</intent-filter>
+		</activity>
+
 	</application>
 
 	<uses-permission android:name="android.permission.INTERNET"/>

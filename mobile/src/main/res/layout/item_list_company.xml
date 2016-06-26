@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+			  android:clickable="true"
+			  android:foreground="?attr/selectableItemBackground">
+
+	<FrameLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="8dp"
+		android:layout_marginBottom="8dp"
+		android:layout_marginLeft="16dp"
+		android:layout_marginRight="16dp">
+
+		<de.hdodenhof.circleimageview.CircleImageView
+			android:layout_width="48dp"
+			android:layout_height="48dp"
+			android:layout_gravity="center"
+			android:id="@+id/iv_logo"
+			tools:src="@color/pink_700"/>
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_gravity="center"
+			android:id="@+id/tv_first_char"
+			android:textSize="24sp"
+			android:textColor="@android:color/white"
+			tools:text="A"/>
+
+	</FrameLayout>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:orientation="vertical"
+		android:gravity="center_vertical">
+
+		<android.support.v7.widget.AppCompatTextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/tv_title"
+			android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+			tools:text="Title"/>
+
+		<android.support.v7.widget.AppCompatTextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/tv_other"
+			android:layout_marginTop="4dp"
+			android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+			tools:text="Other"/>
+
+	</LinearLayout>
+
+</LinearLayout>

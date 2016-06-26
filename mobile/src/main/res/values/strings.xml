@@ -31,4 +31,8 @@
 	<string name="buttonbar_default_left">PREVIOUS</string>
 	<string name="buttonbar_default_right">NEXT</string>
 
+	<!-- Choose company -->
+	<string name="activity_choose_company">Choose company</string>
+	<string name="search_hint_company">Search company....</string>
+
 </resources>

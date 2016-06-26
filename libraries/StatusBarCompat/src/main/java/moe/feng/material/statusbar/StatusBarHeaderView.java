@@ -70,7 +70,7 @@ public class StatusBarHeaderView extends View {
 		this.setVisibility(
 		!ViewHelper.isChrome() && (
 				(((enableMode == MODE_KITKAT) && (SDK_INT == 19)) ||
-				((enableMode == MODE_LOLLIPOP) && (SDK_INT == 21)) ||
+				((enableMode == MODE_LOLLIPOP) && (SDK_INT >= 21)) ||
 				((enableMode == MODE_ALL) && (SDK_INT >= 19)))
 		) ? View.VISIBLE : View.GONE
 		);
