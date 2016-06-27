@@ -25,7 +25,10 @@
 	<string name="message_no_found">The package seems not exist.</string>
 	<string name="description_no_found">Check your package number or choose the correct company manually.</string>
 	<string name="text_field_name">Package name (Optional)</string>
-	<string name="message_successful_format">The package \"%s\" has been successfully added to track list. Now you can give it a name as recognition.</string>
+	<string name="message_successful_format">The package \"%s\" is ready to be added. Now you can give it a name as recognition.</string>
+	<string name="description_successful_format">Latest status: %1$s (%2$s)</string>
+	<string name="package_name_unnamed">My package %s</string>
+	<string name="toast_unknown_error">Something wrong happened! Back to input and try again.</string>
 
 	<!-- Widget ButtonBar -->
 	<string name="buttonbar_default_left">PREVIOUS</string>

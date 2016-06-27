@@ -11,6 +11,8 @@ public class FragmentAll extends BaseFragment {
 		super(database);
 	}
 
+	public FragmentAll() {}
+
 	@Override
 	protected void setUpAdapter() {
 

@@ -10,11 +10,9 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
-import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -23,7 +21,7 @@ import info.papdt.express.helper.api.PackageApi;
 import info.papdt.express.helper.ui.adapter.CompanyListAdapter;
 import info.papdt.express.helper.ui.common.AbsActivity;
 import info.papdt.express.helper.ui.common.SimpleRecyclerViewAdapter;
-import info.papdt.express.helper.ui.fragment.add.StepNoFound;
+import info.papdt.express.helper.ui.fragment.add.AbsStepFragment;
 
 public class CompanyChooserActivity extends AbsActivity {
 
@@ -104,7 +102,7 @@ public class CompanyChooserActivity extends AbsActivity {
 			@Override
 			public void onItemClick(int position, SimpleRecyclerViewAdapter.ClickableViewHolder holder) {
 				Intent intent = new Intent();
-				intent.putExtra(StepNoFound.RESULT_EXTRA_COMPANY_CODE, data.get(position).code);
+				intent.putExtra(AbsStepFragment.RESULT_EXTRA_COMPANY_CODE, data.get(position).code);
 				setResult(RESULT_OK, intent);
 				finish();
 			}

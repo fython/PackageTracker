@@ -67,12 +67,12 @@ public class StepInput extends AbsStepFragment {
 			getAddActivity().hideProgressBar();
 			if (message.getCode() == BaseMessage.CODE_OKAY) {
 				Package p = message.getData();
+				getAddActivity().setNumber(number);
 				if (p.status.equals("200")) {
 					getAddActivity().setPackage(p);
 					getAddActivity().step(AddActivity.STEP_SUCCESS);
 				} else {
 					Toast.makeText(getContext(), p.message, Toast.LENGTH_SHORT).show();
-					getAddActivity().setNumber(number);
 					getAddActivity().step(AddActivity.STEP_NO_FOUND);
 				}
 			} else {

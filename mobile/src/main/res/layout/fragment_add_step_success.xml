@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+	<android.support.v7.widget.AppCompatTextView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/tv_message"
+		android:layout_marginTop="16dp"
+		android:layout_marginStart="16dp"
+		android:layout_marginEnd="16dp"
+		android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+
+	<Space android:layout_width="match_parent" android:layout_height="8dp"/>
+
+	<android.support.v7.widget.AppCompatTextView
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/tv_desc"
+		android:layout_marginStart="16dp"
+		android:layout_marginEnd="16dp"
+		android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
+
+	<com.rengwuxian.materialedittext.MaterialEditText
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/et_name"
+		android:layout_marginStart="16dp"
+		android:layout_marginEnd="16dp"
+		android:hint="@string/text_field_name"
+		app:met_primaryColor="?attr/colorPrimary"
+		app:met_floatingLabel="highlight"
+		app:met_floatingLabelText="@string/text_field_name"
+		app:met_maxCharacters="24"
+		app:met_singleLineEllipsis="true"
+		app:met_iconLeft="@drawable/ic_assignment_black_24dp"/>
+
+	<Button
+		android:id="@+id/btn_choose_company"
+		android:layout_width="wrap_content"
+		android:layout_height="36dp"
+		android:layout_marginStart="16dp"
+		android:layout_marginEnd="16dp"
+		android:paddingStart="8dp"
+		android:paddingEnd="8dp"
+		android:text="@string/operation_manually_choose_company"
+		android:textAppearance="@style/TextAppearance.AppCompat.Button"
+		android:textColor="@color/pink_900"
+		android:background="@drawable/button_bg"
+		android:layout_gravity="end"/>
+
+	<Space
+		android:layout_width="match_parent"
+		android:layout_height="0dp"
+		android:layout_weight="1"/>
+
+	<info.papdt.express.helper.widget.ButtonBar
+		android:layout_width="match_parent"
+		android:layout_height="@dimen/button_bar_size"
+		android:id="@+id/button_bar"/>
+
+</LinearLayout>

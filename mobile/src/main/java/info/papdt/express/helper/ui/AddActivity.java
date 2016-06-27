@@ -2,11 +2,13 @@ package info.papdt.express.helper.ui;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.model.Package;
@@ -14,6 +16,7 @@ import info.papdt.express.helper.ui.common.AbsActivity;
 import info.papdt.express.helper.ui.fragment.add.StepInput;
 import info.papdt.express.helper.ui.fragment.add.StepNoFound;
 import info.papdt.express.helper.ui.fragment.add.StepNoInternetConnection;
+import info.papdt.express.helper.ui.fragment.add.StepSuccess;
 
 public class AddActivity extends AbsActivity{
 
@@ -25,6 +28,8 @@ public class AddActivity extends AbsActivity{
 
 	private Package pack;
 	private String number;
+
+	public static final String RESULT_EXTRA_PACKAGE_JSON = "package_json";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +79,7 @@ public class AddActivity extends AbsActivity{
 				fm.replace(R.id.container, mStepNoFound).commit();
 				break;
 			case STEP_SUCCESS:
+				fm.replace(R.id.container, new StepSuccess()).commit();
 				break;
 		}
 	}
@@ -100,6 +106,17 @@ public class AddActivity extends AbsActivity{
 
 	public String getNumber() {
 		return this.number;
+	}
+
+	public void finishAdd() {
+		if (getPackage() == null || !getPackage().status.equals("200")) {
+			Toast.makeText(this, R.string.toast_unknown_error, Toast.LENGTH_LONG).show();
+			return;
+		}
+		Intent intent = new Intent();
+		intent.putExtra(RESULT_EXTRA_PACKAGE_JSON, getPackage().toJsonString());
+		setResult(MainActivity.RESULT_NEW_PACKAGE, intent);
+		finish();
 	}
 
 }

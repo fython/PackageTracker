@@ -21,6 +21,7 @@ public class Package {
 
 	/** Local data */
 	public boolean shouldPush = false;
+	public String name;
 
 	public static final int STATUS_FAILED = 2, STATUS_NORMAL = 0, STATUS_ON_THE_WAY = 5,
 			STATUS_DELIVERED = 3, STATUS_RETURNED = 4 /* RETURNING 6 */, STATUS_OTHER = 1;

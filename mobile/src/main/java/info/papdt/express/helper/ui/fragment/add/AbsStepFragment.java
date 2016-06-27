@@ -12,6 +12,9 @@ import info.papdt.express.helper.widget.ButtonBar;
 
 public abstract class AbsStepFragment extends AbsFragment {
 
+	public final static int REQUEST_CODE_CHOOSE_COMPANY = 1001;
+	public final static String RESULT_EXTRA_COMPANY_CODE = "company_code";
+
 	protected ButtonBar mButtonBar;
 
 	@Override

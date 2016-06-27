@@ -26,6 +26,9 @@ public abstract class BaseFragment extends AbsFragment implements SwipeRefreshLa
 		this.mDatabase = database;
 	}
 
+	protected BaseFragment() {
+	}
+
 	@Override
 	protected int getLayoutResId() {
 		return R.layout.fragment_home;
