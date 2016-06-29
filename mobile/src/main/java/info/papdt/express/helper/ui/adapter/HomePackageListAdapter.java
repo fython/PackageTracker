@@ -17,6 +17,8 @@ import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableI
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableItemResults;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractSwipeableItemViewHolder;
 
+import java.util.ArrayList;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.dao.PackageDatabase;
@@ -24,17 +26,21 @@ import info.papdt.express.helper.model.Package;
 import info.papdt.express.helper.support.ColorGenerator;
 import info.papdt.express.helper.ui.callback.OnDataRemovedCallback;
 
-public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageListAdapter.MyViewHolder> implements SwipeableItemAdapter<HomePackageListAdapter.MyViewHolder> {
+public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageListAdapter.MyViewHolder> implements SwipeableItemAdapter<HomePackageListAdapter.MyViewHolder>{
 
 	private PackageDatabase db;
+	private int type;
 
 	private OnDataRemovedCallback mDataRemovedCallback;
 
-	public HomePackageListAdapter(PackageDatabase db) {
+	public static final int TYPE_ALL = 0, TYPE_DELIVERED = 1, TYPE_DELIVERING = 2;
+
+	public HomePackageListAdapter(PackageDatabase db, int type) {
 		/** This is required for swiping feature. */
 		setHasStableIds(true);
 
 		this.db = db;
+		this.type = type;
 	}
 
 	@Override
@@ -69,7 +75,15 @@ public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageList
 	}
 
 	public Package getItemData(int pos) {
-		return db.get(pos);
+		switch (type) {
+			case TYPE_DELIVERED:
+				return db.getDeliveredData().get(pos);
+			case TYPE_DELIVERING:
+				return db.getDeliveringData().get(pos);
+			case TYPE_ALL:
+			default:
+				return db.get(pos);
+		}
 	}
 
 	public void setDatabase(PackageDatabase db) {
@@ -85,7 +99,15 @@ public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageList
 
 	@Override
 	public int getItemCount() {
-		return db.size();
+		switch (type) {
+			case TYPE_DELIVERED:
+				return db.getDeliveredData().size();
+			case TYPE_DELIVERING:
+				return db.getDeliveringData().size();
+			case TYPE_ALL:
+			default:
+				return db.size();
+		}
 	}
 
 	@Override

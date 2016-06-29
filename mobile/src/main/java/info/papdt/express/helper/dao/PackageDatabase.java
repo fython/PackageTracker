@@ -4,6 +4,8 @@ import android.content.Context;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.Expose;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,7 +17,8 @@ import info.papdt.express.helper.support.FileUtils;
 
 public class PackageDatabase {
 
-	private ArrayList<Package> data;
+	@Expose private ArrayList<Package> data;
+	private ArrayList<Package> delivered, delivering;
 	private Context mContext;
 
 	private static PackageDatabase sInstance;
@@ -48,11 +51,13 @@ public class PackageDatabase {
 			e.printStackTrace();
 		}
 		this.data = new Gson().fromJson(json, PackageDatabase.class).data;
+		refreshList();
 	}
 
 	public boolean save() {
 		try {
-			FileUtils.saveFile(mContext, FILE_NAME, new Gson().toJson(this));
+			Gson gson = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
+			FileUtils.saveFile(mContext, FILE_NAME, gson.toJson(this));
 			return true;
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -60,16 +65,31 @@ public class PackageDatabase {
 		}
 	}
 
+	public void refreshList() {
+		delivered = new ArrayList<>();
+		delivering = new ArrayList<>();
+		for (Package p : data) {
+			if (p.getState() == Package.STATUS_DELIVERED) {
+				delivered.add(p);
+			} else {
+				delivering.add(p);
+			}
+		}
+	}
+
 	public void add(Package pack) {
 		data.add(pack);
+		refreshList();
 	}
 
 	public void add(int index, Package pack) {
 		data.add(index, pack);
+		refreshList();
 	}
 
 	public void set(int index, Package pack) {
 		data.set(index, pack);
+		refreshList();
 	}
 
 	public void remove(int index) {
@@ -77,6 +97,8 @@ public class PackageDatabase {
 
 		lastRemovedData = removedItem;
 		lastRemovedPosition = index;
+
+		refreshList();
 	}
 
 	public void remove(Package pack) {
@@ -94,6 +116,7 @@ public class PackageDatabase {
 			}
 
 			data.add(insertedPosition, lastRemovedData);
+			refreshList();
 
 			lastRemovedData = null;
 			lastRemovedPosition = -1;
@@ -104,12 +127,25 @@ public class PackageDatabase {
 		}
 	}
 
+	public ArrayList<Package> getData() {
+		return data;
+	}
+
+	public ArrayList<Package> getDeliveredData() {
+		return delivered;
+	}
+
+	public ArrayList<Package> getDeliveringData() {
+		return delivering;
+	}
+
 	public int indexOf(Package p) {
 		return data.indexOf(p);
 	}
 
 	public void clear() {
 		data.clear();
+		refreshList();
 	}
 
 	public int size() {
@@ -134,6 +170,7 @@ public class PackageDatabase {
 				Log.e(TAG, "Package " + pack.codeNumber + " couldn\'t get new info.");
 			}
 		}
+		refreshList();
 	}
 
 }

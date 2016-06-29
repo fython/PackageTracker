@@ -43,9 +43,9 @@ public class MainActivity extends AbsActivity implements OnMenuTabClickListener 
 		mDatabase = PackageDatabase.getInstance(getApplicationContext());
 
 		fragments = new BaseFragment[]{
-				new FragmentAll(mDatabase),
-				new FragmentAll(mDatabase),
-				new FragmentAll(mDatabase)
+				FragmentAll.newInstance(mDatabase, FragmentAll.TYPE_ALL),
+				FragmentAll.newInstance(mDatabase, FragmentAll.TYPE_DELIVERED),
+				FragmentAll.newInstance(mDatabase, FragmentAll.TYPE_DELIVERING)
 		};
 
 		mBottomBar = BottomBar.attach(this, savedInstanceState);
@@ -70,6 +70,12 @@ public class MainActivity extends AbsActivity implements OnMenuTabClickListener 
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
 		mBottomBar.onSaveInstanceState(outState);
+	}
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+		mDatabase.save();
 	}
 
 	@Override

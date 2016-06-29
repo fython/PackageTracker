@@ -5,6 +5,10 @@
 	<color name="colorPrimaryDark">@color/pink_700</color>
 	<color name="colorAccent">@color/blue_500</color>
 
+	<color name="grey_300">#E0E0E0</color>
+	<color name="grey_100">#F5F5F5</color>
+	<color name="grey_50">#FAFAFA</color>
+
 	<color name="red_500">#F44336</color>
 
 	<color name="pink_300">#F06292</color>
@@ -40,5 +44,9 @@
 
 	<color name="button_bar_color">#D1D1D1</color>
 	<color name="lollipop_status_bar_grey">#616161</color>
+
+	<color name="light_theme_status_bar">@color/grey_300</color>
+	<color name="light_theme_app_bar">@color/grey_100</color>
+	<color name="light_theme_background">@color/grey_50</color>
 
 </resources>

@@ -37,7 +37,8 @@ public abstract class BaseFragment extends AbsFragment implements SwipeRefreshLa
 		this.mDatabase = database;
 	}
 
-	protected BaseFragment() {
+	public BaseFragment() {
+		this.mDatabase = PackageDatabase.getInstance(getContext());
 	}
 
 	@Override

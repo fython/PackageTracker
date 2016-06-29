@@ -8,8 +8,8 @@
 	<moe.feng.material.statusbar.AppBarLayout
 		android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
-	    app:colorNormal="@android:color/white"
-	    app:colorDark="@android:color/white"
+	    app:colorNormal="@color/light_theme_app_bar"
+	    app:colorDark="@color/light_theme_status_bar"
 		app:enableMode="Lollipop">
 
 		<android.support.v7.widget.Toolbar
