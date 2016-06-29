@@ -9,6 +9,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.IdRes;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -32,7 +33,7 @@ public class MainActivity extends AbsActivity implements OnMenuTabClickListener 
 
 	public static final int REQUEST_ADD = 10001, RESULT_NEW_PACKAGE = 2000;
 
-	private static final int MSG_NOTIFY_DATA_CHANGED = 1;
+	public static final int MSG_NOTIFY_DATA_CHANGED = 1, MSG_NOTIFY_ITEM_REMOVE = 2;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -121,21 +122,46 @@ public class MainActivity extends AbsActivity implements OnMenuTabClickListener 
 				if (p != null) {
 					Log.i("Main", p.toJsonString());
 					mDatabase.add(p);
-					mHandler.sendEmptyMessage(MSG_NOTIFY_DATA_CHANGED);
+					this.notifyDataChanged(-1);
 				}
 			}
 		}
 	}
 
-	private Handler mHandler = new Handler() {
+	public Handler mHandler = new Handler() {
 		@Override
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 				case MSG_NOTIFY_DATA_CHANGED:
-					// TODO Notify fragments
+					for (int i = 0; i < fragments.length; i++) {
+						if (i == msg.arg1) continue; // Skip the fragment which sent message.
+						fragments[i].notifyDataSetChanged();
+					}
+					break;
+				case MSG_NOTIFY_ITEM_REMOVE:
+					final int fragId = msg.arg1;
+					Snackbar.make(
+							$(R.id.coordinator_layout),
+							String.format(getString(R.string.toast_item_removed), msg.getData().getString("title")),
+							Snackbar.LENGTH_LONG
+					)
+							.setAction(R.string.toast_item_removed_action, new View.OnClickListener() {
+								@Override
+								public void onClick(View view) {
+									fragments[fragId].onUndoActionClicked();
+								}
+							})
+							.show();
 					break;
 			}
 		}
 	};
+
+	public void notifyDataChanged(int fromFragId) {
+		Message msg = new Message();
+		msg.what = MSG_NOTIFY_DATA_CHANGED;
+		msg.arg1 = fromFragId;
+		mHandler.sendMessage(msg);
+	}
 
 }

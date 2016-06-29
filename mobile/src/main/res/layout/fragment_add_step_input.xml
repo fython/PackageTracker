@@ -21,7 +21,7 @@
 		app:met_iconLeft="@drawable/ic_dialpad_black_24dp"
 		app:met_clearButton="true"/>
 
-	<Space android:layout_width="match_parent" android:layout_height="16dp"/>
+	<Space android:layout_width="match_parent" android:layout_height="8dp"/>
 
 	<Button
 		android:id="@+id/btn_scan"

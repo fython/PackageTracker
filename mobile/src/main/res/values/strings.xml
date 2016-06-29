@@ -6,9 +6,15 @@
 	<string name="navigation_item_all">All</string>
 	<string name="navigation_item_delivered">Delivered</string>
 	<string name="navigation_item_on_the_way">On the way</string>
+	<string name="frame_empty_tip">Click \"Add\" button to add packages</string>
 
 	<string name="action_search">Search</string>
 	<string name="action_settings">Settings</string>
+
+	<string name="item_text_cannot_get_package_status">Cannot get the latest status.</string>
+
+	<string name="toast_item_removed">%s has been remove</string>
+	<string name="toast_item_removed_action">Undo</string>
 
 	<!-- Add -->
 	<string name="activity_add">Add package</string>

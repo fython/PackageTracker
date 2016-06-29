@@ -20,6 +20,9 @@ public class PackageDatabase {
 
 	private static PackageDatabase sInstance;
 
+	private Package lastRemovedData = null;
+	private int lastRemovedPosition = -1;
+
 	private static final String FILE_NAME = "packages.json";
 
 	private static final String TAG = PackageDatabase.class.getSimpleName();
@@ -70,11 +73,39 @@ public class PackageDatabase {
 	}
 
 	public void remove(int index) {
-		data.remove(index);
+		final Package removedItem = data.remove(index);
+
+		lastRemovedData = removedItem;
+		lastRemovedPosition = index;
 	}
 
 	public void remove(Package pack) {
-		data.remove(pack);
+		int nowPos = data.indexOf(pack);
+		remove(nowPos);
+	}
+
+	public int undoLastRemoval() {
+		if (lastRemovedData != null) {
+			int insertedPosition;
+			if (lastRemovedPosition >= 0 && lastRemovedPosition < data.size()) {
+				insertedPosition = lastRemovedPosition;
+			} else {
+				insertedPosition = data.size();
+			}
+
+			data.add(insertedPosition, lastRemovedData);
+
+			lastRemovedData = null;
+			lastRemovedPosition = -1;
+
+			return insertedPosition;
+		} else {
+			return -1;
+		}
+	}
+
+	public int indexOf(Package p) {
+		return data.indexOf(p);
 	}
 
 	public void clear() {
