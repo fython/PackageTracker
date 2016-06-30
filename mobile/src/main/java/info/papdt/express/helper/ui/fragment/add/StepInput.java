@@ -10,6 +10,7 @@ import com.rengwuxian.materialedittext.MaterialEditText;
 
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.asynctask.GetPackageTask;
+import info.papdt.express.helper.dao.PackageDatabase;
 import info.papdt.express.helper.model.BaseMessage;
 import info.papdt.express.helper.model.Package;
 import info.papdt.express.helper.ui.AddActivity;
@@ -43,16 +44,27 @@ public class StepInput extends AbsStepFragment {
 			public void onClick(View view) {
 				if (!checkNumberInput()) {
 					Toast.makeText(getContext(), R.string.toast_number_wrong, Toast.LENGTH_SHORT).show();
-				} else {
-					number = mEditText.getText().toString();
-					new FindPackageTask().execute(number);
+					return;
 				}
+
+				if (checkExistance()) {
+					Toast.makeText(getContext(), R.string.toast_number_exist, Toast.LENGTH_SHORT).show();
+					return;
+				}
+
+				// Pass check
+				number = mEditText.getText().toString();
+				new FindPackageTask().execute(number);
 			}
 		});
 	}
 
 	private boolean checkNumberInput() {
 		return mEditText.getText().toString().trim().length() > 4;
+	}
+
+	private boolean checkExistance() {
+		return PackageDatabase.getInstance(getContext()).indexOf(mEditText.getText().toString().trim()) != -1;
 	}
 
 	private class FindPackageTask extends GetPackageTask {

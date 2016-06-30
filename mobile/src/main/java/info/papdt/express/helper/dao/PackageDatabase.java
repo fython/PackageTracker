@@ -143,6 +143,13 @@ public class PackageDatabase {
 		return data.indexOf(p);
 	}
 
+	public int indexOf(String number) {
+		for (int index = 0; index < size(); index++) {
+			if (get(index).number.equals(number)) return index;
+		}
+		return -1;
+	}
+
 	public void clear() {
 		data.clear();
 		refreshList();

@@ -13,7 +13,7 @@
 
 	<string name="item_text_cannot_get_package_status">Cannot get the latest status.</string>
 
-	<string name="toast_item_removed">%s has been remove</string>
+	<string name="toast_item_removed">%s has been removed.</string>
 	<string name="toast_item_removed_action">Undo</string>
 
 	<!-- Add -->
@@ -21,6 +21,7 @@
 	<string name="text_field_number">Package number</string>
 	<string name="text_field_company">Shipment company</string>
 	<string name="toast_number_wrong">Your number is wrong. Check it and try again.</string>
+	<string name="toast_number_exist">The package is in the list. Don\'t add it repeatedly.</string>
 	<string name="operation_scan">Scan code</string>
 	<string name="operation_manually_choose_company">This is not the correct company?</string>
 	<string name="operation_manually_choose_company_when_cannot_find">Choose company manually</string>
@@ -33,7 +34,7 @@
 	<string name="text_field_name">Package name (Optional)</string>
 	<string name="message_successful_format">The package \"%s\" is ready to be added. Now you can give it a name as recognition.</string>
 	<string name="description_successful_format">Latest status: %1$s (%2$s)</string>
-	<string name="package_name_unnamed">My package %s</string>
+	<string name="package_name_unnamed">My Package %s</string>
 	<string name="toast_unknown_error">Something wrong happened! Back to input and try again.</string>
 
 	<!-- Widget ButtonBar -->
