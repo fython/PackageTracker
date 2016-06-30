@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<Preference android:key="settings_ui" android:title="@string/category_user_interface"/>
+	<Preference android:key="settings_network" android:title="@string/category_network"/>
+
+	<PreferenceCategory android:title="@string/category_about">
+
+		<Preference android:key="version" android:title="@string/app_name"/>
+		<Preference android:key="github" android:title="@string/github_repo_title" android:summary="@string/github_repo_url"/>
+		<Preference android:key="sina" android:title="@string/author_sina_title" android:summary="@string/author_sina_desc"/>
+		<Preference android:key="alipay" android:title="@string/alipay_support_title" android:summary="@string/alipay_support_summary"/>
+
+	</PreferenceCategory>
+
+</PreferenceScreen>

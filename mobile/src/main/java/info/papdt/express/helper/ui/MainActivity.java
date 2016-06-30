@@ -12,6 +12,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.roughike.bottombar.BottomBar;
@@ -116,6 +117,16 @@ public class MainActivity extends AbsActivity implements OnMenuTabClickListener 
 		menu.findItem(R.id.action_search).getIcon().setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_IN);
 
 		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		int id = item.getItemId();
+		if (id == R.id.action_settings) {
+			SettingsActivity.launch(this, SettingsActivity.FLAG_MAIN);
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	@Override

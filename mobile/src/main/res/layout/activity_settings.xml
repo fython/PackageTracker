@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+
+	<moe.feng.material.statusbar.AppBarLayout
+		android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    app:colorNormal="?attr/colorPrimary"
+	    app:colorDark="?attr/colorPrimaryDark"
+		app:enableMode="Lollipop">
+
+		<android.support.v7.widget.Toolbar
+			android:layout_width="match_parent"
+			android:layout_height="?attr/actionBarSize"
+			android:id="@+id/toolbar"
+			app:theme="@style/ThemeOverlay.AppCompat.Dark"
+			app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+	</moe.feng.material.statusbar.AppBarLayout>
+
+	<FrameLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:id="@+id/container"/>
+
+</LinearLayout>
