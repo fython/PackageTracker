@@ -17,13 +17,12 @@ import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableI
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableItemResults;
 import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractSwipeableItemViewHolder;
 
-import java.util.ArrayList;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.dao.PackageDatabase;
 import info.papdt.express.helper.model.Package;
 import info.papdt.express.helper.support.ColorGenerator;
+import info.papdt.express.helper.support.ScreenUtils;
 import info.papdt.express.helper.ui.callback.OnDataRemovedCallback;
 
 public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageListAdapter.MyViewHolder> implements SwipeableItemAdapter<HomePackageListAdapter.MyViewHolder>{
@@ -32,6 +31,8 @@ public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageList
 	private int type;
 
 	private OnDataRemovedCallback mDataRemovedCallback;
+
+	private float DP_16_TO_PX = -1;
 
 	public static final int TYPE_ALL = 0, TYPE_DELIVERED = 1, TYPE_DELIVERING = 2;
 
@@ -45,6 +46,8 @@ public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageList
 
 	@Override
 	public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+		if (DP_16_TO_PX == -1) DP_16_TO_PX = ScreenUtils.dpToPx(parent.getContext(), 8);
+
 		View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_package_for_home, parent, false);
 		return new MyViewHolder(itemView);
 	}
@@ -72,6 +75,13 @@ public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageList
 		/** Set CircleImageView */
 		holder.bigCharView.setText(p.name.substring(0, 1));
 		holder.logoView.setImageDrawable(new ColorDrawable(ColorGenerator.MATERIAL.getColor(p.name)));
+
+		/** Add paddingTop/Bottom to the first or last item */
+		if (position == 0) {
+			holder.getSwipeableContainerView().setPadding(0, (int) DP_16_TO_PX, 0, 0);
+		} else if (position == getItemCount()) {
+			holder.getSwipeableContainerView().setPadding(0, 0, 0, (int) DP_16_TO_PX);
+		}
 	}
 
 	public Package getItemData(int pos) {
@@ -139,10 +149,11 @@ public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageList
 		AppCompatTextView titleText, descText, timeText;
 		TextView bigCharView;
 
-		private View containerView;
+		private View containerView, rootView;
 
 		public MyViewHolder(View itemView) {
 			super(itemView);
+			this.rootView = itemView;
 			logoView = (CircleImageView) itemView.findViewById(R.id.iv_logo);
 			titleText = (AppCompatTextView) itemView.findViewById(R.id.tv_title);
 			descText = (AppCompatTextView) itemView.findViewById(R.id.tv_other);
@@ -154,6 +165,10 @@ public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageList
 		@Override
 		public View getSwipeableContainerView() {
 			return containerView;
+		}
+
+		public View getRootView() {
+			return rootView;
 		}
 	}
 

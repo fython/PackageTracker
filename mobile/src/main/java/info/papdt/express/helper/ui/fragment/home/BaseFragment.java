@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.LinearLayout;
 
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
+import com.h6ah4i.android.widget.advrecyclerview.touchguard.RecyclerViewTouchActionGuardManager;
 
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.dao.PackageDatabase;
@@ -93,6 +94,7 @@ public abstract class BaseFragment extends AbsFragment implements SwipeRefreshLa
 		this.mAdapter = adapter;
 		mRecyclerView.setAdapter(mSwipeManager.createWrappedAdapter(mAdapter));
 		mSwipeManager.attachRecyclerView(mRecyclerView);
+		new RecyclerViewTouchActionGuardManager().attachRecyclerView(mRecyclerView);
 		mEmptyView.setVisibility(mAdapter != null && mAdapter.getItemCount() > 0 ? View.GONE : View.VISIBLE);
 
 		/** Set undo operation */

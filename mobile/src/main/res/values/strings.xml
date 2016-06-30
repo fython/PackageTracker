@@ -13,6 +13,7 @@
 
 	<string name="item_text_cannot_get_package_status">Cannot get the latest status.</string>
 
+	<string name="action_remove">Remove</string>
 	<string name="toast_item_removed">%s has been removed.</string>
 	<string name="toast_item_removed_action">Undo</string>
 

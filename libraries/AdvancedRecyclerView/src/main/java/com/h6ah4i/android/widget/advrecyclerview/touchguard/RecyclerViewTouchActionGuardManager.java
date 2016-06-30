@@ -38,7 +38,7 @@ public class RecyclerViewTouchActionGuardManager {
     private int mInitialTouchY;
     private int mLastTouchY;
     private int mTouchSlop;
-    private boolean mEnabled;
+    private boolean mEnabled = true;
     private boolean mInterceptScrollingWhileAnimationRunning;
 
     /**
