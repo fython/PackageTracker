@@ -148,16 +148,21 @@ public class PackageApi {
 			return -1;
 		}
 
+		public static String getNameByCode(String code) {
+			int index = findCompanyByCode(code);
+			return index != -1 ? info.get(index).name : null;
+		}
+
 		static {
 			info = new ArrayList<>();
-			info.add(new Company("顺丰速递（中文结果）", "shunfeng", "95338", "http://www.sf-express.com/"));
+			info.add(new Company("顺丰速递", "shunfeng", "95338", "http://www.sf-express.com/"));
 			info.add(new Company("中通速递", "zhongtong", "95311", "http://www.zto.cn/"));
 			info.add(new Company("圆通速递", "yuantong", "95554", "http://www.ytoexpress.com/"));
 			info.add(new Company("申通", "shentong", "95543", "http://www.sto.cn/"));
 			info.add(new Company("韵达快运", "yunda", "95546", "http://www.yundaex.com/"));
 			info.add(new Company("百世汇通", "huitongkuaidi", "4009 565656", "http://www.800bestex.com/"));
 			info.add(new Company("EMS(中文结果)", "ems", "11183", "http://www.ems.com.cn/"));
-			info.add(new Company("澳大利亚邮政(英文结果）", "auspost", null, null));
+			info.add(new Company("澳大利亚邮政", "auspost", null, null));
 			info.add(new Company("AAE", "aae", null, null));
 			info.add(new Company("安信达", "anxindakuaixi", null, null));
 			info.add(new Company("百福东方", "baifudongfang", null, null));
@@ -167,14 +172,13 @@ public class PackageApi {
 			info.add(new Company("希伊艾斯（CCES）", "cces", null, null));
 			info.add(new Company("中国东方（COE）", "coe", null, null));
 			info.add(new Company("传喜物流", "chuanxiwuliu ", null, null));
-			info.add(new Company("加拿大邮政Canada Post（英文结果）", "canpost", null, null));
-			info.add(new Company("加拿大邮政Canada Post(德文结果）", "canpostfr", null, null));
+			info.add(new Company("加拿大邮政Canada Post", "canpost", null, null));
 			info.add(new Company("大田物流", "datianwuliu", null, null));
 			info.add(new Company("德邦物流", "debangwuliu", null, null));
 			info.add(new Company("DPEX", "dpex", null, null));
-			info.add(new Company("DHL-中国件-中文结果", "dhl", null, null));
-			info.add(new Company("DHL-国际件-英文结果", "dhlen", null, null));
-			info.add(new Company("DHL-德国件-德文结果（德国国内派、收的件）", "dhlde", null, null));
+			info.add(new Company("DHL-中国件", "dhl", null, null));
+			info.add(new Company("DHL-国际件", "dhlen", null, null));
+			info.add(new Company("DHL-德国件", "dhlde", null, null));
 			info.add(new Company("D速快递", "dsukuaidi", null, null));
 			info.add(new Company("递四方", "disifang", null, null));
 			info.add(new Company("E邮宝", "ems", null, null));

@@ -35,7 +35,7 @@
 	<string name="text_field_name">Package name (Optional)</string>
 	<string name="message_successful_format">The package \"%s\" is ready to be added. Now you can give it a name as recognition.</string>
 	<string name="description_successful_format">Latest status: %1$s (%2$s)</string>
-	<string name="package_name_unnamed">My Package %s</string>
+	<string name="package_name_unnamed">Package %s</string>
 	<string name="toast_unknown_error">Something wrong happened! Back to input and try again.</string>
 
 	<!-- Widget ButtonBar -->
@@ -64,5 +64,27 @@
 	<string name="alipay_support_summary">316643843\@qq.com (Click to copy it)</string>
 	<string name="alipay_support_account">316643843\@qq.com</string>
 	<string name="toast_copied_successfully">Alipay account has been copied successfully.</string>
+
+	<!-- Details -->
+	<string name="activity_details">Details</string>
+	<string name="action_copy_code">Copy code</string>
+	<string name="action_share">Share</string>
+	<string name="action_edit_name">Edit name</string>
+	<string name="action_delete">Delete</string>
+	<string name="toast_copied_code">Package number has been copied successfully.</string>
+
+	<string name="list_status_subheader">Package Status</string>
+	<string name="list_package_name">Name</string>
+	<string name="list_package_number">Package Number</string>
+	<string name="list_package_number_format">%1$s (%2$s)</string>
+
+	<string name="dialog_edit_name_title">Edit name</string>
+	<string name="toast_edit_name_is_empty">The package name can\'t be empty.</string>
+
+	<string name="dialog_share_title">Share my package</string>
+	<string name="share_info_format">%1$s (%2$s %3$s) Latest status: %4$s - %5$s (Sent from Package Tracker App)</string>
+
+	<string name="dialog_delete_title">Delete</string>
+	<string name="dialog_delete_message">You will not continue track this package.</string>
 
 </resources>

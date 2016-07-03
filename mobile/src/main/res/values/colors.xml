@@ -30,6 +30,8 @@
 
 	<color name="brown_500">#795548</color>
 
+	<color name="blue_grey_500">#607D8B</color>
+
 	<array name="statusColor">
 		<item>@color/red_500</item>
 		<item>@color/teal_500</item>

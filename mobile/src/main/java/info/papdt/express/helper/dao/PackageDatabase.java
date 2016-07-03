@@ -102,7 +102,7 @@ public class PackageDatabase {
 	}
 
 	public void remove(Package pack) {
-		int nowPos = data.indexOf(pack);
+		int nowPos = indexOf(pack);
 		remove(nowPos);
 	}
 
@@ -140,7 +140,7 @@ public class PackageDatabase {
 	}
 
 	public int indexOf(Package p) {
-		return data.indexOf(p);
+		return indexOf(p.number);
 	}
 
 	public int indexOf(String number) {
@@ -170,7 +170,7 @@ public class PackageDatabase {
 				continue;
 			}
 			BaseMessage<Package> newPack = PackageApi.getPackage(pack.companyType, pack.number);
-			if (newPack.getCode() == BaseMessage.CODE_OKAY) {
+			if (newPack.getCode() == BaseMessage.CODE_OKAY && newPack.getData().data != null) {
 				newPack.getData().shouldPush = newPack.getData().data.size() > pack.data.size();
 				this.set(i, newPack.getData());
 			} else {

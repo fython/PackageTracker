@@ -32,7 +32,7 @@ public class MainActivity extends AbsActivity implements OnMenuTabClickListener 
 
 	private PackageDatabase mDatabase;
 
-	public static final int REQUEST_ADD = 10001, RESULT_NEW_PACKAGE = 2000;
+	public static final int REQUEST_ADD = 10001, RESULT_NEW_PACKAGE = 2000, REQUEST_DETAILS = 10002, RESULT_DELETED = 2001, RESULT_RENAMED = 2002;
 
 	public static final int MSG_NOTIFY_DATA_CHANGED = 1, MSG_NOTIFY_ITEM_REMOVE = 2;
 
@@ -141,6 +141,29 @@ public class MainActivity extends AbsActivity implements OnMenuTabClickListener 
 					mDatabase.add(p);
 					this.notifyDataChanged(-1);
 				}
+			}
+		}
+		if (requestCode == REQUEST_DETAILS) {
+			switch (resultCode) {
+				case RESULT_RENAMED:
+					notifyDataChanged(-1);
+					break;
+				case RESULT_DELETED:
+					notifyDataChanged(-1);
+					final int fragId = mBottomBar.getCurrentTabPosition();
+					Snackbar.make(
+							$(R.id.coordinator_layout),
+							String.format(getString(R.string.toast_item_removed), data.getStringExtra("title")),
+							Snackbar.LENGTH_LONG
+					)
+							.setAction(R.string.toast_item_removed_action, new View.OnClickListener() {
+								@Override
+								public void onClick(View view) {
+									fragments[fragId].onUndoActionClicked();
+								}
+							})
+							.show();
+					break;
 			}
 		}
 	}

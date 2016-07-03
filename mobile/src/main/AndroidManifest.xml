@@ -32,6 +32,13 @@
 			</intent-filter>
 		</activity>
 
+		<activity android:name=".ui.DetailsActivity"
+		          android:label="@string/activity_details"
+		          android:theme="@style/AppTheme">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN"/>
+			</intent-filter>
+		</activity>
 
 		<activity android:name=".ui.SettingsActivity"
 		          android:label="@string/activity_settings"

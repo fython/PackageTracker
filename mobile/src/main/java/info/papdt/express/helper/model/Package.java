@@ -10,12 +10,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import info.papdt.express.helper.api.PackageApi;
+
 public class Package {
 
 	/** Query data */
 	@Expose @SerializedName("message") public String message;
 	@Expose @SerializedName("nu") public String number;
-	@Expose @SerializedName("companyname") public String companyType;
+	@Expose @SerializedName("com") public String companyType;
+	@Expose @SerializedName("companytype") private String companyType1;
 	@Expose @SerializedName("ischeck") public String isCheck;
 	@Expose @SerializedName("updatetime") public String updateTime;
 	@Expose @SerializedName("status") public String status;
@@ -28,6 +31,7 @@ public class Package {
 	@Expose public boolean shouldPush = false;
 	@Expose public boolean unreadNew = false;
 	@Expose public String name;
+	@Expose public String companyChineseName;
 
 	public static final int STATUS_FAILED = 2, STATUS_NORMAL = 0, STATUS_ON_THE_WAY = 5,
 			STATUS_DELIVERED = 3, STATUS_RETURNED = 4 /* RETURNING 6 */, STATUS_OTHER = 1;
@@ -41,7 +45,14 @@ public class Package {
 	}
 
 	public static Package buildFromJson(String json) {
-		return new Gson().fromJson(json, Package.class);
+		Package p = new Gson().fromJson(json, Package.class);
+		if (p.companyChineseName == null && p.companyType != null) {
+			p.companyChineseName = PackageApi.CompanyInfo.getNameByCode(p.companyType);
+		}
+		if (p.companyType == null) {
+			p.companyType = p.companyType1;
+		}
+		return p;
 	}
 
 	public String toJsonString() {

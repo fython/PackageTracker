@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:paddingEnd="16dp"
+              android:gravity="center_vertical"
+              android:orientation="horizontal"
+              android:foreground="?attr/selectableItemBackground"
+              android:clickable="true">
+
+	<LinearLayout
+		android:layout_width="0dp"
+		android:layout_height="wrap_content"
+		android:layout_weight="1"
+		android:layout_marginTop="8dp"
+		android:layout_marginBottom="8dp"
+		android:layout_marginStart="16dp"
+		android:orientation="vertical">
+
+		<android.support.v7.widget.AppCompatTextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/tv_title"
+			android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+			tools:text="Item Title"/>
+
+		<Space android:layout_width="match_parent" android:layout_height="4dp"/>
+
+		<android.support.v7.widget.AppCompatTextView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:id="@+id/tv_summary"
+			android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+			android:alpha="0.87"
+			tools:text="Summary"/>
+
+	</LinearLayout>
+
+	<android.support.v7.widget.AppCompatImageButton
+		android:layout_width="48dp"
+		android:layout_height="48dp"
+		android:id="@+id/btn_action"
+		android:background="?attr/selectableItemBackgroundBorderless"
+		android:visibility="gone"
+		tools:visibility="visible"
+		tools:src="@drawable/ic_add_black_24dp"/>
+
+</LinearLayout>

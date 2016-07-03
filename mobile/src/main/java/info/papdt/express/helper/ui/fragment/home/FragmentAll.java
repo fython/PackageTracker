@@ -31,7 +31,7 @@ public class FragmentAll extends BaseFragment {
 
 	@Override
 	protected void setUpAdapter() {
-		HomePackageListAdapter adapter = new HomePackageListAdapter(getDatabase(), getArguments().getInt(ARG_TYPE));
+		HomePackageListAdapter adapter = new HomePackageListAdapter(getDatabase(), getArguments().getInt(ARG_TYPE), getMainActivity());
 		setAdapter(adapter);
 	}
 

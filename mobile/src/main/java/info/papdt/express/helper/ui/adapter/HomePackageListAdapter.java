@@ -1,6 +1,7 @@
 package info.papdt.express.helper.ui.adapter;
 
 import android.graphics.drawable.ColorDrawable;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -23,12 +24,14 @@ import info.papdt.express.helper.dao.PackageDatabase;
 import info.papdt.express.helper.model.Package;
 import info.papdt.express.helper.support.ColorGenerator;
 import info.papdt.express.helper.support.ScreenUtils;
+import info.papdt.express.helper.ui.DetailsActivity;
 import info.papdt.express.helper.ui.callback.OnDataRemovedCallback;
 
 public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageListAdapter.MyViewHolder> implements SwipeableItemAdapter<HomePackageListAdapter.MyViewHolder>{
 
 	private PackageDatabase db;
 	private int type;
+	private AppCompatActivity parentActivity;
 
 	private OnDataRemovedCallback mDataRemovedCallback;
 
@@ -36,12 +39,13 @@ public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageList
 
 	public static final int TYPE_ALL = 0, TYPE_DELIVERED = 1, TYPE_DELIVERING = 2;
 
-	public HomePackageListAdapter(PackageDatabase db, int type) {
+	public HomePackageListAdapter(PackageDatabase db, int type, AppCompatActivity parentActivity) {
 		/** This is required for swiping feature. */
 		setHasStableIds(true);
 
 		this.db = db;
 		this.type = type;
+		this.parentActivity = parentActivity;
 	}
 
 	@Override
@@ -54,7 +58,7 @@ public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageList
 
 	@Override
 	public void onBindViewHolder(MyViewHolder holder, int position) {
-		Package p = getItemData(position);
+		final Package p = getItemData(position);
 
 		holder.titleText.setText(p.name);
 		if (p.data.size() > 0) {
@@ -82,6 +86,13 @@ public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageList
 		} else if (position == getItemCount()) {
 			holder.getSwipeableContainerView().setPadding(0, 0, 0, (int) DP_16_TO_PX);
 		}
+
+		holder.getSwipeableContainerView().setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				DetailsActivity.launch(parentActivity, p);
+			}
+		});
 	}
 
 	public Package getItemData(int pos) {
