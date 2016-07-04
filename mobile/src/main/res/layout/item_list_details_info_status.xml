@@ -2,8 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
               android:orientation="horizontal"
+              android:layout_gravity="start"
               android:layout_width="match_parent"
-              android:layout_height="wrap_content">
+              android:layout_height="wrap_content"
+			  android:layout_marginStart="8dp">
+
+	<info.papdt.express.helper.view.VerticalStepView
+		android:layout_width="48dp"
+		android:layout_height="match_parent"
+		android:id="@+id/step_view"/>
+
+	<Space android:layout_width="8dp" android:layout_height="wrap_content"/>
 
 	<LinearLayout
 		android:layout_width="0dp"
@@ -11,7 +20,7 @@
 		android:layout_weight="1"
 		android:orientation="vertical"
 		android:layout_marginStart="8dp"
-		android:layout_marginEnd="8dp"
+		android:layout_marginEnd="16dp"
 		android:layout_marginTop="16dp"
 		android:layout_marginBottom="16dp">
 
@@ -29,7 +38,6 @@
 			android:layout_height="wrap_content"
 			android:id="@+id/tv_time"
 			android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-			android:gravity="end"
 			android:alpha="0.53"
 			tools:text="2016-06-09 17:00"/>
 

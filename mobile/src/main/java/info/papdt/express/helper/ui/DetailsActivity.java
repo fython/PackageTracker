@@ -1,5 +1,6 @@
 package info.papdt.express.helper.ui;
 
+import android.app.ActivityManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -271,6 +272,19 @@ public class DetailsActivity extends AbsActivity {
 		protected void onPostExecute(ArrayList<DetailsInfoAdapter.ItemType> items) {
 			mAdapter.setData(data, items);
 			mAdapter.notifyDataSetChanged();
+
+			int color;
+			if (state == Package.STATUS_DELIVERED) {
+				color = getResources().getColor(R.color.teal_500);
+			} else if (state == Package.STATUS_FAILED) {
+				color = getResources().getColor(R.color.blue_grey_500);
+			} else {
+				color = getResources().getColor(R.color.blue_500);
+			}
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+				ActivityManager.TaskDescription taskDesc = new ActivityManager.TaskDescription(data.name, null, color);
+				setTaskDescription(taskDesc);
+			}
 		}
 
 	}

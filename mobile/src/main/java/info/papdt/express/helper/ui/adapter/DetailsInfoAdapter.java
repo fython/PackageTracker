@@ -11,8 +11,8 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 
 import info.papdt.express.helper.R;
-import info.papdt.express.helper.api.PackageApi;
 import info.papdt.express.helper.model.Package;
+import info.papdt.express.helper.view.VerticalStepView;
 
 public class DetailsInfoAdapter extends RecyclerView.Adapter {
 
@@ -63,7 +63,7 @@ public class DetailsInfoAdapter extends RecyclerView.Adapter {
 		switch (items.get(index).viewType) {
 			case ItemType.TYPE_NORMAL:
 				if (holder instanceof NormalItemHolder) {
-					NormalItemHolder h = (NormalItemHolder) holder;
+					final NormalItemHolder h = (NormalItemHolder) holder;
 					if (itemType.id == ItemType.ID_NAME) {
 						h.title.setText(R.string.list_package_name);
 						h.summary.setText(data.name);
@@ -74,6 +74,34 @@ public class DetailsInfoAdapter extends RecyclerView.Adapter {
 								data.number,
 								data.companyChineseName
 						));
+						if (h.button.getTag() != null && ((Boolean) h.button.getTag())) {
+							h.button.setImageResource(R.drawable.ic_visibility_off_black_24dp);
+							h.summary.setText(String.format(STRING_NUMBER_FORMAT, data.number, data.companyChineseName));
+						} else {
+							int length = data.number.length();
+							String str = data.number.substring(0, 4);
+							for (int i = 4; i < length; i++) str += "*";
+							h.summary.setText(String.format(STRING_NUMBER_FORMAT, str, data.companyChineseName));
+							h.button.setImageResource(R.drawable.ic_visibility_black_24dp);
+						}
+						h.button.setVisibility(View.VISIBLE);
+						h.button.setOnClickListener(new View.OnClickListener() {
+							@Override
+							public void onClick(View view) {
+								if (h.button.getTag() != null && ((Boolean) h.button.getTag())) {
+									int length = data.number.length();
+									String str = data.number.substring(0, 4);
+									for (int i = 4; i < length; i++) str += "*";
+									h.summary.setText(String.format(STRING_NUMBER_FORMAT, str, data.companyChineseName));
+									h.button.setImageResource(R.drawable.ic_visibility_black_24dp);
+									h.button.setTag(false);
+								} else {
+									h.button.setImageResource(R.drawable.ic_visibility_off_black_24dp);
+									h.summary.setText(String.format(STRING_NUMBER_FORMAT, data.number, data.companyChineseName));
+									h.button.setTag(true);
+								}
+							}
+						});
 					}
 				}
 				break;
@@ -93,10 +121,47 @@ public class DetailsInfoAdapter extends RecyclerView.Adapter {
 						h.title.setText(status.context);
 						h.time.setText(status.time);
 						if (itemType.statusIndex == 0) {
-							// TODO
+							h.stepView.setIsMini(false);
+							h.stepView.setLineShouldDraw(false, true);
+							h.stepView.setPointOffsetY(-h.time.getTextSize());
+							int pointColorResId, pointIconResId;
+							switch (data.getState()) {
+								case Package.STATUS_DELIVERED:
+									pointColorResId = R.color.green_500;
+									pointIconResId = R.drawable.ic_done_white_24dp;
+									break;
+								case Package.STATUS_FAILED:
+								case Package.STATUS_OTHER:
+									pointColorResId = R.color.red_500;
+									pointIconResId = R.drawable.ic_close_white_24dp;
+									break;
+								case Package.STATUS_RETURNED:
+									pointColorResId = R.color.brown_500;
+									pointIconResId = R.drawable.ic_assignment_return_white_24dp;
+									break;
+								case Package.STATUS_ON_THE_WAY:
+									pointColorResId = R.color.blue_700;
+									pointIconResId = R.drawable.ic_local_shipping_white_24dp;
+									break;
+								case Package.STATUS_NORMAL:
+								default:
+									pointColorResId = R.color.blue_500;
+									pointIconResId = R.drawable.ic_flight_white_24dp;
+									break;
+							}
+							h.stepView.setPointColorResource(pointColorResId);
+							h.stepView.setCenterIcon(pointIconResId);
+						} else {
+							h.stepView.setIsMini(true);
+							h.stepView.setPointColorResource(R.color.blue_grey_500);
+							h.stepView.setPointOffsetY(-h.time.getTextSize());
+							h.stepView.setCenterIcon(null);
+							h.stepView.setLineShouldDraw(true, true);
 						}
 						if (itemType.statusIndex == data.data.size() - 1) {
-							// TODO
+							h.stepView.setLineShouldDraw(true, false);
+							h.stepView.setPointOffsetY(0);
+							h.stepView.setCenterIcon(null);
 						}
 					}
 				}
@@ -159,11 +224,13 @@ public class DetailsInfoAdapter extends RecyclerView.Adapter {
 	public class StatusItemHolder extends RecyclerView.ViewHolder {
 
 		AppCompatTextView title, time;
+		VerticalStepView stepView;
 
 		public StatusItemHolder(View itemView) {
 			super(itemView);
 			title = (AppCompatTextView) itemView.findViewById(R.id.tv_title);
 			time = (AppCompatTextView) itemView.findViewById(R.id.tv_time);
+			stepView = (VerticalStepView) itemView.findViewById(R.id.step_view);
 		}
 
 	}

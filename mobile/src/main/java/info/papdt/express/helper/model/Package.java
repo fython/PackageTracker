@@ -34,7 +34,7 @@ public class Package {
 	@Expose public String companyChineseName;
 
 	public static final int STATUS_FAILED = 2, STATUS_NORMAL = 0, STATUS_ON_THE_WAY = 5,
-			STATUS_DELIVERED = 3, STATUS_RETURNED = 4 /* RETURNING 6 */, STATUS_OTHER = 1;
+			STATUS_DELIVERED = 3, STATUS_RETURNED = 4, STATUS_RETURNING = 6 , STATUS_OTHER = 1;
 
 	public int getState() {
 		return state != null ? Integer.parseInt(state) : STATUS_FAILED;
