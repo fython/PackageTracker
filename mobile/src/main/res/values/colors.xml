@@ -19,8 +19,10 @@
 	<color name="indigo_400">#5C6BC0</color>
 
 	<color name="blue_500">#2196F3</color>
+	<color name="blue_700">#1976D2</color>
 
 	<color name="teal_500">#009688</color>
+	<color name="teal_700">#00796B</color>
 
 	<color name="green_500">#4CAF50</color>
 
@@ -31,6 +33,7 @@
 	<color name="brown_500">#795548</color>
 
 	<color name="blue_grey_500">#607D8B</color>
+	<color name="blue_grey_700">#455A64</color>
 
 	<array name="statusColor">
 		<item>@color/red_500</item>

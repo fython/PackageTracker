@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.graphics.drawable.DrawableCompat;
@@ -34,6 +35,7 @@ import info.papdt.express.helper.ui.common.AbsActivity;
 
 public class DetailsActivity extends AbsActivity {
 
+	private CollapsingToolbarLayout mToolbarLayout;
 	private RecyclerView mRecyclerView;
 	private FloatingActionButton mFAB;
 	private ImageView mBackground;
@@ -73,6 +75,7 @@ public class DetailsActivity extends AbsActivity {
 		mBackground = $(R.id.parallax_background);
 		mRecyclerView = $(R.id.recycler_view);
 		mNameEdit = new AppCompatEditText(this);
+		mToolbarLayout = $(R.id.collapsing_layout);
 
 		mNameEdit.setSingleLine(true);
 
@@ -99,16 +102,23 @@ public class DetailsActivity extends AbsActivity {
 			mFAB.setImageDrawable(drawable);
 		}
 
+		int color, colorDark;
 		if (state == Package.STATUS_DELIVERED) {
 			mBackground.setImageResource(R.drawable.banner_background_delivered);
-			DrawableCompat.setTint(drawable, getResources().getColor(R.color.teal_500));
+			color = getResources().getColor(R.color.teal_500);
+			colorDark = getResources().getColor(R.color.teal_700);
 		} else if (state == Package.STATUS_FAILED) {
 			mBackground.setImageResource(R.drawable.banner_background_error);
-			DrawableCompat.setTint(drawable, getResources().getColor(R.color.blue_grey_500));
+			color = getResources().getColor(R.color.blue_grey_500);
+			colorDark = getResources().getColor(R.color.blue_grey_700);
 		} else {
 			mBackground.setImageResource(R.drawable.banner_background_on_the_way);
-			DrawableCompat.setTint(drawable, getResources().getColor(R.color.blue_500));
+			color = getResources().getColor(R.color.blue_500);
+			colorDark = getResources().getColor(R.color.blue_700);
 		}
+		mToolbarLayout.setContentScrimColor(color);
+		mToolbarLayout.setStatusBarScrimColor(colorDark);
+		DrawableCompat.setTint(drawable, color);
 	}
 
 	private ArrayList<DetailsInfoAdapter.ItemType> buildItems() {
