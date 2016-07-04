@@ -29,6 +29,8 @@ public class AddActivity extends AbsActivity{
 	private Package pack;
 	private String number;
 
+	private int nowStep;
+
 	public static final String RESULT_EXTRA_PACKAGE_JSON = "package_json";
 
 	@Override
@@ -54,6 +56,8 @@ public class AddActivity extends AbsActivity{
 	}
 
 	public void step(int step) {
+		nowStep = step;
+
 		FragmentTransaction fm = getFragmentManager().beginTransaction();
 
 		/** Set Animation */
@@ -117,6 +121,15 @@ public class AddActivity extends AbsActivity{
 		intent.putExtra(RESULT_EXTRA_PACKAGE_JSON, getPackage().toJsonString());
 		setResult(MainActivity.RESULT_NEW_PACKAGE, intent);
 		finish();
+	}
+
+	@Override
+	public void onBackPressed() {
+		if (nowStep == STEP_NO_FOUND || nowStep == STEP_NO_INTERNET_CONNECTION || nowStep == STEP_SUCCESS) {
+			step(STEP_INPUT);
+		} else {
+			super.onBackPressed();
+		}
 	}
 
 }
