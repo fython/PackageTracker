@@ -64,6 +64,7 @@ public class Package {
 		this.isCheck = newData.isCheck;
 		this.condition = newData.condition;
 		this.message = newData.message;
+		this.unreadNew = this.shouldPush = newData.data.size() > this.data.size();
 		if (newData.data != null) {
 			this.data = newData.data;
 		}

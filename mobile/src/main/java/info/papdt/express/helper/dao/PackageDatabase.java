@@ -172,8 +172,6 @@ public class PackageDatabase {
 			BaseMessage<Package> newPack = PackageApi.getPackage(pack.companyType, pack.number);
 			if (newPack.getCode() == BaseMessage.CODE_OKAY && newPack.getData().data != null) {
 				pack.applyNewData(newPack.getData());
-				pack.shouldPush = newPack.getData().data.size() > pack.data.size();
-				pack.unreadNew = newPack.getData().data.size() > pack.data.size();
 				this.set(i, pack);
 			} else {
 				Log.e(TAG, "Package " + pack.codeNumber + " couldn\'t get new info.");

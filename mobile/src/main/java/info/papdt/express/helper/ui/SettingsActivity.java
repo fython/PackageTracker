@@ -14,6 +14,7 @@ import info.papdt.express.helper.support.Settings;
 import info.papdt.express.helper.ui.common.AbsActivity;
 import info.papdt.express.helper.ui.fragment.settings.SettingsLicense;
 import info.papdt.express.helper.ui.fragment.settings.SettingsMain;
+import info.papdt.express.helper.ui.fragment.settings.SettingsNetwork;
 import info.papdt.express.helper.ui.fragment.settings.SettingsUi;
 
 public class SettingsActivity extends AbsActivity {
@@ -22,7 +23,7 @@ public class SettingsActivity extends AbsActivity {
 
 	private static final String EXTRA_SETTINGS_FLAG = "extra_flag";
 
-	public static final int FLAG_MAIN = 0, FLAG_UI = 1, FLAG_LICENSE = 2;
+	public static final int FLAG_MAIN = 0, FLAG_UI = 1, FLAG_LICENSE = 2, FLAG_NETWORK = 3;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +48,7 @@ public class SettingsActivity extends AbsActivity {
 	protected void setUpViews() {
 		mActionBar.setDisplayHomeAsUpEnabled(true);
 
-		Fragment f = null;
+		Fragment f;
 		switch (flag) {
 			case FLAG_MAIN:
 				f = new SettingsMain();
@@ -60,6 +61,10 @@ public class SettingsActivity extends AbsActivity {
 			case FLAG_LICENSE:
 				f = new SettingsLicense();
 				mActionBar.setTitle(R.string.open_source_license);
+				break;
+			case FLAG_NETWORK:
+				f = new SettingsNetwork();
+				mActionBar.setTitle(R.string.category_network);
 				break;
 			default:
 				throw new RuntimeException("Please set flag when launching activity.");

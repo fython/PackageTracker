@@ -36,12 +36,13 @@
 	<color name="blue_grey_700">#455A64</color>
 
 	<array name="statusColor">
+		<item>@color/teal_500</item>
 		<item>@color/red_500</item>
-		<item>@color/teal_500</item>
-		<item>@color/teal_500</item>
+		<item>@color/red_500</item>
 		<item>@color/green_500</item>
-		<item>@color/yellow_500</item>
+		<item>@color/teal_500</item>
 		<item>@color/deep_orange_500</item>
+		<item>@color/yellow_500</item>
 	</array>
 
 	<!-- UI -->

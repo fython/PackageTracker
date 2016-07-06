@@ -71,6 +71,27 @@
 	<string name="pref_navigation_tint">Navigation Bar Tint</string>
 	<string name="pref_navigation_tint_summary">This feature is only supported on Android 5.0+</string>
 
+	<string name="category_notification">Notification</string>
+	<string name="item_notification_interval">Notification interval</string>
+
+	<string-array name="notification_interval">
+		<item>10 minutes</item>
+		<item>30 minutes</item>
+		<item>60 minutes</item>
+		<item>90 minutes</item>
+		<item>Never</item>
+	</string-array>
+	<string-array name="notification_interval_item">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+		<item>4</item>
+	</string-array>
+
+	<string name="item_notification_do_not_disturb">Do not disturb mode</string>
+	<string name="item_notification_do_not_disturb_desc">Don\'t send notifications from 23:00 to 06:00.</string>
+
 	<!-- Details -->
 	<string name="activity_details">Details</string>
 	<string name="action_copy_code">Copy code</string>
@@ -92,5 +113,10 @@
 
 	<string name="dialog_delete_title">Delete</string>
 	<string name="dialog_delete_message">You will not continue track this package.</string>
+
+	<!-- Notification -->
+	<string name="notification_delivered">" has been delivered."</string>
+	<string name="notification_on_the_way">" is on the way."</string>
+	<string name="notification_new_message">" has a new message."</string>
 
 </resources>

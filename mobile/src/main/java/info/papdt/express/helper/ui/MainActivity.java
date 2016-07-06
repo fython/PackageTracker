@@ -22,6 +22,7 @@ import com.roughike.bottombar.OnMenuTabClickListener;
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.dao.PackageDatabase;
 import info.papdt.express.helper.model.Package;
+import info.papdt.express.helper.support.PushUtils;
 import info.papdt.express.helper.support.Settings;
 import info.papdt.express.helper.ui.common.AbsActivity;
 import info.papdt.express.helper.ui.fragment.home.BaseFragment;
@@ -44,6 +45,11 @@ public class MainActivity extends AbsActivity implements OnMenuTabClickListener 
 
 		if (getSettings().getBoolean(Settings.KEY_NAVIGATION_TINT, true) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 			getWindow().setNavigationBarColor(getResources().getColor(R.color.colorPrimaryDark));
+		}
+
+		/** Dirty fix for N */
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+			PushUtils.startServices(getApplicationContext());
 		}
 
 		setContentView(R.layout.activity_main);

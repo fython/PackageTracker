@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<PreferenceCategory android:title="@string/category_notification">
+
+		<SwitchPreference android:key="dont_disturb"
+		                  android:title="@string/item_notification_do_not_disturb"
+		                  android:summary="@string/item_notification_do_not_disturb_desc"/>
+
+		<ListPreference android:key="interval"
+		                android:title="@string/item_notification_interval"
+		                android:entries="@array/notification_interval"
+		                android:entryValues="@array/notification_interval_item"
+		                android:defaultValue="1"/>
+
+	</PreferenceCategory>
+
+</PreferenceScreen>
