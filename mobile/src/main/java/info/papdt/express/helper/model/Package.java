@@ -55,6 +55,20 @@ public class Package {
 		return p;
 	}
 
+	public void applyNewData(Package newData) {
+		if (newData == null) return;
+
+		this.status = newData.status;
+		this.state = newData.state;
+		this.updateTime = newData.updateTime;
+		this.isCheck = newData.isCheck;
+		this.condition = newData.condition;
+		this.message = newData.message;
+		if (newData.data != null) {
+			this.data = newData.data;
+		}
+	}
+
 	public String toJsonString() {
 		return new Gson().toJson(this);
 	}

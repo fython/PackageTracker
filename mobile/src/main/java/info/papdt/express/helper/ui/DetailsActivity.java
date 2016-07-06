@@ -123,8 +123,6 @@ public class DetailsActivity extends AbsActivity {
 	}
 
 	private ArrayList<DetailsInfoAdapter.ItemType> buildItems() {
-		data = Package.buildFromJson(getIntent().getStringExtra(EXTRA_PACKAGE_JSON));
-
 		ArrayList<DetailsInfoAdapter.ItemType> items = new ArrayList<>();
 
 		items.add(new DetailsInfoAdapter.ItemType(DetailsInfoAdapter.ItemType.TYPE_NORMAL, DetailsInfoAdapter.ItemType.ID_NAME));
@@ -178,7 +176,7 @@ public class DetailsActivity extends AbsActivity {
 						public void onClick(DialogInterface dialogInterface, int i) {
 							if (!TextUtils.isEmpty(mNameEdit.getText().toString())) {
 								data.name = mNameEdit.getText().toString().trim();
-								setUpData();
+								mAdapter.notifyDataSetChanged();
 
 								Intent intent = new Intent();
 								intent.putExtra("id", data.number);
@@ -265,6 +263,19 @@ public class DetailsActivity extends AbsActivity {
 
 		@Override
 		protected ArrayList<DetailsInfoAdapter.ItemType> doInBackground(Void... voids) {
+			data = Package.buildFromJson(getIntent().getStringExtra(EXTRA_PACKAGE_JSON));
+
+			PackageDatabase db = PackageDatabase.getInstance(getApplicationContext());
+			if (data.unreadNew) {
+				data.unreadNew = false;
+
+				Intent intent = new Intent();
+				intent.putExtra("id", data.number);
+				setResult(MainActivity.RESULT_RENAMED, intent);
+			}
+			db.set(db.indexOf(data.number), data);
+			db.save();
+
 			return buildItems();
 		}
 
