@@ -11,7 +11,7 @@ import info.papdt.express.helper.ui.SettingsActivity;
 
 public class SettingsMain extends AbsPrefFragment implements Preference.OnPreferenceClickListener {
 
-	private Preference mPrefUI, mPrefNetwork, mPrefVersion, mPrefSina, mPrefGithub, mPrefAlipay;
+	private Preference mPrefUI, mPrefNetwork, mPrefVersion, mPrefSina, mPrefGithub, mPrefAlipay, mPrefLicense;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -23,6 +23,7 @@ public class SettingsMain extends AbsPrefFragment implements Preference.OnPrefer
 		mPrefGithub = findPreference("github");
 		mPrefSina = findPreference("sina");
 		mPrefAlipay = findPreference("alipay");
+		mPrefLicense = findPreference("license");
 
 		String versionName = null;
 		int versionCode = 0;
@@ -40,6 +41,7 @@ public class SettingsMain extends AbsPrefFragment implements Preference.OnPrefer
 		mPrefGithub.setOnPreferenceClickListener(this);
 		mPrefSina.setOnPreferenceClickListener(this);
 		mPrefAlipay.setOnPreferenceClickListener(this);
+		mPrefLicense.setOnPreferenceClickListener(this);
 	}
 
 	@Override
@@ -59,6 +61,10 @@ public class SettingsMain extends AbsPrefFragment implements Preference.OnPrefer
 		if (pref == mPrefAlipay) {
 			ClipboardUtils.putString(getActivity(), getString(R.string.alipay_support_account));
 			makeSnackbar(getString(R.string.toast_copied_successfully), Snackbar.LENGTH_SHORT).show();
+			return true;
+		}
+		if (pref == mPrefLicense) {
+			SettingsActivity.launch(getParentActivity(), SettingsActivity.FLAG_LICENSE);
 			return true;
 		}
 		return false;

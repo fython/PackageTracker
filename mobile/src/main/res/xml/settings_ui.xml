@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<PreferenceCategory android:title="@string/category_ui_common">
+
+		<SwitchPreference android:key="navigation_tint"
+		                  android:title="@string/pref_navigation_tint"
+		                  android:summary="@string/pref_navigation_tint_summary"/>
+
+	</PreferenceCategory>
+
+</PreferenceScreen>

@@ -64,6 +64,12 @@
 	<string name="alipay_support_summary">316643843\@qq.com (Click to copy it)</string>
 	<string name="alipay_support_account">316643843\@qq.com</string>
 	<string name="toast_copied_successfully">Alipay account has been copied successfully.</string>
+	<string name="open_source_license">Open Source License</string>
+	<string name="open_source_license_summary">GPL v3</string>
+
+	<string name="category_ui_common">Common</string>
+	<string name="pref_navigation_tint">Navigation Bar Tint</string>
+	<string name="pref_navigation_tint_summary">This feature is only supported on Android 5.0+</string>
 
 	<!-- Details -->
 	<string name="activity_details">Details</string>

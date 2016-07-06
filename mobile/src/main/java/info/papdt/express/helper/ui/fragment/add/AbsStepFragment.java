@@ -10,7 +10,7 @@ import info.papdt.express.helper.ui.AddActivity;
 import info.papdt.express.helper.ui.common.AbsFragment;
 import info.papdt.express.helper.widget.ButtonBar;
 
-public abstract class AbsStepFragment extends AbsFragment {
+abstract class AbsStepFragment extends AbsFragment {
 
 	public final static int REQUEST_CODE_CHOOSE_COMPANY = 1001;
 	public final static String RESULT_EXTRA_COMPANY_CODE = "company_code";

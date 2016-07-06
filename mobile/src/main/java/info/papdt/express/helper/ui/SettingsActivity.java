@@ -10,8 +10,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import info.papdt.express.helper.R;
+import info.papdt.express.helper.support.Settings;
 import info.papdt.express.helper.ui.common.AbsActivity;
+import info.papdt.express.helper.ui.fragment.settings.SettingsLicense;
 import info.papdt.express.helper.ui.fragment.settings.SettingsMain;
+import info.papdt.express.helper.ui.fragment.settings.SettingsUi;
 
 public class SettingsActivity extends AbsActivity {
 
@@ -30,6 +33,10 @@ public class SettingsActivity extends AbsActivity {
 
 		super.onCreate(savedInstanceState);
 
+		if (getSettings().getBoolean(Settings.KEY_NAVIGATION_TINT, true) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			getWindow().setNavigationBarColor(getResources().getColor(R.color.colorPrimaryDark));
+		}
+
 		Intent intent = getIntent();
 		flag = intent.getIntExtra(EXTRA_SETTINGS_FLAG, FLAG_MAIN);
 
@@ -44,10 +51,15 @@ public class SettingsActivity extends AbsActivity {
 		switch (flag) {
 			case FLAG_MAIN:
 				f = new SettingsMain();
+				mActionBar.setTitle(R.string.activity_settings);
 				break;
 			case FLAG_UI:
+				f = new SettingsUi();
+				mActionBar.setTitle(R.string.category_user_interface);
 				break;
 			case FLAG_LICENSE:
+				f = new SettingsLicense();
+				mActionBar.setTitle(R.string.open_source_license);
 				break;
 			default:
 				throw new RuntimeException("Please set flag when launching activity.");

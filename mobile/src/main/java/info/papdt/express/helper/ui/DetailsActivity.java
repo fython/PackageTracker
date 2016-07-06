@@ -31,6 +31,7 @@ import info.papdt.express.helper.dao.PackageDatabase;
 import info.papdt.express.helper.model.Package;
 import info.papdt.express.helper.support.ClipboardUtils;
 import info.papdt.express.helper.support.ScreenUtils;
+import info.papdt.express.helper.support.Settings;
 import info.papdt.express.helper.ui.adapter.DetailsInfoAdapter;
 import info.papdt.express.helper.ui.common.AbsActivity;
 
@@ -120,6 +121,9 @@ public class DetailsActivity extends AbsActivity {
 		mToolbarLayout.setContentScrimColor(color);
 		mToolbarLayout.setStatusBarScrimColor(colorDark);
 		DrawableCompat.setTint(drawable, color);
+		if (getSettings().getBoolean(Settings.KEY_NAVIGATION_TINT, true) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			getWindow().setNavigationBarColor(colorDark);
+		}
 	}
 
 	private ArrayList<DetailsInfoAdapter.ItemType> buildItems() {

@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -16,10 +15,12 @@ import com.h6ah4i.android.widget.advrecyclerview.touchguard.RecyclerViewTouchAct
 
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.dao.PackageDatabase;
+import info.papdt.express.helper.support.ScreenUtils;
 import info.papdt.express.helper.ui.MainActivity;
 import info.papdt.express.helper.ui.adapter.HomePackageListAdapter;
 import info.papdt.express.helper.ui.callback.OnDataRemovedCallback;
 import info.papdt.express.helper.ui.common.AbsFragment;
+import info.papdt.express.helper.widget.SwipeRefreshLayout;
 
 public abstract class BaseFragment extends AbsFragment implements SwipeRefreshLayout.OnRefreshListener {
 
@@ -63,6 +64,7 @@ public abstract class BaseFragment extends AbsFragment implements SwipeRefreshLa
 		// Set up mRefreshLayout
 		mRefreshLayout.setColorSchemeResources(R.color.pink_700);
 		mRefreshLayout.setOnRefreshListener(this);
+		mRefreshLayout.setStartDistance(ScreenUtils.dpToPx(getActivity(), 32));
 
 		setUpAdapter();
 		mEmptyView.setVisibility(mAdapter != null && mAdapter.getItemCount() > 0 ? View.GONE : View.VISIBLE);

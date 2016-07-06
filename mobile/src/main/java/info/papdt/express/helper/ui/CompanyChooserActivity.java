@@ -18,10 +18,10 @@ import java.util.ArrayList;
 
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.api.PackageApi;
+import info.papdt.express.helper.support.Settings;
 import info.papdt.express.helper.ui.adapter.CompanyListAdapter;
 import info.papdt.express.helper.ui.common.AbsActivity;
 import info.papdt.express.helper.ui.common.SimpleRecyclerViewAdapter;
-import info.papdt.express.helper.ui.fragment.add.AbsStepFragment;
 
 public class CompanyChooserActivity extends AbsActivity {
 
@@ -31,6 +31,8 @@ public class CompanyChooserActivity extends AbsActivity {
 
 	private CompanyListAdapter mAdapter;
 	private ArrayList<PackageApi.CompanyInfo.Company> data;
+
+	public final static String RESULT_EXTRA_COMPANY_CODE = "company_code";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,10 @@ public class CompanyChooserActivity extends AbsActivity {
 		}
 
 		super.onCreate(savedInstanceState);
+
+		if (getSettings().getBoolean(Settings.KEY_NAVIGATION_TINT, true) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			getWindow().setNavigationBarColor(getResources().getColor(R.color.lollipop_status_bar_grey));
+		}
 
 		data = PackageApi.CompanyInfo.info;
 
@@ -102,7 +108,7 @@ public class CompanyChooserActivity extends AbsActivity {
 			@Override
 			public void onItemClick(int position, SimpleRecyclerViewAdapter.ClickableViewHolder holder) {
 				Intent intent = new Intent();
-				intent.putExtra(AbsStepFragment.RESULT_EXTRA_COMPANY_CODE, data.get(position).code);
+				intent.putExtra(RESULT_EXTRA_COMPANY_CODE, data.get(position).code);
 				setResult(RESULT_OK, intent);
 				finish();
 			}

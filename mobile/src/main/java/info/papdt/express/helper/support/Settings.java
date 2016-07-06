@@ -11,6 +11,8 @@ public class Settings {
 			KEY_NOTIFICATION_INTERVAL = "noti_interval",
 			KEY_NOTIFICATION_DO_NOT_DISTURB = "noti_do_not_disturb";
 
+	public static final String KEY_NAVIGATION_TINT = "navi_tint";
+
 	private static Settings sInstance;
 
 	private SharedPreferences mPrefs;
