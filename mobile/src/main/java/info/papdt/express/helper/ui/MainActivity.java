@@ -1,6 +1,7 @@
 package info.papdt.express.helper.ui;
 
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
@@ -94,18 +95,20 @@ public class MainActivity extends AbsActivity implements OnMenuTabClickListener 
 
 	@Override
 	public void onMenuTabSelected(@IdRes int menuItemId) {
-		FragmentManager fragmentManager = getFragmentManager();
+		FragmentTransaction ft = getFragmentManager().beginTransaction();
+		ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 		switch (menuItemId) {
 			case R.id.menu_item_all:
-				fragmentManager.beginTransaction().replace(R.id.container, fragments[0]).commit();
+				ft.replace(R.id.container, fragments[0]);
 				break;
 			case R.id.menu_item_delivered:
-				fragmentManager.beginTransaction().replace(R.id.container, fragments[1]).commit();
+				ft.replace(R.id.container, fragments[1]);
 				break;
 			case R.id.menu_item_on_the_way:
-				fragmentManager.beginTransaction().replace(R.id.container, fragments[2]).commit();
+				ft.replace(R.id.container, fragments[2]);
 				break;
 		}
+		ft.commit();
 	}
 
 	@Override
