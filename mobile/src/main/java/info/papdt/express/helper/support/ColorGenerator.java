@@ -27,20 +27,15 @@ public class ColorGenerator {
 				0xff805781
 		));
 		MATERIAL = create(Arrays.asList(
-				0xffF44336,
 				0xffE91E63,
 				0xff9C27B0,
 				0xff673AB7,
 				0xff3F51B5,
 				0xff2196F3,
 				0xff03A9F4,
-				0xff00BCD4,
 				0xff009688,
 				0xff4CAF50,
-				0xff8BC34A,
 				0xffFF5722,
-				0xffCDDC39,
-				0xffFFC107,
 				0xffFF9800,
 				0xff795548,
 				0xff607D8B

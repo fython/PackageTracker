@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.IBinder;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import java.util.Calendar;
@@ -48,7 +49,7 @@ public class ReminderService extends IntentService {
 
 		PackageDatabase db = PackageDatabase.getInstance(getApplicationContext());
 
-		db.pullDataFromNetwork(false);
+		db.pullDataFromNetwork(true);
 		db.save();
 
 		for (int i = 0; i < db.size(); i++) {
@@ -73,25 +74,24 @@ public class ReminderService extends IntentService {
 	}
 
 	@SuppressWarnings("getNotification")
-	private static Notification buildNotification(Context context, String title, String text, int icon, int color,
+	private static Notification buildNotification(Context context, String title, String subject, String longText, String time, int icon, int color,
 	                                              int defaults, PendingIntent contentIntent, PendingIntent deleteIntent) {
 		Notification n;
-		Notification.Builder builder = new Notification.Builder(context)
-				.setContentTitle(title)
-				.setContentText(text)
-				.setSmallIcon(icon)
-				.setDefaults(defaults)
-				.setAutoCancel(true)
-				.setContentIntent(contentIntent);
+		NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
+		builder.setContentTitle(title);
+		builder.setContentText(subject);
+		builder.setPriority(NotificationCompat.PRIORITY_MAX);
+		builder.setStyle(new NotificationCompat.BigTextStyle(builder).bigText(longText));
+		builder.setDefaults(defaults);
+		builder.setSmallIcon(icon);
+		builder.setContentIntent(contentIntent);
+		builder.setSubText(time);
+		builder.setAutoCancel(true);
 
-		if (Build.VERSION.SDK_INT >= 16) {
-			if (Build.VERSION.SDK_INT >= 21) {
-				builder.setColor(color);
-			}
-			n = builder.build();
-		} else {
-			n = builder.getNotification();
+		if (Build.VERSION.SDK_INT >= 21) {
+			builder.setColor(color);
 		}
+		n = builder.build();
 
 		return n;
 	}
@@ -109,14 +109,14 @@ public class ReminderService extends IntentService {
 
 			pi = PendingIntent.getActivity(getApplicationContext(), position, i, PendingIntent.FLAG_UPDATE_CURRENT);
 
-			String title = exp.name;
+			String title = exp.name, subject;
 			if (exp.getState() == Package.STATUS_DELIVERED) {
-				title += getString(R.string.notification_delivered);
+				subject = getString(R.string.notification_delivered);
 			} else {
 				if (exp.getState() == Package.STATUS_ON_THE_WAY) {
-					title += getString(R.string.notification_on_the_way);
+					subject = getString(R.string.notification_on_the_way);
 				} else {
-					title += getString(R.string.notification_new_message);
+					subject = getString(R.string.notification_new_message);
 				}
 			}
 
@@ -126,7 +126,7 @@ public class ReminderService extends IntentService {
 					smallIcon = R.drawable.ic_done_white_24dp;
 					break;
 				case Package.STATUS_ON_THE_WAY:
-					smallIcon = R.drawable.ic_assignment_turned_in_white_24dp;
+					smallIcon = R.drawable.ic_local_shipping_white_24dp;
 					break;
 				default:
 					smallIcon = R.drawable.ic_assignment_returned_white_24dp;
@@ -134,7 +134,9 @@ public class ReminderService extends IntentService {
 
 			Notification n = buildNotification(getApplicationContext(),
 					title,
-					exp.data.get(exp.data.size() - 1).context,
+					subject,
+					exp.data.get(0).context,
+					exp.data.get(0).time,
 					smallIcon,
 					getResources().getIntArray(R.array.statusColor) [exp.getState()],
 					defaults,

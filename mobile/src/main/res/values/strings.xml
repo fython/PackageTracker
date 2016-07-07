@@ -12,6 +12,15 @@
 	<string name="action_settings">Settings</string>
 
 	<string name="item_text_cannot_get_package_status">Cannot get the latest status.</string>
+	<string-array name="item_status_description">
+		<item>Delivering</item>
+		<item>Other</item>
+		<item>Error</item>
+		<item>Delivered</item>
+		<item>Returned</item>
+		<item>On the way</item>
+		<item>Returning</item>
+	</string-array>
 
 	<string name="action_remove">Remove</string>
 	<string name="toast_item_removed">%s has been removed.</string>
@@ -115,8 +124,8 @@
 	<string name="dialog_delete_message">You will not continue track this package.</string>
 
 	<!-- Notification -->
-	<string name="notification_delivered">" has been delivered."</string>
-	<string name="notification_on_the_way">" is on the way."</string>
-	<string name="notification_new_message">" has a new message."</string>
+	<string name="notification_delivered">"The package has been delivered."</string>
+	<string name="notification_on_the_way">"The package is on the way."</string>
+	<string name="notification_new_message">"The package has a new message."</string>
 
 </resources>

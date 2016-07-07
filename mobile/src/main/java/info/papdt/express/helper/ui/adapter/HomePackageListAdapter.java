@@ -4,6 +4,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
+import android.text.style.ForegroundColorSpan;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,7 @@ import info.papdt.express.helper.dao.PackageDatabase;
 import info.papdt.express.helper.model.Package;
 import info.papdt.express.helper.support.ColorGenerator;
 import info.papdt.express.helper.support.ScreenUtils;
+import info.papdt.express.helper.support.Spanny;
 import info.papdt.express.helper.ui.DetailsActivity;
 import info.papdt.express.helper.ui.callback.OnDataRemovedCallback;
 
@@ -36,6 +38,8 @@ public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageList
 	private OnDataRemovedCallback mDataRemovedCallback;
 
 	private float DP_16_TO_PX = -1;
+	private int statusTitleColor, statusSubtextColor = -1;
+	private String[] STATUS_STRING_ARRAY;
 
 	public static final int TYPE_ALL = 0, TYPE_DELIVERED = 1, TYPE_DELIVERING = 2;
 
@@ -51,6 +55,11 @@ public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageList
 	@Override
 	public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		if (DP_16_TO_PX == -1) DP_16_TO_PX = ScreenUtils.dpToPx(parent.getContext(), 8);
+		if (STATUS_STRING_ARRAY == null) STATUS_STRING_ARRAY = parent.getContext().getResources().getStringArray(R.array.item_status_description);
+		if (statusSubtextColor == -1) {
+			statusTitleColor = parent.getContext().getResources().getColor(R.color.package_list_status_title_color);
+			statusSubtextColor = parent.getContext().getResources().getColor(R.color.package_list_status_subtext_color);
+		}
 
 		View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list_package_for_home, parent, false);
 		return new MyViewHolder(itemView);
@@ -63,7 +72,9 @@ public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageList
 		holder.titleText.setText(p.name);
 		if (p.data.size() > 0) {
 			Package.Status status = p.data.get(0);
-			holder.descText.setText(status.context);
+			Spanny spanny = new Spanny(STATUS_STRING_ARRAY[p.getState()], new ForegroundColorSpan(statusTitleColor))
+					.append(" - " + status.context, new ForegroundColorSpan(statusSubtextColor));
+			holder.descText.setText(spanny);
 			holder.timeText.setText(status.ftime);
 			holder.timeText.setVisibility(View.VISIBLE);
 		} else {

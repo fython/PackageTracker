@@ -58,13 +58,13 @@ public class Package {
 	public void applyNewData(Package newData) {
 		if (newData == null) return;
 
+		this.unreadNew |= this.shouldPush |= newData.data.size() != this.data.size() || newData.getState() != this.getState();
 		this.status = newData.status;
 		this.state = newData.state;
 		this.updateTime = newData.updateTime;
 		this.isCheck = newData.isCheck;
 		this.condition = newData.condition;
 		this.message = newData.message;
-		this.unreadNew = this.shouldPush = newData.data.size() > this.data.size();
 		if (newData.data != null) {
 			this.data = newData.data;
 		}
