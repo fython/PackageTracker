@@ -1,5 +1,6 @@
 package info.papdt.express.helper.ui.fragment.add;
 
+import android.content.Intent;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -14,6 +15,7 @@ import info.papdt.express.helper.dao.PackageDatabase;
 import info.papdt.express.helper.model.BaseMessage;
 import info.papdt.express.helper.model.Package;
 import info.papdt.express.helper.ui.AddActivity;
+import info.papdt.express.helper.ui.ScannerActivity;
 
 public class StepInput extends AbsStepFragment {
 
@@ -29,6 +31,15 @@ public class StepInput extends AbsStepFragment {
 	@Override
 	protected void doCreateView(View rootView) {
 		mEditText = $(R.id.et_number);
+
+		$(R.id.btn_scan).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				Intent intent = new Intent(getAddActivity(), ScannerActivity.class);
+				intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+				startActivityForResult(intent, ScannerActivity.REQUEST_CODE_SCAN);
+			}
+		});
 
 		mEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 			@Override
@@ -57,6 +68,17 @@ public class StepInput extends AbsStepFragment {
 				new FindPackageTask().execute(number);
 			}
 		});
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+		if (requestCode == ScannerActivity.REQUEST_CODE_SCAN) {
+			if (resultCode == ScannerActivity.RESULT_GET_RESULT) {
+				String code = intent.getStringExtra(ScannerActivity.EXTRA_RESULT);
+				mEditText.setText(code);
+				mButtonBar.onRightButtonClick();
+			}
+		}
 	}
 
 	private boolean checkNumberInput() {

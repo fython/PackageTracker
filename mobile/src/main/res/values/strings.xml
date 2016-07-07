@@ -47,6 +47,14 @@
 	<string name="package_name_unnamed">Package %s</string>
 	<string name="toast_unknown_error">Something wrong happened! Back to input and try again.</string>
 
+	<!-- Scanner -->
+	<string name="activity_scanner">Scan barcode</string>
+	<string name="dialog_explanation_permission_title">Permission Denied</string>
+	<string name="dialog_explanation_permission_message">The scanner is built-in plugin so it needs users to grant camera permission for working normally. Without permission, you cannot scan barcode.</string>
+	<string name="dialog_explanation_permission_pos_btn">Go to Settings</string>
+	<string name="toast_permission_denied">Permission denied. Cannot start scanner.</string>
+	<string name="toast_permission_denied_action">Settings</string>
+
 	<!-- Widget ButtonBar -->
 	<string name="buttonbar_default_left">PREVIOUS</string>
 	<string name="buttonbar_default_right">NEXT</string>

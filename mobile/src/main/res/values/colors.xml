@@ -58,4 +58,6 @@
 	<color name="package_list_status_subtext_color">#767676</color>
 	<color name="package_list_status_title_color">#616161</color>
 
+	<color name="dark_theme_translucent_app_bar">#4F000000</color>
+
 </resources>
