@@ -21,11 +21,13 @@
 			android:gravity="center"
 			android:orientation="vertical"
 			android:id="@+id/empty_view"
+			android:clickable="true"
 			android:visibility="gone">
 
 			<ImageView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
+				android:id="@+id/sun"
 				android:src="@drawable/ic_empty_inbox"/>
 
 			<Space android:layout_width="match_parent" android:layout_height="16dp"/>
@@ -34,7 +36,8 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:text="@string/frame_empty_tip"
-				android:textAppearance="@style/TextAppearance.AppCompat.Caption"/>
+				android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+				android:alpha="0.5"/>
 
 		</LinearLayout>
 

@@ -35,6 +35,8 @@ public abstract class BaseFragment extends AbsFragment implements SwipeRefreshLa
 
 	private final static int FLAG_REFRESH_LIST = 0, FLAG_UPDATE_ADAPTER_ONLY = 1;
 
+	int eggCount = 0, bigEggCount = 0;
+
 	public BaseFragment(PackageDatabase database) {
 		this.mDatabase = database;
 	}
@@ -68,6 +70,20 @@ public abstract class BaseFragment extends AbsFragment implements SwipeRefreshLa
 
 		setUpAdapter();
 		mEmptyView.setVisibility(mAdapter != null && mAdapter.getItemCount() > 0 ? View.GONE : View.VISIBLE);
+		mEmptyView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				if (eggCount++ > 7) {
+					eggCount = 0;
+					bigEggCount++;
+					View eggView = $(R.id.sun);
+					if (eggView == null) return;
+					eggView.setRotation(0f);
+					eggView.animate().rotation(360f * bigEggCount).setDuration(1000).start();
+					if (bigEggCount > 3) bigEggCount = 0;
+				}
+			}
+		});
 	}
 
 	protected abstract void setUpAdapter();
