@@ -13,8 +13,8 @@ import okhttp3.Response;
 public class HttpUtils {
 
 	private static OkHttpClient client = new OkHttpClient.Builder()
-			.connectTimeout(12, TimeUnit.SECONDS)
-			.readTimeout(12, TimeUnit.SECONDS)
+			.connectTimeout(10, TimeUnit.SECONDS)
+			.readTimeout(10, TimeUnit.SECONDS)
 			.build();
 
 	private static final String UA_CHROME = "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.84 Safari/537.36";

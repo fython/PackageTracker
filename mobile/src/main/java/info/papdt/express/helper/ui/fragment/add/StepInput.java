@@ -14,6 +14,7 @@ import info.papdt.express.helper.asynctask.GetPackageTask;
 import info.papdt.express.helper.dao.PackageDatabase;
 import info.papdt.express.helper.model.BaseMessage;
 import info.papdt.express.helper.model.Package;
+import info.papdt.express.helper.receiver.ConnectivityReceiver;
 import info.papdt.express.helper.ui.AddActivity;
 import info.papdt.express.helper.ui.ScannerActivity;
 
@@ -65,7 +66,11 @@ public class StepInput extends AbsStepFragment {
 
 				// Pass check
 				number = mEditText.getText().toString();
-				new FindPackageTask().execute(number);
+				if (ConnectivityReceiver.readNetworkState(getActivity())) {
+					new FindPackageTask().execute(number);
+				} else {
+					getAddActivity().step(AddActivity.STEP_NO_INTERNET_CONNECTION);
+				}
 			}
 		});
 	}
@@ -111,7 +116,8 @@ public class StepInput extends AbsStepFragment {
 					getAddActivity().step(AddActivity.STEP_NO_FOUND);
 				}
 			} else {
-				getAddActivity().step(AddActivity.STEP_NO_INTERNET_CONNECTION);
+				getAddActivity().setNumber(number);
+				getAddActivity().step(AddActivity.STEP_NO_FOUND);
 			}
 		}
 
