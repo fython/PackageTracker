@@ -27,7 +27,7 @@ public class SettingsNetwork extends AbsPrefFragment implements Preference.OnPre
 		mPrefDontDisturb.setChecked(getSettings().getBoolean(Settings.KEY_NOTIFICATION_DO_NOT_DISTURB, true));
 
 		String[] values = getResources().getStringArray(R.array.notification_interval_item);
-		int index, target = getSettings().getInt(Settings.KEY_NOTIFICATION_INTERVAL, 0);
+		int index, target = getSettings().getInt(Settings.KEY_NOTIFICATION_INTERVAL, 1);
 		for (index = 0; index < values.length; index++) {
 			if (values[index].equals(String.valueOf(target))) break;
 		}
