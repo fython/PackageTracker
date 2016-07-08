@@ -90,6 +90,7 @@ public class StepSuccess extends AbsStepFragment {
 
 		@Override
 		public void onPostExecute(BaseMessage<Package> message) {
+			if (getActivity() == null) return;
 			getAddActivity().hideProgressBar();
 			if (message.getCode() == BaseMessage.CODE_OKAY) {
 				Package p = message.getData();
