@@ -13,6 +13,8 @@ public class Settings {
 
 	public static final String KEY_NAVIGATION_TINT = "navi_tint";
 
+	public static final String KEY_FIRST_RUN = "first_run";
+
 	private static Settings sInstance;
 
 	private SharedPreferences mPrefs;

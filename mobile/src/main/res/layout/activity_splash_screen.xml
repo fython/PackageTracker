@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+
+	<ImageView
+		android:layout_width="210dp"
+		android:layout_height="210dp"
+		android:layout_marginBottom="64dp"
+		android:src="@drawable/web_hi_res_512"
+		android:layout_gravity="center"
+		android:id="@+id/iv_logo"/>
+
+	<android.support.v7.widget.AppCompatTextView
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:id="@+id/tv_title"
+		android:text="@string/app_name"
+		android:textAppearance="@style/TextAppearance.AppCompat.Display1"
+		android:layout_gravity="bottom|center_horizontal"
+		android:layout_marginBottom="64dp"
+		android:alpha="0"
+		tools:alpha="1"/>
+
+</FrameLayout>

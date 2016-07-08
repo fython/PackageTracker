@@ -34,7 +34,8 @@
 		<android.support.v7.widget.Toolbar
 			android:layout_width="match_parent"
 			android:layout_height="?attr/actionBarSize"
-			android:id="@+id/toolbar"/>
+			android:id="@+id/toolbar"
+			android:theme="@style/Toolbar.Dark"/>
 
 	</LinearLayout>
 

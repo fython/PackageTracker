@@ -1,5 +1,11 @@
 <resources>
 
+	<style name="EmptyActivity" parent="@android:style/Theme.Translucent">
+		<item name="android:background">#00000000</item>
+		<item name="android:windowEnterAnimation">@null</item>
+		<item name="android:windowExitAnimation">@null</item>
+	</style>
+
 	<style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
 		<item name="colorPrimary">@color/colorPrimary</item>
 		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -10,6 +16,11 @@
 		<item name="colorPrimary">@color/colorPrimary</item>
 		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
 		<item name="colorAccent">@color/colorAccent</item>
+	</style>
+
+	<style name="Toolbar.Dark" parent="ThemeOverlay.AppCompat.ActionBar">
+		<item name="colorControlNormal">@color/white</item>
+		<item name="android:textColorPrimary">@color/white</item>
 	</style>
 
 	<style name="AppTheme.Translucent" parent="AppTheme">

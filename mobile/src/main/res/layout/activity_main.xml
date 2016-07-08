@@ -15,7 +15,7 @@
 			android:layout_height="?attr/actionBarSize"
 			android:id="@+id/toolbar"
 			android:background="?attr/colorPrimary"
-			app:theme="@style/ThemeOverlay.AppCompat.Dark"
+			app:theme="@style/Toolbar.Dark"
 			app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
 			app:layout_scrollFlags="snap"/>
 

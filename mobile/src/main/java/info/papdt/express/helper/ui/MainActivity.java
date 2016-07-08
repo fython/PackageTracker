@@ -1,6 +1,6 @@
 package info.papdt.express.helper.ui;
 
-import android.app.FragmentManager;
+import android.app.Activity;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Color;
@@ -192,6 +192,12 @@ public class MainActivity extends AbsActivity implements OnMenuTabClickListener 
 					break;
 			}
 		}
+	}
+
+	public static void launch(Activity activity) {
+		Intent intent = new Intent(activity, MainActivity.class);
+		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		activity.startActivity(intent);
 	}
 
 	public Handler mHandler = new Handler() {

@@ -40,7 +40,7 @@ public class SettingsMain extends AbsPrefFragment implements Preference.OnPrefer
 		mPrefVersion.setOnPreferenceClickListener(this);
 		mPrefGithub.setOnPreferenceClickListener(this);
 		mPrefSina.setOnPreferenceClickListener(this);
-		mPrefAlipay.setOnPreferenceClickListener(this);
+		if (mPrefAlipay != null) mPrefAlipay.setOnPreferenceClickListener(this);
 		mPrefLicense.setOnPreferenceClickListener(this);
 	}
 
