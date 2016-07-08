@@ -142,7 +142,7 @@ public abstract class BaseFragment extends AbsFragment implements SwipeRefreshLa
 	public void onUndoActionClicked() {
 		int position = mDatabase.undoLastRemoval();
 		if (position >= 0 && mAdapter != null) {
-			mAdapter.notifyItemInserted(position);
+			mAdapter.notifyDataSetChanged();
 			getMainActivity().notifyDataChanged(getFragmentId());
 		}
 	}

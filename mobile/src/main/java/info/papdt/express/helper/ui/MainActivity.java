@@ -211,7 +211,6 @@ public class MainActivity extends AbsActivity implements OnMenuTabClickListener 
 					}
 					break;
 				case MSG_NOTIFY_ITEM_REMOVE:
-					final int fragId = msg.arg1;
 					Snackbar.make(
 							$(R.id.coordinator_layout),
 							String.format(getString(R.string.toast_item_removed), msg.getData().getString("title")),
@@ -220,7 +219,7 @@ public class MainActivity extends AbsActivity implements OnMenuTabClickListener 
 							.setAction(R.string.toast_item_removed_action, new View.OnClickListener() {
 								@Override
 								public void onClick(View view) {
-									fragments[fragId].onUndoActionClicked();
+									fragments[mBottomBar.getCurrentTabPosition()].onUndoActionClicked();
 								}
 							})
 							.show();
