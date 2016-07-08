@@ -3,6 +3,7 @@ package info.papdt.express.helper.support;
 import android.util.Log;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 import info.papdt.express.helper.model.BaseMessage;
 import okhttp3.OkHttpClient;
@@ -11,7 +12,10 @@ import okhttp3.Response;
 
 public class HttpUtils {
 
-	private static OkHttpClient client = new OkHttpClient();
+	private static OkHttpClient client = new OkHttpClient.Builder()
+			.connectTimeout(12, TimeUnit.SECONDS)
+			.readTimeout(12, TimeUnit.SECONDS)
+			.build();
 
 	private static final String UA_CHROME = "Mozilla/5.0 (Windows NT 6.1; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.84 Safari/537.36";
 

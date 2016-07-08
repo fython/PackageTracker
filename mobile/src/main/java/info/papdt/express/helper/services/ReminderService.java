@@ -49,7 +49,7 @@ public class ReminderService extends IntentService {
 
 		PackageDatabase db = PackageDatabase.getInstance(getApplicationContext());
 
-		db.pullDataFromNetwork(true);
+		db.pullDataFromNetwork(false);
 		db.save();
 
 		for (int i = 0; i < db.size(); i++) {
