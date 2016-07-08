@@ -151,7 +151,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter {
 					h2.descText.setText(R.string.item_text_cannot_get_package_status);
 					h2.timeText.setVisibility(View.GONE);
 				}
-				
+
 				/** Set CircleImageView */
 				h2.bigCharView.setText(p.name.substring(0, 1));
 				h2.logoView.setImageDrawable(new ColorDrawable(ColorGenerator.MATERIAL.getColor(p.name)));
