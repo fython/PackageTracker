@@ -1,0 +1,149 @@
+<resources>
+
+	<string name="app_name">水表助手</string>
+
+	<!-- Home design -->
+	<string name="navigation_item_all">全部</string>
+	<string name="navigation_item_delivered">已送达</string>
+	<string name="navigation_item_on_the_way">运输中</string>
+	<string name="frame_empty_tip">点击 “添加” 按钮新增快递包裹</string>
+
+	<string name="action_search">搜索</string>
+	<string name="action_read_all">全部标记为已读</string>
+	<string name="action_settings">设置</string>
+
+	<string name="item_text_cannot_get_package_status">无法拉取最新状态</string>
+	<string-array name="item_status_description">
+		<item>运输中</item>
+		<item>其它</item>
+		<item>错误</item>
+		<item>已送达</item>
+		<item>已退回</item>
+		<item>正在派送</item>
+		<item>正在退回</item>
+	</string-array>
+
+	<string name="action_remove">移除</string>
+	<string name="toast_item_removed">%s 已被移除。</string>
+	<string name="toast_item_removed_action">撤回</string>
+	<string name="toast_all_read">%d 个包裹已标为已读。</string>
+
+	<!-- Add -->
+	<string name="activity_add">新增包裹</string>
+	<string name="text_field_number">运单号码</string>
+	<string name="text_field_company">运输公司</string>
+	<string name="toast_number_wrong">你的运单号码不正确，检查一下再尝试。</string>
+	<string name="toast_number_exist">快递包裹已经在列表里了，不要重复添加。</string>
+	<string name="operation_scan">扫描条码</string>
+	<string name="operation_manually_choose_company">不是正确的运输公司？</string>
+	<string name="operation_manually_choose_company_when_cannot_find">手动选择运输公司</string>
+	<string name="action_next">下一步</string>
+	<string name="action_prev">返回</string>
+	<string name="message_no_internet_connection">没有连接到互联网。</string>
+	<string name="description_no_internet_connection">请打开 Wi-Fi 或移动数据网络再试。</string>
+	<string name="message_no_found">快递包裹似乎不存在。</string>
+	<string name="description_no_found">检查你的运单号码或者手动选择正确的运输公司。</string>
+	<string name="text_field_name">包裹名称（可选）</string>
+	<string name="message_successful_format">添加快递包裹 \"%s\" 已就绪。现在你还可以给它起一个名便于辨识。</string>
+	<string name="description_successful_format">最新状态：%1$s (%2$s)</string>
+	<string name="package_name_unnamed">快递 %s</string>
+	<string name="toast_unknown_error">发生了未知错误！请返回输入重试。</string>
+
+	<!-- Scanner -->
+	<string name="activity_scanner">扫描条码</string>
+	<string name="dialog_explanation_permission_title">没有权限</string>
+	<string name="dialog_explanation_permission_message">扫描器是内置功能，因此需要你给予应用照相权限才能保证正常运作，否则无法扫描条码。</string>
+	<string name="dialog_explanation_permission_pos_btn">去设置</string>
+	<string name="toast_permission_denied">权限被拒绝。无法启动扫描器。</string>
+	<string name="toast_permission_denied_action">设置</string>
+
+	<!-- Widget ButtonBar -->
+	<string name="buttonbar_default_left">上一步</string>
+	<string name="buttonbar_default_right">下一步</string>
+
+	<!-- Choose company -->
+	<string name="activity_choose_company">选择快递公司</string>
+	<string name="search_hint_company">搜索公司....</string>
+	<string name="search_no_result">无结果</string>
+
+	<!-- Settings -->
+	<string name="activity_settings">设置</string>
+	<string name="category_user_interface">用户界面</string>
+	<string name="category_network">网络</string>
+	<string name="toast_need_restart">设置将会在重启应用后生效。</string>
+	<string name="toast_need_restart_action">立即重启</string>
+	<string name="category_about">关于</string>
+	<string name="app_version_format">%1$s (%2$d)</string>
+	<string name="author_sina_title">新浪微博</string>
+	<string name="author_sina_desc">\@FungGo</string>
+	<string name="author_sina_url">http://weibo.com/fython</string>
+	<string name="github_repo_title">Github 源码</string>
+	<string name="github_repo_url">https://github.com/fython/PackageTracker</string>
+	<string name="alipay_support_title">通过支付宝捐赠</string>
+	<string name="alipay_support_summary">316643843\@qq.com (点击复制)</string>
+	<string name="alipay_support_account">316643843\@qq.com</string>
+	<string name="toast_copied_successfully">支付宝帐号已成功复制。</string>
+	<string name="open_source_license">开源代码许可证</string>
+	<string name="open_source_license_summary">GPL v3</string>
+
+	<string name="category_ui_common">通用</string>
+	<string name="pref_navigation_tint">导航栏变色</string>
+	<string name="pref_navigation_tint_summary">这项特性只会在 Android 5.0 及更高版本启用。</string>
+
+	<string name="category_notification">通知</string>
+	<string name="item_notification_interval">检查频率</string>
+
+	<string-array name="notification_interval">
+		<item>10 分钟</item>
+		<item>30 分钟</item>
+		<item>60 分钟</item>
+		<item>90 分钟</item>
+		<item>从不</item>
+	</string-array>
+	<string-array name="notification_interval_item">
+		<item>0</item>
+		<item>1</item>
+		<item>2</item>
+		<item>3</item>
+		<item>4</item>
+	</string-array>
+
+	<string name="item_notification_do_not_disturb">勿扰模式</string>
+	<string name="item_notification_do_not_disturb_desc">在 23:00 到次日 06:00 期间不发出通知。</string>
+
+	<!-- Details -->
+	<string name="activity_details">详情</string>
+	<string name="action_set_unread">标为未读</string>
+	<string name="action_copy_code">复制单号</string>
+	<string name="action_share">分享</string>
+	<string name="action_edit_name">编辑名称</string>
+	<string name="action_delete">移除</string>
+	<string name="toast_copied_code">运单号码已成功复制。</string>
+
+	<string name="list_status_subheader">物流信息</string>
+	<string name="list_package_name">名称</string>
+	<string name="list_package_number">运单号码</string>
+	<string name="list_package_number_format">%1$s (%2$s)</string>
+
+	<string name="dialog_edit_name_title">编辑名称</string>
+	<string name="toast_edit_name_is_empty">包裹名称不能为空。</string>
+
+	<string name="dialog_share_title">分享我的包裹</string>
+	<string name="share_info_format">%1$s (%2$s %3$s) 最新状态： %4$s - %5$s (发自水表助手)</string>
+
+	<string name="dialog_delete_title">删除</string>
+	<string name="dialog_delete_message">你将不再跟踪这个包裹的物流信息。</string>
+
+	<!-- Search -->
+	<string name="activity_search">搜索</string>
+	<string name="search_hint_common">包裹或公司....</string>
+	<string name="subheader_package">包裹</string>
+	<string name="subheader_company">快递公司</string>
+	<string name="item_title_please_wait">请稍候....</string>
+
+	<!-- Notification -->
+	<string name="notification_delivered">\"包裹已经送达。\"</string>
+	<string name="notification_on_the_way">\"包裹正在派送中。\"</string>
+	<string name="notification_new_message">\"包裹有一条新的物流信息。\"</string>
+
+</resources>
