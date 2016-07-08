@@ -148,8 +148,8 @@ public class MainActivity extends AbsActivity implements OnMenuTabClickListener 
 		} else if (id == R.id.action_search) {
 			View menuButton = findViewById(id);
 			int[] location = new int[2];
-			menuButton.getLocationInWindow(location);
-			SearchActivity.launch(this, location[0], location[1]);
+			menuButton.getLocationOnScreen(location);
+			SearchActivity.launch(this, location[0] + menuButton.getHeight() / 2, location[1] + menuButton.getWidth() / 2);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

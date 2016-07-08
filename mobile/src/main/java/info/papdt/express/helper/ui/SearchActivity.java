@@ -83,7 +83,7 @@ public class SearchActivity extends AbsActivity {
 								}
 								circularRevealActivity();
 							}
-						}, 150);
+						}, 50);
 						rootLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 					}
 				});
@@ -167,7 +167,7 @@ public class SearchActivity extends AbsActivity {
 
 		// create the animator for this view (the start radius is zero)
 		Animator circularReveal = ViewAnimationUtils.createCircularReveal(rootLayout, cx, cy, 0, finalRadius);
-		circularReveal.setDuration(600);
+		circularReveal.setDuration(300);
 
 		// make the view visible and start the animation
 		rootLayout.setVisibility(View.VISIBLE);
