@@ -145,6 +145,12 @@ public class MainActivity extends AbsActivity implements OnMenuTabClickListener 
 		} else if (id == R.id.action_read_all) {
 			new ReadAllTask().execute();
 			return true;
+		} else if (id == R.id.action_search) {
+			View menuButton = findViewById(id);
+			int[] location = new int[2];
+			menuButton.getLocationInWindow(location);
+			SearchActivity.launch(this, location[0], location[1]);
+			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}

@@ -134,6 +134,13 @@
 	<string name="dialog_delete_title">Delete</string>
 	<string name="dialog_delete_message">You will not continue track this package.</string>
 
+	<!-- Search -->
+	<string name="activity_search">Search</string>
+	<string name="search_hint_common">Package or Company....</string>
+	<string name="subheader_package">Package</string>
+	<string name="subheader_company">Company</string>
+	<string name="item_title_please_wait">Please wait....</string>
+
 	<!-- Notification -->
 	<string name="notification_delivered">"The package has been delivered."</string>
 	<string name="notification_on_the_way">"The package is on the way."</string>

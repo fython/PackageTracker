@@ -12,6 +12,11 @@
 		<item name="colorAccent">@color/colorAccent</item>
 	</style>
 
+	<style name="AppTheme.Translucent" parent="AppTheme">
+		<item name="android:windowIsTranslucent">true</item>
+		<item name="android:windowBackground">@android:color/transparent</item>
+	</style>
+
 	<!-- Widget -->
 	<style name="Widget.ButtonBar" parent="">
 		<item name="leftText">@string/buttonbar_default_left</item>

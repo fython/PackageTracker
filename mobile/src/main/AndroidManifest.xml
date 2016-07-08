@@ -62,6 +62,14 @@
 			</intent-filter>
 		</activity>
 
+		<activity android:name=".ui.SearchActivity"
+		          android:label="@string/activity_search"
+		          android:theme="@style/AppTheme.Translucent">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN"/>
+			</intent-filter>
+		</activity>
+
 		<service android:name="info.papdt.express.helper.services.ReminderService" />
 
 		<receiver android:name="info.papdt.express.helper.receiver.ConnectivityReceiver" >
