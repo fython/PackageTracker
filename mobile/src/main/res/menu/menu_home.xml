@@ -9,6 +9,10 @@
 	    app:showAsAction="ifRoom"/>
 
 	<item
+		android:id="@+id/action_read_all"
+	    android:title="@string/action_read_all"/>
+
+	<item
 		android:id="@+id/action_settings"
 		android:title="@string/action_settings"/>
 

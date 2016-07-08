@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-	<item android:id="@+id/action_edit_name" android:title="@string/action_edit_name"/>
+	<item android:id="@+id/action_set_unread" android:title="@string/action_set_unread"/>
 	<item android:id="@+id/action_copy_code" android:title="@string/action_copy_code"/>
 	<item android:id="@+id/action_share" android:title="@string/action_share"/>
 	<item android:id="@+id/action_delete" android:title="@string/action_delete"/>

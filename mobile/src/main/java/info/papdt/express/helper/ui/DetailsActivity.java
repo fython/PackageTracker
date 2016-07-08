@@ -151,10 +151,7 @@ public class DetailsActivity extends AbsActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		int id = item.getItemId();
-		if (id == R.id.action_edit_name) {
-			showNameEditDialog();
-			return true;
-		} else if (id == R.id.action_copy_code) {
+		if (id == R.id.action_copy_code) {
 			ClipboardUtils.putString(getApplicationContext(), data.number);
 			Snackbar.make($(R.id.coordinator_layout), R.string.toast_copied_code, Snackbar.LENGTH_LONG)
 					.show();
@@ -164,6 +161,18 @@ public class DetailsActivity extends AbsActivity {
 			return true;
 		} else if (id == R.id.action_delete) {
 			showDeleteDialog();
+			return true;
+		} else if (id == R.id.action_set_unread) {
+			data.unreadNew = true;
+
+			Intent intent = new Intent();
+			intent.putExtra("id", data.number);
+			setResult(MainActivity.RESULT_RENAMED, intent);
+
+			PackageDatabase db = PackageDatabase.getInstance(getApplicationContext());
+			db.set(db.indexOf(data.number), data);
+
+			finish();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

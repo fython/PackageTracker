@@ -9,6 +9,7 @@
 	<string name="frame_empty_tip">Click \"Add\" button to add packages</string>
 
 	<string name="action_search">Search</string>
+	<string name="action_read_all">Mark all read</string>
 	<string name="action_settings">Settings</string>
 
 	<string name="item_text_cannot_get_package_status">Cannot get the latest status.</string>
@@ -25,6 +26,7 @@
 	<string name="action_remove">Remove</string>
 	<string name="toast_item_removed">%s has been removed.</string>
 	<string name="toast_item_removed_action">Undo</string>
+	<string name="toast_all_read">%d items has been marked read.</string>
 
 	<!-- Add -->
 	<string name="activity_add">Add package</string>
@@ -111,6 +113,7 @@
 
 	<!-- Details -->
 	<string name="activity_details">Details</string>
+	<string name="action_set_unread">Set unread</string>
 	<string name="action_copy_code">Copy code</string>
 	<string name="action_share">Share</string>
 	<string name="action_edit_name">Edit name</string>

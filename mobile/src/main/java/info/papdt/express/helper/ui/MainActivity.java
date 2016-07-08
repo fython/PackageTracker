@@ -5,6 +5,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.PorterDuff;
+import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -141,6 +142,9 @@ public class MainActivity extends AbsActivity implements OnMenuTabClickListener 
 		if (id == R.id.action_settings) {
 			SettingsActivity.launch(this, SettingsActivity.FLAG_MAIN);
 			return true;
+		} else if (id == R.id.action_read_all) {
+			new ReadAllTask().execute();
+			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
@@ -218,6 +222,33 @@ public class MainActivity extends AbsActivity implements OnMenuTabClickListener 
 		msg.what = MSG_NOTIFY_DATA_CHANGED;
 		msg.arg1 = fromFragId;
 		mHandler.sendMessage(msg);
+	}
+
+	private class ReadAllTask extends AsyncTask<Void, Void, Integer> {
+
+		@Override
+		protected Integer doInBackground(Void... voids) {
+			int count = 0;
+			for (int i = 0; i < mDatabase.size(); i++) {
+				if (mDatabase.get(i).unreadNew) {
+					count++;
+					mDatabase.get(i).unreadNew = false;
+				}
+			}
+			mDatabase.save();
+			return count;
+		}
+
+		@Override
+		protected void onPostExecute(Integer count) {
+			notifyDataChanged(-1);
+			Snackbar.make(
+					$(R.id.coordinator_layout),
+					getString(R.string.toast_all_read, count),
+					Snackbar.LENGTH_LONG
+			).show();
+		}
+
 	}
 
 }
