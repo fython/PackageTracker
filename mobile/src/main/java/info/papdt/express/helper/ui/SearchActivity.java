@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -49,19 +50,6 @@ public class SearchActivity extends AbsActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-			overridePendingTransition(R.anim.do_not_move, R.anim.do_not_move);
-			getWindow().getDecorView().setSystemUiVisibility(
-					Build.VERSION.SDK_INT < Build.VERSION_CODES.M
-							? View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-							: View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-			);
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-				getWindow().setStatusBarColor(Color.TRANSPARENT);
-			} else {
-				getWindow().setStatusBarColor(getResources().getColor(R.color.lollipop_status_bar_grey));
-			}
-		}
 
 		if (getSettings().getBoolean(Settings.KEY_NAVIGATION_TINT, true) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 			getWindow().setNavigationBarColor(getResources().getColor(R.color.lollipop_status_bar_grey));
@@ -77,7 +65,25 @@ public class SearchActivity extends AbsActivity {
 				viewTreeObserver.addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
 					@Override
 					public void onGlobalLayout() {
-						circularRevealActivity();
+						new Handler().postDelayed(new Runnable() {
+							@Override
+							public void run() {
+								if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+									overridePendingTransition(R.anim.do_not_move, R.anim.do_not_move);
+									getWindow().getDecorView().setSystemUiVisibility(
+											Build.VERSION.SDK_INT < Build.VERSION_CODES.M
+													? View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+													: View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+									);
+									if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+										getWindow().setStatusBarColor(Color.TRANSPARENT);
+									} else {
+										getWindow().setStatusBarColor(getResources().getColor(R.color.lollipop_status_bar_grey));
+									}
+								}
+								circularRevealActivity();
+							}
+						}, 150);
 						rootLayout.getViewTreeObserver().removeOnGlobalLayoutListener(this);
 					}
 				});
