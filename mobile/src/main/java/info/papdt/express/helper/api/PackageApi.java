@@ -159,6 +159,7 @@ public class PackageApi {
 			info.add(new Company("中通速递", "zhongtong", "95311", "http://www.zto.cn/"));
 			info.add(new Company("圆通速递", "yuantong", "95554", "http://www.ytoexpress.com/"));
 			info.add(new Company("申通", "shentong", "95543", "http://www.sto.cn/"));
+			info.add(new Company("京东", "jd", null, "http://www.jd.com/"));
 			info.add(new Company("韵达快运", "yunda", "95546", "http://www.yundaex.com/"));
 			info.add(new Company("百世汇通", "huitongkuaidi", "4009 565656", "http://www.800bestex.com/"));
 			info.add(new Company("EMS(中文结果)", "ems", "11183", "http://www.ems.com.cn/"));

@@ -122,8 +122,10 @@ public class DetailsInfoAdapter extends RecyclerView.Adapter {
 						h.time.setText(status.time);
 						if (itemType.statusIndex == 0) {
 							h.stepView.setIsMini(false);
-							h.stepView.setLineShouldDraw(false, true);
-							h.stepView.setPointOffsetY(-h.time.getTextSize());
+							h.stepView.setLineShouldDraw(false, data.data.size() > 1);
+							if (data.data.size() > 1) {
+								h.stepView.setPointOffsetY(-h.time.getTextSize());
+							}
 							int pointColorResId, pointIconResId;
 							switch (data.getState()) {
 								case Package.STATUS_DELIVERED:
@@ -158,7 +160,7 @@ public class DetailsInfoAdapter extends RecyclerView.Adapter {
 							h.stepView.setCenterIcon(null);
 							h.stepView.setLineShouldDraw(true, true);
 						}
-						if (itemType.statusIndex == data.data.size() - 1) {
+						if (itemType.statusIndex == data.data.size() - 1 && data.data.size() > 1) {
 							h.stepView.setLineShouldDraw(true, false);
 							h.stepView.setPointOffsetY(0);
 							h.stepView.setCenterIcon(null);
