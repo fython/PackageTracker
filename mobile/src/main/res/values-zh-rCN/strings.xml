@@ -85,6 +85,9 @@
 	<string name="toast_copied_successfully">支付宝帐号已成功复制。</string>
 	<string name="open_source_license">开源代码许可证</string>
 	<string name="open_source_license_summary">GPL v3</string>
+	<string name="icon_designer_title">图标 &amp; 海报设计师</string>
+	<string name="icon_designer_summary">\@翟宅宅Jack</string>
+	<string name="icon_designer_url">http://weibo.com/u/1934471601</string>
 
 	<string name="category_ui_common">通用</string>
 	<string name="pref_navigation_tint">导航栏变色</string>

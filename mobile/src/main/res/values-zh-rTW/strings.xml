@@ -85,6 +85,9 @@
 	<string name="toast_copied_successfully">支付寶帳號已成功拷貝到剪貼板。</string>
 	<string name="open_source_license">開放源代碼許可證</string>
 	<string name="open_source_license_summary">GPL v3</string>
+	<string name="icon_designer_title">徽標 &amp; 海報設計師</string>
+	<string name="icon_designer_summary">\@翟宅宅Jack</string>
+	<string name="icon_designer_url">http://weibo.com/u/1934471601</string>
 
 	<string name="category_ui_common">通用</string>
 	<string name="pref_navigation_tint">導航欄變色</string>

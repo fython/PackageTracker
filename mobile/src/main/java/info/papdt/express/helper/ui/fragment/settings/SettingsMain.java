@@ -12,6 +12,7 @@ import info.papdt.express.helper.ui.SettingsActivity;
 public class SettingsMain extends AbsPrefFragment implements Preference.OnPreferenceClickListener {
 
 	private Preference mPrefUI, mPrefNetwork, mPrefVersion, mPrefSina, mPrefGithub, mPrefAlipay, mPrefLicense;
+	private Preference mPrefIconDesigner;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -24,6 +25,7 @@ public class SettingsMain extends AbsPrefFragment implements Preference.OnPrefer
 		mPrefSina = findPreference("sina");
 		mPrefAlipay = findPreference("alipay");
 		mPrefLicense = findPreference("license");
+		mPrefIconDesigner = findPreference("designer");
 
 		String versionName = null;
 		int versionCode = 0;
@@ -42,6 +44,7 @@ public class SettingsMain extends AbsPrefFragment implements Preference.OnPrefer
 		mPrefSina.setOnPreferenceClickListener(this);
 		if (mPrefAlipay != null) mPrefAlipay.setOnPreferenceClickListener(this);
 		mPrefLicense.setOnPreferenceClickListener(this);
+		mPrefIconDesigner.setOnPreferenceClickListener(this);
 	}
 
 	@Override
@@ -69,6 +72,10 @@ public class SettingsMain extends AbsPrefFragment implements Preference.OnPrefer
 		}
 		if (pref == mPrefNetwork) {
 			SettingsActivity.launch(getParentActivity(), SettingsActivity.FLAG_NETWORK);
+			return true;
+		}
+		if (pref == mPrefIconDesigner) {
+			openWebsite(getString(R.string.icon_designer_url));
 			return true;
 		}
 		return false;
