@@ -25,7 +25,7 @@
 
 	<string name="action_remove">移除</string>
 	<string name="toast_item_removed">%s 已被移除。</string>
-	<string name="toast_item_removed_action">撤回</string>
+	<string name="toast_item_removed_action">撤銷</string>
 	<string name="toast_all_read">%d 個包裹已標為已讀。</string>
 
 	<!-- Add -->
