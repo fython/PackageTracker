@@ -148,5 +148,6 @@
 	<string name="notification_delivered">\"包裹已經送達。\"</string>
 	<string name="notification_on_the_way">\"包裹正在派送中。\"</string>
 	<string name="notification_new_message">\"包裹有一条新的物流訊息。\"</string>
+	<string name="operation_force_add_when_cannot_find">選擇速遞公司并強制添加</string>
 
 </resources>

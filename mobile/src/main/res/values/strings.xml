@@ -148,5 +148,6 @@
 	<string name="notification_delivered">"The package has been delivered."</string>
 	<string name="notification_on_the_way">"The package is on the way."</string>
 	<string name="notification_new_message">"The package has a new message."</string>
+	<string name="operation_force_add_when_cannot_find">Choose company and force add</string>
 
 </resources>
