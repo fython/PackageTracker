@@ -44,7 +44,7 @@
 	<string name="message_no_found">The package seems not exist.</string>
 	<string name="description_no_found">Check your package number or choose the correct company manually.</string>
 	<string name="text_field_name">Package name (Optional)</string>
-	<string name="message_successful_format">The package \"%s\" is ready to be added. Now you can give it a name as recognition.</string>
+	<string name="message_successful_format">The package \"%1$s(%2$s)\" is ready to be added. Now you can give it a name as recognition.</string>
 	<string name="description_successful_format">Latest status: %1$s (%2$s)</string>
 	<string name="package_name_unnamed">Package %s</string>
 	<string name="toast_unknown_error">Something wrong happened! Back to input and try again.</string>
@@ -148,6 +148,8 @@
 	<string name="notification_delivered">"The package has been delivered."</string>
 	<string name="notification_on_the_way">"The package is on the way."</string>
 	<string name="notification_new_message">"The package has a new message."</string>
-	<string name="operation_force_add_when_cannot_find">Choose company and force add</string>
+	<string name="operation_force_add_when_cannot_find">Force add (%s)</string>
+	<string name="message_failure_forced">No information - added forcedly.</string>
+	<string name="message_invalid_company">No company detected</string>
 
 </resources>

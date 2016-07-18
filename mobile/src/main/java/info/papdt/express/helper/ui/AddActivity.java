@@ -117,7 +117,7 @@ public class AddActivity extends AbsActivity{
 	}
 
 	public void finishAdd() {
-		if (getPackage() == null || !getPackage().status.equals("200")) {
+		if (getPackage() == null) {
 			Toast.makeText(this, R.string.toast_unknown_error, Toast.LENGTH_LONG).show();
 			return;
 		}

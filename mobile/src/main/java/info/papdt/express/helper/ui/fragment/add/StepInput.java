@@ -108,15 +108,14 @@ public class StepInput extends AbsStepFragment {
 			if (message.getCode() == BaseMessage.CODE_OKAY) {
 				Package p = message.getData();
 				getAddActivity().setNumber(number);
+				getAddActivity().setPackage(p);
 				if (p.status.equals("200")) {
-					getAddActivity().setPackage(p);
 					getAddActivity().step(AddActivity.STEP_SUCCESS);
 				} else {
 					Toast.makeText(getContext(), p.message, Toast.LENGTH_SHORT).show();
 					getAddActivity().step(AddActivity.STEP_NO_FOUND);
 				}
 			} else {
-				getAddActivity().setNumber(number);
 				getAddActivity().step(AddActivity.STEP_NO_FOUND);
 			}
 		}
