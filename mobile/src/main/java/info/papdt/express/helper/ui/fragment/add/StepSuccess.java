@@ -67,8 +67,12 @@ public class StepSuccess extends AbsStepFragment {
 	}
 
 	private void updateUIContent(Package p) {
-		mMsgText.setText(String.format(getString(R.string.message_successful_format), p.number));
-		mDescText.setText(p.data.size() > 0 ? String.format(getString(R.string.description_successful_format), p.data.get(0).context, p.data.get(0).time) : p.message);
+		mMsgText.setText(String.format(getString(R.string.message_successful_format), p.number, p.companyChineseName));
+		if(p.data != null) {
+			mDescText.setText(p.data.size() > 0 ? String.format(getString(R.string.description_successful_format), p.data.get(0).context, p.data.get(0).time) : p.message);
+		} else {
+			mDescText.setText(getString(R.string.message_failure_forced));
+		}
 	}
 
 	@Override
