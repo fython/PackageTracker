@@ -98,15 +98,15 @@ public class StepSuccess extends AbsStepFragment {
 			getAddActivity().hideProgressBar();
 			if (message.getCode() == BaseMessage.CODE_OKAY) {
 				Package p = message.getData();
+				getAddActivity().setPackage(p);
 				if (p.status.equals("200")) {
-					getAddActivity().setPackage(p);
-					updateUIContent(p);
+					getAddActivity().step(AddActivity.STEP_SUCCESS);
 				} else {
 					Toast.makeText(getContext(), p.message, Toast.LENGTH_SHORT).show();
 					getAddActivity().step(AddActivity.STEP_NO_FOUND);
 				}
 			} else {
-				getAddActivity().step(AddActivity.STEP_NO_INTERNET_CONNECTION);
+				getAddActivity().step(AddActivity.STEP_NO_FOUND);
 			}
 		}
 

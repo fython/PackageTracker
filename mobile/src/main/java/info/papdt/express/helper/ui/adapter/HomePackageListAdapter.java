@@ -70,7 +70,7 @@ public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageList
 		final Package p = getItemData(position);
 
 		holder.titleText.setText(p.name);
-		if (p.data.size() > 0) {
+		if (p.data != null && p.data.size() > 0) {
 			Package.Status status = p.data.get(0);
 			Spanny spanny = new Spanny(STATUS_STRING_ARRAY[p.getState()], new ForegroundColorSpan(statusTitleColor))
 					.append(" - " + status.context, new ForegroundColorSpan(statusSubtextColor));

@@ -133,10 +133,12 @@ public class DetailsActivity extends AbsActivity {
 		items.add(new DetailsInfoAdapter.ItemType(DetailsInfoAdapter.ItemType.TYPE_NORMAL, DetailsInfoAdapter.ItemType.ID_NUMBER));
 		items.add(new DetailsInfoAdapter.ItemType(DetailsInfoAdapter.ItemType.TYPE_SUBHEADER, DetailsInfoAdapter.ItemType.ID_STATUS_HEADER));
 
-		for (int i = 0; i < data.data.size(); i++) {
-			DetailsInfoAdapter.ItemType item = new DetailsInfoAdapter.ItemType(DetailsInfoAdapter.ItemType.TYPE_PACK_STATUS, DetailsInfoAdapter.ItemType.ID_STATUS);
-			item.statusIndex = i;
-			items.add(item);
+		if(data.data != null) {
+			for (int i = 0; i < data.data.size(); i++) {
+				DetailsInfoAdapter.ItemType item = new DetailsInfoAdapter.ItemType(DetailsInfoAdapter.ItemType.TYPE_PACK_STATUS, DetailsInfoAdapter.ItemType.ID_STATUS);
+				item.statusIndex = i;
+				items.add(item);
+			}
 		}
 
 		return items;

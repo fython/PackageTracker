@@ -71,12 +71,8 @@ public class PackageApi {
 	 * @return Package and status code
 	 */
 	public static BaseMessage<Package> getPackageByNumber(String number) {
-		BaseMessage<String> message = HttpUtils.getString(getQueryUrl(detectCompanyByNumber(number), number), false);
-		if (message.getCode() == BaseMessage.CODE_OKAY) {
-			return new BaseMessage<>(BaseMessage.CODE_OKAY, Package.buildFromJson(message.getData()));
-		} else {
-			return new BaseMessage<>(BaseMessage.CODE_ERROR);
-		}
+		String comcode = detectCompanyByNumber(number);
+		return getPackage(comcode, number);
 	}
 
 	/**
@@ -87,7 +83,16 @@ public class PackageApi {
 	public static BaseMessage<Package> getPackage(String comcode, String number) {
 		BaseMessage<String> message = HttpUtils.getString(getQueryUrl(comcode, number), false);
 		if (message.getCode() == BaseMessage.CODE_OKAY) {
-			return new BaseMessage<>(BaseMessage.CODE_OKAY, Package.buildFromJson(message.getData()));
+			Package pkg = Package.buildFromJson(message.getData());
+			if(pkg.status.equals("200")) {
+				return new BaseMessage<>(BaseMessage.CODE_OKAY, pkg);
+			} else {
+				pkg.number = number;
+				pkg.companyType = comcode;
+				pkg.companyChineseName = PackageApi.CompanyInfo.getNameByCode(pkg.companyType);
+				pkg.data = new ArrayList<Package.Status>();
+				return new BaseMessage<>(BaseMessage.CODE_OKAY, pkg);
+			}
 		} else {
 			return new BaseMessage<>(BaseMessage.CODE_ERROR);
 		}
