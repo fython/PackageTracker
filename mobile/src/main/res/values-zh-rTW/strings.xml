@@ -44,7 +44,7 @@
 	<string name="message_no_found">速遞包裹似乎不存在。</string>
 	<string name="description_no_found">檢查你的運單號碼或者手動選擇正確的速遞公司。</string>
 	<string name="text_field_name">包裹名稱（可選）</string>
-	<string name="message_successful_format">添加速遞包裹 \"%s\" 已就緒。現在你還可以給它起一個名便於辨識。</string>
+	<string name="message_successful_format">添加速遞包裹 \"%1$s (%2$s)\" 已就緒。現在你還可以給它起一個名便於辨識。</string>
 	<string name="description_successful_format">最新狀態：%1$s (%2$s)</string>
 	<string name="package_name_unnamed">速遞 %s</string>
 	<string name="toast_unknown_error">發生了未知錯誤！請返回輸入重試。</string>
@@ -148,5 +148,8 @@
 	<string name="notification_delivered">\"包裹已經送達。\"</string>
 	<string name="notification_on_the_way">\"包裹正在派送中。\"</string>
 	<string name="notification_new_message">\"包裹有一条新的物流訊息。\"</string>
+	<string name="operation_force_add_when_cannot_find">強制添加(%s)</string>
+	<string name="message_failure_forced">沒有訊息──包裹被強制添加。</string>
+	<string name="message_invalid_company">沒有識別到速遞公司</string>
 
 </resources>

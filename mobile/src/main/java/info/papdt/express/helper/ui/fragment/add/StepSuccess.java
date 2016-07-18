@@ -67,8 +67,12 @@ public class StepSuccess extends AbsStepFragment {
 	}
 
 	private void updateUIContent(Package p) {
-		mMsgText.setText(String.format(getString(R.string.message_successful_format), p.number));
-		mDescText.setText(p.data.size() > 0 ? String.format(getString(R.string.description_successful_format), p.data.get(0).context, p.data.get(0).time) : p.message);
+		mMsgText.setText(String.format(getString(R.string.message_successful_format), p.number, p.companyChineseName));
+		if(p.data != null) {
+			mDescText.setText(p.data.size() > 0 ? String.format(getString(R.string.description_successful_format), p.data.get(0).context, p.data.get(0).time) : p.message);
+		} else {
+			mDescText.setText(getString(R.string.message_failure_forced));
+		}
 	}
 
 	@Override
@@ -94,15 +98,15 @@ public class StepSuccess extends AbsStepFragment {
 			getAddActivity().hideProgressBar();
 			if (message.getCode() == BaseMessage.CODE_OKAY) {
 				Package p = message.getData();
+				getAddActivity().setPackage(p);
 				if (p.status.equals("200")) {
-					getAddActivity().setPackage(p);
-					updateUIContent(p);
+					getAddActivity().step(AddActivity.STEP_SUCCESS);
 				} else {
 					Toast.makeText(getContext(), p.message, Toast.LENGTH_SHORT).show();
 					getAddActivity().step(AddActivity.STEP_NO_FOUND);
 				}
 			} else {
-				getAddActivity().step(AddActivity.STEP_NO_INTERNET_CONNECTION);
+				getAddActivity().step(AddActivity.STEP_NO_FOUND);
 			}
 		}
 

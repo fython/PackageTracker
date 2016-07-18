@@ -44,7 +44,7 @@
 	<string name="message_no_found">快递包裹似乎不存在。</string>
 	<string name="description_no_found">检查你的运单号码或者手动选择正确的运输公司。</string>
 	<string name="text_field_name">包裹名称（可选）</string>
-	<string name="message_successful_format">添加快递包裹 \"%s\" 已就绪。现在你还可以给它起一个名便于辨识。</string>
+	<string name="message_successful_format">添加快递包裹 \"%1$s (%2$s)\" 已就绪。现在你还可以给它起一个名便于辨识。</string>
 	<string name="description_successful_format">最新状态：%1$s (%2$s)</string>
 	<string name="package_name_unnamed">快递 %s</string>
 	<string name="toast_unknown_error">发生了未知错误！请返回输入重试。</string>
@@ -148,5 +148,8 @@
 	<string name="notification_delivered">\"包裹已经送达。\"</string>
 	<string name="notification_on_the_way">\"包裹正在派送中。\"</string>
 	<string name="notification_new_message">\"包裹有一条新的物流信息。\"</string>
+	<string name="operation_force_add_when_cannot_find">强制添加 (%s)</string>
+	<string name="message_failure_forced">没有信息——包裹被强制添加。</string>
+	<string name="message_invalid_company">没有识别到快递公司</string>
 
 </resources>
