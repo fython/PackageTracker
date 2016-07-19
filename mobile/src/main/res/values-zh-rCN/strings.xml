@@ -145,11 +145,14 @@
 	<string name="item_title_please_wait">请稍候....</string>
 
 	<!-- Notification -->
-	<string name="notification_delivered">\"包裹已经送达。\"</string>
-	<string name="notification_on_the_way">\"包裹正在派送中。\"</string>
-	<string name="notification_new_message">\"包裹有一条新的物流信息。\"</string>
+	<string name="notification_delivered">包裹已经送达。</string>
+	<string name="notification_on_the_way">包裹正在派送中。</string>
+	<string name="notification_new_message">包裹有一条新的物流信息。</string>
 	<string name="operation_force_add_when_cannot_find">强制添加 (%s)</string>
 	<string name="message_failure_forced">没有信息——包裹被强制添加。</string>
 	<string name="message_invalid_company">没有识别到快递公司</string>
+
+	<!-- Widget -->
+	<string name="hint_all_package_delivered">所有包裹均已送达。</string>
 
 </resources>

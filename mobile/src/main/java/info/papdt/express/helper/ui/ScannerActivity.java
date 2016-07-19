@@ -31,6 +31,8 @@ public class ScannerActivity extends AbsActivity implements ZXingScannerView.Res
 
 	private static final int REQUEST_PERMISSION = 20001;
 
+	public static final String ACTION_SCAN_TO_ADD = "info.papdt.express.helper.ACTION_SCAN_TO_ADD";
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

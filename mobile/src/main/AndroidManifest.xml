@@ -85,12 +85,30 @@
 			</intent-filter>
 		</activity>
 
-		<service android:name="info.papdt.express.helper.services.ReminderService" />
-
-		<receiver android:name="info.papdt.express.helper.receiver.ConnectivityReceiver" >
+		<activity android:name=".ui.shortcut.ScannerShortcutCreator"
+		          android:label="@string/activity_scanner"
+		          android:theme="@style/EmptyActivity">
 			<intent-filter>
-				<action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+				<action android:name="android.intent.action.MAIN"/>
+				<action android:name="android.intent.action.CREATE_SHORTCUT"/>
 			</intent-filter>
+		</activity>
+
+		<service android:name="info.papdt.express.helper.services.ReminderService"/>
+		<service android:name="info.papdt.express.helper.services.AppWidgetService"
+		         android:permission="android.permission.BIND_REMOTEVIEWS"/>
+
+		<receiver android:name="info.papdt.express.helper.receiver.ConnectivityReceiver">
+			<intent-filter>
+				<action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+			</intent-filter>
+		</receiver>
+
+		<receiver android:name=".ui.launcher.AppWidgetProvider">
+			<intent-filter>
+				<action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+			</intent-filter>
+			<meta-data android:name="android.appwidget.provider" android:resource="@xml/appwidget_provider"/>
 		</receiver>
 
 	</application>

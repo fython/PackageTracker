@@ -19,6 +19,7 @@ import info.papdt.express.helper.model.Package;
 import info.papdt.express.helper.support.PushUtils;
 import info.papdt.express.helper.support.Settings;
 import info.papdt.express.helper.ui.DetailsActivity;
+import info.papdt.express.helper.ui.launcher.AppWidgetProvider;
 
 public class ReminderService extends IntentService {
 
@@ -51,6 +52,8 @@ public class ReminderService extends IntentService {
 
 		db.pullDataFromNetwork(false);
 		db.save();
+
+		AppWidgetProvider.updateManually(getApplication());
 
 		for (int i = 0; i < db.size(); i++) {
 			Package p = db.get(i);

@@ -58,15 +58,17 @@ public class Package {
 	public void applyNewData(Package newData) {
 		if (newData == null) return;
 
-		this.unreadNew |= this.shouldPush |= newData.data.size() != this.data.size() || newData.getState() != this.getState();
+		this.unreadNew |= this.shouldPush |= newData.data.size() != this.data.size() || (newData.getState() != STATUS_FAILED && this.getState() == STATUS_FAILED);
 		this.status = newData.status;
 		this.state = newData.state;
 		this.updateTime = newData.updateTime;
 		this.isCheck = newData.isCheck;
 		this.condition = newData.condition;
 		this.message = newData.message;
-		if (newData.data != null) {
+		if (newData.data != null && !newData.data.isEmpty()) {
 			this.data = newData.data;
+		} else {
+			this.unreadNew = this.shouldPush = false;
 		}
 	}
 

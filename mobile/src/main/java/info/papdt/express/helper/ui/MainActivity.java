@@ -29,6 +29,7 @@ import info.papdt.express.helper.support.Settings;
 import info.papdt.express.helper.ui.common.AbsActivity;
 import info.papdt.express.helper.ui.fragment.home.BaseFragment;
 import info.papdt.express.helper.ui.fragment.home.FragmentAll;
+import info.papdt.express.helper.ui.launcher.AppWidgetProvider;
 
 public class MainActivity extends AbsActivity implements OnMenuTabClickListener {
 
@@ -67,6 +68,13 @@ public class MainActivity extends AbsActivity implements OnMenuTabClickListener 
 		mBottomBar = BottomBar.attach(this, savedInstanceState);
 		mBottomBar.setItems(R.menu.bottombar_menu_home);
 		mBottomBar.setOnMenuTabClickListener(this);
+
+		if (ScannerActivity.ACTION_SCAN_TO_ADD.equals(getIntent().getAction())) {
+			Intent intent = new Intent(MainActivity.this, AddActivity.class);
+			intent.setAction(ScannerActivity.ACTION_SCAN_TO_ADD);
+			intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+			startActivityForResult(intent, REQUEST_ADD);
+		}
 	}
 
 	@Override
@@ -205,6 +213,7 @@ public class MainActivity extends AbsActivity implements OnMenuTabClickListener 
 		public void handleMessage(Message msg) {
 			switch (msg.what) {
 				case MSG_NOTIFY_DATA_CHANGED:
+					AppWidgetProvider.updateManually(getApplication());
 					for (int i = 0; i < fragments.length; i++) {
 						if (i == msg.arg1) continue; // Skip the fragment which sent message.
 						fragments[i].notifyDataSetChanged();

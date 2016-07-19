@@ -152,4 +152,7 @@
 	<string name="message_failure_forced">No information - added forcedly.</string>
 	<string name="message_invalid_company">No company detected</string>
 
+	<!-- Widget -->
+	<string name="hint_all_package_delivered">All packages have been delivered.</string>
+
 </resources>

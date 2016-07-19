@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -52,6 +53,17 @@ public class AddActivity extends AbsActivity{
 		mActionBar.setDisplayShowTitleEnabled(false);
 
 		step(STEP_INPUT);
+
+		if (ScannerActivity.ACTION_SCAN_TO_ADD.equals(getIntent().getAction())) {
+			new Handler().postDelayed(new Runnable() {
+				@Override
+				public void run() {
+					Intent intent = new Intent(AddActivity.this, ScannerActivity.class);
+					intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+					mStepInput.startActivityForResult(intent, ScannerActivity.REQUEST_CODE_SCAN);
+				}
+			}, 600);
+		}
 	}
 
 	@Override
