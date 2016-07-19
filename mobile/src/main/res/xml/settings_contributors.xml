@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<Preference android:key="coderfox"
+	            android:title="@string/contributors_coderfox"
+	            android:summary="@string/contributors_coderfox_desc"/>
+
+</PreferenceScreen>

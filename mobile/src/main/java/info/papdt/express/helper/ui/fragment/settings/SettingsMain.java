@@ -12,7 +12,7 @@ import info.papdt.express.helper.ui.SettingsActivity;
 public class SettingsMain extends AbsPrefFragment implements Preference.OnPreferenceClickListener {
 
 	private Preference mPrefUI, mPrefNetwork, mPrefVersion, mPrefSina, mPrefGithub, mPrefAlipay, mPrefLicense;
-	private Preference mPrefIconDesigner;
+	private Preference mPrefIconDesigner, mPrefContributors;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -26,6 +26,7 @@ public class SettingsMain extends AbsPrefFragment implements Preference.OnPrefer
 		mPrefAlipay = findPreference("alipay");
 		mPrefLicense = findPreference("license");
 		mPrefIconDesigner = findPreference("designer");
+		mPrefContributors = findPreference("contributors");
 
 		String versionName = null;
 		int versionCode = 0;
@@ -45,6 +46,7 @@ public class SettingsMain extends AbsPrefFragment implements Preference.OnPrefer
 		if (mPrefAlipay != null) mPrefAlipay.setOnPreferenceClickListener(this);
 		mPrefLicense.setOnPreferenceClickListener(this);
 		mPrefIconDesigner.setOnPreferenceClickListener(this);
+		mPrefContributors.setOnPreferenceClickListener(this);
 	}
 
 	@Override
@@ -76,6 +78,10 @@ public class SettingsMain extends AbsPrefFragment implements Preference.OnPrefer
 		}
 		if (pref == mPrefIconDesigner) {
 			openWebsite(getString(R.string.icon_designer_url));
+			return true;
+		}
+		if (pref == mPrefContributors) {
+			SettingsActivity.launch(getParentActivity(), SettingsActivity.FLAG_CONTRIBUTORS);
 			return true;
 		}
 		return false;

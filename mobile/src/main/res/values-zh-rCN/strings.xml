@@ -96,6 +96,12 @@
 	<string name="category_notification">通知</string>
 	<string name="item_notification_interval">检查频率</string>
 
+	<string name="category_contributors">代码贡献者</string>
+	<string name="category_contributors_desc">没有他们的努力就没有更好的体验</string>
+	<string name="contributors_coderfox">小傅Fox</string>
+	<string name="contributors_coderfox_desc">自动拉取快递公司列表; 允许强制添加包裹; 改进翻译</string>
+	<string name="contributors_coderfox_weibo_url">http://weibo.com/coderfox</string>
+
 	<string-array name="notification_interval">
 		<item>10 分钟</item>
 		<item>30 分钟</item>

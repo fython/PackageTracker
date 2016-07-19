@@ -96,6 +96,12 @@
 	<string name="category_notification">Notification</string>
 	<string name="item_notification_interval">Notification interval</string>
 
+	<string name="category_contributors">Contributors</string>
+	<string name="category_contributors_desc">Without their efforts, we can\'t enjoy better experience.</string>
+	<string name="contributors_coderfox">CoderFox</string>
+	<string name="contributors_coderfox_desc">Automatically pull company list; Allow to force add package; Enhance Translation</string>
+	<string name="contributors_coderfox_weibo_url">http://weibo.com/coderfox</string>
+
 	<string-array name="notification_interval">
 		<item>10 minutes</item>
 		<item>30 minutes</item>
