@@ -16,7 +16,7 @@ public class ScannerShortcutCreator extends Activity {
 		super.onCreate(savedInstanceState);
 		if (getIntent().getAction().equals(Intent.ACTION_CREATE_SHORTCUT)) {
 			Intent intent = new Intent();
-			Parcelable icon = Intent.ShortcutIconResource.fromContext(this, R.mipmap.ic_launcher);
+			Parcelable icon = Intent.ShortcutIconResource.fromContext(this, R.mipmap.ic_scanner_launcher);
 
 			intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, getString(R.string.activity_scanner));
 			intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, icon);
