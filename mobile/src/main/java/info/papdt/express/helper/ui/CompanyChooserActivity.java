@@ -108,7 +108,7 @@ public class CompanyChooserActivity extends AbsActivity {
 			@Override
 			public void onItemClick(int position, SimpleRecyclerViewAdapter.ClickableViewHolder holder) {
 				Intent intent = new Intent();
-				intent.putExtra(RESULT_EXTRA_COMPANY_CODE, data.get(position).code);
+				intent.putExtra(RESULT_EXTRA_COMPANY_CODE, mAdapter.getItem(position).code);
 				setResult(RESULT_OK, intent);
 				finish();
 			}
