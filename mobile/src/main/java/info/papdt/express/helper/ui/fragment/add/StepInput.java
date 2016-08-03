@@ -54,6 +54,7 @@ public class StepInput extends AbsStepFragment {
 		mButtonBar.setOnRightButtonClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
+				mEditText.setText(mEditText.getText().toString().trim());
 				if (!checkNumberInput()) {
 					Toast.makeText(getContext(), R.string.toast_number_wrong, Toast.LENGTH_SHORT).show();
 					return;
