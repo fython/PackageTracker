@@ -16,7 +16,7 @@ public class CompanyFilterTask extends AsyncTask<String, Void, ArrayList<Package
 		ArrayList<PackageApi.CompanyInfo.Company> src = new ArrayList<>();
 		if (keyword != null && keyword.trim().length() > 0) {
 			for (int i = 0; i < PackageApi.CompanyInfo.info.size(); i++) {
-				if (!PackageApi.CompanyInfo.names [i].contains(keyword) && !PackageApi.CompanyInfo.pinyin [i].contains(keyword)) {
+				if (!PackageApi.CompanyInfo.names [i].toLowerCase().contains(keyword.toLowerCase()) && !PackageApi.CompanyInfo.pinyin [i].contains(keyword)) {
 					continue;
 				}
 
