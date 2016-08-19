@@ -31,14 +31,11 @@
 	<!-- Add -->
 	<string name="activity_add">新增包裹</string>
 	<string name="text_field_number">運單號碼</string>
-	<string name="text_field_company">速遞公司</string>
 	<string name="toast_number_wrong">你的運單號碼不正確，檢查一下再嘗試。</string>
 	<string name="toast_number_exist">速遞包裹已經在列表內，不要重複添加。</string>
 	<string name="operation_scan">掃描條碼</string>
 	<string name="operation_manually_choose_company">不是正确的速遞公司？</string>
 	<string name="operation_manually_choose_company_when_cannot_find">手動選擇速遞公司</string>
-	<string name="action_next">下一步</string>
-	<string name="action_prev">返回</string>
 	<string name="message_no_internet_connection">無法連接到網際網路。</string>
 	<string name="description_no_internet_connection">請打開 Wi-Fi 或移動數據網路再試。</string>
 	<string name="message_no_found">速遞包裹似乎不存在。</string>
@@ -125,7 +122,6 @@
 	<string name="action_set_unread">標為未讀</string>
 	<string name="action_copy_code">拷貝單號</string>
 	<string name="action_share">分享</string>
-	<string name="action_edit_name">編輯名稱</string>
 	<string name="action_delete">移除</string>
 	<string name="toast_copied_code">運單號碼已成功拷貝到剪貼板。</string>
 

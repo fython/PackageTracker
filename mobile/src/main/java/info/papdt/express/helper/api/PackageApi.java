@@ -10,7 +10,6 @@ import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
 import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
 import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 import info.papdt.express.helper.model.BaseMessage;
@@ -82,7 +81,7 @@ public class PackageApi {
 			strJson = strJson.replace("};", "}");
 			strJson = strJson.replace("'", "\"");
 			CompanyListResult result = new Gson().fromJson(strJson, CompanyListResult.class);
-			if(result.company.size() > 0 && result.error_size < 0) {
+			if (result.company.size() > 0 && result.error_size < 0) {
 				ArrayList<CompanyInfo.Company> info = new ArrayList<>();
 				for(int i=0; i<result.company.size(); i++) {
 					info.add(new CompanyInfo.Company(result.company.get(i).companyname,
@@ -121,7 +120,7 @@ public class PackageApi {
 				pkg.number = number;
 				pkg.companyType = comcode;
 				pkg.companyChineseName = PackageApi.CompanyInfo.getNameByCode(pkg.companyType);
-				pkg.data = new ArrayList<Package.Status>();
+				pkg.data = new ArrayList<>();
 				return new BaseMessage<>(BaseMessage.CODE_OKAY, pkg);
 			}
 		} else {
@@ -202,7 +201,7 @@ public class PackageApi {
 
 		static {
 			ArrayList fetchedList = getCompanyList();
-			if(fetchedList == null) {
+			if (fetchedList == null) {
 				info = new ArrayList<>();
 				info.add(new Company("申通快递", "shentong", "95543", "http://www.sto.cn"));
 				info.add(new Company("EMS", "ems", "11183", "http://www.ems.com.cn/"));

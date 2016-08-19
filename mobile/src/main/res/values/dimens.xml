@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-	<dimen name="app_bar_elevation">5dp</dimen>
-
 	<!-- Add package -->
 	<dimen name="parallax_app_bar_size">230dp</dimen>
 	<dimen name="button_bar_size">56dp</dimen>

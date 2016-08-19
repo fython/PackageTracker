@@ -109,12 +109,12 @@ public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageList
 	public Package getItemData(int pos) {
 		switch (type) {
 			case TYPE_DELIVERED:
-				return db.getDeliveredData().get(pos);
+				return db.getDeliveredData().get(db.getDeliveredData().size() - pos - 1);
 			case TYPE_DELIVERING:
-				return db.getDeliveringData().get(pos);
+				return db.getDeliveringData().get(db.getDeliveringData().size() - pos - 1);
 			case TYPE_ALL:
 			default:
-				return db.get(pos);
+				return db.get(db.size() - pos - 1);
 		}
 	}
 
@@ -171,11 +171,10 @@ public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageList
 		AppCompatTextView titleText, descText, timeText;
 		TextView bigCharView;
 
-		private View containerView, rootView;
+		private View containerView;
 
 		public MyViewHolder(View itemView) {
 			super(itemView);
-			this.rootView = itemView;
 			logoView = (CircleImageView) itemView.findViewById(R.id.iv_logo);
 			titleText = (AppCompatTextView) itemView.findViewById(R.id.tv_title);
 			descText = (AppCompatTextView) itemView.findViewById(R.id.tv_other);
@@ -189,9 +188,6 @@ public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageList
 			return containerView;
 		}
 
-		public View getRootView() {
-			return rootView;
-		}
 	}
 
 	class MySwipeResultActionRemoveItem extends SwipeResultActionRemoveItem {
@@ -206,8 +202,8 @@ public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageList
 
 		@Override
 		protected void onPerformAction() {
-			final String title = adapter.db.get(position).name;
-			adapter.db.remove(position);
+			final String title = adapter.db.get(adapter.db.size() - position - 1).name;
+			adapter.db.remove(adapter.db.size() - position - 1);
 			adapter.notifyItemRemoved(position);
 			if (mDataRemovedCallback != null) mDataRemovedCallback.onDataRemoved(position, title);
 		}

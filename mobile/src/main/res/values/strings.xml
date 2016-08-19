@@ -31,14 +31,11 @@
 	<!-- Add -->
 	<string name="activity_add">Add package</string>
 	<string name="text_field_number">Package number</string>
-	<string name="text_field_company">Shipment company</string>
 	<string name="toast_number_wrong">Your number is wrong. Check it and try again.</string>
 	<string name="toast_number_exist">The package is in the list. Don\'t add it repeatedly.</string>
 	<string name="operation_scan">Scan code</string>
 	<string name="operation_manually_choose_company">This is not the correct company?</string>
 	<string name="operation_manually_choose_company_when_cannot_find">Choose company manually</string>
-	<string name="action_next">Next</string>
-	<string name="action_prev">Previous</string>
 	<string name="message_no_internet_connection">No Internet connection.</string>
 	<string name="description_no_internet_connection">Please turn on Wi-Fi or mobile network and retry.</string>
 	<string name="message_no_found">The package seems not exist.</string>
@@ -125,7 +122,6 @@
 	<string name="action_set_unread">Set unread</string>
 	<string name="action_copy_code">Copy code</string>
 	<string name="action_share">Share</string>
-	<string name="action_edit_name">Edit name</string>
 	<string name="action_delete">Delete</string>
 	<string name="toast_copied_code">Package number has been copied successfully.</string>
 
