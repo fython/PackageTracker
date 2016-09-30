@@ -104,6 +104,7 @@ public class MainActivity extends AbsActivity implements OnMenuTabClickListener 
 
 	@Override
 	public void onMenuTabSelected(@IdRes int menuItemId) {
+		getFragmentManager().executePendingTransactions();
 		FragmentTransaction ft = getFragmentManager().beginTransaction();
 		ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
 		switch (menuItemId) {
