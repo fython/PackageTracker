@@ -5,4 +5,8 @@
 	            android:title="@string/contributors_coderfox"
 	            android:summary="@string/contributors_coderfox_desc"/>
 
+	<Preference android:key="hearsilent"
+	            android:title="HearSilent"
+	            android:summary="Improve zh-tw strings"/>
+
 </PreferenceScreen>

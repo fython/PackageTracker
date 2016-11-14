@@ -77,7 +77,7 @@
 	<string name="github_repo_title">Github 源代碼</string>
 	<string name="github_repo_url">https://github.com/fython/PackageTracker</string>
 	<string name="alipay_support_title">通過支付寶捐贈</string>
-	<string name="alipay_support_summary">316643843@qq.com (點按拷貝)</string>
+	<string name="alipay_support_summary">316643843@qq.com</string>
 	<string name="alipay_support_account">316643843\@qq.com</string>
 	<string name="toast_copied_successfully">支付寶帳號已成功拷貝到剪貼板。</string>
 	<string name="open_source_license">開放源代碼許可證</string>

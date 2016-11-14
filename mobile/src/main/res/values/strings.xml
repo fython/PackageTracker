@@ -77,7 +77,7 @@
 	<string name="github_repo_title">Github Source</string>
 	<string name="github_repo_url">https://github.com/fython/PackageTracker</string>
 	<string name="alipay_support_title">Donate through Alipay</string>
-	<string name="alipay_support_summary">316643843\@qq.com (Click to copy it)</string>
+	<string name="alipay_support_summary">316643843@qq.com</string>
 	<string name="alipay_support_account">316643843\@qq.com</string>
 	<string name="toast_copied_successfully">Alipay account has been copied successfully.</string>
 	<string name="open_source_license">Open Source License</string>

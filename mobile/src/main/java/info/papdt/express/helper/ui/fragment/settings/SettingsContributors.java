@@ -7,7 +7,7 @@ import info.papdt.express.helper.R;
 
 public class SettingsContributors extends AbsPrefFragment implements Preference.OnPreferenceClickListener {
 
-	private Preference mPrefCoderFox;
+	private Preference mPrefCoderFox, mPrefHearSilent;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -15,12 +15,19 @@ public class SettingsContributors extends AbsPrefFragment implements Preference.
 
 		mPrefCoderFox = findPreference("coderfox");
 		mPrefCoderFox.setOnPreferenceClickListener(this);
+
+		mPrefHearSilent = findPreference("hearsilent");
+		mPrefHearSilent.setOnPreferenceClickListener(this);
 	}
 
 	@Override
 	public boolean onPreferenceClick(Preference pref) {
 		if (pref == mPrefCoderFox) {
 			openWebsite(getString(R.string.contributors_coderfox_weibo_url));
+			return true;
+		}
+		if (pref == mPrefHearSilent) {
+			openWebsite("https://github.com/hearsilent");
 			return true;
 		}
 		return false;

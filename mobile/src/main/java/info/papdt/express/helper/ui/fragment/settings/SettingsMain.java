@@ -8,6 +8,7 @@ import android.support.design.widget.Snackbar;
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.support.ClipboardUtils;
 import info.papdt.express.helper.ui.SettingsActivity;
+import moe.feng.alipay.zerosdk.AlipayZeroSdk;
 
 public class SettingsMain extends AbsPrefFragment implements Preference.OnPreferenceClickListener {
 
@@ -64,8 +65,13 @@ public class SettingsMain extends AbsPrefFragment implements Preference.OnPrefer
 			return true;
 		}
 		if (pref == mPrefAlipay) {
-			ClipboardUtils.putString(getActivity(), getString(R.string.alipay_support_account));
-			makeSnackbar(getString(R.string.toast_copied_successfully), Snackbar.LENGTH_SHORT).show();
+			if (AlipayZeroSdk.hasInstalledAlipayClient(getActivity())) {
+				AlipayZeroSdk.startAlipayClient(getActivity(), "aehvyvf4taua18zo6e");
+			} else {
+				ClipboardUtils.putString(getActivity(), getString(R.string.alipay_support_account));
+				makeSnackbar(getString(R.string.toast_copied_successfully), Snackbar.LENGTH_SHORT)
+						.show();
+			}
 			return true;
 		}
 		if (pref == mPrefLicense) {
