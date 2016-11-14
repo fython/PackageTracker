@@ -21,7 +21,7 @@ public class PackageDatabase {
 	private ArrayList<Package> delivered, delivering;
 	private Context mContext;
 
-	private static PackageDatabase sInstance;
+	private volatile static PackageDatabase sInstance;
 
 	private Package lastRemovedData = null;
 	private int lastRemovedPosition = -1;
@@ -32,7 +32,11 @@ public class PackageDatabase {
 
 	public static PackageDatabase getInstance(Context context) {
 		if (sInstance == null) {
-			sInstance = new PackageDatabase(context);
+			synchronized (PackageDatabase.class) {
+				if (sInstance == null) {
+					sInstance = new PackageDatabase(context);
+				}
+			}
 		}
 		return sInstance;
 	}
