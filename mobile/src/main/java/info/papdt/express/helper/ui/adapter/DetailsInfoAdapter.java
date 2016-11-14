@@ -1,9 +1,14 @@
 package info.papdt.express.helper.ui.adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.AppCompatTextView;
+import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,9 +26,14 @@ public class DetailsInfoAdapter extends RecyclerView.Adapter {
 
 	private final String STRING_NUMBER_FORMAT;
 
+	private Activity parentActivity;
+
 	public DetailsInfoAdapter(Context context) {
 		super();
 		this.STRING_NUMBER_FORMAT = context.getString(R.string.list_package_number_format);
+		if (context instanceof Activity) {
+			parentActivity = (Activity) context;
+		}
 	}
 
 	public void setData(Package newData, ArrayList<ItemType> items) {
@@ -118,8 +128,45 @@ public class DetailsInfoAdapter extends RecyclerView.Adapter {
 					StatusItemHolder h = (StatusItemHolder) holder;
 					if (itemType.id == ItemType.ID_STATUS) {
 						Package.Status status = data.data.get(itemType.statusIndex);
-						h.title.setText(status.context);
-						h.time.setText(status.time);
+
+						/** Show time and location (if available) */
+						String timeText = status.time;
+						String location = status.getLocation();
+						if (location != null) {
+							timeText += "  ·  " + location;
+						}
+						h.time.setText(timeText);
+
+						/** Show status */
+						String context = status.context;
+						if (location != null) {
+							if (context.contains("]")) {
+								context = context.substring(
+										context.indexOf("]") + 1,
+										context.length()
+								).trim();
+							} else if (context.contains("】")) {
+								context = context.substring(
+										context.indexOf("】") + 1,
+										context.length()
+								).trim();
+							}
+
+							if (context.startsWith("的")) {
+								context = context.substring(
+										context.indexOf("的") + 1,
+										context.length()
+								).trim();
+							}
+						}
+						h.title.setText(context);
+
+						/** Show contact card if available */
+						String phone = status.getPhone();
+						if (phone != null) h.phone.setText(phone);
+						h.contactCard.setVisibility(phone != null ? View.VISIBLE : View.GONE);
+
+						/** Set up step view style */
 						if (itemType.statusIndex == 0) {
 							h.stepView.setIsMini(false);
 							h.stepView.setLineShouldDraw(false, data.data.size() > 1);
@@ -228,11 +275,30 @@ public class DetailsInfoAdapter extends RecyclerView.Adapter {
 		AppCompatTextView title, time;
 		VerticalStepView stepView;
 
+		CardView contactCard;
+		AppCompatTextView phone;
+
 		public StatusItemHolder(View itemView) {
 			super(itemView);
 			title = (AppCompatTextView) itemView.findViewById(R.id.tv_title);
 			time = (AppCompatTextView) itemView.findViewById(R.id.tv_time);
 			stepView = (VerticalStepView) itemView.findViewById(R.id.step_view);
+			contactCard = (CardView) itemView.findViewById(R.id.contact_card);
+			phone = (AppCompatTextView) itemView.findViewById(R.id.contact_number);
+
+			View.OnClickListener callPhone = new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					if (!TextUtils.isEmpty(phone.getText().toString())
+							&& parentActivity != null) {
+						Intent intent = new Intent(Intent.ACTION_DIAL);
+						intent.setData(Uri.parse("tel:" + phone.getText().toString()));
+						parentActivity.startActivity(intent);
+					}
+				}
+			};
+			contactCard.setOnClickListener(callPhone);
+			itemView.findViewById(R.id.btn_call_contact).setOnClickListener(callPhone);
 		}
 
 	}

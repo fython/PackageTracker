@@ -129,6 +129,7 @@
 	<string name="list_package_name">名称</string>
 	<string name="list_package_number">运单号码</string>
 	<string name="list_package_number_format">%1$s (%2$s)</string>
+	<string name="list_package_contact_name">快递员</string>
 
 	<string name="dialog_edit_name_title">编辑名称</string>
 	<string name="toast_edit_name_is_empty">包裹名称不能为空。</string>

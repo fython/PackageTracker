@@ -6,18 +6,18 @@
 	<string name="navigation_item_all">全部</string>
 	<string name="navigation_item_delivered">已送達</string>
 	<string name="navigation_item_on_the_way">運輸中</string>
-	<string name="frame_empty_tip">點擊 “添加” 按鈕新增快遞包裹</string>
+	<string name="frame_empty_tip">點擊 “添加” 按鈕新增速遞包裹</string>
 
 	<string name="action_search">搜尋</string>
 	<string name="action_read_all">全部標為已讀</string>
 	<string name="action_settings">設定</string>
 
-	<string name="item_text_cannot_get_package_status">無法獲取最新狀態</string>
+	<string name="item_text_cannot_get_package_status">無法拉取最新狀態</string>
 	<string-array name="item_status_description">
-		<item>運輸中</item>
-		<item>其他</item>
-		<item>錯誤</item>
-		<item>已送達</item>
+		<item>运输中</item>
+		<item>其它</item>
+		<item>错误</item>
+		<item>已送达</item>
 		<item>已退回</item>
 		<item>正在派送</item>
 		<item>正在退回</item>
@@ -25,25 +25,25 @@
 
 	<string name="action_remove">移除</string>
 	<string name="toast_item_removed">%s 已被移除。</string>
-	<string name="toast_item_removed_action">取消</string>
+	<string name="toast_item_removed_action">撤銷</string>
 	<string name="toast_all_read">%d 個包裹已標為已讀。</string>
 
 	<!-- Add -->
 	<string name="activity_add">新增包裹</string>
 	<string name="text_field_number">運單號碼</string>
 	<string name="toast_number_wrong">你的運單號碼不正確，檢查一下再嘗試。</string>
-	<string name="toast_number_exist">快遞包裹已經在列表內，不要重複添加。</string>
+	<string name="toast_number_exist">速遞包裹已經在列表內，不要重複添加。</string>
 	<string name="operation_scan">掃描條碼</string>
-	<string name="operation_manually_choose_company">不是正確的快遞公司？</string>
-	<string name="operation_manually_choose_company_when_cannot_find">手動選擇快遞公司</string>
+	<string name="operation_manually_choose_company">不是正确的速遞公司？</string>
+	<string name="operation_manually_choose_company_when_cannot_find">手動選擇速遞公司</string>
 	<string name="message_no_internet_connection">無法連接到網際網路。</string>
-	<string name="description_no_internet_connection">請打開 Wi-Fi 或行動網路再試。</string>
-	<string name="message_no_found">快遞包裹似乎不存在。</string>
-	<string name="description_no_found">檢查你的運單號碼或者手動選擇正確的快遞公司。</string>
+	<string name="description_no_internet_connection">請打開 Wi-Fi 或移動數據網路再試。</string>
+	<string name="message_no_found">速遞包裹似乎不存在。</string>
+	<string name="description_no_found">檢查你的運單號碼或者手動選擇正確的速遞公司。</string>
 	<string name="text_field_name">包裹名稱（可選）</string>
-	<string name="message_successful_format">添加快遞包裹 \"%1$s (%2$s)\" 已就緒。現在你還可以給它取名字便於辨識。</string>
+	<string name="message_successful_format">添加速遞包裹 \"%1$s (%2$s)\" 已就緒。現在你還可以給它起一個名便於辨識。</string>
 	<string name="description_successful_format">最新狀態：%1$s (%2$s)</string>
-	<string name="package_name_unnamed">快遞 %s</string>
+	<string name="package_name_unnamed">速遞 %s</string>
 	<string name="toast_unknown_error">發生了未知錯誤！請返回輸入重試。</string>
 
 	<!-- Scanner -->
@@ -59,13 +59,13 @@
 	<string name="buttonbar_default_right">下一步</string>
 
 	<!-- Choose company -->
-	<string name="activity_choose_company">選擇快遞公司</string>
-	<string name="search_hint_company">搜尋公司&#8230;</string>
+	<string name="activity_choose_company">選擇速遞公司</string>
+	<string name="search_hint_company">搜尋公司....</string>
 	<string name="search_no_result">無結果</string>
 
 	<!-- Settings -->
 	<string name="activity_settings">設定</string>
-	<string name="category_user_interface">介面</string>
+	<string name="category_user_interface">用戶介面</string>
 	<string name="category_network">網路</string>
 	<string name="toast_need_restart">設定將在重啟程式後生效。</string>
 	<string name="toast_need_restart_action">立刻重啟</string>
@@ -74,21 +74,21 @@
 	<string name="author_sina_title">新浪微博</string>
 	<string name="author_sina_desc">\@FungGo</string>
 	<string name="author_sina_url">http://weibo.com/fython</string>
-	<string name="github_repo_title">Github 原始碼</string>
+	<string name="github_repo_title">Github 源代碼</string>
 	<string name="github_repo_url">https://github.com/fython/PackageTracker</string>
-	<string name="alipay_support_title">透過支付寶贊助</string>
-	<string name="alipay_support_summary">316643843@qq.com (點擊複製)</string>
+	<string name="alipay_support_title">通過支付寶捐贈</string>
+	<string name="alipay_support_summary">316643843@qq.com (點按拷貝)</string>
 	<string name="alipay_support_account">316643843\@qq.com</string>
-	<string name="toast_copied_successfully">支付寶帳號已成功複製到剪貼簿。</string>
-	<string name="open_source_license">開放源代碼授權</string>
+	<string name="toast_copied_successfully">支付寶帳號已成功拷貝到剪貼板。</string>
+	<string name="open_source_license">開放源代碼許可證</string>
 	<string name="open_source_license_summary">GPL v3</string>
-	<string name="icon_designer_title">Icon &amp; 海報設計師</string>
+	<string name="icon_designer_title">徽標 &amp; 海報設計師</string>
 	<string name="icon_designer_summary">\@翟宅宅Jack</string>
 	<string name="icon_designer_url">http://weibo.com/u/1934471601</string>
 
 	<string name="category_ui_common">通用</string>
 	<string name="pref_navigation_tint">導航欄變色</string>
-	<string name="pref_navigation_tint_summary">此功能只會在 Android 5.0 或更高版本啟用。</string>
+	<string name="pref_navigation_tint_summary">這項特性只會在 Android 5.0 與更高版本啟用。</string>
 
 	<string name="category_notification">通知</string>
 	<string name="item_notification_interval">檢查頻率</string>
@@ -96,15 +96,15 @@
 	<string name="category_contributors">代碼貢獻者</string>
 	<string name="category_contributors_desc">沒有他們的努力就沒有更好的體驗</string>
 	<string name="contributors_coderfox">小傅Fox</string>
-	<string name="contributors_coderfox_desc">自動獲取快遞公司列表; 允許強制添加包裹; 改進翻譯</string>
+	<string name="contributors_coderfox_desc">自動拉取速遞公司列表; 允許強制添加包裹; 改進翻譯</string>
 	<string name="contributors_coderfox_weibo_url">http://weibo.com/coderfox</string>
 
 	<string-array name="notification_interval">
-		<item>10 分鐘</item>
-		<item>30 分鐘</item>
-		<item>60 分鐘</item>
-		<item>90 分鐘</item>
-		<item>從不</item>
+		<item>10 分钟</item>
+		<item>30 分钟</item>
+		<item>60 分钟</item>
+		<item>90 分钟</item>
+		<item>从不</item>
 	</string-array>
 	<string-array name="notification_interval_item">
 		<item>0</item>
@@ -120,39 +120,40 @@
 	<!-- Details -->
 	<string name="activity_details">詳情</string>
 	<string name="action_set_unread">標為未讀</string>
-	<string name="action_copy_code">複製單號</string>
+	<string name="action_copy_code">拷貝單號</string>
 	<string name="action_share">分享</string>
 	<string name="action_delete">移除</string>
-	<string name="toast_copied_code">運單號碼已成功複製到剪貼簿。</string>
+	<string name="toast_copied_code">運單號碼已成功拷貝到剪貼板。</string>
 
-	<string name="list_status_subheader">物流訊息</string>
+	<string name="list_status_subheader">物流讯息</string>
 	<string name="list_package_name">名稱</string>
 	<string name="list_package_number">運單號碼</string>
 	<string name="list_package_number_format">%1$s (%2$s)</string>
+	<string name="list_package_contact_name">快遞員</string>
 
 	<string name="dialog_edit_name_title">編輯名稱</string>
 	<string name="toast_edit_name_is_empty">包裹名稱不能為空。</string>
 
 	<string name="dialog_share_title">分享我的包裹</string>
-	<string name="share_info_format">%1$s (%2$s %3$s) 最新狀態： %4$s - %5$s (水錶助手)</string>
+	<string name="share_info_format">%1$s (%2$s %3$s) 最新狀態： %4$s - %5$s (發自水錶助手)</string>
 
 	<string name="dialog_delete_title">刪除</string>
 	<string name="dialog_delete_message">你將不再跟蹤這個包裹的物流訊息。</string>
 
 	<!-- Search -->
 	<string name="activity_search">搜尋</string>
-	<string name="search_hint_common">包裹或公司&#8230;</string>
+	<string name="search_hint_common">包裹或公司....</string>
 	<string name="subheader_package">包裹</string>
-	<string name="subheader_company">快遞公司</string>
-	<string name="item_title_please_wait">請稍後&#8230;</string>
+	<string name="subheader_company">速遞公司</string>
+	<string name="item_title_please_wait">請稍後....</string>
 
 	<!-- Notification -->
 	<string name="notification_delivered">包裹已經送達。</string>
 	<string name="notification_on_the_way">包裹正在派送中。</string>
-	<string name="notification_new_message">包裹有一個新的物流訊息。</string>
+	<string name="notification_new_message">包裹有一条新的物流訊息。</string>
 	<string name="operation_force_add_when_cannot_find">強制添加(%s)</string>
 	<string name="message_failure_forced">沒有訊息──包裹被強制添加。</string>
-	<string name="message_invalid_company">無法識別快遞公司</string>
+	<string name="message_invalid_company">沒有識別到速遞公司</string>
 
 	<!-- Widget -->
 	<string name="hint_all_package_delivered">所有包裹均已送達。</string>

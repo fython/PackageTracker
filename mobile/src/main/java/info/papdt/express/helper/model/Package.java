@@ -9,6 +9,8 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import info.papdt.express.helper.api.PackageApi;
 
@@ -100,9 +102,59 @@ public class Package {
 		}
 	}
 
-	public class Status {
+	public static class Status {
 
 		@Expose public String time, location, context, ftime;
+		@Expose public String phone;
+
+		private void processOldData() {
+			String qszp = "签收照片,";
+			if (context.startsWith(qszp)) {
+				context = context
+						.substring(context.indexOf(qszp) + qszp.length(), context.length())
+						.trim();
+			}
+		}
+
+		public String getLocation() {
+			processOldData(); // dirty method
+
+			if (location != null) return location;
+			if (context.startsWith("【")) {
+				location = context.substring(context.indexOf("【") + 1, context.indexOf("】")).trim();
+			}
+			if (context.startsWith("[")) {
+				location = context.substring(context.indexOf("[") + 1, context.indexOf("]")).trim();
+			}
+			return location;
+		}
+
+		public String getPhone() {
+			if (phone != null) return phone;
+			return phone = Status.findContact(context);
+		}
+
+		public static String findContact(String s) {
+			String number = checkNum(s);
+			if (number == null || number.length() < 8) return null;
+			if (number.contains(",")) number = number.substring(0, number.indexOf(","));
+			return number;
+		}
+
+		private static String checkNum(String num){
+			if (num == null || num.length() == 0) return "";
+			Pattern pattern = Pattern.compile("(?<!\\d)(?:(?:1[3578]\\d{9})|(?:861[3578]\\d{9}))(?!\\d)");
+			Matcher matcher = pattern.matcher(num);
+			StringBuffer bf = new StringBuffer(64);
+			while (matcher.find()) {
+				bf.append(matcher.group()).append(",");
+			}
+			int len = bf.length();
+			if (len > 0) {
+				bf.deleteCharAt(len - 1);
+			}
+			return bf.toString();
+		}
 
 	}
 

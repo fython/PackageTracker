@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:tools="http://schemas.android.com/tools"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:orientation="horizontal"
               android:layout_gravity="start"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-			  android:layout_marginStart="8dp">
+              android:layout_marginStart="8dp">
 
 	<info.papdt.express.helper.view.VerticalStepView
 		android:layout_width="48dp"
@@ -33,13 +34,77 @@
 
 		<Space android:layout_width="match_parent" android:layout_height="8dp"/>
 
+		<android.support.v7.widget.CardView
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="4dp"
+			android:layout_marginEnd="4dp"
+			android:layout_marginTop="8dp"
+			android:layout_marginBottom="16dp"
+			android:id="@+id/contact_card"
+			android:visibility="gone"
+			android:clickable="true"
+			android:foreground="?attr/selectableItemBackground"
+			app:cardElevation="2dp"
+			tools:visibility="visible">
+
+			<LinearLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal">
+
+				<de.hdodenhof.circleimageview.CircleImageView
+					android:layout_width="32dp"
+					android:layout_height="32dp"
+					android:layout_margin="16dp"
+					android:src="@drawable/avatar_placeholder_empty"/>
+
+				<LinearLayout
+					android:layout_width="0dp"
+					android:layout_height="wrap_content"
+					android:layout_weight="1"
+					android:orientation="vertical"
+					android:layout_marginStart="8dp"
+					android:layout_marginEnd="8dp"
+					android:layout_gravity="center_vertical">
+
+					<android.support.v7.widget.AppCompatTextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+						android:text="@string/list_package_contact_name"/>
+
+					<Space android:layout_width="match_parent" android:layout_height="4dp"/>
+
+					<android.support.v7.widget.AppCompatTextView
+						android:layout_width="wrap_content"
+						android:layout_height="wrap_content"
+						android:id="@+id/contact_number"
+						android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+						android:alpha="0.87"
+						tools:text="13800138000"/>
+
+				</LinearLayout>
+
+				<android.support.v7.widget.AppCompatImageButton
+					android:layout_width="48dp"
+					android:layout_height="match_parent"
+					android:paddingEnd="8dp"
+					android:id="@+id/btn_call_contact"
+					android:background="?attr/selectableItemBackgroundBorderless"
+					android:src="@drawable/ic_call_black_20dp"/>
+
+			</LinearLayout>
+
+		</android.support.v7.widget.CardView>
+
 		<android.support.v7.widget.AppCompatTextView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:id="@+id/tv_time"
 			android:textAppearance="@style/TextAppearance.AppCompat.Body1"
 			android:alpha="0.53"
-			tools:text="2016-06-09 17:00"/>
+			tools:text="2016-06-09 17:00  ·  Location"/>
 
 	</LinearLayout>
 
