@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<shortcut
+		android:shortcutId="add"
+		android:enabled="true"
+		android:icon="@drawable/ic_shortcut_add"
+		android:shortcutShortLabel="@string/label_shortcut_add"
+		android:shortcutLongLabel="@string/label_shortcut_add">
+		<intent
+			android:action="android.intent.action.VIEW"
+			android:targetPackage="info.papdt.express.helper"
+			android:targetClass="info.papdt.express.helper.ui.AddActivity" />
+		<categories android:name="android.shortcut.conversation" />
+	</shortcut>
+
+	<shortcut
+		android:shortcutId="scan"
+		android:enabled="true"
+		android:icon="@drawable/ic_shortcut_scan"
+		android:shortcutShortLabel="@string/label_shortcut_scan"
+		android:shortcutLongLabel="@string/label_shortcut_scan">
+		<intent
+			android:action="info.papdt.express.helper.ACTION_SCAN_TO_ADD"
+			android:targetPackage="info.papdt.express.helper"
+			android:targetClass="info.papdt.express.helper.ui.AddActivity"/>
+		<categories android:name="android.shortcut.conversation" />
+	</shortcut>
+
+</shortcuts>

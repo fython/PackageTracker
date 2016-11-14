@@ -2,6 +2,10 @@
 
 	<string name="app_name">水錶助手</string>
 
+	<!-- Shortcuts -->
+	<string name="label_shortcut_add">手動添加</string>
+	<string name="label_shortcut_scan">掃描條碼</string>
+
 	<!-- Home design -->
 	<string name="navigation_item_all">全部</string>
 	<string name="navigation_item_delivered">已送達</string>

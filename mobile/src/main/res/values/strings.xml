@@ -2,6 +2,10 @@
 
 	<string name="app_name">Package Tracker</string>
 
+	<!-- Shortcuts -->
+	<string name="label_shortcut_add">Add manually</string>
+	<string name="label_shortcut_scan">Scan barcode</string>
+
 	<!-- Home design -->
 	<string name="navigation_item_all">All</string>
 	<string name="navigation_item_delivered">Delivered</string>
