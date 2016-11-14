@@ -42,3 +42,4 @@
 -keep class com.rengwuxian.** {*;}
 -keep class okio.** {*;}
 -keep class com.google.** {*;}
+-keep class moe.feng.alipay.zerosdk.** {*;}

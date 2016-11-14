@@ -121,7 +121,8 @@ public class DetailsActivity extends AbsActivity {
 		mToolbarLayout.setContentScrimColor(color);
 		mToolbarLayout.setStatusBarScrimColor(colorDark);
 		DrawableCompat.setTint(drawable, color);
-		if (getSettings().getBoolean(Settings.KEY_NAVIGATION_TINT, true) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+		if (getSettings().getBoolean(Settings.KEY_NAVIGATION_TINT, true)
+				&& Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !isNightMode()) {
 			getWindow().setNavigationBarColor(colorDark);
 		}
 	}

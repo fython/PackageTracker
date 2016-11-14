@@ -14,6 +14,8 @@
 		android:layout_marginEnd="16dp"
 		android:hint="@string/text_field_number"
 		app:met_primaryColor="?attr/colorPrimary"
+		app:met_textColor="@color/list_text_title_color"
+		app:met_textColorHint="@color/list_text_hint_color"
 		app:met_floatingLabel="highlight"
 		app:met_floatingLabelText="@string/text_field_number"
 		app:met_maxCharacters="24"

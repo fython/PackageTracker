@@ -89,6 +89,14 @@
 	<string name="category_ui_common">通用</string>
 	<string name="pref_navigation_tint">導航欄變色</string>
 	<string name="pref_navigation_tint_summary">這項特性只會在 Android 5.0 與更高版本啟用。</string>
+	<string name="pref_night_mode">夜間主題</string>
+
+	<string-array name="night_mode_choices">
+		<item>跟隨系統設定 (默認)</item>
+		<item>自動</item>
+		<item>強制開啟</item>
+		<item>強制關閉</item>
+	</string-array>
 
 	<string name="category_notification">通知</string>
 	<string name="item_notification_interval">檢查頻率</string>

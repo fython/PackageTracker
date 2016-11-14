@@ -1,5 +1,6 @@
 package info.papdt.express.helper.ui.common;
 
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
@@ -34,6 +35,14 @@ public abstract class AbsActivity extends AppCompatActivity {
 			mActionBar = getSupportActionBar();
 		}
 		setUpViews();
+	}
+
+	public int getNightMode() {
+		return getResources().getConfiguration().uiMode & Configuration.UI_MODE_NIGHT_MASK;
+	}
+
+	public boolean isNightMode() {
+		return getNightMode() == Configuration.UI_MODE_NIGHT_YES;
 	}
 
 	protected abstract void setUpViews();

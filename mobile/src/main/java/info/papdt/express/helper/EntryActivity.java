@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatDelegate;
 
 import com.tencent.bugly.crashreport.CrashReport;
 
@@ -16,6 +17,24 @@ public class EntryActivity extends Activity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		Settings mSettings = Settings.getInstance(getApplicationContext());
+		int defaultNightMode;
+		switch (mSettings.getInt(Settings.KEY_NIGHT_MODE, 0)) {
+			case 1:
+				defaultNightMode = AppCompatDelegate.MODE_NIGHT_AUTO;
+				break;
+			case 2:
+				defaultNightMode = AppCompatDelegate.MODE_NIGHT_YES;
+				break;
+			case 3:
+				defaultNightMode = AppCompatDelegate.MODE_NIGHT_NO;
+				break;
+			case 0:
+			default:
+				defaultNightMode = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
+		}
+		AppCompatDelegate.setDefaultNightMode(defaultNightMode);
+
 		super.onCreate(savedInstanceState);
 
 		/** Init CrashReport */
@@ -35,8 +54,6 @@ public class EntryActivity extends Activity {
 		CrashReport.initCrashReport(getApplicationContext(), Constants.BUGLY_APP_ID, Constants.BUGLY_ENABLE_DEBUG, strategy);
 
 		/** Open activity */
-		Settings mSettings = Settings.getInstance(getApplicationContext());
-
 		if (mSettings.getBoolean(Settings.KEY_FIRST_RUN, true)) {
 			mSettings.putBoolean(Settings.KEY_FIRST_RUN, false);
 			Intent intent = new Intent(this, SplashActivity.class);

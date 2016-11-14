@@ -1,11 +1,15 @@
 package info.papdt.express.helper.ui.fragment.settings;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceFragment;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.Snackbar;
+import android.support.v4.content.IntentCompat;
 import android.view.View;
 
 import info.papdt.express.helper.R;
@@ -39,13 +43,14 @@ abstract class AbsPrefFragment extends PreferenceFragment {
 				.setAction(R.string.toast_need_restart_action, new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
-						Intent i = getParentActivity()
-								.getBaseContext()
-								.getPackageManager()
-								.getLaunchIntentForPackage(getParentActivity().getPackageName());
-						i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+						Context context = getParentActivity();
+						PackageManager packageManager = context.getPackageManager();
+						Intent intent = packageManager.getLaunchIntentForPackage(context.getPackageName());
+						ComponentName componentName = intent.getComponent();
+						Intent i = IntentCompat.makeRestartActivityTask(componentName);
 						getParentActivity().startActivity(i);
-						getParentActivity().finish();
+
+						System.exit(0);
 					}
 				}).show();
 	}

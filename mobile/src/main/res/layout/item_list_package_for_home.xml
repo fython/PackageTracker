@@ -71,7 +71,7 @@
 				android:layout_height="wrap_content"
 				android:id="@+id/tv_title"
 				android:textAppearance="@style/TextAppearance.AppCompat.Small"
-				android:textColor="#000000"
+				android:textColor="@color/list_text_title_color"
 				android:alpha="0.87"
 				tools:text="Title"/>
 
@@ -92,7 +92,7 @@
 				android:layout_gravity="end"
 				android:layout_marginEnd="16dp"
 				android:textAppearance="@style/TextAppearance.AppCompat.Small"
-				android:textColor="#000000"
+				android:textColor="@color/list_text_title_color"
 				android:alpha="0.54"
 				tools:text="2016-07-01 13:00:14"/>
 

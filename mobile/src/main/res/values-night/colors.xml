@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<color name="colorPrimary">@color/blue_grey_500</color>
+	<color name="colorPrimaryDark">@color/blue_grey_700</color>
+	<color name="colorAccent">@color/indigo_500</color>
+
+	<array name="statusColor">
+		<item>@color/teal_500</item>
+		<item>@color/red_500</item>
+		<item>@color/red_500</item>
+		<item>@color/green_500</item>
+		<item>@color/teal_500</item>
+		<item>@color/deep_orange_500</item>
+		<item>@color/yellow_500</item>
+	</array>
+
+	<!-- UI -->
+	<color name="list_text_title_color">#FFFFFF</color>
+	<color name="list_text_hint_color">#4FFFFFFF</color>
+
+	<color name="button_pressed_color">#424242</color>
+
+	<color name="button_bar_color">@color/grey_900</color>
+	<color name="lollipop_status_bar_grey">@color/grey_900</color>
+
+	<color name="light_theme_status_bar">@color/grey_900</color>
+	<color name="light_theme_app_bar">@color/grey_850</color>
+	<color name="light_theme_background">@color/grey_850</color>
+
+	<color name="package_list_status_subtext_color">#bdbdbd</color>
+	<color name="package_list_status_title_color">#e0e0e0</color>
+
+	<color name="dark_theme_translucent_app_bar">#4F000000</color>
+
+</resources>

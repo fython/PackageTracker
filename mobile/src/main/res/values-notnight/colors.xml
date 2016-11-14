@@ -5,40 +5,6 @@
 	<color name="colorPrimaryDark">@color/pink_700</color>
 	<color name="colorAccent">@color/blue_500</color>
 
-	<color name="grey_1000">#000000</color>
-	<color name="grey_900">#212121</color>
-	<color name="grey_850">#303030</color>
-	<color name="grey_800">#424242</color>
-	<color name="grey_500">#9E9E9E</color>
-	<color name="grey_300">#E0E0E0</color>
-	<color name="grey_100">#F5F5F5</color>
-	<color name="grey_50">#FAFAFA</color>
-
-	<color name="red_500">#F44336</color>
-
-	<color name="pink_500">#E91E63</color>
-	<color name="pink_700">#C2185B</color>
-	<color name="pink_900">#880E4F</color>
-
-	<color name="indigo_500">#3F51B5</color>
-
-	<color name="blue_500">#2196F3</color>
-	<color name="blue_700">#1976D2</color>
-
-	<color name="teal_500">#009688</color>
-	<color name="teal_700">#00796B</color>
-
-	<color name="green_500">#4CAF50</color>
-
-	<color name="yellow_500">#FFEB3B</color>
-
-	<color name="deep_orange_500">#FF5722</color>
-
-	<color name="brown_500">#795548</color>
-
-	<color name="blue_grey_500">#607D8B</color>
-	<color name="blue_grey_700">#455A64</color>
-
 	<array name="statusColor">
 		<item>@color/teal_500</item>
 		<item>@color/red_500</item>

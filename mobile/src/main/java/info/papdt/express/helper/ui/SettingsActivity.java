@@ -35,7 +35,8 @@ public class SettingsActivity extends AbsActivity {
 
 		super.onCreate(savedInstanceState);
 
-		if (getSettings().getBoolean(Settings.KEY_NAVIGATION_TINT, true) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+		if (getSettings().getBoolean(Settings.KEY_NAVIGATION_TINT, true)
+				&& Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !isNightMode()) {
 			getWindow().setNavigationBarColor(getResources().getColor(R.color.colorPrimaryDark));
 		}
 

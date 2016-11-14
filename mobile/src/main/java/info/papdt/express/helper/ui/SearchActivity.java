@@ -51,7 +51,8 @@ public class SearchActivity extends AbsActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		if (getSettings().getBoolean(Settings.KEY_NAVIGATION_TINT, true) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+		if (getSettings().getBoolean(Settings.KEY_NAVIGATION_TINT, true)
+				&& Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !isNightMode()) {
 			getWindow().setNavigationBarColor(getResources().getColor(R.color.lollipop_status_bar_grey));
 		}
 
@@ -71,7 +72,7 @@ public class SearchActivity extends AbsActivity {
 								if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 									overridePendingTransition(R.anim.do_not_move, R.anim.do_not_move);
 									getWindow().getDecorView().setSystemUiVisibility(
-											Build.VERSION.SDK_INT < Build.VERSION_CODES.M
+											Build.VERSION.SDK_INT < Build.VERSION_CODES.M || isNightMode()
 													? View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
 													: View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN | View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
 									);

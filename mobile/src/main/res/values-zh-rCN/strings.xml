@@ -89,6 +89,14 @@
 	<string name="category_ui_common">通用</string>
 	<string name="pref_navigation_tint">导航栏变色</string>
 	<string name="pref_navigation_tint_summary">这项特性只会在 Android 5.0 及更高版本启用。</string>
+	<string name="pref_night_mode">夜间主题</string>
+
+	<string-array name="night_mode_choices">
+		<item>跟随系统设置 (默认)</item>
+		<item>自动</item>
+		<item>强制开启</item>
+		<item>强制关闭</item>
+	</string-array>
 
 	<string name="category_notification">通知</string>
 	<string name="item_notification_interval">检查频率</string>

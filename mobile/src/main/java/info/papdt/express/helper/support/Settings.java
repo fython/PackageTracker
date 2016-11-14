@@ -9,7 +9,8 @@ public class Settings {
 	public static final String KEY_NOTIFICATION_SOUND = "noti_sound",
 			KEY_NOTIFICATION_VIBRATE = "noti_vibrate",
 			KEY_NOTIFICATION_INTERVAL = "noti_interval",
-			KEY_NOTIFICATION_DO_NOT_DISTURB = "noti_do_not_disturb";
+			KEY_NOTIFICATION_DO_NOT_DISTURB = "noti_do_not_disturb",
+			KEY_NIGHT_MODE = "night_mode";
 
 	public static final String KEY_NAVIGATION_TINT = "navi_tint";
 

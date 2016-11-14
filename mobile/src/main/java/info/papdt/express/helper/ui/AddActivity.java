@@ -44,7 +44,8 @@ public class AddActivity extends AbsActivity{
 			getWindow().setStatusBarColor(Color.TRANSPARENT);
 		}
 		super.onCreate(savedInstanceState);
-		if (getSettings().getBoolean(Settings.KEY_NAVIGATION_TINT, true) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+		if (getSettings().getBoolean(Settings.KEY_NAVIGATION_TINT, true)
+				&& Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !isNightMode()) {
 			getWindow().setNavigationBarColor(getResources().getColor(R.color.brown_500));
 		}
 		setContentView(R.layout.activity_add);
