@@ -202,8 +202,8 @@ public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageList
 
 		@Override
 		protected void onPerformAction() {
-			final String title = adapter.db.get(adapter.db.size() - position - 1).name;
-			adapter.db.remove(adapter.db.size() - position - 1);
+			final String title = getItemData(position).name;
+			adapter.db.remove(getItemData(position));
 			adapter.notifyItemRemoved(position);
 			if (mDataRemovedCallback != null) mDataRemovedCallback.onDataRemoved(position, title);
 		}
