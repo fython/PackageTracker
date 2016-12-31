@@ -92,8 +92,8 @@ public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageList
 			holder.bigCharView.setText(p.name.substring(0, 1));
 			holder.logoView.setImageDrawable(new ColorDrawable(ColorGenerator.MATERIAL.getColor(p.name)));
 		} else {
-			holder.bigCharView.setText(" ");
-			holder.logoView.setImageDrawable(new ColorDrawable(ColorGenerator.MATERIAL.getColor(" ")));
+			holder.bigCharView.setText(p.companyChineseName);
+			holder.logoView.setImageDrawable(new ColorDrawable(ColorGenerator.MATERIAL.getColor(p.companyChineseName)));
 		}
 
 		/** Add paddingTop/Bottom to the first or last item */
