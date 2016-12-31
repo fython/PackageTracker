@@ -88,8 +88,13 @@ public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageList
 		holder.titleText.getPaint().setFakeBoldText(p.unreadNew);
 
 		/** Set CircleImageView */
-		holder.bigCharView.setText(p.name.substring(0, 1));
-		holder.logoView.setImageDrawable(new ColorDrawable(ColorGenerator.MATERIAL.getColor(p.name)));
+		if (p.name.length() > 0){
+			holder.bigCharView.setText(p.name.substring(0, 1));
+			holder.logoView.setImageDrawable(new ColorDrawable(ColorGenerator.MATERIAL.getColor(p.name)));
+		} else {
+			holder.bigCharView.setText(" ");
+			holder.logoView.setImageDrawable(new ColorDrawable(ColorGenerator.MATERIAL.getColor(" ")));
+		}
 
 		/** Add paddingTop/Bottom to the first or last item */
 		if (position == 0) {
