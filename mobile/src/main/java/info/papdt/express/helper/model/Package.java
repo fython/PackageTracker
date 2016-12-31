@@ -47,14 +47,20 @@ public class Package {
 	}
 
 	public static Package buildFromJson(String json) {
-		Package p = new Gson().fromJson(json, Package.class);
-		if (p.companyChineseName == null && p.companyType != null) {
-			p.companyChineseName = PackageApi.CompanyInfo.getNameByCode(p.companyType);
+		try {
+			Package p = new Gson().fromJson(json, Package.class);
+			if (p.companyChineseName == null && p.companyType != null) {
+				p.companyChineseName = PackageApi.CompanyInfo.getNameByCode(p.companyType);
+			}
+			if (p.companyType == null) {
+				p.companyType = p.companyType1;
+			}
+			return p;
+		}catch (Exception e){
+			//may not be a json string
+			e.printStackTrace();
+			return new Package();
 		}
-		if (p.companyType == null) {
-			p.companyType = p.companyType1;
-		}
-		return p;
 	}
 
 	public void applyNewData(Package newData) {
