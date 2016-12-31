@@ -1,6 +1,7 @@
 package info.papdt.express.helper.ui.fragment.add;
 
 import android.content.Intent;
+import android.text.InputType;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
@@ -32,7 +33,8 @@ public class StepInput extends AbsStepFragment {
 	@Override
 	protected void doCreateView(View rootView) {
 		mEditText = $(R.id.et_number);
-
+		mEditText.setRawInputType(InputType.TYPE_CLASS_NUMBER);
+		
 		$(R.id.btn_scan).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
