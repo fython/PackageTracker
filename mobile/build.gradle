@@ -38,4 +38,5 @@ dependencies {
     compile 'me.dm7.barcodescanner:zxing:1.8.4'
     compile 'com.tencent.bugly:crashreport:2.1.7'
     compile 'moe.feng:AlipayZeroSdk:1.1'
+    compile 'com.google.android.gms:play-services-appindexing:8.4.0'
 }
