@@ -69,7 +69,11 @@ public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageList
 	public void onBindViewHolder(MyViewHolder holder, int position) {
 		final Package p = getItemData(position);
 
-		holder.titleText.setText(p.name);
+		if (p.name.length() > 0) {
+			holder.titleText.setText(p.name);
+		}else {
+			holder.titleText.setText(p.companyChineseName);
+		}
 		if (p.data != null && p.data.size() > 0) {
 			Package.Status status = p.data.get(0);
 			Spanny spanny = new Spanny(STATUS_STRING_ARRAY[p.getState()], new ForegroundColorSpan(statusTitleColor))

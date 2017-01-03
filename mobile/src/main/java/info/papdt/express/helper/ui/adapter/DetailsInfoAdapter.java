@@ -137,28 +137,8 @@ public class DetailsInfoAdapter extends RecyclerView.Adapter {
 						}
 						h.time.setText(timeText);
 
-						/** Show status */
+						/** Show status context*/
 						String context = status.context;
-						if (location != null) {
-							if (context.contains("]")) {
-								context = context.substring(
-										context.indexOf("]") + 1,
-										context.length()
-								).trim();
-							} else if (context.contains("】")) {
-								context = context.substring(
-										context.indexOf("】") + 1,
-										context.length()
-								).trim();
-							}
-
-							if (context.startsWith("的")) {
-								context = context.substring(
-										context.indexOf("的") + 1,
-										context.length()
-								).trim();
-							}
-						}
 						h.title.setText(context);
 
 						/** Show contact card if available */
