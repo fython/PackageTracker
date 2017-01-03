@@ -34,7 +34,6 @@ public class StepInput extends AbsStepFragment {
 	protected void doCreateView(View rootView) {
 		mEditText = $(R.id.et_number);
 		mEditText.setRawInputType(InputType.TYPE_CLASS_NUMBER);
-		
 		$(R.id.btn_scan).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {

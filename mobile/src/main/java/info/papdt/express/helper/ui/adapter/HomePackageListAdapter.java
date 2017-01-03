@@ -91,8 +91,8 @@ public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageList
 		if (p.name.length() > 0){
 			holder.bigCharView.setText(p.name.substring(0, 1));
 			holder.logoView.setImageDrawable(new ColorDrawable(ColorGenerator.MATERIAL.getColor(p.name)));
-		} else {
-			holder.bigCharView.setText(p.companyChineseName);
+		} else if(p.companyChineseName.length() > 0){
+			holder.bigCharView.setText(p.companyChineseName.substring(0,1));
 			holder.logoView.setImageDrawable(new ColorDrawable(ColorGenerator.MATERIAL.getColor(p.companyChineseName)));
 		}
 
