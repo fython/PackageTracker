@@ -1,6 +1,7 @@
 package info.papdt.express.helper.model;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
@@ -110,7 +111,7 @@ public class Package {
 
 	public static class Status {
 
-		@Expose public String time, location, context, ftime;
+		@Expose public String time, location = null, context, ftime;
 		@Expose public String phone;
 
 		private void processOldData() {
@@ -124,12 +125,12 @@ public class Package {
 
 		public String getLocation() {
 			processOldData(); // dirty method
+			if (location != null && location.trim().length() > 0)	return location;
 
-			if (location != null) return location;
-			if (context.startsWith("【")) {
+			if (context.contains("【")) {
 				location = context.substring(context.indexOf("【") + 1, context.indexOf("】")).trim();
 			}
-			if (context.startsWith("[")) {
+			if (context.contains("[")) {
 				location = context.substring(context.indexOf("[") + 1, context.indexOf("]")).trim();
 			}
 			return location;

@@ -136,7 +136,6 @@ public class DetailsInfoAdapter extends RecyclerView.Adapter {
 							timeText += "  ·  " + location;
 						}
 						h.time.setText(timeText);
-
 						/** Show status context*/
 						String context = status.context;
 						h.title.setText(context);
