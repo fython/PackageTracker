@@ -10,6 +10,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -111,7 +112,10 @@ public class Package {
 
 	public static class Status {
 
-		@Expose public String time, location = null, context, ftime;
+		@Expose public String time;
+		@Expose public String location = null;
+		@Expose public String context;
+		@Expose public String ftime;
 		@Expose public String phone;
 
 		private void processOldData() {
@@ -125,7 +129,13 @@ public class Package {
 
 		public String getLocation() {
 			processOldData(); // dirty method
-			if (location != null && location.trim().length() > 0)	return location;
+			if (location != null) {
+				if(location.trim().length() > 0){
+					if (!Objects.equals(location.trim(), "null")){
+						return location;
+					}
+				}
+			}
 
 			if (context.contains("【")) {
 				location = context.substring(context.indexOf("【") + 1, context.indexOf("】")).trim();
