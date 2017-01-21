@@ -20,7 +20,7 @@ import info.papdt.express.helper.support.MaterialImageLoader;
 import info.papdt.express.helper.ui.common.AbsActivity;
 
 public class SplashActivity extends AbsActivity {
-	private String TAG = "express.SplashActivity";
+	private final String TAG = "express.SplashActivity";
 	private ImageView mLogoView;
 	private AppCompatTextView mTitleView;
 	/**
@@ -31,6 +31,7 @@ public class SplashActivity extends AbsActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		Log.i(TAG, "SplashActivity launch");
 		super.onCreate(savedInstanceState);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 			getWindow().getDecorView().setSystemUiVisibility(
@@ -64,8 +65,8 @@ public class SplashActivity extends AbsActivity {
 		mLogoView = $(R.id.iv_logo);
 		mTitleView = $(R.id.tv_title);
 
-		MaterialImageLoader.animate(mLogoView).setDuration(1500).start();
-		mTitleView.animate().alpha(1f).setDuration(600).start();
+		MaterialImageLoader.animate(mLogoView).setDuration(1000).start();
+		mTitleView.animate().alpha(1f).setDuration(500).start();
 	}
 
 	/**

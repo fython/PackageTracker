@@ -36,6 +36,8 @@ public class MainActivity extends AbsActivity implements OnMenuTabClickListener 
 	private BottomBar mBottomBar;
 	private BaseFragment[] fragments;
 
+	private final String TAG = "express.MainActivity";
+
 	private PackageDatabase mDatabase;
 
 	public static final int REQUEST_ADD = 10001, RESULT_NEW_PACKAGE = 2000, REQUEST_DETAILS = 10002, RESULT_DELETED = 2001, RESULT_RENAMED = 2002;
@@ -44,6 +46,7 @@ public class MainActivity extends AbsActivity implements OnMenuTabClickListener 
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		Log.i(TAG, "MainActivity launch");
 		super.onCreate(savedInstanceState);
 
 		if (getSettings().getBoolean(Settings.KEY_NAVIGATION_TINT, true)
