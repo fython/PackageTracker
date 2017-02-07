@@ -15,81 +15,82 @@
 		android:fullBackupContent="true"
 		android:theme="@style/AppTheme">
 
-		<activity android:name=".EntryActivity"
-		          android:theme="@style/EmptyActivity">
+		<activity
+			android:name=".ui.SplashActivity"
+			android:theme="@style/AppTheme">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 				<category android:name="android.intent.category.LAUNCHER"/>
 			</intent-filter>
-			<meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts"/>
 		</activity>
 
-		<activity android:name=".ui.SplashActivity"
-		          android:theme="@style/AppTheme">
+		<activity
+			android:name=".ui.MainActivity"
+			android:theme="@style/AppTheme">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 			</intent-filter>
 		</activity>
 
-		<activity android:name=".ui.MainActivity"
-		          android:theme="@style/AppTheme">
+		<activity
+			android:name=".ui.AddActivity"
+			android:label="@string/activity_add"
+			android:theme="@style/AppTheme">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 			</intent-filter>
 		</activity>
 
-		<activity android:name=".ui.AddActivity"
-		          android:label="@string/activity_add"
-		          android:theme="@style/AppTheme">
+		<activity
+			android:name=".ui.CompanyChooserActivity"
+			android:label="@string/activity_choose_company"
+			android:theme="@style/AppTheme">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 			</intent-filter>
 		</activity>
 
-		<activity android:name=".ui.CompanyChooserActivity"
-		          android:label="@string/activity_choose_company"
-		          android:theme="@style/AppTheme">
+		<activity
+			android:name=".ui.DetailsActivity"
+			android:label="@string/activity_details"
+			android:theme="@style/AppTheme">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 			</intent-filter>
 		</activity>
 
-		<activity android:name=".ui.DetailsActivity"
-		          android:label="@string/activity_details"
-		          android:theme="@style/AppTheme">
+		<activity
+			android:name=".ui.SettingsActivity"
+			android:label="@string/activity_settings"
+			android:theme="@style/AppTheme">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 			</intent-filter>
 		</activity>
 
-		<activity android:name=".ui.SettingsActivity"
-		          android:label="@string/activity_settings"
-		          android:theme="@style/AppTheme">
+		<activity
+			android:name=".ui.ScannerActivity"
+			android:label="@string/activity_scanner"
+			android:theme="@style/AppTheme.Dark">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 			</intent-filter>
 		</activity>
 
-		<activity android:name=".ui.ScannerActivity"
-		          android:label="@string/activity_scanner"
-		          android:theme="@style/AppTheme.Dark">
+		<activity
+			android:name=".ui.SearchActivity"
+			android:label="@string/activity_search"
+			android:theme="@style/AppTheme.Translucent">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 			</intent-filter>
 		</activity>
 
-		<activity android:name=".ui.SearchActivity"
-		          android:label="@string/activity_search"
-		          android:theme="@style/AppTheme.Translucent">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN"/>
-			</intent-filter>
-		</activity>
-
-		<activity android:name=".ui.shortcut.ScannerShortcutCreator"
-		          android:label="@string/activity_scanner"
-		          android:icon="@mipmap/ic_scanner_launcher"
-		          android:theme="@style/EmptyActivity">
+		<activity
+			android:name=".ui.shortcut.ScannerShortcutCreator"
+			android:label="@string/activity_scanner"
+			android:icon="@mipmap/ic_scanner_launcher"
+			android:theme="@style/EmptyActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 				<action android:name="android.intent.action.CREATE_SHORTCUT"/>
@@ -97,8 +98,9 @@
 		</activity>
 
 		<service android:name="info.papdt.express.helper.services.ReminderService"/>
-		<service android:name="info.papdt.express.helper.services.AppWidgetService"
-		         android:permission="android.permission.BIND_REMOTEVIEWS"/>
+		<service
+			android:name="info.papdt.express.helper.services.AppWidgetService"
+			android:permission="android.permission.BIND_REMOTEVIEWS"/>
 
 		<receiver android:name="info.papdt.express.helper.receiver.ConnectivityReceiver">
 			<intent-filter>
@@ -111,7 +113,11 @@
 				<action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
 			</intent-filter>
 			<meta-data android:name="android.appwidget.provider" android:resource="@xml/appwidget_provider"/>
-		</receiver>
+		</receiver><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+		<meta-data
+			android:name="com.google.android.gms.version"
+			android:value="@integer/google_play_services_version" />
 
 	</application>
 

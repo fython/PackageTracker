@@ -69,7 +69,11 @@ public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageList
 	public void onBindViewHolder(MyViewHolder holder, int position) {
 		final Package p = getItemData(position);
 
-		holder.titleText.setText(p.name);
+		if (p.name.length() > 0) {
+			holder.titleText.setText(p.name);
+		}else {
+			holder.titleText.setText(p.companyChineseName);
+		}
 		if (p.data != null && p.data.size() > 0) {
 			Package.Status status = p.data.get(0);
 			Spanny spanny = new Spanny(STATUS_STRING_ARRAY[p.getState()], new ForegroundColorSpan(statusTitleColor))
@@ -91,9 +95,9 @@ public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageList
 		if (p.name.length() > 0){
 			holder.bigCharView.setText(p.name.substring(0, 1));
 			holder.logoView.setImageDrawable(new ColorDrawable(ColorGenerator.MATERIAL.getColor(p.name)));
-		} else {
-			holder.bigCharView.setText(" ");
-			holder.logoView.setImageDrawable(new ColorDrawable(ColorGenerator.MATERIAL.getColor(" ")));
+		} else if(p.companyChineseName.length() > 0){
+			holder.bigCharView.setText(p.companyChineseName.substring(0,1));
+			holder.logoView.setImageDrawable(new ColorDrawable(ColorGenerator.MATERIAL.getColor(p.companyChineseName)));
 		}
 
 		/** Add paddingTop/Bottom to the first or last item */

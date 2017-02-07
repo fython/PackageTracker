@@ -19,8 +19,10 @@ package info.papdt.express.helper.widget;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
+import android.support.annotation.StringRes;
 import android.support.annotation.VisibleForTesting;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.NestedScrollingChild;
@@ -364,7 +366,7 @@ public class SwipeRefreshLayout extends ViewGroup implements NestedScrollingPare
 	private void createProgressView() {
 		mCircleView = new CircleImageView(getContext(), CIRCLE_BG_LIGHT, CIRCLE_DIAMETER/2);
 		mProgress = new MaterialProgressDrawable(getContext(), this);
-		mProgress.setBackgroundColor(CIRCLE_BG_LIGHT);
+		mProgress.setBackgroundColor(Color.parseColor(String.format("#%x", CIRCLE_BG_LIGHT)));
 		mCircleView.setImageDrawable(mProgress);
 		mCircleView.setVisibility(View.GONE);
 		addView(mCircleView);
@@ -526,14 +528,6 @@ public class SwipeRefreshLayout extends ViewGroup implements NestedScrollingPare
 	public void setProgressBackgroundColorSchemeColor(@ColorInt int color) {
 		mCircleView.setBackgroundColor(color);
 		mProgress.setBackgroundColor(color);
-	}
-
-	/**
-	 * @deprecated Use {@link #setColorSchemeResources(int...)}
-	 */
-	@Deprecated
-	public void setColorScheme(@ColorInt int... colors) {
-		setColorSchemeResources(colors);
 	}
 
 	/**
@@ -752,10 +746,8 @@ public class SwipeRefreshLayout extends ViewGroup implements NestedScrollingPare
 		// if this is a List < L or another view that doesn't support nested
 		// scrolling, ignore this request so that the vertical scroll event
 		// isn't stolen
-		if ((android.os.Build.VERSION.SDK_INT < 21 && mTarget instanceof AbsListView)
-				|| (mTarget != null && !ViewCompat.isNestedScrollingEnabled(mTarget))) {
-			// Nope.
-		} else {
+		if (!((android.os.Build.VERSION.SDK_INT < 21 && mTarget instanceof AbsListView)
+				|| (mTarget != null && !ViewCompat.isNestedScrollingEnabled(mTarget)))) {
 			super.requestDisallowInterceptTouchEvent(b);
 		}
 	}

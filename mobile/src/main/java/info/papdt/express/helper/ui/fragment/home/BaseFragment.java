@@ -1,5 +1,7 @@
 package info.papdt.express.helper.ui.fragment.home;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,7 +34,7 @@ public abstract class BaseFragment extends AbsFragment implements SwipeRefreshLa
 	private RecyclerViewSwipeManager mSwipeManager;
 
 	private PackageDatabase mDatabase;
-
+	private static Context sInstance = null;
 	private final static int FLAG_REFRESH_LIST = 0, FLAG_UPDATE_ADAPTER_ONLY = 1;
 
 	int eggCount = 0, bigEggCount = 0;
@@ -41,8 +43,22 @@ public abstract class BaseFragment extends AbsFragment implements SwipeRefreshLa
 		this.mDatabase = database;
 	}
 
-	public BaseFragment() {
-		this.mDatabase = PackageDatabase.getInstance(getContext());
+	public BaseFragment(){
+		super();
+	}
+
+	// official method to get Activity Context
+	@Override
+	public void onAttach(Activity activity) {
+		super.onAttach(activity);
+		sInstance = activity;
+	}
+
+	// restore database to reconstruct express info
+	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		this.mDatabase = PackageDatabase.getInstance(sInstance);
 	}
 
 	@Override

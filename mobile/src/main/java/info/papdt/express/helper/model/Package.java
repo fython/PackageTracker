@@ -1,6 +1,7 @@
 package info.papdt.express.helper.model;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.google.gson.Gson;
 import com.google.gson.annotations.Expose;
@@ -9,6 +10,7 @@ import com.google.gson.annotations.SerializedName;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -47,14 +49,20 @@ public class Package {
 	}
 
 	public static Package buildFromJson(String json) {
-		Package p = new Gson().fromJson(json, Package.class);
-		if (p.companyChineseName == null && p.companyType != null) {
-			p.companyChineseName = PackageApi.CompanyInfo.getNameByCode(p.companyType);
+		try {
+			Package p = new Gson().fromJson(json, Package.class);
+			if (p.companyChineseName == null && p.companyType != null) {
+				p.companyChineseName = PackageApi.CompanyInfo.getNameByCode(p.companyType);
+			}
+			if (p.companyType == null) {
+				p.companyType = p.companyType1;
+			}
+			return p;
+		}catch (Exception e){
+			//may not be a json string
+			e.printStackTrace();
+			return new Package();
 		}
-		if (p.companyType == null) {
-			p.companyType = p.companyType1;
-		}
-		return p;
 	}
 
 	public void applyNewData(Package newData) {
@@ -104,7 +112,10 @@ public class Package {
 
 	public static class Status {
 
-		@Expose public String time, location, context, ftime;
+		@Expose public String time;
+		@Expose public String location = null;
+		@Expose public String context;
+		@Expose public String ftime;
 		@Expose public String phone;
 
 		private void processOldData() {
@@ -118,12 +129,18 @@ public class Package {
 
 		public String getLocation() {
 			processOldData(); // dirty method
+			if (location != null) {
+				if(location.trim().length() > 0){
+					if (!Objects.equals(location.trim(), "null")){
+						return location;
+					}
+				}
+			}
 
-			if (location != null) return location;
-			if (context.startsWith("【")) {
+			if (context.contains("【")) {
 				location = context.substring(context.indexOf("【") + 1, context.indexOf("】")).trim();
 			}
-			if (context.startsWith("[")) {
+			if (context.contains("[")) {
 				location = context.substring(context.indexOf("[") + 1, context.indexOf("]")).trim();
 			}
 			return location;

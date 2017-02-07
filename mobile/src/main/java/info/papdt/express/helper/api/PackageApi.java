@@ -3,6 +3,7 @@ package info.papdt.express.helper.api;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.google.gson.annotations.Expose;
 import com.spreada.utils.chinese.ZHConverter;
 
 import net.sourceforge.pinyin4j.PinyinHelper;
@@ -63,33 +64,45 @@ public class PackageApi {
 	public static String detectCompanyByNumber(String number) {
 		BaseMessage<String> message = HttpUtils.getString(getCompantDetectUrl(number), false);
 		if (message.getCode() == BaseMessage.CODE_OKAY) {
-			DetectResult result = new Gson().fromJson(message.getData(), DetectResult.class);
-			if (result.auto.size() > 0) {
-				return result.auto.get(0).comCode;
-			} else {
+			try {
+				DetectResult result = new Gson().fromJson(message.getData(), DetectResult.class);
+				if (result.auto.size() > 0) {
+					return result.auto.get(0).comCode;
+				} else {
+					return null;
+				}
+			} catch (Exception e) {
+				//return data may not be json
+				e.printStackTrace();
 				return null;
 			}
-		} else {
+		}else {
 			return null;
 		}
 	}
 
-	private static ArrayList<CompanyInfo.Company> getCompanyList(){
+	private static ArrayList<CompanyInfo.Company> getCompanyList() {
 		BaseMessage<String> message = HttpUtils.getString(getCompanyListUrl(), false);
 		if (message.getCode() == BaseMessage.CODE_OKAY) {
 			String strJson = message.getData().replace("var jsoncom=", "");
 			strJson = strJson.replace("};", "}");
 			strJson = strJson.replace("'", "\"");
-			CompanyListResult result = new Gson().fromJson(strJson, CompanyListResult.class);
-			if (result.company.size() > 0 && result.error_size < 0) {
-				ArrayList<CompanyInfo.Company> info = new ArrayList<>();
-				for(int i=0; i<result.company.size(); i++) {
-					info.add(new CompanyInfo.Company(result.company.get(i).companyname,
-							result.company.get(i).code, result.company.get(i).tel,
-							result.company.get(i).comurl));
+			try {
+				CompanyListResult result = new Gson().fromJson(strJson, CompanyListResult.class);
+				if (result.company.size() > 0 && result.error_size < 0) {
+					ArrayList<CompanyInfo.Company> info = new ArrayList<>();
+					for(int i=0; i<result.company.size(); i++) {
+						info.add(new CompanyInfo.Company(result.company.get(i).companyname,
+								result.company.get(i).code, result.company.get(i).tel,
+								result.company.get(i).comurl));
+					}
+					return info;
+				} else {
+					return null;
 				}
-				return info;
-			} else {
+			} catch (Exception e) {
+				//return data may not be json
+				e.printStackTrace();
 				return null;
 			}
 		} else {
@@ -113,15 +126,20 @@ public class PackageApi {
 	public static BaseMessage<Package> getPackage(String comcode, String number) {
 		BaseMessage<String> message = HttpUtils.getString(getQueryUrl(comcode, number), false);
 		if (message.getCode() == BaseMessage.CODE_OKAY) {
-			Package pkg = Package.buildFromJson(message.getData());
-			if(pkg.status.equals("200")) {
-				return new BaseMessage<>(BaseMessage.CODE_OKAY, pkg);
-			} else {
-				pkg.number = number;
-				pkg.companyType = comcode;
-				pkg.companyChineseName = PackageApi.CompanyInfo.getNameByCode(pkg.companyType);
-				pkg.data = new ArrayList<>();
-				return new BaseMessage<>(BaseMessage.CODE_OKAY, pkg);
+			try {
+				Package pkg = Package.buildFromJson(message.getData());
+				if (pkg.status.equals("200")) {
+					return new BaseMessage<>(BaseMessage.CODE_OKAY, pkg);
+				} else {
+					pkg.number = number;
+					pkg.companyType = comcode;
+					pkg.companyChineseName = PackageApi.CompanyInfo.getNameByCode(pkg.companyType);
+					pkg.data = new ArrayList<>();
+					return new BaseMessage<>(BaseMessage.CODE_ERROR, pkg);
+				}
+			}catch (Exception e){
+				e.printStackTrace();
+				return new BaseMessage<>(BaseMessage.CODE_ERROR);
 			}
 		} else {
 			return new BaseMessage<>(BaseMessage.CODE_ERROR);
