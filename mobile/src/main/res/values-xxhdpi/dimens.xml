@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<!-- Add package -->
+	<dimen name="parallax_app_bar_size">260dp</dimen>
+
+</resources>

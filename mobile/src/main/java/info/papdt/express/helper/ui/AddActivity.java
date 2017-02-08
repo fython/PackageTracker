@@ -8,11 +8,13 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.model.Package;
+import info.papdt.express.helper.support.ScreenUtils;
 import info.papdt.express.helper.support.Settings;
 import info.papdt.express.helper.ui.common.AbsActivity;
 import info.papdt.express.helper.ui.fragment.add.StepInput;
@@ -52,6 +54,8 @@ public class AddActivity extends AbsActivity{
 
 		mActionBar.setDisplayHomeAsUpEnabled(true);
 		mActionBar.setDisplayShowTitleEnabled(false);
+		((ViewGroup.MarginLayoutParams) mToolbar.getLayoutParams()).topMargin +=
+				ScreenUtils.getStatusBarHeight(this);
 
 		step(STEP_INPUT);
 
