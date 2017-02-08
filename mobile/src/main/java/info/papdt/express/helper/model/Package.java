@@ -144,8 +144,13 @@ public class Package {
 			if (context.contains("[")) {
 				location = context.substring(context.indexOf("[") + 1, context.indexOf("]")).trim();
 			}
-			location = location.replace("【", "").replace("】", "").replace("[", "".replace("]", ""));
-			if (location.trim().contains("null")) location = null;
+			if (location != null) {
+				if (location.trim().contains("null")) {
+					location = null;
+				} else {
+					location = location.replace("【", "").replace("】", "").replace("[", "".replace("]", ""));
+				}
+			}
 			return location;
 		}
 
