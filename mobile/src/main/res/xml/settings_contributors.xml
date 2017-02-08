@@ -9,4 +9,8 @@
 	            android:title="HearSilent"
 	            android:summary="Improve zh-tw strings"/>
 
+	<Preference android:key="archiemeng"
+	            android:title="ArchieMeng"
+	            android:summary="Fix a lot of bug"/>
+
 </PreferenceScreen>
