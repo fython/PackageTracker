@@ -130,8 +130,9 @@ public class Package {
 		public String getLocation() {
 			processOldData(); // dirty method
 			if (location != null) {
-				if(location.trim().length() > 0){
-					if (!Objects.equals(location.trim(), "null")){
+				location = location.replace("【", "").replace("】", "").replace("[", "".replace("]", ""));
+				if (location.trim().length() > 0) {
+					if (!location.trim().contains("null")){
 						return location;
 					}
 				}
@@ -143,6 +144,8 @@ public class Package {
 			if (context.contains("[")) {
 				location = context.substring(context.indexOf("[") + 1, context.indexOf("]")).trim();
 			}
+			location = location.replace("【", "").replace("】", "").replace("[", "".replace("]", ""));
+			if (location.trim().contains("null")) location = null;
 			return location;
 		}
 

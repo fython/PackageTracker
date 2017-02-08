@@ -93,6 +93,10 @@ public class DetailsInfoAdapter extends RecyclerView.Adapter {
 							for (int i = 4; i < length; i++) str += "*";
 							h.summary.setText(String.format(STRING_NUMBER_FORMAT, str, data.companyChineseName));
 							h.button.setImageResource(R.drawable.ic_visibility_black_24dp);
+							h.button.setContentDescription(
+									h.itemView.getResources()
+											.getString(R.string.list_package_show_toggle_desc)
+							);
 						}
 						h.button.setVisibility(View.VISIBLE);
 						h.button.setOnClickListener(new View.OnClickListener() {

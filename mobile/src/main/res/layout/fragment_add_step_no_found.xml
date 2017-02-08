@@ -29,7 +29,7 @@
 	<Button
 		android:id="@+id/btn_choose_company"
 		android:layout_width="wrap_content"
-		android:layout_height="36dp"
+		android:layout_height="48dp"
 		android:layout_marginStart="16dp"
 		android:layout_marginEnd="16dp"
 		android:paddingStart="8dp"
@@ -43,7 +43,7 @@
 	<Button
 		android:id="@+id/btn_force_add"
 		android:layout_width="wrap_content"
-		android:layout_height="36dp"
+		android:layout_height="48dp"
 		android:layout_marginStart="16dp"
 		android:layout_marginEnd="16dp"
 		android:paddingStart="8dp"

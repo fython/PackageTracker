@@ -147,7 +147,9 @@
 	<string name="list_package_name">Name</string>
 	<string name="list_package_number">Package Number</string>
 	<string name="list_package_number_format">%1$s (%2$s)</string>
+	<string name="list_package_show_toggle_desc">Show/Hide number</string>
 	<string name="list_package_contact_name">Deliver man</string>
+	<string name="list_package_contact_button_desc">Call</string>
 
 	<string name="dialog_edit_name_title">Edit name</string>
 	<string name="toast_edit_name_is_empty">The package name can\'t be empty.</string>

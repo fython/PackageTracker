@@ -141,7 +141,9 @@
 	<string name="list_package_name">名稱</string>
 	<string name="list_package_number">運單號碼</string>
 	<string name="list_package_number_format">%1$s (%2$s)</string>
+	<string name="list_package_show_toggle_desc">顯示/隱藏單號</string>
 	<string name="list_package_contact_name">快遞員</string>
+	<string name="list_package_contact_button_desc">呼叫</string>
 
 	<string name="dialog_edit_name_title">編輯名稱</string>
 	<string name="toast_edit_name_is_empty">包裹名稱不能為空。</string>

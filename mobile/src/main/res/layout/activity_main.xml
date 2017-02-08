@@ -35,6 +35,7 @@
 	    android:layout_gravity="bottom|end"
 	    android:id="@+id/fab"
 	    android:src="@drawable/ic_add_black_24dp"
-		android:tint="@android:color/white"/>
+		android:tint="@android:color/white"
+		android:contentDescription="@string/activity_add"/>
 
 </android.support.design.widget.CoordinatorLayout>
