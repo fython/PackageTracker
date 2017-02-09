@@ -94,6 +94,7 @@
 					android:id="@+id/btn_call_contact"
 					android:background="?attr/selectableItemBackgroundBorderless"
 					android:src="@drawable/ic_call_black_20dp"
+					android:tint="@color/black_in_light"
 					android:contentDescription="@string/list_package_contact_button_desc"/>
 
 			</LinearLayout>

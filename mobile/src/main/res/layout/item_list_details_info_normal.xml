@@ -43,6 +43,7 @@
 		android:id="@+id/btn_action"
 		android:background="?attr/selectableItemBackgroundBorderless"
 		android:visibility="gone"
+		android:tint="@color/black_in_light"
 		tools:visibility="visible"
 		tools:src="@drawable/ic_add_black_24dp"/>
 

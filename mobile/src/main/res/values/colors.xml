@@ -9,6 +9,7 @@
 	<color name="grey_900">#212121</color>
 	<color name="grey_850">#303030</color>
 	<color name="grey_800">#424242</color>
+	<color name="grey_600">#757575</color>
 	<color name="grey_500">#9E9E9E</color>
 	<color name="grey_300">#E0E0E0</color>
 	<color name="grey_100">#F5F5F5</color>
@@ -66,5 +67,7 @@
 	<color name="package_list_status_title_color">#616161</color>
 
 	<color name="dark_theme_translucent_app_bar">#4F000000</color>
+
+	<color name="black_in_light">@android:color/black</color>
 
 </resources>
