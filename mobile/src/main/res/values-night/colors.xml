@@ -3,7 +3,7 @@
 
 	<color name="colorPrimary">@color/blue_grey_500</color>
 	<color name="colorPrimaryDark">@color/blue_grey_700</color>
-	<color name="colorAccent">@color/indigo_500</color>
+	<color name="colorAccent">@color/indigo_accent_200</color>
 
 	<array name="statusColor">
 		<item>@color/teal_500</item>
