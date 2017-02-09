@@ -1,6 +1,8 @@
 package info.papdt.express.helper.ui;
 
 import android.animation.Animator;
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -8,9 +10,11 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.RequiresApi;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
+import android.support.v7.widget.DrawableUtils;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -67,6 +71,7 @@ public class SearchActivity extends AbsActivity {
 					@Override
 					public void onGlobalLayout() {
 						new Handler().postDelayed(new Runnable() {
+							@TargetApi(Build.VERSION_CODES.LOLLIPOP)
 							@Override
 							public void run() {
 								if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -92,6 +97,7 @@ public class SearchActivity extends AbsActivity {
 		}
 	}
 
+	@SuppressLint("NewApi")
 	@Override
 	protected void setUpViews() {
 		mList = $(R.id.recycler_view);
@@ -145,6 +151,8 @@ public class SearchActivity extends AbsActivity {
 		mActionBar.setDisplayHomeAsUpEnabled(true);
 		mActionBar.setDisplayShowCustomEnabled(true);
 		mActionBar.setDisplayShowTitleEnabled(false);
+
+		DrawableCompat.wrap(mToolbar.getNavigationIcon()).setTint(getResources().getColor(R.color.black_in_light));
 
 		/** Set up company list */
 		mList.setHasFixedSize(true);
