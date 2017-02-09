@@ -2,21 +2,21 @@ package info.papdt.express.helper.ui.fragment.settings;
 
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.preference.Preference;
 import android.support.design.widget.Snackbar;
 
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.support.ClipboardUtils;
 import info.papdt.express.helper.ui.SettingsActivity;
 import moe.feng.alipay.zerosdk.AlipayZeroSdk;
+import rikka.materialpreference.Preference;
 
 public class SettingsMain extends AbsPrefFragment implements Preference.OnPreferenceClickListener {
 
 	private Preference mPrefUI, mPrefNetwork, mPrefVersion, mPrefSina, mPrefGithub, mPrefAlipay, mPrefLicense;
 	private Preference mPrefIconDesigner, mPrefContributors;
 
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	@Override
+	public void onCreatePreferences(Bundle bundle, String s) {
 		addPreferencesFromResource(R.xml.settings_main);
 
 		mPrefUI = findPreference("settings_ui");

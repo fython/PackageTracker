@@ -1,11 +1,11 @@
 package info.papdt.express.helper.ui;
 
-import android.app.Fragment;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
@@ -61,9 +61,10 @@ public class SettingsActivity extends AbsActivity {
 				mActionBar.setTitle(R.string.category_user_interface);
 				break;
 			case FLAG_LICENSE:
-				f = new SettingsLicense();
+				getFragmentManager().beginTransaction().replace(R.id.container, new SettingsLicense())
+						.commit();
 				mActionBar.setTitle(R.string.open_source_license);
-				break;
+				return;
 			case FLAG_NETWORK:
 				f = new SettingsNetwork();
 				mActionBar.setTitle(R.string.category_network);
@@ -75,7 +76,7 @@ public class SettingsActivity extends AbsActivity {
 			default:
 				throw new RuntimeException("Please set flag when launching activity.");
 		}
-		getFragmentManager().beginTransaction().replace(R.id.container, f).commit();
+		getSupportFragmentManager().beginTransaction().replace(R.id.container, f).commit();
 	}
 
 	public static void launch(AppCompatActivity activity, int flag) {

@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceFragment;
 import android.support.customtabs.CustomTabsIntent;
 import android.support.design.widget.Snackbar;
 import android.support.v4.content.IntentCompat;
@@ -15,6 +14,7 @@ import android.view.View;
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.support.Settings;
 import info.papdt.express.helper.ui.SettingsActivity;
+import rikka.materialpreference.PreferenceFragment;
 
 abstract class AbsPrefFragment extends PreferenceFragment {
 
@@ -22,8 +22,8 @@ abstract class AbsPrefFragment extends PreferenceFragment {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
 		mSettings = Settings.getInstance(getActivity().getApplicationContext());
+		super.onCreate(savedInstanceState);
 	}
 
 	public Settings getSettings() {

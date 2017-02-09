@@ -1,16 +1,16 @@
 package info.papdt.express.helper.ui.fragment.settings;
 
 import android.os.Bundle;
-import android.preference.Preference;
 
 import info.papdt.express.helper.R;
+import rikka.materialpreference.Preference;
 
 public class SettingsContributors extends AbsPrefFragment implements Preference.OnPreferenceClickListener {
 
 	private Preference mPrefCoderFox, mPrefHearSilent, mPrefArchieMeng;
 
-	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+	@Override
+	public void onCreatePreferences(Bundle bundle, String s) {
 		addPreferencesFromResource(R.xml.settings_contributors);
 
 		mPrefCoderFox = findPreference("coderfox");
