@@ -165,18 +165,19 @@
 	<!-- Import/Export -->
 	<string name="activity_import_export">导入/导出</string>
 	<string name="action_backup_all_data">备份所有包裹数据</string>
-	<string name="action_backup_all_data_desc">将包裹数据导出到存放在文件中，以后可以在<b>水表助手</b>当前版本或更新的版本中还原。</string>
+	<string name="action_backup_all_data_desc">将包裹数据导出到存放在文件（内置储存、Google 云盘等位置）中，以后可以在<b>水表助手</b>当前版本或更新的版本中还原。</string>
 	<string name="action_export_list">导出列表</string>
 	<string name="action_export_list_desc">导出一个列表并分享给你的好友。</string>
 	<string name="action_restore_all_data">从文件还原包裹数据</string>
-	<string name="action_restore_all_data_desc">选择<b>水表助手</b>备份文件还原所有包裹数据。</string>
+	<string name="action_restore_all_data_desc">在内置储存或 Google 云盘等位置中选择<b>水表助手</b>备份文件还原所有包裹数据。</string>
 
 	<string name="dialog_restoring_title">还原包裹数据中，请稍候……</string>
 	<string name="dialog_backup_title">备份包裹数据中，请稍候……</string>
 	<string name="toast_backup_succeed">备份成功</string>
+	<string name="toast_backup_send_action">作为附件发送</string>
 	<string name="toast_backup_failed">保存失败</string>
 	<string name="dialog_restored_title">成功</string>
-	<string name="dialog_restored_message">你的包裹数据已还原，需要重启以生效。</string>
+	<string name="dialog_restored_message">你的包裹数据已还原，需要重启应用以生效。</string>
 	<string name="dialog_restored_restart_button">现在重启</string>
 	<string name="toast_restore_failed">还原数据失败，请检查选定的文件是否合法。</string>
 

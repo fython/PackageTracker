@@ -10,6 +10,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.ShareCompat;
 import android.support.v4.content.IntentCompat;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
@@ -143,6 +144,7 @@ public class ImportExportActivity extends AbsActivity implements View.OnClickLis
 	private class BackupTask extends AsyncTask<Uri, Void, Boolean> {
 
 		ProgressDialog progressDialog;
+		Uri tempUri;
 
 		@Override
 		protected void onPreExecute() {
@@ -154,7 +156,9 @@ public class ImportExportActivity extends AbsActivity implements View.OnClickLis
 		@Override
 		protected Boolean doInBackground(Uri... uri) {
 			try {
-				FileUtils.writeTextToUri(ImportExportActivity.this, uri[0], database.getBackupData());
+				FileUtils.writeTextToUri(
+						ImportExportActivity.this, tempUri = uri[0], database.getBackupData()
+				);
 				return true;
 			} catch (Exception e) {
 				e.printStackTrace();
@@ -166,11 +170,24 @@ public class ImportExportActivity extends AbsActivity implements View.OnClickLis
 		protected void onPostExecute(Boolean isSucceed) {
 			if (!isFinishing()) {
 				progressDialog.dismiss();
-				Snackbar.make(
-						$(R.id.container),
-						isSucceed ? R.string.toast_backup_succeed : R.string.toast_backup_failed,
-						Snackbar.LENGTH_LONG
-				).show();
+				if (isSucceed) {
+					Snackbar.make(
+							$(R.id.container), R.string.toast_backup_succeed, Snackbar.LENGTH_LONG
+					).setAction(R.string.toast_backup_send_action, new View.OnClickListener() {
+						@Override
+						public void onClick(View v) {
+							ShareCompat.IntentBuilder.from(ImportExportActivity.this)
+									.addStream(tempUri)
+									.setType("text/*")
+									.startChooser();
+						}
+					}).show();
+				} else {
+					Snackbar.make(
+							$(R.id.container), R.string.toast_backup_failed, Snackbar.LENGTH_LONG
+					).show();
+				}
+
 			}
 		}
 

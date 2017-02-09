@@ -171,18 +171,19 @@
 	<!-- Import/Export -->
 	<string name="activity_import_export">Import/Export</string>
 	<string name="action_backup_all_data">Backup packages data</string>
-	<string name="action_backup_all_data_desc">Export packages data to a file in internal storage. You can restore all data in <b>PackageTracker</b> current or newer version.</string>
+	<string name="action_backup_all_data_desc">Export packages data to a file (Internal storage, Google Drive, etc.). You can restore all data in <b>PackageTracker</b> current or newer version.</string>
 	<string name="action_export_list">Export list</string>
 	<string name="action_export_list_desc">Export a list and share to your friends.</string>
 	<string name="action_restore_all_data">Restore packages from a file</string>
-	<string name="action_restore_all_data_desc">Restore packages data from <b>PackageTracker</b> backup file.</string>
+	<string name="action_restore_all_data_desc">Restore packages data from <b>PackageTracker</b> backup file (Internal storage, Google Drive, etc.).</string>
 
 	<string name="dialog_restoring_title">Restoring packages data, Please wait…</string>
 	<string name="dialog_backup_title">Saving packages data, Please wait…</string>
 	<string name="toast_backup_succeed">Backup successfully.</string>
+	<string name="toast_backup_send_action">Send as attachment</string>
 	<string name="toast_backup_failed">Failed to save data.</string>
 	<string name="dialog_restored_title">Finished</string>
-	<string name="dialog_restored_message">Your packages data has been restored. It needs to be restarted to take effect.</string>
+	<string name="dialog_restored_message">Your packages data has been restored. The application needs to be restarted to take effect.</string>
 	<string name="dialog_restored_restart_button">Restart now</string>
 	<string name="toast_restore_failed">Failed to restore data. Please check if the selected file is valid.</string>
 
