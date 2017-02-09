@@ -7,8 +7,8 @@ android {
         applicationId "info.papdt.express.helper"
         minSdkVersion 19
         targetSdkVersion 25
-        versionCode 30
-        versionName "2.3.4b"
+        versionCode 31
+        versionName "2.5.0 Alpha 1"
         resConfigs "en", "zh_cn", "zh_tw"
     }
     buildTypes {
