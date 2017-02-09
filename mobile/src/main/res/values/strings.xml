@@ -186,6 +186,10 @@
 	<string name="dialog_restored_restart_button">Restart now</string>
 	<string name="toast_restore_failed">Failed to restore data. Please check if the selected file is valid.</string>
 
+	<string name="toast_list_empty">The list is empty. Please add some packages.</string>
+	<string name="export_list_item_format">%1$s (%2$s) Latest status: %3$s</string>
+	<string name="export_list_end_text">Shared from PackageTracker (https://play.google.com/store/apps/details?id=info.papdt.express.helper)</string>
+
 	<!-- Notification -->
 	<string name="notification_delivered">"The package has been delivered."</string>
 	<string name="notification_on_the_way">"The package is on the way."</string>

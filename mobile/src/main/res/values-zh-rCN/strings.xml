@@ -180,6 +180,10 @@
 	<string name="dialog_restored_restart_button">现在重启</string>
 	<string name="toast_restore_failed">还原数据失败，请检查选定的文件是否合法。</string>
 
+	<string name="toast_list_empty">列表是空的，请添加一些包裹。</string>
+	<string name="export_list_item_format">%1$s （%2$s） 最新状态： %3$s</string>
+	<string name="export_list_end_text">从水表助手 (http://coolapk.com/apk/info.papdt.express.helper) 中分享</string>
+
 	<!-- Notification -->
 	<string name="notification_delivered">包裹已经送达。</string>
 	<string name="notification_on_the_way">包裹正在派送中。</string>

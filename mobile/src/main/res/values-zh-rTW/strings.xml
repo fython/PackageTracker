@@ -180,6 +180,10 @@
 	<string name="dialog_restored_restart_button">現在重新啟動</string>
 	<string name="toast_restore_failed">還原資料失敗，請檢查選定的檔案是否合法。</string>
 
+	<string name="toast_list_empty">列表是空的，請添加一些包裹。</string>
+	<string name="export_list_item_format">%1$s （%2$s） 最新狀態： %3$s</string>
+	<string name="export_list_end_text">從水錶助手 (https://play.google.com/store/apps/details?id=info.papdt.express.helper) 中分享</string>
+
 	<!-- Notification -->
 	<string name="notification_delivered">包裹已經送達。</string>
 	<string name="notification_on_the_way">包裹正在派送中。</string>

@@ -21,6 +21,7 @@ import java.util.Date;
 
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.dao.PackageDatabase;
+import info.papdt.express.helper.model.Package;
 import info.papdt.express.helper.support.FileUtils;
 import info.papdt.express.helper.ui.common.AbsActivity;
 
@@ -68,6 +69,12 @@ public class ImportExportActivity extends AbsActivity implements View.OnClickLis
 				startActivityForResult(intent, REQUEST_WRITE_BACKUP_FILE);
 				break;
 			case R.id.action_export_list:
+				if (database.size() == 0) {
+					Snackbar.make($(R.id.container), R.string.toast_list_empty, Snackbar.LENGTH_SHORT)
+							.show();
+				} else {
+					new ShareTask().execute();
+				}
 				break;
 			case R.id.action_restore_all_data:
 				Intent intent1 = new Intent(Intent.ACTION_OPEN_DOCUMENT);
@@ -98,6 +105,39 @@ public class ImportExportActivity extends AbsActivity implements View.OnClickLis
 		Intent intent = new Intent(activity, ImportExportActivity.class);
 		intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 		activity.startActivity(intent);
+	}
+
+	private class ShareTask extends AsyncTask<Void, Void, String> {
+
+		@Override
+		protected String doInBackground(Void... params) {
+			StringBuilder sb = new StringBuilder();
+			for (Package pack : database.getData()) {
+				sb.append(
+						getString(
+								R.string.export_list_item_format,
+								pack.name,
+								pack.number + " " + pack.companyChineseName,
+								(pack.data != null && pack.data.size() > 0)
+										? pack.data.get(0).context
+										: getString(R.string.item_text_cannot_get_package_status)
+						)
+				).append("\n\n");
+			}
+			sb.append(getString(R.string.export_list_end_text));
+			return sb.toString();
+		}
+
+		@Override
+		protected void onPostExecute(String text) {
+			if (!isFinishing()) {
+				Intent intent = new Intent(Intent.ACTION_SEND);
+				intent.setType("text/plain");
+				intent.putExtra(Intent.EXTRA_TEXT, text);
+				startActivity(Intent.createChooser(intent, getString(R.string.dialog_share_title)));
+			}
+		}
+
 	}
 
 	private class BackupTask extends AsyncTask<Uri, Void, Boolean> {
