@@ -29,7 +29,8 @@
 				android:layout_height="wrap_content"
 				android:id="@+id/sun"
 				android:src="@drawable/ic_empty_inbox"
-				android:importantForAccessibility="no"/>
+				android:importantForAccessibility="no"
+				android:hapticFeedbackEnabled="true"/>
 
 			<Space android:layout_width="match_parent" android:layout_height="16dp"/>
 
