@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.IdRes;
+import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
@@ -163,6 +164,9 @@ public class MainActivity extends AbsActivity implements OnMenuTabClickListener 
 			int[] location = new int[2];
 			menuButton.getLocationOnScreen(location);
 			SearchActivity.launch(this, location[0] + menuButton.getHeight() / 2, location[1] + menuButton.getWidth() / 2);
+			return true;
+		} else if (id == R.id.action_import_export) {
+			ImportExportActivity.launch(this);
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

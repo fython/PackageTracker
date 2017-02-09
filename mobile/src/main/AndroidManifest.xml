@@ -6,6 +6,7 @@
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 	<uses-permission android:name="android.permission.CAMERA"/>
 	<uses-permission android:name="android.permission.READ_LOGS"/>
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
 	<application
 		android:allowBackup="true"
@@ -81,6 +82,14 @@
 		<activity android:name=".ui.SearchActivity"
 		          android:label="@string/activity_search"
 		          android:theme="@style/AppTheme.Translucent">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN"/>
+			</intent-filter>
+		</activity>
+
+		<activity android:name=".ui.ImportExportActivity"
+		          android:label="@string/activity_import_export"
+		          android:theme="@style/AppTheme.Grey">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 			</intent-filter>

@@ -30,6 +30,11 @@
 		<item name="android:windowBackground">@android:color/transparent</item>
 	</style>
 
+	<style name="AppTheme.Grey" parent="AppTheme">
+		<item name="colorPrimary">@color/grey_500</item>
+		<item name="colorPrimaryDark">@color/grey_600</item>
+	</style>
+
 	<!-- Widget -->
 	<style name="Widget.ButtonBar" parent="">
 		<item name="leftText">@string/buttonbar_default_left</item>

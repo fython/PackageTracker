@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
+                                                 android:layout_width="match_parent"
+                                                 android:layout_height="match_parent">
+
+	<android.support.design.widget.AppBarLayout
+		android:layout_height="wrap_content"
+	    android:layout_width="match_parent"
+		android:id="@+id/app_bar_layout"
+		android:theme="@style/Toolbar.Dark">
+
+		<android.support.v7.widget.Toolbar
+			android:layout_width="match_parent"
+			android:layout_height="?attr/actionBarSize"
+			android:id="@+id/toolbar"
+			app:theme="@style/Toolbar.Dark"
+			app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+	</android.support.design.widget.AppBarLayout>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="match_parent"
+		android:id="@+id/container"
+		android:orientation="vertical"
+		app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:layout_gravity="center_vertical"
+			android:clickable="true"
+			android:foreground="?attr/selectableItemBackground"
+			android:id="@+id/action_backup_all_data">
+
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:padding="16dp"
+				android:src="@drawable/ic_save_black_24dp"
+				android:tint="@color/black_in_light"
+				android:alpha="0.63"
+				android:importantForAccessibility="no"/>
+
+			<LinearLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				android:layout_marginTop="16dp"
+				android:layout_marginBottom="16dp"
+				android:layout_marginEnd="16dp">
+
+				<android.support.v7.widget.AppCompatTextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/action_backup_all_data"
+					android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
+
+				<android.support.v7.widget.AppCompatTextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="8dp"
+					android:text="@string/action_backup_all_data_desc"
+					android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+
+			</LinearLayout>
+
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:layout_gravity="center_vertical"
+			android:clickable="true"
+			android:foreground="?attr/selectableItemBackground"
+			android:id="@+id/action_export_list">
+
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:padding="16dp"
+				android:src="@drawable/ic_content_copy_black_24dp"
+				android:tint="@color/black_in_light"
+				android:alpha="0.63"
+				android:importantForAccessibility="no"/>
+
+			<LinearLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				android:layout_marginTop="16dp"
+				android:layout_marginBottom="16dp"
+				android:layout_marginEnd="16dp">
+
+				<android.support.v7.widget.AppCompatTextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/action_export_list"
+					android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
+
+				<android.support.v7.widget.AppCompatTextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="8dp"
+					android:text="@string/action_export_list_desc"
+					android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+
+			</LinearLayout>
+
+		</LinearLayout>
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal"
+			android:layout_gravity="center_vertical"
+			android:clickable="true"
+			android:foreground="?attr/selectableItemBackground"
+			android:id="@+id/action_restore_all_data">
+
+			<ImageView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:padding="16dp"
+				android:src="@drawable/ic_settings_backup_restore_black_24dp"
+				android:tint="@color/black_in_light"
+				android:alpha="0.63"
+				android:importantForAccessibility="no"/>
+
+			<LinearLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				android:layout_marginTop="16dp"
+				android:layout_marginBottom="16dp"
+				android:layout_marginEnd="16dp">
+
+				<android.support.v7.widget.AppCompatTextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/action_restore_all_data"
+					android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
+
+				<android.support.v7.widget.AppCompatTextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="8dp"
+					android:text="@string/action_restore_all_data_desc"
+					android:textAppearance="@style/TextAppearance.AppCompat.Body1"/>
+
+			</LinearLayout>
+
+		</LinearLayout>
+
+	</LinearLayout>
+
+</android.support.design.widget.CoordinatorLayout>
