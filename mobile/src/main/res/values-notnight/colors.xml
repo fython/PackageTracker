@@ -28,6 +28,9 @@
 	<color name="light_theme_app_bar">@color/grey_100</color>
 	<color name="light_theme_background">@color/grey_50</color>
 
+	<color name="grey_theme_status_bar">@color/grey_600</color>
+	<color name="grey_theme_app_bar">@color/grey_500</color>
+
 	<color name="package_list_status_subtext_color">#767676</color>
 	<color name="package_list_status_title_color">#616161</color>
 

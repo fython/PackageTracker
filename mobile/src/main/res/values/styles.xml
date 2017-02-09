@@ -31,8 +31,8 @@
 	</style>
 
 	<style name="AppTheme.Grey" parent="AppTheme">
-		<item name="colorPrimary">@color/grey_500</item>
-		<item name="colorPrimaryDark">@color/grey_600</item>
+		<item name="colorPrimary">@color/grey_theme_app_bar</item>
+		<item name="colorPrimaryDark">@color/grey_theme_status_bar</item>
 	</style>
 
 	<!-- Widget -->

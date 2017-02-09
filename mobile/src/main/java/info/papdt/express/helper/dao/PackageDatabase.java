@@ -20,6 +20,7 @@ public class PackageDatabase {
 	@Expose private ArrayList<Package> data;
 	private ArrayList<Package> delivered, delivering;
 	private Context mContext;
+	@Expose private String dataVersion = "2.5.0";
 
 	private volatile static PackageDatabase sInstance;
 
@@ -56,6 +57,22 @@ public class PackageDatabase {
 		}
 		this.data = new Gson().fromJson(json, PackageDatabase.class).data;
 		refreshList();
+	}
+
+	public void restoreData(String json) {
+		this.data = new Gson().fromJson(json, PackageDatabase.class).data;
+		refreshList();
+	}
+
+	public String getBackupData() {
+		if (dataVersion == null) {
+			dataVersion = "2.5.0";
+		}
+		return new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(this);
+	}
+
+	public String getDataVersion() {
+		return this.dataVersion;
 	}
 
 	public boolean save() {

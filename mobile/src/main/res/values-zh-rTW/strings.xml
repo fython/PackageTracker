@@ -164,12 +164,21 @@
 
 	<!-- Import/Export -->
 	<string name="activity_import_export">導入/導出</string>
-	<string name="action_backup_all_data">備份所有資料</string>
-	<string name="action_backup_all_data_desc">將資料導出到存放在內置儲存空間的檔案中，以後可以還原<b>水錶助手</b>的資料。</string>
+	<string name="action_backup_all_data">備份所有包裹資料</string>
+	<string name="action_backup_all_data_desc">將包裹資料導出到存放在檔案中，以後可以在<b>水錶助手</b>當前版本或更新的版本中還原。</string>
 	<string name="action_export_list">導出清單</string>
 	<string name="action_export_list_desc">導出一個清單並分享給你的好友。</string>
-	<string name="action_restore_all_data">從檔案還原資料</string>
-	<string name="action_restore_all_data_desc">從內置儲存空間的文件中還原所有資料。</string>
+	<string name="action_restore_all_data">從檔案還原包裹資料</string>
+	<string name="action_restore_all_data_desc">選擇水錶助手備份檔案還原所有包裹資料。</string>
+
+	<string name="dialog_restoring_title">還原包裹資料中，請稍後……</string>
+	<string name="dialog_backup_title">備份包裹資料中，請稍後……</string>
+	<string name="toast_backup_succeed">備份成功</string>
+	<string name="toast_backup_failed">儲存失敗</string>
+	<string name="dialog_restored_title">成功</string>
+	<string name="dialog_restored_message">你的包裹資料已還原，需要重新啟動以生效。</string>
+	<string name="dialog_restored_restart_button">現在重新啟動</string>
+	<string name="toast_restore_failed">還原資料失敗，請檢查選定的檔案是否合法。</string>
 
 	<!-- Notification -->
 	<string name="notification_delivered">包裹已經送達。</string>
