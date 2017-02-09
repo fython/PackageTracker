@@ -31,8 +31,12 @@ public abstract class AbsFragment extends Fragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup parent, Bundle state) {
-		rootView = inflater.inflate(this.getLayoutResId(), parent, false);
-		mContext = parent.getContext();
+		if (parent != null) {
+			rootView = inflater.inflate(this.getLayoutResId(), parent, false);
+			mContext = parent.getContext();
+		} else {
+			rootView = inflater.inflate(this.getLayoutResId(), null);
+		}
 		this.doCreateView(rootView);
 
 		return rootView;
