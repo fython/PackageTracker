@@ -78,6 +78,7 @@ public class MainActivity extends AbsActivity implements OnMenuTabClickListener 
 			Intent intent = new Intent(MainActivity.this, AddActivity.class);
 			intent.setAction(ScannerActivity.ACTION_SCAN_TO_ADD);
 			intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+			intent.putExtra(AddActivity.EXTRA_IS_FROM_MAIN_ACTIVITY, true);
 			startActivityForResult(intent, REQUEST_ADD);
 		}
 	}
@@ -90,6 +91,7 @@ public class MainActivity extends AbsActivity implements OnMenuTabClickListener 
 			public void onClick(View view) {
 				Intent intent = new Intent(MainActivity.this, AddActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+				intent.putExtra(AddActivity.EXTRA_IS_FROM_MAIN_ACTIVITY, true);
 				startActivityForResult(intent, REQUEST_ADD);
 			}
 		});

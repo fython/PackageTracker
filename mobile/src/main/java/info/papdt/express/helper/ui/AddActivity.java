@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import info.papdt.express.helper.R;
+import info.papdt.express.helper.dao.PackageDatabase;
 import info.papdt.express.helper.model.Package;
 import info.papdt.express.helper.support.ScreenUtils;
 import info.papdt.express.helper.support.Settings;
@@ -33,9 +34,13 @@ public class AddActivity extends AbsActivity{
 	private Package pack;
 	private String number;
 
+	private boolean isFromMainActivity = false;
+
 	private int nowStep;
 
 	public static final String RESULT_EXTRA_PACKAGE_JSON = "package_json";
+
+	public static final String EXTRA_IS_FROM_MAIN_ACTIVITY = "is_from_main";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +56,11 @@ public class AddActivity extends AbsActivity{
 			getWindow().setNavigationBarColor(getResources().getColor(R.color.brown_500));
 		}
 		setContentView(R.layout.activity_add);
+
+		if (getIntent().hasExtra(EXTRA_IS_FROM_MAIN_ACTIVITY)
+				&& getIntent().getBooleanExtra(EXTRA_IS_FROM_MAIN_ACTIVITY, false)) {
+			isFromMainActivity = true;
+		}
 
 		mActionBar.setDisplayHomeAsUpEnabled(true);
 		mActionBar.setDisplayShowTitleEnabled(false);
@@ -138,9 +148,16 @@ public class AddActivity extends AbsActivity{
 			Toast.makeText(this, R.string.toast_unknown_error, Toast.LENGTH_LONG).show();
 			return;
 		}
-		Intent intent = new Intent();
-		intent.putExtra(RESULT_EXTRA_PACKAGE_JSON, getPackage().toJsonString());
-		setResult(MainActivity.RESULT_NEW_PACKAGE, intent);
+
+		if (isFromMainActivity) {
+			Intent intent = new Intent();
+			intent.putExtra(RESULT_EXTRA_PACKAGE_JSON, getPackage().toJsonString());
+			setResult(MainActivity.RESULT_NEW_PACKAGE, intent);
+		} else {
+			PackageDatabase database = PackageDatabase.getInstance(getApplicationContext());
+			database.add(getPackage());
+			database.save();
+		}
 		finish();
 	}
 
