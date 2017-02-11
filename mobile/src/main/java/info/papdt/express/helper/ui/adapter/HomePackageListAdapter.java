@@ -93,10 +93,10 @@ public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageList
 
 		/** Set CircleImageView */
 		if (p.name.length() > 0){
-			holder.bigCharView.setText(p.name.substring(0, 1));
+			holder.bigCharView.setText(p.name.substring(0, 1).toUpperCase());
 			holder.logoView.setImageDrawable(new ColorDrawable(ColorGenerator.MATERIAL.getColor(p.name)));
-		} else if(p.companyChineseName.length() > 0){
-			holder.bigCharView.setText(p.companyChineseName.substring(0,1));
+		} else if (p.companyChineseName.length() > 0){
+			holder.bigCharView.setText(p.companyChineseName.substring(0,1).toUpperCase());
 			holder.logoView.setImageDrawable(new ColorDrawable(ColorGenerator.MATERIAL.getColor(p.companyChineseName)));
 		}
 
