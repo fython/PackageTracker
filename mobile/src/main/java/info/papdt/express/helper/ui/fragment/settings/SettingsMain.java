@@ -12,7 +12,8 @@ import rikka.materialpreference.Preference;
 
 public class SettingsMain extends AbsPrefFragment implements Preference.OnPreferenceClickListener {
 
-	private Preference mPrefUI, mPrefNetwork, mPrefVersion, mPrefSina, mPrefGithub, mPrefAlipay, mPrefLicense;
+	private Preference mPrefUI, mPrefNetwork, mPrefVersion, mPrefSina,
+			mPrefGithub, mPrefAlipay, mPrefLicense, mPrefGooglePlus;
 	private Preference mPrefIconDesigner, mPrefContributors;
 
 	@Override
@@ -28,6 +29,7 @@ public class SettingsMain extends AbsPrefFragment implements Preference.OnPrefer
 		mPrefLicense = findPreference("license");
 		mPrefIconDesigner = findPreference("designer");
 		mPrefContributors = findPreference("contributors");
+		mPrefGooglePlus = findPreference("googleplus");
 
 		String versionName = null;
 		int versionCode = 0;
@@ -48,6 +50,7 @@ public class SettingsMain extends AbsPrefFragment implements Preference.OnPrefer
 		mPrefLicense.setOnPreferenceClickListener(this);
 		mPrefIconDesigner.setOnPreferenceClickListener(this);
 		mPrefContributors.setOnPreferenceClickListener(this);
+		mPrefGooglePlus.setOnPreferenceClickListener(this);
 	}
 
 	@Override
@@ -89,6 +92,9 @@ public class SettingsMain extends AbsPrefFragment implements Preference.OnPrefer
 		if (pref == mPrefContributors) {
 			SettingsActivity.launch(getParentActivity(), SettingsActivity.FLAG_CONTRIBUTORS);
 			return true;
+		}
+		if (pref == mPrefGooglePlus) {
+			openWebsite(getString(R.string.google_plus_url));
 		}
 		return false;
 	}

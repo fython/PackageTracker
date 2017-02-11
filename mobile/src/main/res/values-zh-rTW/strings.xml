@@ -90,6 +90,7 @@
 	<string name="icon_designer_title">徽標 &amp; 海報設計師</string>
 	<string name="icon_designer_summary">\@翟宅宅Jack</string>
 	<string name="icon_designer_url">http://weibo.com/u/1934471601</string>
+	<string name="google_plus_title">Google+ 社群</string>
 
 	<string name="category_ui_common">通用</string>
 	<string name="pref_navigation_tint">導航欄變色</string>
@@ -169,7 +170,7 @@
 	<string name="action_export_list">匯出清單</string>
 	<string name="action_export_list_desc">匯出一份清單並分享給你的好友。</string>
 	<string name="action_restore_all_data">從檔案還原包裹資料</string>
-	<string name="action_restore_all_data_desc">在內置儲存、Google 雲端硬碟等位置中選擇水錶助手備份檔案還原所有包裹資料。</string>
+	<string name="action_restore_all_data_desc">在內置儲存、Google 雲端硬碟等位置中選擇<b>水錶助手</b>備份檔案還原所有包裹資料。</string>
 
 	<string name="dialog_restoring_title">還原包裹資料中，請稍後……</string>
 	<string name="dialog_backup_title">備份包裹資料中，請稍後……</string>
