@@ -1,14 +1,14 @@
 apply plugin: 'com.android.application'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion TARGET_SDK_VERSION.toInteger()
+    buildToolsVersion BUILD_TOOLS_VERSION
     defaultConfig {
         applicationId "info.papdt.express.helper"
-        minSdkVersion 19
-        targetSdkVersion 25
-        versionCode 32
-        versionName "2.5.0 Beta 2"
+        minSdkVersion MIN_SDK_VERSION.toInteger()
+        targetSdkVersion TARGET_SDK_VERSION.toInteger()
+        versionCode VERSION_CODE.toInteger()
+        versionName VERSION_NAME
         resConfigs "en", "zh_cn", "zh_tw"
     }
     buildTypes {
