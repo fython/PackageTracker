@@ -167,7 +167,7 @@
 	<!-- Import/Export -->
 	<string name="activity_import_export">匯入/匯出</string>
 	<string name="action_backup_all_data">備份所有包裹資料</string>
-	<string name="action_backup_all_data_desc">將包裹資料匯出到存放在檔案（內置儲存、Google 雲端硬碟等位置）中，以後可以在<b>水錶助手</b>當前版本或更新的版本中還原。</string>
+	<string name="action_backup_all_data_desc">將包裹資料匯出到檔案（內置儲存、Google 雲端硬碟等位置）中，以後可以在<b>水錶助手</b>當前版本或更新的版本中還原。</string>
 	<string name="action_export_list">匯出清單</string>
 	<string name="action_export_list_desc">匯出一份清單並分享給你的好友。</string>
 	<string name="action_restore_all_data">從檔案還原包裹資料</string>
