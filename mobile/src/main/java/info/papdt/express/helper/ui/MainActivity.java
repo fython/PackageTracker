@@ -40,6 +40,7 @@ public class MainActivity extends AbsActivity implements OnMenuTabClickListener 
 	private final String TAG = "express.MainActivity";
 
 	private PackageDatabase mDatabase;
+	private Package mContextMenuPackage;
 
 	public static final int REQUEST_ADD = 10001, RESULT_NEW_PACKAGE = 2000, REQUEST_DETAILS = 10002, RESULT_DELETED = 2001, RESULT_RENAMED = 2002;
 
@@ -211,6 +212,43 @@ public class MainActivity extends AbsActivity implements OnMenuTabClickListener 
 					break;
 			}
 		}
+	}
+
+	public void onContextMenuCreate(Package pack) {
+		mContextMenuPackage = pack;
+	}
+
+	@Override
+	public boolean onContextItemSelected(MenuItem item) {
+		if (mContextMenuPackage == null) {
+			return super.onContextItemSelected(item);
+		}
+		switch (item.getItemId()) {
+			case R.id.action_set_unread:
+				mContextMenuPackage.unreadNew = true;
+				int position = mDatabase.indexOf(mContextMenuPackage);
+				if (position != -1) {
+					mDatabase.set(position, mContextMenuPackage);
+					notifyDataChanged(-1);
+				}
+				return true;
+			case R.id.action_share:
+				Package data = mContextMenuPackage;
+				String text = getString(R.string.share_info_format,
+						data.name,
+						data.number,
+						data.companyChineseName,
+						data.data.size() > 0 ? data.data.get(0).context : "Unknown",
+						data.data.size() > 0 ? data.data.get(0).time : ""
+				);
+
+				Intent intent = new Intent(Intent.ACTION_SEND);
+				intent.setType("text/plain");
+				intent.putExtra(Intent.EXTRA_TEXT, text);
+				startActivity(Intent.createChooser(intent, getString(R.string.dialog_share_title)));
+				return true;
+		}
+		return super.onContextItemSelected(item);
 	}
 
 	public static void launch(Activity activity) {

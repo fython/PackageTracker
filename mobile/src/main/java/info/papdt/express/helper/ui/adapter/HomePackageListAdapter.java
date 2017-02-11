@@ -5,7 +5,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.RecyclerView;
 import android.text.style.ForegroundColorSpan;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -27,6 +29,7 @@ import info.papdt.express.helper.support.ColorGenerator;
 import info.papdt.express.helper.support.ScreenUtils;
 import info.papdt.express.helper.support.Spanny;
 import info.papdt.express.helper.ui.DetailsActivity;
+import info.papdt.express.helper.ui.MainActivity;
 import info.papdt.express.helper.ui.callback.OnDataRemovedCallback;
 
 public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageListAdapter.MyViewHolder> implements SwipeableItemAdapter<HomePackageListAdapter.MyViewHolder>{
@@ -174,7 +177,8 @@ public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageList
 		this.mDataRemovedCallback = callback;
 	}
 
-	public class MyViewHolder extends AbstractSwipeableItemViewHolder {
+	public class MyViewHolder extends AbstractSwipeableItemViewHolder
+			implements View.OnCreateContextMenuListener {
 
 		CircleImageView logoView;
 		AppCompatTextView titleText, descText, timeText;
@@ -190,6 +194,8 @@ public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageList
 			timeText = (AppCompatTextView) itemView.findViewById(R.id.tv_time);
 			bigCharView = (TextView) itemView.findViewById(R.id.tv_first_char);
 			containerView = itemView.findViewById(R.id.item_container);
+
+			containerView.setOnCreateContextMenuListener(this);
 		}
 
 		@Override
@@ -197,6 +203,18 @@ public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageList
 			return containerView;
 		}
 
+		@Override
+		public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo info) {
+			if (parentActivity instanceof MainActivity) {
+				((MainActivity) parentActivity).onContextMenuCreate(getItemData(getAdapterPosition()));
+			}
+
+			menu.setHeaderTitle(getItemData(getAdapterPosition()).name);
+			if (!getItemData(getAdapterPosition()).unreadNew) {
+				menu.add(Menu.NONE, R.id.action_set_unread, 0, R.string.action_set_unread);
+			}
+			menu.add(Menu.NONE, R.id.action_share, 0, R.string.action_share);
+		}
 	}
 
 	class MySwipeResultActionRemoveItem extends SwipeResultActionRemoveItem {
