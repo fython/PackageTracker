@@ -28,11 +28,6 @@ public class SettingsActivity extends AbsActivity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-			getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-			getWindow().setStatusBarColor(Color.TRANSPARENT);
-		}
-
 		super.onCreate(savedInstanceState);
 
 		if (getSettings().getBoolean(Settings.KEY_NAVIGATION_TINT, true)
