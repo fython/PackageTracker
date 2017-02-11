@@ -1,6 +1,7 @@
 package info.papdt.express.helper.ui;
 
 import android.app.ActivityManager;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
@@ -27,7 +28,9 @@ import android.widget.ImageView;
 import java.util.ArrayList;
 
 import info.papdt.express.helper.R;
+import info.papdt.express.helper.api.PackageApi;
 import info.papdt.express.helper.dao.PackageDatabase;
+import info.papdt.express.helper.model.BaseMessage;
 import info.papdt.express.helper.model.Package;
 import info.papdt.express.helper.support.ClipboardUtils;
 import info.papdt.express.helper.support.ScreenUtils;
@@ -93,8 +96,10 @@ public class DetailsActivity extends AbsActivity {
 	}
 
 	private void setUpData() {
-		mAdapter = new DetailsInfoAdapter(this);
-		mRecyclerView.setAdapter(mAdapter);
+		if (mAdapter == null) {
+			mAdapter = new DetailsInfoAdapter(this);
+			mRecyclerView.setAdapter(mAdapter);
+		}
 		new ListBuildTask().execute();
 
 		Drawable drawable = mFAB.getDrawable();
@@ -176,6 +181,9 @@ public class DetailsActivity extends AbsActivity {
 			db.set(db.indexOf(data.number), data);
 
 			finish();
+			return true;
+		} else if (id == R.id.action_refresh) {
+			new RefreshTask().execute();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -279,7 +287,9 @@ public class DetailsActivity extends AbsActivity {
 
 		@Override
 		protected ArrayList<DetailsInfoAdapter.ItemType> doInBackground(Void... voids) {
-			data = Package.buildFromJson(getIntent().getStringExtra(EXTRA_PACKAGE_JSON));
+			if (data == null) {
+				data = Package.buildFromJson(getIntent().getStringExtra(EXTRA_PACKAGE_JSON));
+			}
 
 			PackageDatabase db = PackageDatabase.getInstance(getApplicationContext());
 			if (data.unreadNew) {
@@ -311,6 +321,48 @@ public class DetailsActivity extends AbsActivity {
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 				ActivityManager.TaskDescription taskDesc = new ActivityManager.TaskDescription(data.name, null, color);
 				setTaskDescription(taskDesc);
+			}
+		}
+
+	}
+
+	private class RefreshTask extends AsyncTask<Void, Void, Boolean> {
+
+		ProgressDialog progressDialog;
+
+		@Override
+		protected void onPreExecute() {
+			progressDialog = new ProgressDialog(DetailsActivity.this);
+			progressDialog.setMessage("");
+			progressDialog.setCancelable(false);
+			progressDialog.show();
+		}
+
+		@Override
+		protected Boolean doInBackground(Void... params) {
+			BaseMessage<Package> newPack = PackageApi.getPackage(data.companyType, data.number);
+			if (newPack.getCode() == BaseMessage.CODE_OKAY && newPack.getData().data != null) {
+				data.applyNewData(newPack.getData());
+				PackageDatabase db = PackageDatabase.getInstance(getApplicationContext());
+				db.set(db.indexOf(data.number), data);
+				db.save();
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		@Override
+		protected void onPostExecute(Boolean isSucceed) {
+			if (!isFinishing()) {
+				progressDialog.dismiss();
+				if (isSucceed) {
+					Intent intent = new Intent();
+					intent.putExtra("id", data.number);
+					setResult(MainActivity.RESULT_RENAMED, intent);
+
+					setUpData();
+				}
 			}
 		}
 

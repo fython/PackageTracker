@@ -16,6 +16,7 @@
 	<string name="action_read_all">全部标记为已读</string>
 	<string name="action_import_export">导入/导出</string>
 	<string name="action_settings">设置</string>
+	<string name="action_refresh">刷新</string>
 
 	<string name="item_text_cannot_get_package_status">无法拉取最新状态</string>
 	<string-array name="item_status_description">

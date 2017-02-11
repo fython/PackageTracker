@@ -150,6 +150,7 @@ public class ImportExportActivity extends AbsActivity implements View.OnClickLis
 		protected void onPreExecute() {
 			progressDialog = new ProgressDialog(ImportExportActivity.this);
 			progressDialog.setMessage(getString(R.string.dialog_backup_title));
+			progressDialog.setCancelable(false);
 			progressDialog.show();
 		}
 
@@ -201,6 +202,7 @@ public class ImportExportActivity extends AbsActivity implements View.OnClickLis
 		protected void onPreExecute() {
 			progressDialog = new ProgressDialog(ImportExportActivity.this);
 			progressDialog.setMessage(getString(R.string.dialog_restoring_title));
+			progressDialog.setCancelable(false);
 			progressDialog.show();
 		}
 

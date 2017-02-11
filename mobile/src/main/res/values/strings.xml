@@ -16,6 +16,7 @@
 	<string name="action_read_all">Mark all read</string>
 	<string name="action_import_export">Import/Export</string>
 	<string name="action_settings">Settings</string>
+	<string name="action_refresh">Refresh</string>
 
 	<string name="item_text_cannot_get_package_status">Cannot get the latest status.</string>
 	<string-array name="item_status_description">

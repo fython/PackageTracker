@@ -77,6 +77,7 @@ public class DetailsInfoAdapter extends RecyclerView.Adapter {
 					if (itemType.id == ItemType.ID_NAME) {
 						h.title.setText(R.string.list_package_name);
 						h.summary.setText(data.name);
+						h.button.setVisibility(View.GONE);
 					} else if (itemType.id == ItemType.ID_NUMBER) {
 						h.title.setText(R.string.list_package_number);
 						h.summary.setText(String.format(
