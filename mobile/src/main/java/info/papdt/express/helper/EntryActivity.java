@@ -14,22 +14,6 @@ public class EntryActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		Settings mSettings = Settings.getInstance(getApplicationContext());
-		int defaultNightMode;
-		switch (mSettings.getInt(Settings.KEY_NIGHT_MODE, 0)) {
-			case 1:
-				defaultNightMode = AppCompatDelegate.MODE_NIGHT_AUTO;
-				break;
-			case 2:
-				defaultNightMode = AppCompatDelegate.MODE_NIGHT_YES;
-				break;
-			case 3:
-				defaultNightMode = AppCompatDelegate.MODE_NIGHT_NO;
-				break;
-			case 0:
-			default:
-				defaultNightMode = AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM;
-		}
-		AppCompatDelegate.setDefaultNightMode(defaultNightMode);
 
 		super.onCreate(savedInstanceState);
 
