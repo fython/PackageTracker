@@ -101,12 +101,14 @@ public class StepInput extends AbsStepFragment {
 		@Override
 		public void onPreExecute() {
 			getAddActivity().showProgressBar();
+			mEditText.setEnabled(false);
 		}
 
 		@Override
 		public void onPostExecute(BaseMessage<Package> message) {
 			if (getActivity() == null) return;
 			getAddActivity().hideProgressBar();
+			mEditText.setEnabled(true);
 			if (message.getCode() == BaseMessage.CODE_OKAY) {
 				Package p = message.getData();
 				getAddActivity().setNumber(number);
