@@ -189,7 +189,7 @@ public class DetailsActivity extends AbsActivity {
 		return super.onOptionsItemSelected(item);
 	}
 
-	private void showNameEditDialog() {
+	public void showNameEditDialog() {
 		if (mEditDialog == null) {
 			int DP8 = (int) ScreenUtils.dpToPx(this, 8);
 			mEditDialog = new AlertDialog.Builder(this)

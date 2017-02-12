@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.support.design.widget.Snackbar;
 import android.support.v7.widget.AppCompatImageButton;
 import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.CardView;
@@ -17,6 +18,8 @@ import java.util.ArrayList;
 
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.model.Package;
+import info.papdt.express.helper.support.ClipboardUtils;
+import info.papdt.express.helper.ui.DetailsActivity;
 import info.papdt.express.helper.view.VerticalStepView;
 
 public class DetailsInfoAdapter extends RecyclerView.Adapter {
@@ -78,6 +81,15 @@ public class DetailsInfoAdapter extends RecyclerView.Adapter {
 						h.title.setText(R.string.list_package_name);
 						h.summary.setText(data.name);
 						h.button.setVisibility(View.GONE);
+						h.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+							@Override
+							public boolean onLongClick(View v) {
+								if (parentActivity instanceof DetailsActivity) {
+									((DetailsActivity) parentActivity).showNameEditDialog();
+								}
+								return true;
+							}
+						});
 					} else if (itemType.id == ItemType.ID_NUMBER) {
 						h.title.setText(R.string.list_package_number);
 						h.summary.setText(String.format(
@@ -115,6 +127,17 @@ public class DetailsInfoAdapter extends RecyclerView.Adapter {
 									h.summary.setText(String.format(STRING_NUMBER_FORMAT, data.number, data.companyChineseName));
 									h.button.setTag(true);
 								}
+							}
+						});
+						h.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+							@Override
+							public boolean onLongClick(View v) {
+								ClipboardUtils.putString(parentActivity, data.number);
+								Snackbar.make(parentActivity.findViewById(R.id.coordinator_layout),
+										R.string.toast_copied_code,
+										Snackbar.LENGTH_LONG
+								).show();
+								return true;
 							}
 						});
 					}
