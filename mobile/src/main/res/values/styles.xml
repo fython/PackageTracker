@@ -21,8 +21,8 @@
 	</style>
 
 	<style name="Toolbar.Dark" parent="ThemeOverlay.AppCompat.ActionBar">
-		<item name="colorControlNormal">@color/white</item>
-		<item name="android:textColorPrimary">@color/white</item>
+		<item name="colorControlNormal">@android:color/white</item>
+		<item name="android:textColorPrimary">@android:color/white</item>
 	</style>
 
 	<style name="AppTheme.Translucent" parent="AppTheme">

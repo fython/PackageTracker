@@ -50,7 +50,7 @@ public class StepNoFound extends AbsStepFragment {
 	}
 
 	private void updateForceButton() {
-				if(getAddActivity().getPackage().companyChineseName != null) {
+		if (getAddActivity().getPackage().companyChineseName != null) {
 			mForceBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.pink_900));
 			mForceBtn.setText(String.format(getString(R.string.operation_force_add_when_cannot_find),
 					getAddActivity().getPackage().companyChineseName));
