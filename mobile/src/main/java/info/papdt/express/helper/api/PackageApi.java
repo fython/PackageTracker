@@ -135,9 +135,9 @@ public class PackageApi {
 					pkg.companyType = comcode;
 					pkg.companyChineseName = PackageApi.CompanyInfo.getNameByCode(pkg.companyType);
 					pkg.data = new ArrayList<>();
-					return new BaseMessage<>(BaseMessage.CODE_ERROR, pkg);
+					return new BaseMessage<>(BaseMessage.CODE_OKAY, pkg);
 				}
-			}catch (Exception e){
+			} catch (Exception e){
 				e.printStackTrace();
 				return new BaseMessage<>(BaseMessage.CODE_ERROR);
 			}
