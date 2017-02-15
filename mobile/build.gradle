@@ -32,7 +32,7 @@ dependencies {
     compile 'com.android.support:design:25.1.0'
     compile 'com.android.support:support-v13:25.1.0'
     compile 'com.android.support:customtabs:25.1.0'
-    compile 'com.roughike:bottom-bar:2.1.1'
+    compile 'com.roughike:bottom-bar:1.4.0.1'
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'com.squareup.okhttp3:okhttp:3.6.0'
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
