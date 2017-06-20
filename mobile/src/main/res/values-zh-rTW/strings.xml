@@ -83,8 +83,8 @@
 	<string name="github_repo_title">Github 源代碼</string>
 	<string name="github_repo_url">https://github.com/fython/PackageTracker</string>
 	<string name="alipay_support_title">通過支付寶捐贈</string>
-	<string name="alipay_support_summary">316643843@qq.com</string>
-	<string name="alipay_support_account">316643843\@qq.com</string>
+	<string name="alipay_support_summary">fythonx@gmail.com</string>
+	<string name="alipay_support_account">fythonx\@gmail.com</string>
 	<string name="toast_copied_successfully">支付寶帳號已成功拷貝到剪貼板。</string>
 	<string name="open_source_license">開放源代碼許可證</string>
 	<string name="open_source_license_summary">GPL v3</string>
@@ -131,6 +131,8 @@
 
 	<string name="item_notification_do_not_disturb">勿擾模式</string>
 	<string name="item_notification_do_not_disturb_desc">在 23:00 至次日 06:00 期間不發出通知。</string>
+
+	<string name="item_auto_detect_services">自動偵測新包裹</string>
 
 	<!-- Details -->
 	<string name="activity_details">詳情</string>
@@ -197,5 +199,13 @@
 
 	<!-- Widget -->
 	<string name="hint_all_package_delivered">所有包裹均已送達。</string>
+
+	<!-- Auto Detect Number -->
+	<string name="label_detect_service">水錶助手 - 運單自動偵測</string>
+	<string name="description_detect_service">當你打開淘寶或京東應用程式，水錶助手會檢測當前頁面是否有新包裹資料（通常只會出現在訂單頁面中）並幫助你添加追蹤。</string>
+	<string name="auto_detect_noti_title">發現新的運單號碼</string>
+	<string name="auto_detect_noti_title_with_name">發現新的運單：%s</string>
+	<string name="auto_detect_noti_result">來自%1$s的【%2$s】%3$s</string>
+	<string name="auto_detect_noti_action_add">新增</string>
 
 </resources>

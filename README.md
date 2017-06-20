@@ -11,9 +11,9 @@ A Material Design Shipment Tracker Android App.
 
 ### 开发环境需求
 
-- Android SDK Platform 24
-- Android Support Library 24.0.0
-- Gradle + Android Studio 2.2 Preview1
+- Android SDK Platform 26
+- Android Support Library 26.0.0
+- Gradle + Android Studio 2.3 / IntelliJ IDEA 2017.1
 - Windows / Linux / Mac
 
 ### 应用安装需求
@@ -28,16 +28,16 @@ Fung Go (fython) Email: fython@163.com
 
 联系 QQ: 2850029060
 
-捐赠支持(支付宝): 316643843@qq.com
+捐赠支持(支付宝): fythonx@gmail.com
 
-博客地址: http://blog.feng.moe
+博客地址: https://feng.moe
 
 ### License
 
 ```
 GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
 
-Copyright (C) 2016 Fung Go
+Copyright (C) 2016-2017 Fung Go
 
 This program comes with ABSOLUTELY NO WARRANTY.
 This is free software, and you are welcome to redistribute it under certain conditions.

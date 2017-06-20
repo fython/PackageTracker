@@ -12,11 +12,16 @@ public class CompanyFilterTask extends AsyncTask<String, Void, ArrayList<Package
 
 	@Override
 	protected ArrayList<PackageApi.CompanyInfo.Company> doInBackground(String... strings) {
-		String keyword = ZHConverter.convert(strings[0], ZHConverter.SIMPLIFIED);
+		return doSync(strings[0]);
+	}
+
+	public static ArrayList<PackageApi.CompanyInfo.Company> doSync(String keyword) {
+		keyword = ZHConverter.convert(keyword, ZHConverter.SIMPLIFIED).replaceAll("快递", "");
 		ArrayList<PackageApi.CompanyInfo.Company> src = new ArrayList<>();
 		if (keyword != null && keyword.trim().length() > 0) {
 			for (int i = 0; i < PackageApi.CompanyInfo.info.size(); i++) {
-				if (!PackageApi.CompanyInfo.names [i].toLowerCase().contains(keyword.toLowerCase()) && !PackageApi.CompanyInfo.pinyin [i].contains(keyword)) {
+				if (!PackageApi.CompanyInfo.names [i].toLowerCase().contains(keyword.toLowerCase())
+						&& !PackageApi.CompanyInfo.pinyin[i].contains(keyword)) {
 					continue;
 				}
 

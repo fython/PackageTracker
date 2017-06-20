@@ -73,6 +73,9 @@ public class StepSuccess extends AbsStepFragment {
 		} else {
 			mDescText.setText(getString(R.string.message_failure_forced));
 		}
+		if (!TextUtils.isEmpty(getAddActivity().getPreName())) {
+			mNameEdit.setText(getAddActivity().getPreName());
+		}
 	}
 
 	@Override

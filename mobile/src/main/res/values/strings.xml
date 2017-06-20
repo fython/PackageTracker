@@ -83,8 +83,8 @@
 	<string name="github_repo_title">Github Source</string>
 	<string name="github_repo_url">https://github.com/fython/PackageTracker</string>
 	<string name="alipay_support_title">Donate through Alipay</string>
-	<string name="alipay_support_summary">316643843@qq.com</string>
-	<string name="alipay_support_account">316643843\@qq.com</string>
+	<string name="alipay_support_summary">fythonx@gmail.com</string>
+	<string name="alipay_support_account">fythonx\@gmail.com</string>
 	<string name="toast_copied_successfully">Alipay account has been copied successfully.</string>
 	<string name="open_source_license">Open Source License</string>
 	<string name="open_source_license_summary">GPL v3</string>
@@ -138,6 +138,8 @@
 
 	<string name="item_notification_do_not_disturb">Do not disturb mode</string>
 	<string name="item_notification_do_not_disturb_desc">Don\'t send notifications from 23:00 to 06:00.</string>
+
+	<string name="item_auto_detect_services">New package auto-detection</string>
 
 	<!-- Details -->
 	<string name="activity_details">Details</string>
@@ -204,5 +206,13 @@
 
 	<!-- Widget -->
 	<string name="hint_all_package_delivered">All packages have been delivered.</string>
+
+	<!-- Auto Detect Number -->
+	<string name="label_detect_service">Package Tracker Auto-detection</string>
+	<string name="description_detect_service">When you open Taobao or JD.com application, Package Tracker can detect if there is a new package in current page (Generally, it exists in order details page.) and help you to add it.</string>
+	<string name="auto_detect_noti_title">New package number detected</string>
+	<string name="auto_detect_noti_title_with_name">New package detected: %s</string>
+	<string name="auto_detect_noti_result">From %1$s: %2$s %3$s</string>
+	<string name="auto_detect_noti_action_add">Add</string>
 
 </resources>

@@ -2,6 +2,8 @@ package info.papdt.express.helper.ui;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.dao.PackageDatabase;
 import info.papdt.express.helper.model.Package;
+import info.papdt.express.helper.services.DetectNumberService;
 import info.papdt.express.helper.support.ScreenUtils;
 import info.papdt.express.helper.support.Settings;
 import info.papdt.express.helper.ui.common.AbsActivity;
@@ -34,13 +37,18 @@ public class AddActivity extends AbsActivity{
 	private Package pack;
 	private String number;
 
+	private String preName, preNumber, preCompany;
+
 	private boolean isFromMainActivity = false;
 
 	private int nowStep;
 
+	public static final String EXTRA_PRE_NUMBER = "pre_number",
+			EXTRA_PRE_COMPANY = "pre_company", EXTRA_PRE_NAME = "pre_name";
+
 	public static final String RESULT_EXTRA_PACKAGE_JSON = "package_json";
 
-	public static final String EXTRA_IS_FROM_MAIN_ACTIVITY = "is_from_main";
+	public static final String EXTRA_IS_FROM_MAIN_ACTIVITY = "is_from_main", EXTRA_HAS_PREINFO = "has_pre_info";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -57,9 +65,20 @@ public class AddActivity extends AbsActivity{
 		}
 		setContentView(R.layout.activity_add);
 
-		if (getIntent().hasExtra(EXTRA_IS_FROM_MAIN_ACTIVITY)
-				&& getIntent().getBooleanExtra(EXTRA_IS_FROM_MAIN_ACTIVITY, false)) {
+		Intent intent = getIntent();
+
+		if (intent.hasExtra(EXTRA_IS_FROM_MAIN_ACTIVITY)
+				&& intent.getBooleanExtra(EXTRA_IS_FROM_MAIN_ACTIVITY, false)) {
 			isFromMainActivity = true;
+		}
+
+		if (intent.hasExtra(EXTRA_HAS_PREINFO)
+				&& intent.getBooleanExtra(EXTRA_HAS_PREINFO, false)) {
+			preNumber = intent.getStringExtra(EXTRA_PRE_NUMBER);
+			preCompany = intent.getStringExtra(EXTRA_PRE_COMPANY);
+			preName = intent.getStringExtra(EXTRA_PRE_NAME);
+			NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+			nm.cancel(DetectNumberService.NOTIFICATION_ID_ASSIST);
 		}
 
 		mActionBar.setDisplayHomeAsUpEnabled(true);
@@ -168,6 +187,29 @@ public class AddActivity extends AbsActivity{
 		} else {
 			super.onBackPressed();
 		}
+	}
+
+	public static void launch(Context context, String company, String number, String name) {
+		Intent intent = new Intent(context, AddActivity.class);
+		intent.putExtra(EXTRA_HAS_PREINFO, true);
+		intent.putExtra(EXTRA_PRE_NUMBER, number);
+		intent.putExtra(EXTRA_PRE_COMPANY, company);
+		if (name != null) {
+			intent.putExtra(EXTRA_PRE_NAME, name);
+		}
+		context.startActivity(intent);
+	}
+
+	public String getPreName() {
+		return preName;
+	}
+
+	public String getPreNumber() {
+		return preNumber;
+	}
+
+	public String getPreCompany() {
+		return preCompany;
 	}
 
 }

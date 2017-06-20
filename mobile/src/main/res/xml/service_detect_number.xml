@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
+                       android:description="@string/description_detect_service"
+                       android:packageNames="com.taobao.taobao,com.jingdong.app.mall"
+                       android:accessibilityEventTypes="typeAllMask"
+                       android:accessibilityFlags="flagReportViewIds"
+                       android:accessibilityFeedbackType="feedbackAllMask"
+                       android:notificationTimeout="100"
+                       android:canRetrieveWindowContent="true"/>

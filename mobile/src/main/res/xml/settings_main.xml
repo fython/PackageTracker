@@ -3,6 +3,7 @@
 
 	<Preference android:key="settings_ui" android:title="@string/category_user_interface"/>
 	<Preference android:key="settings_network" android:title="@string/category_network"/>
+	<Preference android:key="settings_auto_detect" android:title="@string/item_auto_detect_services"/>
 
 	<PreferenceCategory android:title="@string/category_about">
 

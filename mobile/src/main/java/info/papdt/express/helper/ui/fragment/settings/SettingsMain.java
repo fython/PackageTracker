@@ -1,7 +1,9 @@
 package info.papdt.express.helper.ui.fragment.settings;
 
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.support.design.widget.Snackbar;
 
 import info.papdt.express.helper.R;
@@ -14,7 +16,9 @@ public class SettingsMain extends AbsPrefFragment implements Preference.OnPrefer
 
 	private Preference mPrefUI, mPrefNetwork, mPrefVersion, mPrefSina,
 			mPrefGithub, mPrefAlipay, mPrefLicense, mPrefGooglePlus;
-	private Preference mPrefIconDesigner, mPrefContributors;
+	private Preference mPrefIconDesigner, mPrefContributors, mPrefAutoDetect;
+
+	private static final int REQUEST_AUTO_DETECT_ENABLE = 1001;
 
 	@Override
 	public void onCreatePreferences(Bundle bundle, String s) {
@@ -22,6 +26,7 @@ public class SettingsMain extends AbsPrefFragment implements Preference.OnPrefer
 
 		mPrefUI = findPreference("settings_ui");
 		mPrefNetwork = findPreference("settings_network");
+		mPrefAutoDetect = findPreference("settings_auto_detect");
 		mPrefVersion = findPreference("version");
 		mPrefGithub = findPreference("github");
 		mPrefSina = findPreference("sina");
@@ -43,6 +48,7 @@ public class SettingsMain extends AbsPrefFragment implements Preference.OnPrefer
 
 		mPrefUI.setOnPreferenceClickListener(this);
 		mPrefNetwork.setOnPreferenceClickListener(this);
+		mPrefAutoDetect.setOnPreferenceClickListener(this);
 		mPrefVersion.setOnPreferenceClickListener(this);
 		mPrefGithub.setOnPreferenceClickListener(this);
 		mPrefSina.setOnPreferenceClickListener(this);
@@ -95,6 +101,12 @@ public class SettingsMain extends AbsPrefFragment implements Preference.OnPrefer
 		}
 		if (pref == mPrefGooglePlus) {
 			openWebsite(getString(R.string.google_plus_url));
+			return true;
+		}
+		if (pref == mPrefAutoDetect) {
+			Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
+			startActivityForResult(intent, REQUEST_AUTO_DETECT_ENABLE);
+			return true;
 		}
 		return false;
 	}
