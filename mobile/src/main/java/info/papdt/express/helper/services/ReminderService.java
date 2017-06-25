@@ -11,7 +11,10 @@ import android.os.IBinder;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.dao.PackageDatabase;
@@ -77,7 +80,7 @@ public class ReminderService extends IntentService {
 	}
 
 	@SuppressWarnings("getNotification")
-	private static Notification buildNotification(Context context, String title, String subject, String longText, String time, int icon, int color,
+	private static Notification buildNotification(Context context, String title, String subject, String longText, long time, int icon, int color,
 	                                              int defaults, PendingIntent contentIntent, PendingIntent deleteIntent) {
 		Notification n;
 		NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
@@ -88,7 +91,7 @@ public class ReminderService extends IntentService {
 		builder.setDefaults(defaults);
 		builder.setSmallIcon(icon);
 		builder.setContentIntent(contentIntent);
-		builder.setSubText(time);
+		builder.setWhen(time);
 		builder.setAutoCancel(true);
 
 		if (Build.VERSION.SDK_INT >= 21) {
@@ -135,11 +138,21 @@ public class ReminderService extends IntentService {
 					smallIcon = R.drawable.ic_assignment_returned_white_24dp;
 			}
 
+			String myDate = exp.data.get(0).time;
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			long millis = 0;
+			try {
+				Date date = sdf.parse(myDate);
+				millis = date.getTime();
+			} catch (ParseException e) {
+				e.printStackTrace();
+			}
+
 			Notification n = buildNotification(getApplicationContext(),
 					title,
 					subject,
 					exp.data.get(0).context,
-					exp.data.get(0).time,
+					millis,
 					smallIcon,
 					getResources().getIntArray(R.array.statusColor) [exp.getState()],
 					defaults,
