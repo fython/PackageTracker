@@ -14,7 +14,6 @@ import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.AppCompatEditText;
-import android.support.v7.widget.DrawableUtils;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
@@ -180,6 +179,30 @@ public class SearchActivity extends AbsActivity {
 
 		// make the view visible and start the animation
 		rootLayout.setVisibility(View.VISIBLE);
+		circularReveal.start();
+	}
+
+	@Override
+	public void onBackPressed() {
+		Intent intent = getIntent();
+
+		int cx = intent.getIntExtra(EXTRA_CX, rootLayout.getWidth() / 2);
+		int cy = intent.getIntExtra(EXTRA_CY, rootLayout.getHeight() / 2);
+
+		float finalRadius = Math.max(rootLayout.getWidth(), rootLayout.getHeight());
+		Animator circularReveal = ViewAnimationUtils.createCircularReveal(rootLayout, cx, cy, finalRadius, 0);
+
+		circularReveal.addListener(new Animator.AnimatorListener() {
+			@Override public void onAnimationStart(Animator animator) {}
+			@Override public void onAnimationCancel(Animator animator) {}
+			@Override public void onAnimationRepeat(Animator animator) {}
+			@Override
+			public void onAnimationEnd(Animator animator) {
+				rootLayout.setVisibility(View.INVISIBLE);
+				finish();
+			}
+		});
+		circularReveal.setDuration(400);
 		circularReveal.start();
 	}
 
