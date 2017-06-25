@@ -187,7 +187,7 @@ public abstract class BaseFragment extends AbsFragment implements SwipeRefreshLa
 
 		@Override
 		protected Void doInBackground(Void... voids) {
-			mDatabase.pullDataFromNetwork(true);
+			mDatabase.pullDataFromNetwork(false);
 			return null;
 		}
 

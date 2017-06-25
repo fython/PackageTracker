@@ -92,7 +92,7 @@ public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageList
 
 		/** Set bold text when unread */
 		holder.descText.getPaint().setFakeBoldText(p.unreadNew);
-		holder.titleText.getPaint().setFakeBoldText(p.unreadNew);
+		holder.titleText.getPaint().setFakeBoldText(true);
 
 		/** Set CircleImageView */
 		if (p.name.length() > 0){
