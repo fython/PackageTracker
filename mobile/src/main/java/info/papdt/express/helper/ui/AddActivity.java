@@ -5,13 +5,18 @@ import android.app.FragmentTransaction;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.AppBarLayout;
+import android.support.v7.app.ActionBar;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import info.papdt.express.helper.R;
@@ -33,6 +38,8 @@ public class AddActivity extends AbsActivity{
 
 	private Fragment mStepInput, mStepNoInternetConnection, mStepNoFound, mStepSuccess;
 	private ProgressBar mProgressBar;
+	private AppBarLayout mAppBarLayout;
+	private View mAppBarBackground, mAppBarTitle, mAppBarSmallTitle;
 
 	private Package pack;
 	private String number;
@@ -86,7 +93,7 @@ public class AddActivity extends AbsActivity{
 		((ViewGroup.MarginLayoutParams) mToolbar.getLayoutParams()).topMargin +=
 				ScreenUtils.getStatusBarHeight(this);
 
-		step(STEP_INPUT);
+		addStep(STEP_INPUT);
 
 		if (ScannerActivity.ACTION_SCAN_TO_ADD.equals(getIntent().getAction())) {
 			new Handler().postDelayed(new Runnable() {
@@ -98,14 +105,32 @@ public class AddActivity extends AbsActivity{
 				}
 			}, 600);
 		}
+
+		setExpanded(getResources().getConfiguration().screenHeightDp > 480);
 	}
 
 	@Override
 	protected void setUpViews() {
 		mProgressBar = $(R.id.progress_bar);
+		mAppBarLayout = $(R.id.app_bar_layout);
+		mAppBarBackground = $(R.id.parallax_background);
+		mAppBarTitle = $(R.id.title_view);
+		mAppBarSmallTitle = $(R.id.small_title_view);
 	}
 
-	public void step(int step) {
+	@Override
+	public void onConfigurationChanged(Configuration newConfig) {
+		super.onConfigurationChanged(newConfig);
+		setExpanded(newConfig.screenHeightDp > 480);
+	}
+
+	private void setExpanded(boolean shouldExpand) {
+		mAppBarBackground.setVisibility(shouldExpand ? View.VISIBLE : View.GONE);
+		mAppBarTitle.setVisibility(shouldExpand ? View.VISIBLE : View.INVISIBLE);
+		mAppBarSmallTitle.setVisibility(shouldExpand ? View.INVISIBLE : View.VISIBLE);
+	}
+
+	public void addStep(int step) {
 		nowStep = step;
 
 		FragmentTransaction fm = getFragmentManager().beginTransaction();
@@ -118,22 +143,22 @@ public class AddActivity extends AbsActivity{
 				if (mStepInput == null) {
 					mStepInput = new StepInput();
 				}
-				fm.replace(R.id.container, mStepInput).commit();
+				fm.replace(R.id.container, mStepInput).addToBackStack(null).commit();
 				break;
 			case STEP_NO_INTERNET_CONNECTION:
 				if (mStepNoInternetConnection == null) {
 					mStepNoInternetConnection = new StepNoInternetConnection();
 				}
-				fm.replace(R.id.container, mStepNoInternetConnection).commit();
+				fm.replace(R.id.container, mStepNoInternetConnection).addToBackStack(null).commit();
 				break;
 			case STEP_NO_FOUND:
 				if (mStepNoFound == null) {
 					mStepNoFound = new StepNoFound();
 				}
-				fm.replace(R.id.container, mStepNoFound).commit();
+				fm.replace(R.id.container, mStepNoFound).addToBackStack(null).commit();
 				break;
 			case STEP_SUCCESS:
-				fm.replace(R.id.container, new StepSuccess()).commit();
+				fm.replace(R.id.container, new StepSuccess()).addToBackStack(null).commit();
 				break;
 		}
 	}
@@ -182,8 +207,11 @@ public class AddActivity extends AbsActivity{
 
 	@Override
 	public void onBackPressed() {
-		if (nowStep == STEP_NO_FOUND || nowStep == STEP_NO_INTERNET_CONNECTION || nowStep == STEP_SUCCESS) {
-			step(STEP_INPUT);
+		if (getFragmentManager().getBackStackEntryCount() > 0) {
+			getFragmentManager().popBackStackImmediate();
+			if (getFragmentManager().getBackStackEntryCount() <= 0) {
+				super.onBackPressed();
+			}
 		} else {
 			super.onBackPressed();
 		}

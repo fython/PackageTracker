@@ -17,7 +17,7 @@ public class StepNoInternetConnection extends AbsStepFragment {
 		mButtonBar.setOnLeftButtonClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				getAddActivity().step(AddActivity.STEP_INPUT);
+				getAddActivity().onBackPressed();
 			}
 		});
 	}

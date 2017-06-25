@@ -13,6 +13,13 @@
 		<item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
 	</style>
 
+	<style name="AppTheme.Brown" parent="Theme.AppCompat.DayNight.NoActionBar">
+		<item name="colorPrimary">@color/brown_500</item>
+		<item name="colorPrimaryDark">@color/brown_700</item>
+		<item name="colorAccent">@color/colorAccent</item>
+		<item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+	</style>
+
 	<style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
 		<item name="colorPrimary">@color/colorPrimary</item>
 		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>

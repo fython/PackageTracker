@@ -35,7 +35,7 @@ public class StepSuccess extends AbsStepFragment {
 		mButtonBar.setOnLeftButtonClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				getAddActivity().step(AddActivity.STEP_INPUT);
+				getAddActivity().onBackPressed();
 			}
 		});
 		mButtonBar.setOnRightButtonClickListener(new View.OnClickListener() {
@@ -62,7 +62,7 @@ public class StepSuccess extends AbsStepFragment {
 		if (p != null) {
 			updateUIContent(p);
 		} else {
-			getAddActivity().step(AddActivity.STEP_NO_FOUND);
+			getAddActivity().addStep(AddActivity.STEP_NO_FOUND);
 		}
 	}
 
@@ -103,13 +103,13 @@ public class StepSuccess extends AbsStepFragment {
 				Package p = message.getData();
 				getAddActivity().setPackage(p);
 				if (p.status.equals("200")) {
-					getAddActivity().step(AddActivity.STEP_SUCCESS);
+					getAddActivity().addStep(AddActivity.STEP_SUCCESS);
 				} else {
 					Toast.makeText(getContext(), p.message, Toast.LENGTH_SHORT).show();
-					getAddActivity().step(AddActivity.STEP_NO_FOUND);
+					getAddActivity().addStep(AddActivity.STEP_NO_FOUND);
 				}
 			} else {
-				getAddActivity().step(AddActivity.STEP_NO_FOUND);
+				getAddActivity().addStep(AddActivity.STEP_NO_FOUND);
 			}
 		}
 

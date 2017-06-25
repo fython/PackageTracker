@@ -84,7 +84,7 @@ public class StepInput extends AbsStepFragment {
 						new FindCompanyAndGetPackageTask().execute(getAddActivity().getPreCompany());
 					}
 				} else {
-					getAddActivity().step(AddActivity.STEP_NO_INTERNET_CONNECTION);
+					getAddActivity().addStep(AddActivity.STEP_NO_INTERNET_CONNECTION);
 				}
 			}
 		});
@@ -127,13 +127,13 @@ public class StepInput extends AbsStepFragment {
 				getAddActivity().setNumber(number);
 				getAddActivity().setPackage(p);
 				if (p.status.equals("200")) {
-					getAddActivity().step(AddActivity.STEP_SUCCESS);
+					getAddActivity().addStep(AddActivity.STEP_SUCCESS);
 				} else {
 					Toast.makeText(getContext(), p.message, Toast.LENGTH_SHORT).show();
-					getAddActivity().step(AddActivity.STEP_NO_FOUND);
+					getAddActivity().addStep(AddActivity.STEP_NO_FOUND);
 				}
 			} else {
-				getAddActivity().step(AddActivity.STEP_NO_FOUND);
+				getAddActivity().addStep(AddActivity.STEP_NO_FOUND);
 			}
 		}
 

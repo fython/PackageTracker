@@ -18,9 +18,15 @@ abstract class AbsStepFragment extends AbsFragment {
 	protected ButtonBar mButtonBar;
 
 	@Override
+	public void onCreate(Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
+		setRetainInstance(true);
+	}
+
+	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup group, Bundle state) {
 		rootView = inflater.inflate(this.getLayoutResId(), group, false);
-		mButtonBar = (ButtonBar) rootView.findViewById(R.id.button_bar);
+		mButtonBar = rootView.findViewById(R.id.button_bar);
 		this.doCreateView(rootView);
 		return rootView;
 	}

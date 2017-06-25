@@ -30,7 +30,7 @@ public class StepNoFound extends AbsStepFragment {
 		mButtonBar.setOnLeftButtonClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				getAddActivity().step(AddActivity.STEP_INPUT);
+				getAddActivity().onBackPressed();
 			}
 		});
 		$(R.id.btn_choose_company).setOnClickListener(new View.OnClickListener() {
@@ -44,7 +44,7 @@ public class StepNoFound extends AbsStepFragment {
 		$(R.id.btn_force_add).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View view) {
-				getAddActivity().step(AddActivity.STEP_SUCCESS);
+				getAddActivity().addStep(AddActivity.STEP_SUCCESS);
 			}
 		});
 	}
@@ -90,13 +90,13 @@ public class StepNoFound extends AbsStepFragment {
 				getAddActivity().setPackage(p);
 				updateForceButton();
 				if (p.status.equals("200")) {
-					getAddActivity().step(AddActivity.STEP_SUCCESS);
+					getAddActivity().addStep(AddActivity.STEP_SUCCESS);
 				} else {
 					Toast.makeText(getContext(), p.message, Toast.LENGTH_SHORT).show();
-					getAddActivity().step(AddActivity.STEP_NO_FOUND);
+					getAddActivity().addStep(AddActivity.STEP_NO_FOUND);
 				}
 			} else {
-				getAddActivity().step(AddActivity.STEP_NO_FOUND);
+				getAddActivity().addStep(AddActivity.STEP_NO_FOUND);
 			}
 		}
 

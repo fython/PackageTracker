@@ -42,7 +42,8 @@
 
 		<activity android:name=".ui.AddActivity"
 		          android:label="@string/activity_add"
-		          android:theme="@style/AppTheme">
+		          android:theme="@style/AppTheme"
+		          android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 			</intent-filter>
@@ -50,7 +51,8 @@
 
 		<activity android:name=".ui.CompanyChooserActivity"
 		          android:label="@string/activity_choose_company"
-		          android:theme="@style/AppTheme">
+		          android:theme="@style/AppTheme"
+		          android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 			</intent-filter>
