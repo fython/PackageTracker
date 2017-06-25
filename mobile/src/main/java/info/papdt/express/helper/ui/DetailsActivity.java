@@ -25,8 +25,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 
-import java.util.ArrayList;
-
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.api.PackageApi;
 import info.papdt.express.helper.dao.PackageDatabase;
@@ -35,8 +33,13 @@ import info.papdt.express.helper.model.Package;
 import info.papdt.express.helper.support.ClipboardUtils;
 import info.papdt.express.helper.support.ScreenUtils;
 import info.papdt.express.helper.support.Settings;
-import info.papdt.express.helper.ui.adapter.DetailsInfoAdapter;
 import info.papdt.express.helper.ui.common.AbsActivity;
+import info.papdt.express.helper.ui.items.DetailsStatusItemBinder;
+import info.papdt.express.helper.ui.items.DetailsTwoLineItem;
+import info.papdt.express.helper.ui.items.DetailsTwoLineItemBinder;
+import info.papdt.express.helper.ui.items.SubheaderItemBinder;
+import me.drakeet.multitype.Items;
+import me.drakeet.multitype.MultiTypeAdapter;
 
 public class DetailsActivity extends AbsActivity {
 
@@ -46,7 +49,8 @@ public class DetailsActivity extends AbsActivity {
 	private ImageView mBackground;
 	private AppCompatEditText mNameEdit;
 
-	private DetailsInfoAdapter mAdapter;
+	private MultiTypeAdapter mAdapter;
+	private DetailsStatusItemBinder mStatusBinder;
 
 	private AlertDialog mEditDialog, mDeleteDialog;
 
@@ -97,7 +101,11 @@ public class DetailsActivity extends AbsActivity {
 
 	private void setUpData() {
 		if (mAdapter == null) {
-			mAdapter = new DetailsInfoAdapter(this);
+			mAdapter = new MultiTypeAdapter();
+			mStatusBinder = new DetailsStatusItemBinder();
+			mAdapter.register(DetailsTwoLineItem.class, new DetailsTwoLineItemBinder());
+			mAdapter.register(String.class, new SubheaderItemBinder());
+			mAdapter.register(Package.Status.class, mStatusBinder);
 			mRecyclerView.setAdapter(mAdapter);
 		}
 		new ListBuildTask().execute();
@@ -132,22 +140,13 @@ public class DetailsActivity extends AbsActivity {
 		}
 	}
 
-	private ArrayList<DetailsInfoAdapter.ItemType> buildItems() {
-		ArrayList<DetailsInfoAdapter.ItemType> items = new ArrayList<>();
-
-		items.add(new DetailsInfoAdapter.ItemType(DetailsInfoAdapter.ItemType.TYPE_NORMAL, DetailsInfoAdapter.ItemType.ID_NAME));
-		items.add(new DetailsInfoAdapter.ItemType(DetailsInfoAdapter.ItemType.TYPE_NORMAL, DetailsInfoAdapter.ItemType.ID_NUMBER));
-		items.add(new DetailsInfoAdapter.ItemType(DetailsInfoAdapter.ItemType.TYPE_SUBHEADER, DetailsInfoAdapter.ItemType.ID_STATUS_HEADER));
-
-		if(data.data != null) {
-			for (int i = 0; i < data.data.size(); i++) {
-				DetailsInfoAdapter.ItemType item = new DetailsInfoAdapter.ItemType(DetailsInfoAdapter.ItemType.TYPE_PACK_STATUS, DetailsInfoAdapter.ItemType.ID_STATUS);
-				item.statusIndex = i;
-				items.add(item);
-			}
-		}
-
-		return items;
+	private Items buildItems() {
+		Items newItems = new Items();
+		newItems.add(new DetailsTwoLineItem(DetailsTwoLineItem.TYPE_NAME, data.name));
+		newItems.add(new DetailsTwoLineItem(DetailsTwoLineItem.TYPE_NUMBER, data.number, data.companyChineseName));
+		newItems.add(getString(R.string.list_status_subheader));
+		newItems.addAll(data.data);
+		return newItems;
 	}
 
 	@Override
@@ -283,10 +282,10 @@ public class DetailsActivity extends AbsActivity {
 		activity.startActivityForResult(intent, MainActivity.REQUEST_DETAILS);
 	}
 
-	private class ListBuildTask extends AsyncTask<Void, Void, ArrayList<DetailsInfoAdapter.ItemType>> {
+	private class ListBuildTask extends AsyncTask<Void, Void, Items> {
 
 		@Override
-		protected ArrayList<DetailsInfoAdapter.ItemType> doInBackground(Void... voids) {
+		protected Items doInBackground(Void... voids) {
 			if (data == null) {
 				data = Package.buildFromJson(getIntent().getStringExtra(EXTRA_PACKAGE_JSON));
 			}
@@ -306,8 +305,9 @@ public class DetailsActivity extends AbsActivity {
 		}
 
 		@Override
-		protected void onPostExecute(ArrayList<DetailsInfoAdapter.ItemType> items) {
-			mAdapter.setData(data, items);
+		protected void onPostExecute(Items items) {
+			mStatusBinder.setData(data);
+			mAdapter.setItems(items);
 			mAdapter.notifyDataSetChanged();
 
 			int color;
