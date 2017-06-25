@@ -18,10 +18,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.View;
-import android.view.ViewAnimationUtils;
-import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
+import android.view.*;
 import android.view.inputmethod.EditorInfo;
 
 import java.util.ArrayList;
@@ -204,6 +201,21 @@ public class SearchActivity extends AbsActivity {
 		});
 		circularReveal.setDuration(400);
 		circularReveal.start();
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.menu_search, menu);
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		if (item.getItemId() == R.id.action_clear) {
+			mSearchEdit.setText("");
+			return true;
+		}
+		return super.onOptionsItemSelected(item);
 	}
 
 	private synchronized ArrayList<SearchResultAdapter.ItemType> buildItems() {

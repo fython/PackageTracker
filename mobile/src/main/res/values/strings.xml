@@ -168,6 +168,7 @@
 
 	<!-- Search -->
 	<string name="activity_search">Search</string>
+	<string name="action_clear">Clear</string>
 	<string name="search_hint_common">Package or Company....</string>
 	<string name="subheader_package">Package</string>
 	<string name="subheader_company">Company</string>

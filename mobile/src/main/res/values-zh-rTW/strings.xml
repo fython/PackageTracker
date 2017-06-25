@@ -161,6 +161,7 @@
 
 	<!-- Search -->
 	<string name="activity_search">搜尋</string>
+	<string name="action_clear">清空</string>
 	<string name="search_hint_common">包裹或公司....</string>
 	<string name="subheader_package">包裹</string>
 	<string name="subheader_company">速遞公司</string>
