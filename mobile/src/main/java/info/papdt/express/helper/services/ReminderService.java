@@ -91,7 +91,7 @@ public class ReminderService extends IntentService {
 		builder.setDefaults(defaults);
 		builder.setSmallIcon(icon);
 		builder.setContentIntent(contentIntent);
-		builder.setWhen(time);
+		if (time > 0) builder.setWhen(time);
 		builder.setAutoCancel(true);
 
 		if (Build.VERSION.SDK_INT >= 21) {
