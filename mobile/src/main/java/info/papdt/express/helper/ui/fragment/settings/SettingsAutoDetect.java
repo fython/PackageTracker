@@ -1,6 +1,8 @@
 package info.papdt.express.helper.ui.fragment.settings;
 
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.services.ClipboardDetectService;
@@ -34,6 +36,14 @@ public class SettingsAutoDetect extends AbsPrefFragment
 	public boolean onPreferenceChange(Preference pref, Object o) {
 		if (pref == mPrefFromClipboard) {
 			Boolean b = (Boolean) o;
+			if (b && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+				if (!android.provider.Settings.canDrawOverlays(getActivity())) {
+					Intent intent = new Intent(android.provider.Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+							Uri.parse("package:" + getActivity().getPackageName()));
+					startActivity(intent);
+					return false;
+				}
+			}
 			getSettings().putBoolean(Settings.KEY_DETECT_FROM_CLIPBOARD, b);
 			Intent intent = new Intent(getActivity().getApplicationContext(), ClipboardDetectService.class);
 			if (!b) {
