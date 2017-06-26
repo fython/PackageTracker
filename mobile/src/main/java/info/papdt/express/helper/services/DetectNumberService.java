@@ -331,9 +331,12 @@ public class DetectNumberService extends AccessibilityService {
 				.setPriority(Notification.PRIORITY_HIGH)
 				.setShowWhen(false)
 				.setAutoCancel(true)
+				.setContentIntent(PendingIntent.getActivity(
+						this, 0, addIntent, PendingIntent.FLAG_UPDATE_CURRENT
+				))
 				.addAction(R.drawable.ic_add_black_24dp, getString(R.string.auto_detect_noti_action_add),
 						PendingIntent.getActivity(
-								this, 0, addIntent, PendingIntent.FLAG_CANCEL_CURRENT
+								this, 0, addIntent, PendingIntent.FLAG_UPDATE_CURRENT
 						))
 				.setDeleteIntent(PendingIntent.getBroadcast(
 						this, 1002,
