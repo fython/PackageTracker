@@ -139,7 +139,7 @@ public class ReminderService extends IntentService {
 			}
 
 			String myDate = exp.data.get(0).time;
-			SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			long millis = 0;
 			try {
 				Date date = sdf.parse(myDate);

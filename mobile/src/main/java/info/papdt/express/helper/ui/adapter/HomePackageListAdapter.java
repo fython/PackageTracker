@@ -70,7 +70,7 @@ public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageList
 
 	@Override
 	public void onBindViewHolder(MyViewHolder holder, int position) {
-		final Package p = getItemData(position);
+		Package p = getItemData(position);
 
 		if (p.name.length() > 0) {
 			holder.titleText.setText(p.name);
@@ -109,13 +109,6 @@ public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageList
 		} else if (position == getItemCount()) {
 			holder.getSwipeableContainerView().setPadding(0, 0, 0, (int) DP_16_TO_PX);
 		}
-
-		holder.getSwipeableContainerView().setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				DetailsActivity.launch(parentActivity, p);
-			}
-		});
 	}
 
 	public Package getItemData(int pos) {
@@ -188,14 +181,21 @@ public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageList
 
 		public MyViewHolder(View itemView) {
 			super(itemView);
-			logoView = (CircleImageView) itemView.findViewById(R.id.iv_logo);
-			titleText = (AppCompatTextView) itemView.findViewById(R.id.tv_title);
-			descText = (AppCompatTextView) itemView.findViewById(R.id.tv_other);
-			timeText = (AppCompatTextView) itemView.findViewById(R.id.tv_time);
-			bigCharView = (TextView) itemView.findViewById(R.id.tv_first_char);
+			logoView = itemView.findViewById(R.id.iv_logo);
+			titleText = itemView.findViewById(R.id.tv_title);
+			descText = itemView.findViewById(R.id.tv_other);
+			timeText = itemView.findViewById(R.id.tv_time);
+			bigCharView = itemView.findViewById(R.id.tv_first_char);
 			containerView = itemView.findViewById(R.id.item_container);
 
 			containerView.setOnCreateContextMenuListener(this);
+
+			getSwipeableContainerView().setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					DetailsActivity.launch(parentActivity, getItemData(getAdapterPosition()));
+				}
+			});
 		}
 
 		@Override
