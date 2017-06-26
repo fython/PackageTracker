@@ -1,11 +1,13 @@
 package info.papdt.express.helper;
 
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.support.v7.app.AppCompatDelegate;
 
 import com.tencent.bugly.crashreport.CrashReport;
 
+import info.papdt.express.helper.services.ClipboardDetectService;
 import info.papdt.express.helper.support.Settings;
 
 public class Application extends android.app.Application {
@@ -31,6 +33,10 @@ public class Application extends android.app.Application {
 		AppCompatDelegate.setDefaultNightMode(defaultNightMode);
 
 		super.onCreate();
+
+		if (mSettings.getBoolean(Settings.KEY_DETECT_FROM_CLIPBOARD, false)) {
+			startService(new Intent(getApplicationContext(), ClipboardDetectService.class));
+		}
 
 		/** Init CrashReport */
 		CrashReport.UserStrategy strategy = new CrashReport.UserStrategy(getApplicationContext());

@@ -10,7 +10,8 @@ public class Settings {
 			KEY_NOTIFICATION_VIBRATE = "noti_vibrate",
 			KEY_NOTIFICATION_INTERVAL = "noti_interval",
 			KEY_NOTIFICATION_DO_NOT_DISTURB = "noti_do_not_disturb",
-			KEY_NIGHT_MODE = "night_mode";
+			KEY_NIGHT_MODE = "night_mode",
+			KEY_DETECT_FROM_CLIPBOARD = "from_clipboard";
 
 	public static final String KEY_NAVIGATION_TINT = "navi_tint";
 

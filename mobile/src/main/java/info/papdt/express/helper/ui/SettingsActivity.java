@@ -12,11 +12,7 @@ import android.view.View;
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.support.Settings;
 import info.papdt.express.helper.ui.common.AbsActivity;
-import info.papdt.express.helper.ui.fragment.settings.SettingsContributors;
-import info.papdt.express.helper.ui.fragment.settings.SettingsLicense;
-import info.papdt.express.helper.ui.fragment.settings.SettingsMain;
-import info.papdt.express.helper.ui.fragment.settings.SettingsNetwork;
-import info.papdt.express.helper.ui.fragment.settings.SettingsUi;
+import info.papdt.express.helper.ui.fragment.settings.*;
 
 public class SettingsActivity extends AbsActivity {
 
@@ -24,7 +20,8 @@ public class SettingsActivity extends AbsActivity {
 
 	private static final String EXTRA_SETTINGS_FLAG = "extra_flag";
 
-	public static final int FLAG_MAIN = 0, FLAG_UI = 1, FLAG_LICENSE = 2, FLAG_NETWORK = 3, FLAG_CONTRIBUTORS = 4;
+	public static final int FLAG_MAIN = 0, FLAG_UI = 1, FLAG_LICENSE = 2, FLAG_NETWORK = 3,
+			FLAG_CONTRIBUTORS = 4, FLAG_AUTO_DETECT = 5;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -67,6 +64,10 @@ public class SettingsActivity extends AbsActivity {
 			case FLAG_CONTRIBUTORS:
 				f = new SettingsContributors();
 				mActionBar.setTitle(R.string.category_contributors);
+				break;
+			case FLAG_AUTO_DETECT:
+				f = new SettingsAutoDetect();
+				mActionBar.setTitle(R.string.category_auto_detect_services);
 				break;
 			default:
 				throw new RuntimeException("Please set flag when launching activity.");

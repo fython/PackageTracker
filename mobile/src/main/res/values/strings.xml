@@ -139,7 +139,11 @@
 	<string name="item_notification_do_not_disturb">Do not disturb mode</string>
 	<string name="item_notification_do_not_disturb_desc">Don\'t send notifications from 23:00 to 06:00.</string>
 
-	<string name="item_auto_detect_services">New package auto-detection</string>
+	<string name="category_auto_detect_services">New package auto-detection</string>
+	<string name="item_detect_screen_text">Detect from screen</string>
+	<string name="item_detect_screen_text_desc">@string/description_detect_service</string>
+	<string name="item_detect_clipboard">Detect from clipboard</string>
+	<string name="item_detect_clipboard_desc">When you copied a text including long number, it will show up a bubble to enter app and track your package.</string>
 
 	<!-- Details -->
 	<string name="activity_details">Details</string>
@@ -215,5 +219,7 @@
 	<string name="auto_detect_noti_title_with_name">New package detected: %s</string>
 	<string name="auto_detect_noti_result">From %1$s: %2$s %3$s</string>
 	<string name="auto_detect_noti_action_add">Add</string>
+
+	<string name="label_clipboard_service">Clipboard auto-detection</string>
 
 </resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<SwitchPreference android:key="from_clipboard"
+	                  android:title="@string/item_detect_clipboard"
+	                  android:summary="@string/item_detect_clipboard_desc"/>
+
+	<Preference android:key="from_screen"
+	            android:title="@string/item_detect_screen_text"
+	            android:summary="@string/item_detect_screen_text_desc"/>
+
+</PreferenceScreen>

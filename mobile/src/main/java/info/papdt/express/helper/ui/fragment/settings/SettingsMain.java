@@ -1,9 +1,7 @@
 package info.papdt.express.helper.ui.fragment.settings;
 
-import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.support.design.widget.Snackbar;
 
 import info.papdt.express.helper.R;
@@ -17,8 +15,6 @@ public class SettingsMain extends AbsPrefFragment implements Preference.OnPrefer
 	private Preference mPrefUI, mPrefNetwork, mPrefVersion, mPrefSina,
 			mPrefGithub, mPrefAlipay, mPrefLicense, mPrefGooglePlus;
 	private Preference mPrefIconDesigner, mPrefContributors, mPrefAutoDetect;
-
-	private static final int REQUEST_AUTO_DETECT_ENABLE = 1001;
 
 	@Override
 	public void onCreatePreferences(Bundle bundle, String s) {
@@ -104,8 +100,7 @@ public class SettingsMain extends AbsPrefFragment implements Preference.OnPrefer
 			return true;
 		}
 		if (pref == mPrefAutoDetect) {
-			Intent intent = new Intent(Settings.ACTION_ACCESSIBILITY_SETTINGS);
-			startActivityForResult(intent, REQUEST_AUTO_DETECT_ENABLE);
+			SettingsActivity.launch(getParentActivity(), SettingsActivity.FLAG_AUTO_DETECT);
 			return true;
 		}
 		return false;

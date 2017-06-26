@@ -132,7 +132,11 @@
 	<string name="item_notification_do_not_disturb">勿擾模式</string>
 	<string name="item_notification_do_not_disturb_desc">在 23:00 至次日 06:00 期間不發出通知。</string>
 
-	<string name="item_auto_detect_services">自動偵測新包裹</string>
+	<string name="category_auto_detect_services">自動偵測新包裹</string>
+	<string name="item_detect_screen_text">從介面偵測</string>
+	<string name="item_detect_screen_text_desc">@string/description_detect_service</string>
+	<string name="item_detect_clipboard">從剪貼板偵測</string>
+	<string name="item_detect_clipboard_desc">當你拷貝了一串帶有數字的文本時，水錶助手會顯示一個氣泡快速入口。</string>
 
 	<!-- Details -->
 	<string name="activity_details">詳情</string>
@@ -208,5 +212,7 @@
 	<string name="auto_detect_noti_title_with_name">發現新的運單：%s</string>
 	<string name="auto_detect_noti_result">來自%1$s的【%2$s】%3$s</string>
 	<string name="auto_detect_noti_action_add">新增</string>
+
+	<string name="label_clipboard_service">剪貼板自動偵測</string>
 
 </resources>

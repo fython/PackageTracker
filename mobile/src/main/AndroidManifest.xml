@@ -7,6 +7,7 @@
 	<uses-permission android:name="android.permission.CAMERA"/>
 	<uses-permission android:name="android.permission.READ_LOGS"/>
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+	<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
 
 	<application
 		android:allowBackup="true"
@@ -109,6 +110,8 @@
 		</activity>
 
 		<service android:name="info.papdt.express.helper.services.ReminderService"/>
+		<service android:name="info.papdt.express.helper.services.ClipboardDetectService"
+				 android:label="@string/label_clipboard_service"/>
 		<service android:name="info.papdt.express.helper.services.AppWidgetService"
 		         android:permission="android.permission.BIND_REMOTEVIEWS"/>
 		<service android:name="info.papdt.express.helper.services.DetectNumberService"

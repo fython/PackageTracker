@@ -287,7 +287,7 @@ public class DetectNumberService extends AccessibilityService {
 		return source.substring(source.indexOf(" ") + 1);
 	}
 
-	private String getPackageNumber(String source) {
+	public static String getPackageNumber(String source) {
 		ArrayList<String> results = new ArrayList<>();
 		StringBuffer sb = new StringBuffer();
 		for (int i = 0; i < source.length(); i++) {
