@@ -19,7 +19,7 @@ A Material Design Shipment Tracker Android App.
 ### 应用安装需求
 
 - 一台 Android 智能手机
-- 最低系统版本 Android 4.4 (嗯，没有把 minSDKVersion 设置为 '21' 算给面子国产机厂商了)
+- 最低系统版本 Android 5.0
 - Wi-Fi 或移动网络数据等联网方式
 
 ### 作者
