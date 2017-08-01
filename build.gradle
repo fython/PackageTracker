@@ -1,5 +1,5 @@
 buildscript {
-    ext.android_support_lib_version = '26.0.0-beta2'
+    ext.android_support_lib_version = '26.0.0'
     repositories {
         jcenter()
     }
@@ -11,12 +11,8 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
-        maven {
-            url "https://jitpack.io"
-        }
-        maven {
-            url "https://maven.google.com"
-        }
+        maven { url 'https://jitpack.io' }
+        maven { url 'https://maven.google.com' }
     }
 }
 
