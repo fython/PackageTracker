@@ -22,12 +22,13 @@ import info.papdt.express.helper.ui.MainActivity;
 import info.papdt.express.helper.ui.adapter.HomePackageListAdapter;
 import info.papdt.express.helper.ui.callback.OnDataRemovedCallback;
 import info.papdt.express.helper.ui.common.AbsFragment;
+import info.papdt.express.helper.view.AnimatedRecyclerView;
 import info.papdt.express.helper.widget.SwipeRefreshLayout;
 
 public abstract class BaseFragment extends AbsFragment implements SwipeRefreshLayout.OnRefreshListener {
 
 	private SwipeRefreshLayout mRefreshLayout;
-	private RecyclerView mRecyclerView;
+	private AnimatedRecyclerView mRecyclerView;
 	private LinearLayout mEmptyView;
 
 	private RecyclerView.Adapter mAdapter;
@@ -36,6 +37,7 @@ public abstract class BaseFragment extends AbsFragment implements SwipeRefreshLa
 	private PackageDatabase mDatabase;
 	private static Context sInstance = null;
 	private final static int FLAG_REFRESH_LIST = 0, FLAG_UPDATE_ADAPTER_ONLY = 1;
+	private boolean hasPlayedAnimation = false;
 
 	int eggCount = 0, bigEggCount = 0;
 
@@ -124,6 +126,13 @@ public abstract class BaseFragment extends AbsFragment implements SwipeRefreshLa
 		return mDatabase;
 	}
 
+	protected void playListAnimation() {
+		if (!hasPlayedAnimation) {
+			hasPlayedAnimation = true;
+			mRecyclerView.scheduleLayoutAnimation();
+		}
+	}
+
 	protected void setAdapter(RecyclerView.Adapter adapter) {
 		this.mAdapter = adapter;
 		mRecyclerView.setAdapter(mSwipeManager.createWrappedAdapter(mAdapter));
@@ -176,6 +185,7 @@ public abstract class BaseFragment extends AbsFragment implements SwipeRefreshLa
 				case FLAG_UPDATE_ADAPTER_ONLY:
 					if (mAdapter != null) {
 						mAdapter.notifyDataSetChanged();
+						playListAnimation();
 						mEmptyView.setVisibility(mAdapter != null && mAdapter.getItemCount() > 0 ? View.GONE : View.VISIBLE);
 					}
 					break;
@@ -193,6 +203,7 @@ public abstract class BaseFragment extends AbsFragment implements SwipeRefreshLa
 
 		@Override
 		protected void onPostExecute(Void msg) {
+			hasPlayedAnimation = false;
 			mRefreshLayout.setRefreshing(false);
 			mHandler.sendEmptyMessage(FLAG_UPDATE_ADAPTER_ONLY);
 		}
