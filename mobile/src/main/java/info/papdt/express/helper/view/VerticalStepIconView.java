@@ -1,12 +1,7 @@
 package info.papdt.express.helper.view;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.RectF;
+import android.graphics.*;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -15,31 +10,29 @@ import android.support.annotation.ColorRes;
 import android.support.annotation.DrawableRes;
 import android.util.AttributeSet;
 import android.view.View;
-
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.support.ScreenUtils;
 
-public class VerticalStepView extends View {
+public class VerticalStepIconView extends View {
 
 	private Paint mPaint, mCirclePaint;
 	private RectF mBounds, mIconBounds;
 	private float radius, lineWidth, pointOffsetY = 0, iconSize;
 
-	@ColorInt private int pointColor = Color.BLUE, lineColor = Color.GRAY, iconColor = Color.WHITE;
-	private boolean shouldDrawTopLine = true, shouldDrawBottomLine = true;
+	@ColorInt private int pointColor = Color.BLUE, iconColor = Color.WHITE;
 	private boolean isMini = false;
 	private Drawable centerIcon;
 	private Bitmap centerIconBitmap;
 
-	public VerticalStepView(Context context) {
+	public VerticalStepIconView(Context context) {
 		this(context, null);
 	}
 
-	public VerticalStepView(Context context, AttributeSet attrs) {
+	public VerticalStepIconView(Context context, AttributeSet attrs) {
 		this(context, attrs, 0);
 	}
 
-	public VerticalStepView(Context context, AttributeSet attrs, int defStyleAttr) {
+	public VerticalStepIconView(Context context, AttributeSet attrs, int defStyleAttr) {
 		super(context, attrs, defStyleAttr);
 		lineWidth = ScreenUtils.dpToPx(context, 2);
 		iconSize = ScreenUtils.dpToPx(context, 16);
@@ -47,7 +40,6 @@ public class VerticalStepView extends View {
 		init();
 
 		pointColor = context.getResources().getColor(R.color.blue_500);
-		lineColor = context.getResources().getColor(R.color.blue_grey_500);
 	}
 
 	void init() {
@@ -61,21 +53,8 @@ public class VerticalStepView extends View {
 		mCirclePaint.setColor(pointColor);
 	}
 
-	public void setLineShouldDraw(boolean top, boolean bottom) {
-		shouldDrawTopLine = top;
-		shouldDrawBottomLine = bottom;
-	}
-
-	public void setLineColor(@ColorInt int color) {
-		lineColor = color;
-	}
-
 	public void setPointColor(@ColorInt int color) {
 		pointColor = color;
-	}
-
-	public void setLineColorResource(@ColorRes int resId) {
-		lineColor = getResources().getColor(resId);
 	}
 
 	public void setPointColorResource(@ColorRes int resId) {
@@ -113,17 +92,6 @@ public class VerticalStepView extends View {
 		float r = isMini ? radius / 5 * 3 : radius;
 
 		super.onDraw(canvas);
-
-
-		if (shouldDrawTopLine) {
-			mPaint.setColor(lineColor);
-			canvas.drawLine(mBounds.centerX(), mBounds.centerY() + pointOffsetY, mBounds.centerX(), mBounds.top, mPaint);
-		}
-
-		if (shouldDrawBottomLine) {
-			mPaint.setColor(lineColor);
-			canvas.drawLine(mBounds.centerX(), mBounds.centerY() + pointOffsetY, mBounds.centerX(), mBounds.bottom, mPaint);
-		}
 
 		mCirclePaint.setColor(pointColor);
 		canvas.drawCircle(mBounds.centerX(), mBounds.centerY() + pointOffsetY, r, mCirclePaint);

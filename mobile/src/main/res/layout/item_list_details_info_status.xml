@@ -8,10 +8,21 @@
               android:layout_height="wrap_content"
               android:layout_marginStart="8dp">
 
-	<info.papdt.express.helper.view.VerticalStepView
-		android:layout_width="48dp"
-		android:layout_height="match_parent"
-		android:id="@+id/step_view"/>
+	<FrameLayout
+			android:layout_width="wrap_content"
+			android:layout_height="match_parent">
+
+		<info.papdt.express.helper.view.VerticalStepLineView
+				android:layout_width="48dp"
+				android:layout_height="match_parent"
+				android:id="@+id/step_line_view"/>
+
+		<info.papdt.express.helper.view.VerticalStepIconView
+				android:layout_width="48dp"
+				android:layout_height="match_parent"
+				android:id="@+id/step_icon_view"/>
+
+	</FrameLayout>
 
 	<Space android:layout_width="8dp" android:layout_height="wrap_content"/>
 

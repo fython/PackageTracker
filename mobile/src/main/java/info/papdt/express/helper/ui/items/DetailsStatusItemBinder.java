@@ -7,17 +7,22 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
+import android.util.SparseArray;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.OvershootInterpolator;
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.model.Package;
-import info.papdt.express.helper.view.VerticalStepView;
+import info.papdt.express.helper.view.VerticalStepIconView;
+import info.papdt.express.helper.view.VerticalStepLineView;
 import me.drakeet.multitype.ItemViewBinder;
 
 public class DetailsStatusItemBinder extends ItemViewBinder<Package.Status, DetailsStatusItemBinder.ItemHolder> {
 
 	private Package mPackage;
+	private boolean isShowed[] = new boolean[1000];
 
 	public void setData(Package src) {
 		mPackage = src;
@@ -39,7 +44,8 @@ public class DetailsStatusItemBinder extends ItemViewBinder<Package.Status, Deta
 		private Package.Status data;
 
 		AppCompatTextView title, time;
-		VerticalStepView stepView;
+		VerticalStepIconView stepIcon;
+		VerticalStepLineView stepLine;
 
 		CardView contactCard;
 		AppCompatTextView phoneView;
@@ -49,7 +55,8 @@ public class DetailsStatusItemBinder extends ItemViewBinder<Package.Status, Deta
 
 			title = itemView.findViewById(R.id.tv_title);
 			time = itemView.findViewById(R.id.tv_time);
-			stepView = itemView.findViewById(R.id.step_view);
+			stepIcon = itemView.findViewById(R.id.step_icon_view);
+			stepLine = itemView.findViewById(R.id.step_line_view);
 			contactCard = itemView.findViewById(R.id.contact_card);
 			phoneView = itemView.findViewById(R.id.contact_number);
 
@@ -89,10 +96,11 @@ public class DetailsStatusItemBinder extends ItemViewBinder<Package.Status, Deta
 			/** Set up step view style */
 			int indexInStatus = getAdapterPosition() - 3;
 			if (indexInStatus == 0) {
-				stepView.setIsMini(false);
-				stepView.setLineShouldDraw(false, mPackage.data.size() > 1);
+				stepIcon.setIsMini(false);
+				stepLine.setLineShouldDraw(false, mPackage.data.size() > 1);
 				if (mPackage.data.size() > 1) {
-					stepView.setPointOffsetY(-time.getTextSize());
+					stepIcon.setPointOffsetY(-time.getTextSize());
+					stepLine.setPointOffsetY(-time.getTextSize());
 				}
 				int pointColorResId, pointIconResId;
 				switch (mPackage.getState()) {
@@ -119,19 +127,34 @@ public class DetailsStatusItemBinder extends ItemViewBinder<Package.Status, Deta
 						pointIconResId = R.drawable.ic_flight_white_24dp;
 						break;
 				}
-				stepView.setPointColorResource(pointColorResId);
-				stepView.setCenterIcon(pointIconResId);
+				stepIcon.setPointColorResource(pointColorResId);
+				stepIcon.setCenterIcon(pointIconResId);
 			} else {
-				stepView.setIsMini(true);
-				stepView.setPointColorResource(R.color.blue_grey_500);
-				stepView.setPointOffsetY(-time.getTextSize());
-				stepView.setCenterIcon(null);
-				stepView.setLineShouldDraw(true, true);
+				stepIcon.setIsMini(true);
+				stepIcon.setPointColorResource(R.color.blue_grey_500);
+				stepLine.setPointOffsetY(-time.getTextSize());
+				stepIcon.setPointOffsetY(-time.getTextSize());
+				stepIcon.setCenterIcon(null);
+				stepLine.setLineShouldDraw(true, true);
 			}
 			if (indexInStatus == mPackage.data.size() - 1 && mPackage.data.size() > 1) {
-				stepView.setLineShouldDraw(true, false);
-				stepView.setPointOffsetY(0);
-				stepView.setCenterIcon(null);
+				stepLine.setLineShouldDraw(true, false);
+				stepLine.setPointOffsetY(0);
+				stepIcon.setPointOffsetY(0);
+				stepIcon.setCenterIcon(null);
+			}
+			synchronized (this) {
+				if  (!isShowed[indexInStatus]) {
+					synchronized (this) {
+						isShowed[indexInStatus] = true;
+					}
+					stepIcon.setScaleX(0f);
+					stepIcon.setScaleY(0f);
+					stepIcon.animate().scaleX(1f).scaleY(1f)
+							.setStartDelay(150 * (indexInStatus + 1))
+							.setDuration(500).setInterpolator(new OvershootInterpolator()).start();
+					
+				}
 			}
 		}
 
