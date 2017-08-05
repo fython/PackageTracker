@@ -7,7 +7,7 @@
 		                  android:title="@string/item_notification_do_not_disturb"
 		                  android:summary="@string/item_notification_do_not_disturb_desc"/>
 
-		<SimpleMenuPreference android:key="interval"
+		<FixedSimpleMenuPreference android:key="interval"
 		                      android:title="@string/item_notification_interval"
 		                      android:summary="%s"
 		                      android:entries="@array/notification_interval"

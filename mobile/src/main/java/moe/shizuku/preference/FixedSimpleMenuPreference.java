@@ -1,9 +1,8 @@
-package rikka.materialpreference;
+package moe.shizuku.preference;
 
 import android.content.Context;
 import android.util.AttributeSet;
 import info.papdt.express.helper.R;
-import moe.shizuku.preference.SimpleMenuPreference;
 
 /**
  * A version of {@link ListPreference} that presents the options in a drop down menu rather than a dialog.
