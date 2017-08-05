@@ -74,4 +74,6 @@
 
 	<color name="black_in_light">@android:color/black</color>
 
+	<color name="colorAccentDark">@color/pink_900</color>
+
 </resources>

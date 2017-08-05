@@ -37,7 +37,7 @@
 		android:paddingEnd="8dp"
 		android:text="@string/operation_scan"
 		android:textAppearance="@style/TextAppearance.AppCompat.Button"
-		android:textColor="@color/pink_900"
+		android:textColor="@color/colorAccentDark"
 		android:background="@drawable/button_bg"
 		android:layout_gravity="end"/>
 

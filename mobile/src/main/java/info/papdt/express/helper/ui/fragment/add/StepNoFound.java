@@ -2,7 +2,6 @@ package info.papdt.express.helper.ui.fragment.add;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -52,12 +51,12 @@ public class StepNoFound extends AbsStepFragment {
 	private void updateForceButton() {
 		Package p = getAddActivity().getPackage();
 		if (p != null && p.companyChineseName != null) {
-			mForceBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.pink_900));
+			mForceBtn.setEnabled(true);
 			mForceBtn.setText(String.format(getString(R.string.operation_force_add_when_cannot_find),
 					getAddActivity().getPackage().companyChineseName));
 			mForceBtn.setEnabled(true);
 		} else {
-			mForceBtn.setTextColor(ContextCompat.getColor(getContext(), R.color.grey_500));
+			mForceBtn.setEnabled(false);
 			mForceBtn.setText(String.format(getString(R.string.operation_force_add_when_cannot_find),
 					getString(R.string.message_invalid_company)));
 			mForceBtn.setEnabled(false);

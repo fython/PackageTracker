@@ -206,6 +206,7 @@ public class SearchActivity extends AbsActivity {
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.menu_search, menu);
+		menu.findItem(R.id.action_clear).getIcon().setTint(getResources().getColor(R.color.black_in_light));
 		return super.onCreateOptionsMenu(menu);
 	}
 

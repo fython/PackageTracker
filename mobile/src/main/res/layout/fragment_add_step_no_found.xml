@@ -36,7 +36,7 @@
 		android:paddingEnd="8dp"
 		android:text="@string/operation_manually_choose_company_when_cannot_find"
 		android:textAppearance="@style/TextAppearance.AppCompat.Button"
-		android:textColor="@color/pink_900"
+		android:textColor="@color/colorAccentDark"
 		android:background="@drawable/button_bg"
 		android:layout_gravity="end"/>
 
@@ -49,8 +49,8 @@
 		android:paddingStart="8dp"
 		android:paddingEnd="8dp"
 		android:text="@string/operation_force_add_when_cannot_find"
+		android:textColor="@color/colorAccentDark"
 		android:textAppearance="@style/TextAppearance.AppCompat.Button"
-		android:textColor="@color/pink_900"
 		android:background="@drawable/button_bg"
 		android:layout_gravity="end"/>
 
