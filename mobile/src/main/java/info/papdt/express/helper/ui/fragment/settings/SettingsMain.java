@@ -8,7 +8,7 @@ import info.papdt.express.helper.R;
 import info.papdt.express.helper.support.ClipboardUtils;
 import info.papdt.express.helper.ui.SettingsActivity;
 import moe.feng.alipay.zerosdk.AlipayZeroSdk;
-import rikka.materialpreference.Preference;
+import moe.shizuku.preference.Preference;
 
 public class SettingsMain extends AbsPrefFragment implements Preference.OnPreferenceClickListener {
 

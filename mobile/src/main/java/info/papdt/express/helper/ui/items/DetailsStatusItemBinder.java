@@ -7,8 +7,6 @@ import android.support.v7.widget.AppCompatTextView;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
-import android.util.SparseArray;
-import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -153,7 +151,6 @@ public class DetailsStatusItemBinder extends ItemViewBinder<Package.Status, Deta
 					stepIcon.animate().scaleX(1f).scaleY(1f)
 							.setStartDelay(150 * (indexInStatus + 1))
 							.setDuration(500).setInterpolator(new OvershootInterpolator()).start();
-					
 				}
 			}
 		}

@@ -7,8 +7,8 @@ import android.os.Bundle;
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.services.ClipboardDetectService;
 import info.papdt.express.helper.support.Settings;
-import rikka.materialpreference.Preference;
-import rikka.materialpreference.SwitchPreference;
+import moe.shizuku.preference.Preference;
+import moe.shizuku.preference.SwitchPreference;
 
 public class SettingsAutoDetect extends AbsPrefFragment
 		implements Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {

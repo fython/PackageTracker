@@ -3,7 +3,7 @@ package info.papdt.express.helper.ui.fragment.settings;
 import android.os.Bundle;
 
 import info.papdt.express.helper.R;
-import rikka.materialpreference.Preference;
+import moe.shizuku.preference.Preference;
 
 public class SettingsContributors extends AbsPrefFragment implements Preference.OnPreferenceClickListener {
 

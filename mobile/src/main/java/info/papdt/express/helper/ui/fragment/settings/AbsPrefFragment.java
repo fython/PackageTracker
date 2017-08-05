@@ -14,7 +14,7 @@ import android.view.View;
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.support.Settings;
 import info.papdt.express.helper.ui.SettingsActivity;
-import rikka.materialpreference.PreferenceFragment;
+import moe.shizuku.preference.PreferenceFragment;
 
 abstract class AbsPrefFragment extends PreferenceFragment {
 

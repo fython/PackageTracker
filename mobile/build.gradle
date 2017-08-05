@@ -37,9 +37,10 @@ dependencies {
     compile 'com.google.code.gson:gson:2.8.0'
     compile 'com.squareup.okhttp3:okhttp:3.6.0'
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
-    compile 'com.github.RikkaW:MaterialPreference:v1.4.4'
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'me.dm7.barcodescanner:zxing:1.9'
     compile 'com.tencent.bugly:crashreport:2.4.0'
     compile 'moe.feng:AlipayZeroSdk:1.1'
+    compile 'moe.shizuku.preference:preference:2.0'
+    compile 'moe.shizuku.preference:preference-simplemenu:2.0'
 }

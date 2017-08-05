@@ -7,7 +7,7 @@
 		                  android:title="@string/pref_navigation_tint"
 		                  android:summary="@string/pref_navigation_tint_summary"/>
 
-		<FixedSimpleMenuPreference android:key="night_mode"
+		<SimpleMenuPreference android:key="night_mode"
 		                      android:title="@string/pref_night_mode"
 		                      android:summary="%s"
 		                      android:entries="@array/night_mode_choices"

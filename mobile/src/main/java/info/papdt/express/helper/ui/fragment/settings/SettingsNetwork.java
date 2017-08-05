@@ -5,9 +5,9 @@ import android.os.Bundle;
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.support.PushUtils;
 import info.papdt.express.helper.support.Settings;
-import rikka.materialpreference.ListPreference;
-import rikka.materialpreference.Preference;
-import rikka.materialpreference.SwitchPreference;
+import moe.shizuku.preference.ListPreference;
+import moe.shizuku.preference.Preference;
+import moe.shizuku.preference.SwitchPreference;
 
 public class SettingsNetwork extends AbsPrefFragment implements Preference.OnPreferenceChangeListener {
 
