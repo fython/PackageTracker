@@ -24,6 +24,7 @@ import com.roughike.bottombar.OnMenuTabClickListener;
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.dao.PackageDatabase;
 import info.papdt.express.helper.model.Package;
+import info.papdt.express.helper.support.CheatSheet;
 import info.papdt.express.helper.support.PushUtils;
 import info.papdt.express.helper.support.Settings;
 import info.papdt.express.helper.ui.common.AbsActivity;
@@ -95,6 +96,7 @@ public class MainActivity extends AbsActivity implements OnMenuTabClickListener 
 				startActivityForResult(intent, REQUEST_ADD);
 			}
 		});
+		CheatSheet.setup(fab);
 	}
 
 	@Override

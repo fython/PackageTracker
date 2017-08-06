@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import info.papdt.express.helper.R;
+import info.papdt.express.helper.support.CheatSheet;
 import info.papdt.express.helper.support.ClipboardUtils;
 import info.papdt.express.helper.ui.DetailsActivity;
 import me.drakeet.multitype.ItemViewBinder;
@@ -78,6 +79,7 @@ public class DetailsTwoLineItemBinder extends ItemViewBinder<DetailsTwoLineItem,
 							itemView.getResources()
 									.getString(R.string.list_package_show_toggle_desc)
 					);
+					CheatSheet.setup(button);
 				}
 				button.setVisibility(View.VISIBLE);
 				button.setOnClickListener(new View.OnClickListener() {

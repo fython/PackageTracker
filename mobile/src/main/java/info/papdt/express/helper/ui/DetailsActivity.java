@@ -30,6 +30,7 @@ import info.papdt.express.helper.api.PackageApi;
 import info.papdt.express.helper.dao.PackageDatabase;
 import info.papdt.express.helper.model.BaseMessage;
 import info.papdt.express.helper.model.Package;
+import info.papdt.express.helper.support.CheatSheet;
 import info.papdt.express.helper.support.ClipboardUtils;
 import info.papdt.express.helper.support.ScreenUtils;
 import info.papdt.express.helper.support.Settings;
@@ -97,6 +98,7 @@ public class DetailsActivity extends AbsActivity {
 				showNameEditDialog();
 			}
 		});
+		CheatSheet.setup(mFAB);
 	}
 
 	private void setUpData() {

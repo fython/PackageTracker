@@ -3,7 +3,7 @@
               xmlns:tools="http://schemas.android.com/tools"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:paddingEnd="16dp"
+              android:paddingEnd="24dp"
               android:gravity="center_vertical"
               android:orientation="horizontal"
               android:foreground="?attr/selectableItemBackground"
@@ -38,8 +38,8 @@
 	</LinearLayout>
 
 	<android.support.v7.widget.AppCompatImageButton
-		android:layout_width="48dp"
-		android:layout_height="48dp"
+		android:layout_width="36dp"
+		android:layout_height="36dp"
 		android:id="@+id/btn_action"
 		android:background="?attr/selectableItemBackgroundBorderless"
 		android:visibility="gone"

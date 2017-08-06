@@ -73,6 +73,7 @@
 	<color name="dark_theme_translucent_app_bar">#4F000000</color>
 
 	<color name="black_in_light">@android:color/black</color>
+	<color name="white_in_dark">@android:color/white</color>
 
 	<color name="colorAccentDark">@color/pink_900</color>
 
