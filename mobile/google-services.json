@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "849552681115",
+    "firebase_url": "https://packagetracker-d3fc1.firebaseio.com",
+    "project_id": "packagetracker-d3fc1",
+    "storage_bucket": "packagetracker-d3fc1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:849552681115:android:6a6a3dab56726fac",
+        "android_client_info": {
+          "package_name": "info.papdt.express.helper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "849552681115-ul7qc7fcrj17jo9nl749hjju9ljlqok7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDb3_mNVI3k--0IIajtbSjUpwfpQuzaFtE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
