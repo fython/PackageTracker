@@ -19,7 +19,11 @@
 	<PreferenceCategory android:title="@string/category_push">
 
 		<Preference android:key="firebase_instance_id"
-		            android:title="@string/pref_firebase_instance_id"/>
+		            android:title="@string/pref_firebase_instance_id"
+					android:summary="@string/pref_firebase_instance_id_summary"/>
+
+		<Preference android:key="push_sync"
+		            android:title="@string/pref_push_sync"/>
 
 	</PreferenceCategory>
 

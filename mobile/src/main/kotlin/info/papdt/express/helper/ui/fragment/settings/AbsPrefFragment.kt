@@ -9,12 +9,13 @@ import android.support.v4.content.IntentCompat
 import info.papdt.express.helper.R
 import info.papdt.express.helper.support.Settings
 import info.papdt.express.helper.ui.SettingsActivity
+import moe.feng.kotlinyan.common.AndroidExtensions
 import moe.shizuku.preference.Preference
 import moe.shizuku.preference.PreferenceFragment
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
-abstract class AbsPrefFragment : PreferenceFragment() {
+abstract class AbsPrefFragment : PreferenceFragment(), AndroidExtensions {
 
 	lateinit var settings: Settings
 

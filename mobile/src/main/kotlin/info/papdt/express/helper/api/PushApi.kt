@@ -9,6 +9,7 @@ import io.reactivex.schedulers.Schedulers
 import okhttp3.*
 
 import java.io.IOException
+import java.net.SocketTimeoutException
 import java.util.concurrent.TimeUnit
 
 object PushApi {
@@ -20,11 +21,27 @@ object PushApi {
 			.readTimeout(10, TimeUnit.SECONDS)
 			.build()
 
-	var apiHost = "192.168.1.101"
+	var apiHost = "192.168.1.105:3000"
+	private var token: String = "null"
+
+	private inline fun <reified T> requestJsonObject(request: Request): T? {
+		try {
+			val response = client.newCall(request).execute()
+			val string = response.body().string()
+			Log.i(TAG, string)
+			return Gson().fromJson(string, T::class.java)
+		} catch (e: IOException) {
+			e.printStackTrace()
+		} catch (e: SocketTimeoutException) {
+		} catch (e: Exception) {
+			e.printStackTrace()
+		}
+		return null
+	}
 
 	fun register(token: String): Observable<ResponseMessage> = Observable.just(token)
 			.map { targetToken ->
-				var result: ResponseMessage
+				PushApi.token = targetToken
 				val request = Request.Builder()
 						.method("POST",
 								RequestBody.create(
@@ -32,20 +49,32 @@ object PushApi {
 										"token=$targetToken"
 								)
 						)
-						.url("http://$apiHost/register")
+						.url("http://$apiHost/subscribe/register")
 						.build()
-				try {
-					val response = client.newCall(request).execute()
-					val string = response.body().string()
-					result = Gson().fromJson(string, ResponseMessage::class.java)
-					Log.i(TAG, string)
-				} catch (e: IOException) {
-					result = ResponseMessage()
-					e.printStackTrace()
-				}
-				return@map result
+				return@map requestJsonObject<ResponseMessage>(request) ?: ResponseMessage()
 			}
 			.subscribeOn(Schedulers.io())
 			.observeOn(AndroidSchedulers.mainThread())
+
+	fun sync(list: Collection<String>, token: String? = null): Observable<ResponseMessage> {
+		token?.let { PushApi.token = it }
+		return Observable.just(list)
+				.map { syncList ->
+					val postBody = "[${syncList.map { "\"$it\"" }.reduce { acc, s -> "$acc,$s" }}]"
+					Log.i(TAG, "Post body: $postBody")
+					val request = Request.Builder()
+							.method("POST",
+									RequestBody.create(
+											MediaType.parse("application/json"),
+											postBody
+									)
+							)
+							.url("http://$apiHost/subscribe/sync?token=${PushApi.token}")
+							.build()
+					return@map requestJsonObject<ResponseMessage>(request) ?: ResponseMessage()
+				}
+				.subscribeOn(Schedulers.io())
+				.observeOn(AndroidSchedulers.mainThread())
+	}
 
 }

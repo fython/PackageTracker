@@ -85,7 +85,7 @@
 	<string name="alipay_support_title">Donate through Alipay</string>
 	<string name="alipay_support_summary">fythonx@gmail.com</string>
 	<string name="alipay_support_account">fythonx\@gmail.com</string>
-	<string name="toast_copied_successfully">Alipay account has been copied successfully.</string>
+	<string name="toast_copied_successfully">Copied to clipboard successfully.</string>
 	<string name="open_source_license">Open Source License</string>
 	<string name="open_source_license_summary">GPL v3</string>
 	<string name="icon_designer_title">Icon &amp; Poster Designer</string>
@@ -138,6 +138,10 @@
 
 	<string name="category_push">Push</string>
 	<string name="pref_firebase_instance_id">Device Instance Id</string>
+	<string name="pref_firebase_instance_id_summary">Click to view or copy your instance id</string>
+	<string name="pref_copy_button">Copy</string>
+	<string name="pref_register_button">Register</string>
+	<string name="pref_push_sync">Sync list</string>
 
 	<string name="item_notification_do_not_disturb">Do not disturb mode</string>
 	<string name="item_notification_do_not_disturb_desc">Don\'t send notifications from 23:00 to 06:00.</string>
