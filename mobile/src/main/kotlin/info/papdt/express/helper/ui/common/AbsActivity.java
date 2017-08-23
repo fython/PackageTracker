@@ -29,7 +29,7 @@ public abstract class AbsActivity extends AppCompatActivity {
 	@Override
 	public void setContentView(@LayoutRes int layoutResId) {
 		super.setContentView(layoutResId);
-		mToolbar = (Toolbar) findViewById(R.id.toolbar);
+		mToolbar = findViewById(R.id.toolbar);
 		if (mToolbar != null) {
 			setSupportActionBar(mToolbar);
 			mActionBar = getSupportActionBar();

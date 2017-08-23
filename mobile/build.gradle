@@ -1,4 +1,5 @@
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 
 android {
     compileSdkVersion TARGET_SDK_VERSION.toInteger()
@@ -18,6 +19,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             pseudoLocalesEnabled true
             zipAlignEnabled true
+        }
+    }
+    sourceSets {
+        main {
+            java.srcDirs += 'src/main/kotlin'
         }
     }
 }
@@ -44,6 +50,11 @@ dependencies {
     compile 'moe.shizuku.preference:preference:2.0.2'
     compile 'moe.shizuku.preference:preference-simplemenu:2.0.2'
     compile 'com.google.firebase:firebase-messaging:11.2.0'
+    compile 'io.reactivex.rxjava2:rxjava:2.1.3'
+    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    compile "moe.feng.kotlinyan:kotlinyan-common:$kotlinyan_version"
+    compile "moe.feng.kotlinyan:kotlinyan-appcompat-support:$kotlinyan_version"
 }
 
 apply plugin: 'com.google.gms.google-services'

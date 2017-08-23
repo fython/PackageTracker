@@ -11,7 +11,8 @@ public class Settings {
 			KEY_NOTIFICATION_INTERVAL = "noti_interval",
 			KEY_NOTIFICATION_DO_NOT_DISTURB = "noti_do_not_disturb",
 			KEY_NIGHT_MODE = "night_mode",
-			KEY_DETECT_FROM_CLIPBOARD = "from_clipboard";
+			KEY_DETECT_FROM_CLIPBOARD = "from_clipboard",
+			KEY_FIREBASE_INSTANCE_ID = "firebase_instance_id";
 
 	public static final String KEY_NAVIGATION_TINT = "navi_tint";
 

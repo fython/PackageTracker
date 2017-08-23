@@ -25,10 +25,10 @@ abstract class AbsStepFragment extends AbsFragment {
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup group, Bundle state) {
-		rootView = inflater.inflate(this.getLayoutResId(), group, false);
-		mButtonBar = rootView.findViewById(R.id.button_bar);
-		this.doCreateView(rootView);
-		return rootView;
+		setRootView(inflater.inflate(this.getLayoutResId(), group, false));
+		mButtonBar = getRootView().findViewById(R.id.button_bar);
+		this.doCreateView(getRootView());
+		return getRootView();
 	}
 
 	public AddActivity getAddActivity() {

@@ -136,6 +136,9 @@
 		<item>4</item>
 	</string-array>
 
+	<string name="category_push">Push</string>
+	<string name="pref_firebase_instance_id">Device Instance Id</string>
+
 	<string name="item_notification_do_not_disturb">Do not disturb mode</string>
 	<string name="item_notification_do_not_disturb_desc">Don\'t send notifications from 23:00 to 06:00.</string>
 
