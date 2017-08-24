@@ -62,7 +62,7 @@ public class ReminderService extends IntentService {
 			Package p = db.get(i);
 			if (p.getState() != Package.STATUS_FAILED && p.shouldPush) {
 				Log.i(TAG, "包裹 " + i + " 需要产生通知");
-				Notification n = produceNotifications(i, p);
+				Notification n = produceNotifications(this, i, p);
 				nm.notify(i + 20000, n);
 				p.shouldPush = false;
 			}
@@ -71,7 +71,7 @@ public class ReminderService extends IntentService {
 		db.save();
 	}
 
-	private static int parseDefaults(Context context) {
+	public static int parseDefaults(Context context) {
 		Settings settings = Settings.getInstance(context);
 
 		return (settings.getBoolean(Settings.KEY_NOTIFICATION_SOUND, true) ? Notification.DEFAULT_SOUND : 0) |
@@ -80,7 +80,7 @@ public class ReminderService extends IntentService {
 	}
 
 	@SuppressWarnings("getNotification")
-	private static Notification buildNotification(Context context, String title, String subject, String longText, long time, int icon, int color,
+	public static Notification buildNotification(Context context, String title, String subject, String longText, long time, int icon, int color,
 	                                              int defaults, PendingIntent contentIntent, PendingIntent deleteIntent) {
 		Notification n;
 		NotificationCompat.Builder builder = new NotificationCompat.Builder(context);
@@ -102,27 +102,27 @@ public class ReminderService extends IntentService {
 		return n;
 	}
 
-	private Notification produceNotifications(int position, Package exp) {
+	public static Notification produceNotifications(Context context, int position, Package exp) {
 		if (exp != null) {
-			int defaults = parseDefaults(getApplicationContext());
+			int defaults = parseDefaults(context.getApplicationContext());
 
 			PendingIntent pi;
 
-			Intent i = new Intent(getApplicationContext(), DetailsActivity.class);
+			Intent i = new Intent(context.getApplicationContext(), DetailsActivity.class);
 			i.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
 			i.putExtra("extra_package_json", exp.toJsonString());
 			i.putExtra("extra_state", exp.getState());
 
-			pi = PendingIntent.getActivity(getApplicationContext(), position, i, PendingIntent.FLAG_UPDATE_CURRENT);
+			pi = PendingIntent.getActivity(context.getApplicationContext(), position, i, PendingIntent.FLAG_UPDATE_CURRENT);
 
 			String title = exp.name, subject;
 			if (exp.getState() == Package.STATUS_DELIVERED) {
-				subject = getString(R.string.notification_delivered);
+				subject = context.getString(R.string.notification_delivered);
 			} else {
 				if (exp.getState() == Package.STATUS_ON_THE_WAY) {
-					subject = getString(R.string.notification_on_the_way);
+					subject = context.getString(R.string.notification_on_the_way);
 				} else {
-					subject = getString(R.string.notification_new_message);
+					subject = context.getString(R.string.notification_new_message);
 				}
 			}
 
@@ -148,13 +148,13 @@ public class ReminderService extends IntentService {
 				e.printStackTrace();
 			}
 
-			Notification n = buildNotification(getApplicationContext(),
+			Notification n = buildNotification(context.getApplicationContext(),
 					title,
 					subject,
 					exp.data.get(0).context,
 					millis,
 					smallIcon,
-					getResources().getIntArray(R.array.statusColor) [exp.getState()],
+					context.getResources().getIntArray(R.array.statusColor) [exp.getState()],
 					defaults,
 					pi,
 					null);

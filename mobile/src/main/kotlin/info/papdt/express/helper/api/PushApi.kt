@@ -64,10 +64,7 @@ object PushApi {
 					Log.i(TAG, "Post body: $postBody")
 					val request = Request.Builder()
 							.method("POST",
-									RequestBody.create(
-											MediaType.parse("application/json"),
-											postBody
-									)
+									RequestBody.create(MediaType.parse("application/json"), postBody)
 							)
 							.url("http://$apiHost/subscribe/sync?token=${PushApi.token}")
 							.build()

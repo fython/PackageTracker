@@ -85,7 +85,7 @@ public class AddActivity extends AbsActivity{
 			preCompany = intent.getStringExtra(EXTRA_PRE_COMPANY);
 			preName = intent.getStringExtra(EXTRA_PRE_NAME);
 			NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-			nm.cancel(DetectNumberService.NOTIFICATION_ID_ASSIST);
+			nm.cancel(DetectNumberService.Companion.getNOTIFICATION_ID_ASSIST());
 		}
 
 		mActionBar.setDisplayHomeAsUpEnabled(true);
