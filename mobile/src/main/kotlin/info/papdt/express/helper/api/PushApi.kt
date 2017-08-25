@@ -3,13 +3,15 @@ package info.papdt.express.helper.api
 import android.util.Log
 import com.google.gson.Gson
 import info.papdt.express.helper.model.ResponseMessage
+import info.papdt.express.helper.support.SettingsInstance
+import info.papdt.express.helper.support.postForm
+import info.papdt.express.helper.support.postJson
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import okhttp3.*
 
 import java.io.IOException
-import java.net.SocketTimeoutException
 import java.util.concurrent.TimeUnit
 
 object PushApi {
@@ -21,7 +23,7 @@ object PushApi {
 			.readTimeout(10, TimeUnit.SECONDS)
 			.build()
 
-	var apiHost = "192.168.1.105:3000"
+	private val apiHost: String get() = SettingsInstance.run { "$pushApiHost:$pushApiPort" }
 	private var token: String = "null"
 
 	private inline fun <reified T> requestJsonObject(request: Request): T? {
@@ -32,7 +34,6 @@ object PushApi {
 			return Gson().fromJson(string, T::class.java)
 		} catch (e: IOException) {
 			e.printStackTrace()
-		} catch (e: SocketTimeoutException) {
 		} catch (e: Exception) {
 			e.printStackTrace()
 		}
@@ -43,12 +44,7 @@ object PushApi {
 			.map { targetToken ->
 				PushApi.token = targetToken
 				val request = Request.Builder()
-						.method("POST",
-								RequestBody.create(
-										MediaType.parse("application/x-www-form-urlencoded"),
-										"token=$targetToken"
-								)
-						)
+						.postForm(mapOf("token" to targetToken))
 						.url("http://$apiHost/subscribe/register")
 						.build()
 				return@map requestJsonObject<ResponseMessage>(request) ?: ResponseMessage()
@@ -63,15 +59,50 @@ object PushApi {
 					val postBody = "[${syncList.map { "\"$it\"" }.reduce { acc, s -> "$acc,$s" }}]"
 					Log.i(TAG, "Post body: $postBody")
 					val request = Request.Builder()
-							.method("POST",
-									RequestBody.create(MediaType.parse("application/json"), postBody)
-							)
+							.postJson(postBody)
 							.url("http://$apiHost/subscribe/sync?token=${PushApi.token}")
 							.build()
 					return@map requestJsonObject<ResponseMessage>(request) ?: ResponseMessage()
 				}
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread())
+	}
+
+	fun add(number: String, company: String? = null, token: String? = null): Observable<ResponseMessage> {
+		token?.let { PushApi.token = it }
+		return Observable.just("")
+				.map {
+					val request = Request.Builder()
+							.postForm(mutableMapOf("token" to PushApi.token, "id" to number).apply {
+								company?.let { this["com"] = it }
+							})
+							.url("http://$apiHost/subscribe/add")
+							.build()
+					return@map requestJsonObject<ResponseMessage>(request) ?: ResponseMessage()
+				}
+	}
+
+	fun remove(number: String, token: String? = null): Observable<ResponseMessage> {
+		token?.let { PushApi.token = it }
+		return Observable.just(number)
+				.map { id ->
+					val request = Request.Builder()
+							.postForm(mapOf("token" to PushApi.token, "id" to id))
+							.url("http://$apiHost/subscribe/remove")
+							.build()
+					return@map requestJsonObject<ResponseMessage>(request) ?: ResponseMessage()
+				}
+	}
+
+	fun list(token: String? = null): Observable<Array<String>?> {
+		token?.let { PushApi.token = it }
+		return Observable.just("")
+				.map {
+					val request = Request.Builder()
+							.url("http://$apiHost/subscribe/list?token=${PushApi.token}")
+							.build()
+					return@map requestJsonObject<Array<String>>(request)
+				}
 	}
 
 }

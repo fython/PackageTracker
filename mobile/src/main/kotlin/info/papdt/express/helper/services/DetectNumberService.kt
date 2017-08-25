@@ -69,7 +69,7 @@ class DetectNumberService : AccessibilityService(), ServiceExtensions {
 						val company: String? = nodes!!
 								.firstOrNull()
 								?.let { getPackageCompany(it.text.toString()) }
-						if (number != null && mPackageDatabase!!.indexOf(number) == -1
+						if (number != null && mPackageDatabase.indexOf(number) == -1
 								&& number != mShowingNumber) {
 							mShowingNumber = number
 							sendNotification("淘宝", company, number, null, true)
@@ -83,7 +83,7 @@ class DetectNumberService : AccessibilityService(), ServiceExtensions {
 						val number = findNumberFromJd(flatNodes)
 						val company = findCompanyFromJd(flatNodes)
 						val name = findNameFromJd(flatNodes)
-						if (number != null && mPackageDatabase!!.indexOf(number) == -1) {
+						if (number != null && mPackageDatabase.indexOf(number) == -1) {
 							if (number != mShowingNumber) {
 								mShowingNumber = number
 								lastCompany = company
@@ -111,7 +111,7 @@ class DetectNumberService : AccessibilityService(), ServiceExtensions {
 					val company: String? = nodes!!
 							.firstOrNull()
 							?.let { getPackageCompany(it.text.toString()) }
-					if (number != null && mPackageDatabase!!.indexOf(number) == -1 && number != mShowingNumber) {
+					if (number != null && mPackageDatabase.indexOf(number) == -1 && number != mShowingNumber) {
 						mShowingNumber = number
 						sendNotification("淘宝", company, number, null, true)
 					}
@@ -123,7 +123,7 @@ class DetectNumberService : AccessibilityService(), ServiceExtensions {
 					val number = findNumberFromJd(flatNodes)
 					val company = findCompanyFromJd(flatNodes)
 					val name = findNameFromJd(flatNodes)
-					if (number != null && mPackageDatabase!!.indexOf(number) == -1) {
+					if (number != null && mPackageDatabase.indexOf(number) == -1) {
 						if (number != mShowingNumber) {
 							mShowingNumber = number
 							lastCompany = company

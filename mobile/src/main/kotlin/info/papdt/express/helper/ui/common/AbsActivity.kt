@@ -1,7 +1,6 @@
 package info.papdt.express.helper.ui.common
 
 import android.content.res.Configuration
-import android.os.Bundle
 import android.support.annotation.LayoutRes
 import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity

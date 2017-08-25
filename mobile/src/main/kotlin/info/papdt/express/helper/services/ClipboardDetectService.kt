@@ -107,7 +107,7 @@ class ClipboardDetectService : Service(), ClipboardManager.OnPrimaryClipChangedL
 					MotionEvent.ACTION_UP -> if (distance < 5) {
 						view.performClick()
 					} else {
-						mHandler!!.sendEmptyMessageDelayed(0, 3000)
+						mHandler.sendEmptyMessageDelayed(0, 3000)
 					}
 				}
 				return ret
