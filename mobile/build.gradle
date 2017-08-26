@@ -44,6 +44,7 @@ dependencies {
     compile 'com.squareup.okhttp3:okhttp:3.6.0'
     compile 'com.rengwuxian.materialedittext:library:2.1.4'
     compile 'de.hdodenhof:circleimageview:2.1.0'
+    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
     compile 'me.dm7.barcodescanner:zxing:1.9'
     compile 'com.tencent.bugly:crashreport:2.4.0'
     compile 'moe.feng:AlipayZeroSdk:1.1'

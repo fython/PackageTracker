@@ -15,6 +15,8 @@ import android.widget.LinearLayout;
 import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager;
 import com.h6ah4i.android.widget.advrecyclerview.touchguard.RecyclerViewTouchActionGuardManager;
 
+import com.scwang.smartrefresh.layout.api.RefreshLayout;
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.dao.PackageDatabase;
 import info.papdt.express.helper.support.ScreenUtils;
@@ -23,11 +25,12 @@ import info.papdt.express.helper.ui.adapter.HomePackageListAdapter;
 import info.papdt.express.helper.ui.callback.OnDataRemovedCallback;
 import info.papdt.express.helper.ui.common.AbsFragment;
 import info.papdt.express.helper.view.AnimatedRecyclerView;
+import info.papdt.express.helper.view.DeliveryHeader;
 import info.papdt.express.helper.widget.SwipeRefreshLayout;
 
-public abstract class BaseFragment extends AbsFragment implements SwipeRefreshLayout.OnRefreshListener {
+public abstract class BaseFragment extends AbsFragment implements OnRefreshListener {
 
-	private SwipeRefreshLayout mRefreshLayout;
+	private RefreshLayout mRefreshLayout;
 	private AnimatedRecyclerView mRecyclerView;
 	private LinearLayout mEmptyView;
 
@@ -82,9 +85,8 @@ public abstract class BaseFragment extends AbsFragment implements SwipeRefreshLa
 		);
 
 		// Set up mRefreshLayout
-		mRefreshLayout.setColorSchemeResources(R.color.pink_700);
 		mRefreshLayout.setOnRefreshListener(this);
-		mRefreshLayout.setStartDistance(ScreenUtils.dpToPx(getActivity(), 32));
+		mRefreshLayout.setRefreshHeader(new DeliveryHeader(getActivity()));
 
 		setUpAdapter();
 		mEmptyView.setVisibility(mAdapter != null && mAdapter.getItemCount() > 0 ? View.GONE : View.VISIBLE);
@@ -108,7 +110,7 @@ public abstract class BaseFragment extends AbsFragment implements SwipeRefreshLa
 	public abstract int getFragmentId();
 
 	@Override
-	public void onRefresh() {
+	public void onRefresh(RefreshLayout view) {
 		mHandler.sendEmptyMessage(FLAG_REFRESH_LIST);
 	}
 
@@ -178,7 +180,7 @@ public abstract class BaseFragment extends AbsFragment implements SwipeRefreshLa
 			switch (msg.what) {
 				case FLAG_REFRESH_LIST:
 					if (mRefreshLayout != null && !mRefreshLayout.isRefreshing()) {
-						mRefreshLayout.setRefreshing(true);
+						mRefreshLayout.autoRefresh();
 					}
 					new RefreshTask().execute();
 					break;
@@ -204,7 +206,7 @@ public abstract class BaseFragment extends AbsFragment implements SwipeRefreshLa
 		@Override
 		protected void onPostExecute(Void msg) {
 			hasPlayedAnimation = false;
-			mRefreshLayout.setRefreshing(false);
+			mRefreshLayout.finishRefresh();
 			mHandler.sendEmptyMessage(FLAG_UPDATE_ADAPTER_ONLY);
 		}
 
