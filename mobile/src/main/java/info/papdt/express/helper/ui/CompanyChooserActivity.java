@@ -57,7 +57,7 @@ public class CompanyChooserActivity extends AbsActivity {
 			getWindow().setNavigationBarColor(getResources().getColor(R.color.lollipop_status_bar_grey));
 		}
 
-		data = PackageApi.CompanyInfo.info;
+		data = PackageApi.CompanyInfo.INSTANCE.getInfo();
 
 		setContentView(R.layout.activity_choose_company);
 	}
@@ -110,7 +110,7 @@ public class CompanyChooserActivity extends AbsActivity {
 			@Override
 			public void onItemClick(int position, SimpleRecyclerViewAdapter.ClickableViewHolder holder) {
 				Intent intent = new Intent();
-				intent.putExtra(RESULT_EXTRA_COMPANY_CODE, mAdapter.getItem(position).code);
+				intent.putExtra(RESULT_EXTRA_COMPANY_CODE, mAdapter.getItem(position).getCode());
 				setResult(RESULT_OK, intent);
 				finish();
 			}

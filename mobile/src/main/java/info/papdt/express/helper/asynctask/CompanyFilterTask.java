@@ -19,16 +19,16 @@ public class CompanyFilterTask extends AsyncTask<String, Void, ArrayList<Package
 		keyword = ZHConverter.convert(keyword, ZHConverter.SIMPLIFIED).replaceAll("快递", "");
 		ArrayList<PackageApi.CompanyInfo.Company> src = new ArrayList<>();
 		if (keyword != null && keyword.trim().length() > 0) {
-			for (int i = 0; i < PackageApi.CompanyInfo.info.size(); i++) {
-				if (!PackageApi.CompanyInfo.names [i].toLowerCase().contains(keyword.toLowerCase())
-						&& !PackageApi.CompanyInfo.pinyin[i].contains(keyword)) {
+			for (int i = 0; i < PackageApi.CompanyInfo.INSTANCE.getInfo().size(); i++) {
+				if (!PackageApi.CompanyInfo.INSTANCE.getNames()[i].toLowerCase().contains(keyword.toLowerCase())
+						&& !PackageApi.CompanyInfo.INSTANCE.getPinyin()[i].contains(keyword)) {
 					continue;
 				}
 
-				src.add(PackageApi.CompanyInfo.info.get(i));
+				src.add(PackageApi.CompanyInfo.INSTANCE.getInfo().get(i));
 			}
 		} else {
-			return PackageApi.CompanyInfo.info;
+			return PackageApi.CompanyInfo.INSTANCE.getInfo();
 		}
 		return src;
 	}

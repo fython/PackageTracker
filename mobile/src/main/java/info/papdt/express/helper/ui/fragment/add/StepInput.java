@@ -77,7 +77,7 @@ public class StepInput extends AbsStepFragment {
 
 				// Pass check
 				number = mEditText.getText().toString();
-				if (ConnectivityReceiver.readNetworkState(getActivity())) {
+				if (ConnectivityReceiver.Companion.readNetworkState(getActivity())) {
 					if (TextUtils.isEmpty(getAddActivity().getPreCompany())) {
 						new FindPackageTask().execute(number);
 					} else {
@@ -144,7 +144,7 @@ public class StepInput extends AbsStepFragment {
 		@Override
 		public void onPostExecute(ArrayList<PackageApi.CompanyInfo.Company> lists) {
 			if (lists.size() == 1) {
-				new FindPackageTask().execute(number, lists.get(0).code);
+				new FindPackageTask().execute(number, lists.get(0).getCode());
 			} else {
 				new FindPackageTask().execute(number);
 			}

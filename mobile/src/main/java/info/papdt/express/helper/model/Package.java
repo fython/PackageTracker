@@ -52,7 +52,7 @@ public class Package {
 		try {
 			Package p = new Gson().fromJson(json, Package.class);
 			if (p.companyChineseName == null && p.companyType != null) {
-				p.companyChineseName = PackageApi.CompanyInfo.getNameByCode(p.companyType);
+				p.companyChineseName = PackageApi.CompanyInfo.INSTANCE.getNameByCode(p.companyType);
 			}
 			if (p.companyType == null) {
 				p.companyType = p.companyType1;

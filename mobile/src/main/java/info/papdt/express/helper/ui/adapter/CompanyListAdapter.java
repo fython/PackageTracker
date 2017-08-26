@@ -40,13 +40,13 @@ public class CompanyListAdapter extends SimpleRecyclerViewAdapter {
 		super.onBindViewHolder(holder, pos);
 		if (holder instanceof ItemHolder) {
 			ItemHolder itemHolder = (ItemHolder) holder;
-			itemHolder.titleText.setText(getItem(pos).name);
-			itemHolder.otherText.setText(getItem(pos).phone != null ? getItem(pos).phone : getItem(pos).website);
+			itemHolder.titleText.setText(getItem(pos).getName());
+			itemHolder.otherText.setText(getItem(pos).getPhone() != null ? getItem(pos).getPhone() : getItem(pos).getWebsite());
 			itemHolder.otherText.setVisibility(itemHolder.otherText.getText() != null ? View.VISIBLE : View.INVISIBLE);
 
 			/** Set up the logo */
-			itemHolder.logoView.setImageDrawable(new ColorDrawable(ColorGenerator.MATERIAL.getColor(getItem(pos).name)));
-			itemHolder.firstCharText.setText(getItem(pos).name.substring(0, 1));
+			itemHolder.logoView.setImageDrawable(new ColorDrawable(ColorGenerator.MATERIAL.getColor(getItem(pos).getName())));
+			itemHolder.firstCharText.setText(getItem(pos).getName().substring(0, 1));
 		}
 	}
 

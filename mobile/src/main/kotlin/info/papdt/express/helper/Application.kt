@@ -44,7 +44,7 @@ class Application : android.app.Application() {
 		}
 
 		strategy.appVersion = "$versionName($versionCode)"
-		CrashReport.initCrashReport(applicationContext, Constants.BUGLY_APP_ID, Constants.BUGLY_ENABLE_DEBUG, strategy)
+		CrashReport.initCrashReport(applicationContext, BUGLY_APP_ID, BUGLY_ENABLE_DEBUG, strategy)
 
 		SettingsInstance = getSharedPreferencesProvider()
 	}

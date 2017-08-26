@@ -114,18 +114,18 @@ public class SearchResultAdapter extends RecyclerView.Adapter {
 				break;
 			case ItemType.TYPE_COMPANY:
 				CompanyHolder h1 = (CompanyHolder) holder;
-				h1.titleText.setText(companies.get(itemType.index).name);
-				h1.otherText.setText(companies.get(itemType.index).phone != null ? companies.get(itemType.index).phone : companies.get(itemType.index).website);
+				h1.titleText.setText(companies.get(itemType.index).getName());
+				h1.otherText.setText(companies.get(itemType.index).getPhone() != null ? companies.get(itemType.index).getPhone() : companies.get(itemType.index).getWebsite());
 				h1.otherText.setVisibility(h1.otherText.getText() != null ? View.VISIBLE : View.INVISIBLE);
 
 				/** Set up the logo */
-				h1.logoView.setImageDrawable(new ColorDrawable(ColorGenerator.MATERIAL.getColor(companies.get(itemType.index).name)));
-				h1.firstCharText.setText(companies.get(itemType.index).name.substring(0, 1));
+				h1.logoView.setImageDrawable(new ColorDrawable(ColorGenerator.MATERIAL.getColor(companies.get(itemType.index).getName())));
+				h1.firstCharText.setText(companies.get(itemType.index).getName().substring(0, 1));
 
 				h1.rootView.setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
-						String phone = companies.get(itemType.index).phone;
+						String phone = companies.get(itemType.index).getPhone();
 						if (phone != null && !TextUtils.isEmpty(phone)) {
 							Intent intent = new Intent(Intent.ACTION_DIAL);
 							intent.setData(Uri.parse("tel:" + phone));
