@@ -141,7 +141,12 @@
 	<string name="pref_firebase_instance_id_summary">Click to view or copy your instance id</string>
 	<string name="pref_copy_button">Copy</string>
 	<string name="pref_register_button">Register</string>
-	<string name="pref_push_sync">Sync list</string>
+	<string name="pref_push_sync">Sync list now</string>
+	<string name="pref_enable_push">Enable push</string>
+	<string name="pref_enable_push_summary">Powered by Firebase Cloud Messaging</string>
+	<string name="pref_api_host">Server host</string>
+	<string name="pref_api_port">Server port</string>
+	<string name="pref_request_push">Request push now</string>
 
 	<string name="item_notification_do_not_disturb">Do not disturb mode</string>
 	<string name="item_notification_do_not_disturb_desc">Don\'t send notifications from 23:00 to 06:00.</string>

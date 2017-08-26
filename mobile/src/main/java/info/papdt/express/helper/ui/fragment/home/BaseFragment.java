@@ -19,14 +19,12 @@ import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener;
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.dao.PackageDatabase;
-import info.papdt.express.helper.support.ScreenUtils;
 import info.papdt.express.helper.ui.MainActivity;
 import info.papdt.express.helper.ui.adapter.HomePackageListAdapter;
 import info.papdt.express.helper.ui.callback.OnDataRemovedCallback;
 import info.papdt.express.helper.ui.common.AbsFragment;
 import info.papdt.express.helper.view.AnimatedRecyclerView;
 import info.papdt.express.helper.view.DeliveryHeader;
-import info.papdt.express.helper.widget.SwipeRefreshLayout;
 
 public abstract class BaseFragment extends AbsFragment implements OnRefreshListener {
 
@@ -86,7 +84,7 @@ public abstract class BaseFragment extends AbsFragment implements OnRefreshListe
 
 		// Set up mRefreshLayout
 		mRefreshLayout.setOnRefreshListener(this);
-		mRefreshLayout.setRefreshHeader(new DeliveryHeader(getActivity()));
+		mRefreshLayout.setRefreshHeader(new DeliveryHeader(rootView.getContext()));
 
 		setUpAdapter();
 		mEmptyView.setVisibility(mAdapter != null && mAdapter.getItemCount() > 0 ? View.GONE : View.VISIBLE);

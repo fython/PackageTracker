@@ -11,9 +11,12 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import info.papdt.express.helper.api.PackageApi;
+import info.papdt.express.helper.api.PushApi;
 import info.papdt.express.helper.model.BaseMessage;
 import info.papdt.express.helper.model.Package;
 import info.papdt.express.helper.support.FileUtils;
+import io.reactivex.Observable;
+import io.reactivex.functions.Function;
 
 public class PackageDatabase {
 
@@ -100,11 +103,13 @@ public class PackageDatabase {
 
 	public void add(Package pack) {
 		data.add(pack);
+		PushApi.INSTANCE.add(pack.number, pack.companyType).subscribe();
 		refreshList();
 	}
 
 	public void add(int index, Package pack) {
 		data.add(index, pack);
+		PushApi.INSTANCE.add(pack.number, pack.companyType).subscribe();
 		refreshList();
 	}
 
@@ -115,6 +120,8 @@ public class PackageDatabase {
 
 	public void remove(int index) {
 		final Package removedItem = data.remove(index);
+
+		PushApi.INSTANCE.remove(removedItem.number).subscribe();
 
 		lastRemovedData = removedItem;
 		lastRemovedPosition = index;
@@ -185,6 +192,12 @@ public class PackageDatabase {
 	}
 
 	public void pullDataFromNetwork(boolean shouldRefreshDelivered) {
+		PushApi.INSTANCE.sync(Observable.fromIterable(data).map(new Function<Package, String>() {
+			@Override
+			public String apply(Package pack) throws Exception {
+				return pack.codeNumber + "+" + pack.companyType;
+			}
+		}).toList().blockingGet()).subscribe();
 		for (int i = 0; i < size(); i++) {
 			Package pack = this.get(i);
 			if (!shouldRefreshDelivered && pack.getState() == Package.STATUS_DELIVERED) {

@@ -18,12 +18,30 @@
 
 	<PreferenceCategory android:title="@string/category_push">
 
+		<SwitchPreference android:key="enable_push"
+		                  android:title="@string/pref_enable_push"
+		                  android:summary="@string/pref_enable_push_summary"/>
+
 		<Preference android:key="firebase_instance_id"
 		            android:title="@string/pref_firebase_instance_id"
 					android:summary="@string/pref_firebase_instance_id_summary"/>
 
-		<Preference android:key="push_sync"
-		            android:title="@string/pref_push_sync"/>
+		<EditTextPreference android:key="api_host"
+		                    android:title="@string/pref_api_host"
+		                    android:summary="%s"
+		                    android:singleLine="true"
+							android:inputType="textUri"/>
+
+		<EditTextPreference android:key="api_port"
+		                    android:title="@string/pref_api_port"
+		                    android:summary="%s"
+		                    android:maxLength="5"
+		                    android:singleLine="true"
+							android:inputType="numberDecimal"/>
+
+		<Preference android:key="push_sync" android:title="@string/pref_push_sync"/>
+
+		<Preference android:key="request_push" android:title="@string/pref_request_push"/>
 
 	</PreferenceCategory>
 

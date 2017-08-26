@@ -124,7 +124,7 @@
 			</intent-filter>
 			<meta-data android:name="android.accessibilityservice" android:resource="@xml/service_detect_number"/>
 		</service>
-		<service android:name="info.papdt.express.helper.services.FCMService">
+		<service android:name="info.papdt.express.helper.services.FCMService" android:enabled="false">
 			<intent-filter>
 				<action android:name="com.google.firebase.MESSAGING_EVENT"/>
 			</intent-filter>

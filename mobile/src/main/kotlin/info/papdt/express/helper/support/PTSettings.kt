@@ -6,7 +6,8 @@ import kotlin.properties.Delegates
 
 class PTSettings(context: Context): SharedPreferencesProvider(context, "settings") {
 
-	var pushApiHost by stringValue(defValue = "192.168.1.108")
+	var enablePush by booleanValue(defValue = false)
+	var pushApiHost by stringValue(defValue = "pt.api.rabi.coffee")
 	var pushApiPort by intValue(defValue = 3000)
 
 }
