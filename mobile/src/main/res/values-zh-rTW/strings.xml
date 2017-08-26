@@ -129,6 +129,18 @@
 		<item>4</item>
 	</string-array>
 
+	<string name="category_push">主動推送</string>
+	<string name="pref_firebase_instance_id">設備實例 ID</string>
+	<string name="pref_firebase_instance_id_summary">點擊查看或拷貝你的實例 ID</string>
+	<string name="pref_copy_button">拷貝</string>
+	<string name="pref_register_button">登記</string>
+	<string name="pref_push_sync">現在同步清單</string>
+	<string name="pref_enable_push">啟用推送</string>
+	<string name="pref_enable_push_summary">由 Firebase Cloud Messaging 提供</string>
+	<string name="pref_api_host">伺服器地址</string>
+	<string name="pref_api_port">伺服器端口</string>
+	<string name="pref_request_push">立即請求推送</string>
+
 	<string name="item_notification_do_not_disturb">勿擾模式</string>
 	<string name="item_notification_do_not_disturb_desc">在 23:00 至次日 06:00 期間不發出通知。</string>
 

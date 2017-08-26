@@ -45,7 +45,6 @@ class SettingsNetwork : AbsPrefFragment(), Preference.OnPreferenceChangeListener
 			mPrefIntervalTime.setValueIndex(target)
 		}
 
-		setEnablePush(SettingsInstance.enablePush)
 		mPrefApiHost.text = SettingsInstance.pushApiHost
 		mPrefApiPort.text = SettingsInstance.pushApiPort.toString()
 
@@ -103,6 +102,8 @@ class SettingsNetwork : AbsPrefFragment(), Preference.OnPreferenceChangeListener
 		mPrefEnable.onPreferenceChangeListener = this
 		mPrefApiHost.onPreferenceChangeListener = this
 		mPrefApiPort.onPreferenceChangeListener = this
+
+		setEnablePush(SettingsInstance.enablePush)
 	}
 
 	override fun onStop() {
@@ -111,9 +112,14 @@ class SettingsNetwork : AbsPrefFragment(), Preference.OnPreferenceChangeListener
 	}
 
 	private fun setEnablePush(b: Boolean) {
+		if (b) {
+			mPrefIntervalTime.setValueIndex(4)
+			mPrefIntervalTime.onPreferenceChangeListener.onPreferenceChange(mPrefIntervalTime, "4")
+		}
 		SettingsInstance.enablePush = b
 		mPrefSync.isEnabled = b
 		mPrefReqPush.isEnabled = b
+		mPrefIntervalTime.isEnabled = !b
 		context.packageManager.setComponentEnabledSetting(
 				ComponentName(context.applicationContext, FCMService::class.java),
 				if (b) PackageManager.COMPONENT_ENABLED_STATE_ENABLED else PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
@@ -134,7 +140,7 @@ class SettingsNetwork : AbsPrefFragment(), Preference.OnPreferenceChangeListener
 				PushUtils.restartServices(activity.applicationContext)
 				true
 			}
-			mPrefEnable-> {
+			mPrefEnable -> {
 				val b = o as Boolean
 				setEnablePush(b)
 				if (b) needRegister = true
