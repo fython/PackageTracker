@@ -10,14 +10,24 @@
 		android:layout_width="match_parent"
 	    android:layout_height="wrap_content">
 
-		<android.support.v7.widget.Toolbar
-			android:layout_width="match_parent"
-			android:layout_height="?attr/actionBarSize"
-			android:id="@+id/toolbar"
-			android:background="?attr/colorPrimary"
-			app:theme="@style/Toolbar.Dark"
-			app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-			app:layout_scrollFlags="enterAlways|scroll"/>
+		<android.support.v7.widget.CardView
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="8dp"
+				android:layout_marginBottom="8dp"
+				android:layout_marginStart="8dp"
+				android:layout_marginEnd="8dp"
+				app:cardBackgroundColor="?android:attr/windowBackground"
+				app:layout_scrollFlags="enterAlways|scroll">
+
+			<android.support.v7.widget.Toolbar
+					android:layout_width="match_parent"
+					android:layout_height="48dp"
+					android:id="@+id/toolbar"
+					app:theme="@style/Toolbar.Dark"
+					app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
+
+		</android.support.v7.widget.CardView>
 
 		<android.support.design.widget.TabLayout
 			android:layout_width="match_parent"

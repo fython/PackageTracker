@@ -64,6 +64,11 @@ class MainActivity : AbsActivity() {
 		setContentView(R.layout.activity_main)
 
 		tabLayout.setupWithViewPager(viewPager)
+		tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+			override fun onTabReselected(tab: TabLayout.Tab?) { fragments[viewPager.currentItem].scrollToTop() }
+			override fun onTabUnselected(tab: TabLayout.Tab?) {}
+			override fun onTabSelected(tab: TabLayout.Tab?) {}
+		})
 		viewPager.adapter = TabsAdapter(fragmentManager)
 
 		if (ScannerActivity.ACTION_SCAN_TO_ADD == intent.action) {
@@ -187,6 +192,18 @@ class MainActivity : AbsActivity() {
 				intent[Intent.EXTRA_TEXT] = text
 				startActivity(Intent.createChooser(intent, getString(R.string.dialog_share_title)))
 				return true
+			}
+			R.id.action_delete -> {
+				val title = mContextMenuPackage!!.name
+				mDatabase.remove(mContextMenuPackage!!)
+				val msg = Message()
+				msg.what = MainActivity.MSG_NOTIFY_ITEM_REMOVE
+				msg.arg1 = -1
+				val data = Bundle()
+				data.putString("title", title)
+				msg.data = data
+				mHandler.sendMessage(msg)
+				notifyDataChanged(-1)
 			}
 		}
 		return super.onContextItemSelected(item)

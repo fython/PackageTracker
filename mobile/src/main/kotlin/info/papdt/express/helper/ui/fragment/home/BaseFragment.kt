@@ -10,8 +10,6 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.LinearLayout
 
-import com.h6ah4i.android.widget.advrecyclerview.swipeable.RecyclerViewSwipeManager
-import com.h6ah4i.android.widget.advrecyclerview.touchguard.RecyclerViewTouchActionGuardManager
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 
 import com.scwang.smartrefresh.layout.api.RefreshLayout
@@ -19,23 +17,20 @@ import com.scwang.smartrefresh.layout.listener.OnRefreshListener
 import info.papdt.express.helper.R
 import info.papdt.express.helper.dao.PackageDatabase
 import info.papdt.express.helper.ui.MainActivity
-import info.papdt.express.helper.ui.adapter.HomePackageListAdapter
 import info.papdt.express.helper.ui.common.AbsFragment
 import info.papdt.express.helper.view.AnimatedRecyclerView
 import info.papdt.express.helper.view.DeliveryHeader
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import moe.feng.kotlinyan.common.findNonNullView
 
 abstract class BaseFragment : AbsFragment, OnRefreshListener {
 
-	private val mRefreshLayout: SmartRefreshLayout by findNonNullView(R.id.refresh_layout)
-	private val mRecyclerView: AnimatedRecyclerView by findNonNullView(R.id.recycler_view)
-	private val mEmptyView: LinearLayout by findNonNullView(R.id.empty_view)
+	private lateinit var mRefreshLayout: SmartRefreshLayout
+	private lateinit var mRecyclerView: AnimatedRecyclerView
+	private lateinit var mEmptyView: LinearLayout
 
 	private var mAdapter: RecyclerView.Adapter<*>? = null
-	private var mSwipeManager: RecyclerViewSwipeManager? = null
 
 	protected var database: PackageDatabase? = null
 		private set
@@ -67,16 +62,17 @@ abstract class BaseFragment : AbsFragment, OnRefreshListener {
 	}
 
 	override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+		mRefreshLayout = view.findViewById(R.id.refresh_layout)
+		mRecyclerView = view.findViewById(R.id.recycler_view)
+		mEmptyView = view.findViewById(R.id.empty_view)
+
 		// Set up mRecyclerView
-		mSwipeManager = RecyclerViewSwipeManager()
 		mRecyclerView.setHasFixedSize(false)
-		mRecyclerView.setLayoutManager(
-				LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
-		)
+		mRecyclerView.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
 
 		// Set up mRefreshLayout
 		mRefreshLayout.setOnRefreshListener(this)
-		mRefreshLayout.setRefreshHeader(DeliveryHeader(view.context))
+		mRefreshLayout.refreshHeader = DeliveryHeader(view.context)
 
 		setUpAdapter()
 		mEmptyView.visibility = if (mAdapter != null && mAdapter!!.itemCount > 0) View.GONE else View.VISIBLE
@@ -118,24 +114,8 @@ abstract class BaseFragment : AbsFragment, OnRefreshListener {
 
 	protected fun setAdapter(adapter: RecyclerView.Adapter<*>) {
 		this.mAdapter = adapter
-		mRecyclerView.adapter = mSwipeManager!!.createWrappedAdapter(mAdapter!!)
-		mSwipeManager!!.attachRecyclerView(mRecyclerView)
-		RecyclerViewTouchActionGuardManager().attachRecyclerView(mRecyclerView)
+		mRecyclerView.adapter = mAdapter
 		mEmptyView.visibility = if (mAdapter != null && mAdapter!!.itemCount > 0) View.GONE else View.VISIBLE
-
-		/** Set undo operation  */
-		(adapter as? HomePackageListAdapter)?.setOnDataRemovedCallback { _, title ->
-			val msg = Message()
-			msg.what = MainActivity.MSG_NOTIFY_ITEM_REMOVE
-			msg.arg1 = fragmentId
-			val data = Bundle()
-			data.putString("title", title)
-			msg.data = data
-
-			mainActivity.mHandler.sendMessage(msg)
-
-			mainActivity.notifyDataChanged(fragmentId)
-		}
 	}
 
 	protected val mainActivity: MainActivity

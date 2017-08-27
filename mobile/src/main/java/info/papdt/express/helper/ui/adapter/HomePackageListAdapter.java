@@ -12,15 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemAdapter;
-import com.h6ah4i.android.widget.advrecyclerview.swipeable.SwipeableItemConstants;
-import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultAction;
-import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultActionDefault;
-import com.h6ah4i.android.widget.advrecyclerview.swipeable.action.SwipeResultActionRemoveItem;
-import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableItemDrawableTypes;
-import com.h6ah4i.android.widget.advrecyclerview.swipeable.annotation.SwipeableItemResults;
-import com.h6ah4i.android.widget.advrecyclerview.utils.AbstractSwipeableItemViewHolder;
-
 import de.hdodenhof.circleimageview.CircleImageView;
 import info.papdt.express.helper.R;
 import info.papdt.express.helper.dao.PackageDatabase;
@@ -32,13 +23,11 @@ import info.papdt.express.helper.ui.DetailsActivity;
 import info.papdt.express.helper.ui.MainActivity;
 import info.papdt.express.helper.ui.callback.OnDataRemovedCallback;
 
-public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageListAdapter.MyViewHolder> implements SwipeableItemAdapter<HomePackageListAdapter.MyViewHolder>{
+public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageListAdapter.MyViewHolder> {
 
 	private PackageDatabase db;
 	private int type;
 	private AppCompatActivity parentActivity;
-
-	private OnDataRemovedCallback mDataRemovedCallback;
 
 	private float DP_16_TO_PX = -1;
 	private int statusTitleColor, statusSubtextColor = -1;
@@ -105,9 +94,9 @@ public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageList
 
 		/** Add paddingTop/Bottom to the first or last item */
 		if (position == 0) {
-			holder.getSwipeableContainerView().setPadding(0, (int) DP_16_TO_PX, 0, 0);
+			holder.containerView.setPadding(0, (int) DP_16_TO_PX, 0, 0);
 		} else if (position == getItemCount()) {
-			holder.getSwipeableContainerView().setPadding(0, 0, 0, (int) DP_16_TO_PX);
+			holder.containerView.setPadding(0, 0, 0, (int) DP_16_TO_PX);
 		}
 	}
 
@@ -147,31 +136,7 @@ public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageList
 		}
 	}
 
-	@Override
-	public SwipeResultAction onSwipeItem(MyViewHolder holder, int position, @SwipeableItemResults int result) {
-		if (result == SwipeableItemConstants.RESULT_CANCELED) {
-			return new SwipeResultActionDefault();
-		} else {
-			return new MySwipeResultActionRemoveItem(this, position);
-		}
-	}
-
-	@Override
-	public int onGetSwipeReactionType(MyViewHolder holder, int position, int x, int y) {
-		return SwipeableItemConstants.REACTION_CAN_SWIPE_BOTH_H;
-	}
-
-	@Override
-	public void onSetSwipeBackground(MyViewHolder holder, int position, @SwipeableItemDrawableTypes int type) {
-
-	}
-
-	public void setOnDataRemovedCallback(OnDataRemovedCallback callback) {
-		this.mDataRemovedCallback = callback;
-	}
-
-	public class MyViewHolder extends AbstractSwipeableItemViewHolder
-			implements View.OnCreateContextMenuListener {
+	public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
 
 		CircleImageView logoView;
 		AppCompatTextView titleText, descText, timeText;
@@ -189,18 +154,12 @@ public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageList
 			containerView = itemView.findViewById(R.id.item_container);
 
 			containerView.setOnCreateContextMenuListener(this);
-
-			getSwipeableContainerView().setOnClickListener(new View.OnClickListener() {
+			containerView.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
 					DetailsActivity.Companion.launch(parentActivity, getItemData(getAdapterPosition()));
 				}
 			});
-		}
-
-		@Override
-		public View getSwipeableContainerView() {
-			return containerView;
 		}
 
 		@Override
@@ -214,27 +173,8 @@ public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageList
 				menu.add(Menu.NONE, R.id.action_set_unread, 0, R.string.action_set_unread);
 			}
 			menu.add(Menu.NONE, R.id.action_share, 0, R.string.action_share);
+			menu.add(Menu.NONE, R.id.action_delete, 0, R.string.action_remove);
 		}
-	}
-
-	class MySwipeResultActionRemoveItem extends SwipeResultActionRemoveItem {
-
-		private HomePackageListAdapter adapter;
-		private int position;
-
-		public MySwipeResultActionRemoveItem(HomePackageListAdapter adapter, int position) {
-			this.adapter = adapter;
-			this.position = position;
-		}
-
-		@Override
-		protected void onPerformAction() {
-			final String title = getItemData(position).name;
-			adapter.db.remove(getItemData(position));
-			adapter.notifyItemRemoved(position);
-			if (mDataRemovedCallback != null) mDataRemovedCallback.onDataRemoved(position, title);
-		}
-
 	}
 
 }
