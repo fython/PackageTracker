@@ -121,7 +121,7 @@ class PackageDatabase private constructor(private val mContext: Context) {
 
 	fun undoLastRemoval(): Int {
 		if (lastRemovedData != null) {
-			val insertedPosition: Int = if (lastRemovedPosition >= 0 && lastRemovedPosition < data!!.size) {
+			val insertedPosition: Int = if (lastRemovedPosition >= 0 && lastRemovedPosition < data.size) {
 				lastRemovedPosition
 			} else {
 				data.size
@@ -144,7 +144,7 @@ class PackageDatabase private constructor(private val mContext: Context) {
 	}
 
 	fun indexOf(number: String): Int {
-		return (0 until size()).first { get(it).number == number }
+		return (0 until size()).firstOrNull { get(it).number == number } ?: -1
 	}
 
 	fun clear() {

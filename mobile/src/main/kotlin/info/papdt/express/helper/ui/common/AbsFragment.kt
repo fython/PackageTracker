@@ -20,8 +20,6 @@ abstract class AbsFragment : Fragment(), AndroidExtensions {
 
 	protected abstract fun getLayoutResId(): Int
 
-	protected abstract fun doCreateView(rootView: View)
-
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		settings = Settings.getInstance(context)
@@ -34,8 +32,6 @@ abstract class AbsFragment : Fragment(), AndroidExtensions {
 		} else {
 			rootView = inflater.inflate(getLayoutResId(), null)
 		}
-		this.doCreateView(rootView!!)
-
 		return rootView
 	}
 

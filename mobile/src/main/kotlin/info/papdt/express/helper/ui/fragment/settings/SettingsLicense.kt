@@ -1,5 +1,6 @@
 package info.papdt.express.helper.ui.fragment.settings
 
+import android.os.Bundle
 import android.view.View
 import android.webkit.WebView
 
@@ -14,7 +15,7 @@ class SettingsLicense : AbsFragment() {
 		return R.layout.fragment_license
 	}
 
-	override fun doCreateView(rootView: View) {
+	override fun onViewCreated(rootView: View, savedInstanceState: Bundle?) {
 		(rootView[R.id.web_view] as WebView).loadUrl(ASSERT_URL)
 	}
 

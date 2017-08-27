@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.support.v4.graphics.drawable.DrawableCompat
 import android.support.v7.app.ActionBar
 import android.support.v7.widget.AppCompatEditText
 import android.support.v7.widget.LinearLayoutManager
@@ -82,6 +83,8 @@ class CompanyChooserActivity : AbsActivity() {
 		mActionBar!!.setDisplayHomeAsUpEnabled(true)
 		mActionBar!!.setDisplayShowCustomEnabled(true)
 		mActionBar!!.setDisplayShowTitleEnabled(false)
+
+		DrawableCompat.wrap(mToolbar!!.navigationIcon!!).setTint(resources.getColor(R.color.black_in_light))
 
 		/** Set up company list  */
 		mList.setHasFixedSize(true)

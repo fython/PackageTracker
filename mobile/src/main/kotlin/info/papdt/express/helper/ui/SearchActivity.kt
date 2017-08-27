@@ -85,7 +85,7 @@ class SearchActivity : AbsActivity() {
 
 		if (settings.getBoolean(Settings.KEY_NAVIGATION_TINT, true)
 				&& Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !isNightMode) {
-			window.navigationBarColor = resources.getColor(R.color.lollipop_status_bar_grey)
+			window.navigationBarColor = resources.color[R.color.lollipop_status_bar_grey]
 		}
 
 		setContentView(R.layout.activity_search)
@@ -108,7 +108,7 @@ class SearchActivity : AbsActivity() {
 									Color.TRANSPARENT else resources.color[R.color.lollipop_status_bar_grey]
 							}
 							circularRevealActivity()
-						}, 50)
+						}, 100)
 						rootLayout.viewTreeObserver.removeOnGlobalLayoutListener(this)
 					}
 				})
@@ -156,7 +156,7 @@ class SearchActivity : AbsActivity() {
 		circularReveal.duration = 300
 
 		// make the view visible and start the animation
-		rootLayout.makeInvisible()
+		rootLayout.makeVisible()
 		circularReveal.start()
 	}
 

@@ -27,18 +27,17 @@ import info.papdt.express.helper.support.CheatSheet
 import info.papdt.express.helper.support.PushUtils
 import info.papdt.express.helper.support.Settings
 import info.papdt.express.helper.ui.common.AbsActivity
-import info.papdt.express.helper.ui.fragment.home.BaseFragment
 import info.papdt.express.helper.ui.fragment.home.FragmentAll
 import info.papdt.express.helper.ui.launcher.AppWidgetProvider
 
 class MainActivity : AbsActivity(), OnMenuTabClickListener {
 
-	private val mBottomBar: BottomBar by lazy { BottomBar.attach(this, savedInstanceState) }
-	private val fragments: Array<BaseFragment> = arrayOf(
+	private lateinit var mBottomBar: BottomBar
+	private val fragments by lazy { arrayOf(
 			FragmentAll.newInstance(mDatabase, FragmentAll.TYPE_ALL),
 			FragmentAll.newInstance(mDatabase, FragmentAll.TYPE_DELIVERED),
 			FragmentAll.newInstance(mDatabase, FragmentAll.TYPE_DELIVERING)
-	)
+	) }
 
 	private val TAG = "express.MainActivity"
 
@@ -61,6 +60,7 @@ class MainActivity : AbsActivity(), OnMenuTabClickListener {
 
 		setContentView(R.layout.activity_main)
 
+		mBottomBar = BottomBar.attach(this, savedInstanceState)
 		mBottomBar.setItems(R.menu.bottombar_menu_home)
 		mBottomBar.setOnMenuTabClickListener(this)
 
@@ -145,11 +145,11 @@ class MainActivity : AbsActivity(), OnMenuTabClickListener {
 		}
 	}
 
-	public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {
+	public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 		Log.i("Main", "result received, requestCode=$requestCode, resultCode=$resultCode")
 		if (requestCode == REQUEST_ADD) {
 			if (resultCode == RESULT_NEW_PACKAGE) {
-				val jsonData = data.getStringExtra(AddActivity.RESULT_EXTRA_PACKAGE_JSON)
+				val jsonData = data!![AddActivity.RESULT_EXTRA_PACKAGE_JSON]?.asString()
 				val p = Package.buildFromJson(jsonData)
 				if (p != null) {
 					Log.i("Main", p.toJsonString())
@@ -166,7 +166,7 @@ class MainActivity : AbsActivity(), OnMenuTabClickListener {
 					val fragId = mBottomBar!!.getCurrentTabPosition()
 					Snackbar.make(
 							`$`(R.id.coordinator_layout)!!,
-							String.format(getString(R.string.toast_item_removed), data.getStringExtra("title")),
+							String.format(getString(R.string.toast_item_removed), data!!["title"]),
 							Snackbar.LENGTH_LONG
 					)
 							.setAction(R.string.toast_item_removed_action) { fragments!![fragId].onUndoActionClicked() }

@@ -149,17 +149,12 @@ object PackageApi {
 
 	/** Filter companies by keyword  */
 	@JvmStatic fun searchCompany(keyword: String?): ArrayList<CompanyInfo.Company>? {
-		var keyword = keyword
-		keyword = ZHConverter.convert(keyword, ZHConverter.SIMPLIFIED)
+		val keywordPy = ZHConverter.convert(keyword, ZHConverter.SIMPLIFIED)
 		val src = ArrayList<CompanyInfo.Company>()
-		if (keyword != null && keyword.trim { it <= ' ' }.isNotEmpty()) {
-			for (i in CompanyInfo.info!!.indices) {
-				if (!CompanyInfo.names[i].contains(keyword) && !CompanyInfo.pinyin[i].contains(keyword)) {
-					continue
-				}
-
-				src.add(CompanyInfo.info!![i])
-			}
+		if (keywordPy != null && keywordPy.trim { it <= ' ' }.isNotEmpty()) {
+			CompanyInfo.info!!.indices
+					.filterNot { !CompanyInfo.names[it].contains(keywordPy) && !CompanyInfo.pinyin[it].contains(keywordPy) }
+					.mapTo(src) { CompanyInfo.info!![it] }
 		} else {
 			return CompanyInfo.info
 		}

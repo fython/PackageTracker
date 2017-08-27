@@ -9,7 +9,6 @@ import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
-import android.support.design.widget.AppBarLayout
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
@@ -182,7 +181,7 @@ class AddActivity : AbsActivity() {
 		const val EXTRA_IS_FROM_MAIN_ACTIVITY = "is_from_main"
 		const val EXTRA_HAS_PREINFO = "has_pre_info"
 
-		fun launch(context: Context, company: String, number: String, name: String?) {
+		fun launch(context: Context, company: String?, number: String?, name: String?) {
 			val intent = Intent(context, AddActivity::class.java)
 			intent[EXTRA_HAS_PREINFO] = true
 			intent[EXTRA_PRE_NUMBER] = number
