@@ -146,13 +146,13 @@ public abstract class BaseFragment extends AbsFragment implements OnRefreshListe
 				@Override
 				public void onDataRemoved(int pos, @Nullable String title) {
 					Message msg = new Message();
-					msg.what = MainActivity.MSG_NOTIFY_ITEM_REMOVE;
+					msg.what = MainActivity.Companion.getMSG_NOTIFY_ITEM_REMOVE();
 					msg.arg1 = getFragmentId();
 					Bundle data = new Bundle();
 					data.putString("title", title);
 					msg.setData(data);
 
-					getMainActivity().mHandler.sendMessage(msg);
+					getMainActivity().getMHandler().sendMessage(msg);
 
 					getMainActivity().notifyDataChanged(getFragmentId());
 				}

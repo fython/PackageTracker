@@ -166,7 +166,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter {
 				h2.getContainerView().setOnClickListener(new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
-						DetailsActivity.launch(parentActivity, p);
+						DetailsActivity.Companion.launch(parentActivity, p);
 					}
 				});
 				break;

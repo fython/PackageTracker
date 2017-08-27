@@ -62,7 +62,7 @@ public class StepSuccess extends AbsStepFragment {
 		if (p != null) {
 			updateUIContent(p);
 		} else {
-			getAddActivity().addStep(AddActivity.STEP_NO_FOUND);
+			getAddActivity().addStep(AddActivity.Companion.getSTEP_NO_FOUND());
 		}
 	}
 
@@ -103,13 +103,13 @@ public class StepSuccess extends AbsStepFragment {
 				Package p = message.getData();
 				getAddActivity().setPackage(p);
 				if (p.status.equals("200")) {
-					getAddActivity().addStep(AddActivity.STEP_SUCCESS);
+					getAddActivity().addStep(AddActivity.Companion.getSTEP_SUCCESS());
 				} else {
 					Toast.makeText(getContext(), p.message, Toast.LENGTH_SHORT).show();
-					getAddActivity().addStep(AddActivity.STEP_NO_FOUND);
+					getAddActivity().addStep(AddActivity.Companion.getSTEP_NO_FOUND());
 				}
 			} else {
-				getAddActivity().addStep(AddActivity.STEP_NO_FOUND);
+				getAddActivity().addStep(AddActivity.Companion.getSTEP_NO_FOUND());
 			}
 		}
 

@@ -193,7 +193,7 @@ public class HomePackageListAdapter extends RecyclerView.Adapter<HomePackageList
 			getSwipeableContainerView().setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View view) {
-					DetailsActivity.launch(parentActivity, getItemData(getAdapterPosition()));
+					DetailsActivity.Companion.launch(parentActivity, getItemData(getAdapterPosition()));
 				}
 			});
 		}

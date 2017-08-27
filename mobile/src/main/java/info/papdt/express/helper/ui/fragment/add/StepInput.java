@@ -44,7 +44,7 @@ public class StepInput extends AbsStepFragment {
 			public void onClick(View view) {
 				Intent intent = new Intent(getAddActivity(), ScannerActivity.class);
 				intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-				startActivityForResult(intent, ScannerActivity.REQUEST_CODE_SCAN);
+				startActivityForResult(intent, ScannerActivity.Companion.getREQUEST_CODE_SCAN());
 			}
 		});
 
@@ -84,7 +84,7 @@ public class StepInput extends AbsStepFragment {
 						new FindCompanyAndGetPackageTask().execute(getAddActivity().getPreCompany());
 					}
 				} else {
-					getAddActivity().addStep(AddActivity.STEP_NO_INTERNET_CONNECTION);
+					getAddActivity().addStep(AddActivity.Companion.getSTEP_NO_INTERNET_CONNECTION());
 				}
 			}
 		});
@@ -92,9 +92,9 @@ public class StepInput extends AbsStepFragment {
 
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-		if (requestCode == ScannerActivity.REQUEST_CODE_SCAN) {
-			if (resultCode == ScannerActivity.RESULT_GET_RESULT) {
-				String code = intent.getStringExtra(ScannerActivity.EXTRA_RESULT);
+		if (requestCode == ScannerActivity.Companion.getREQUEST_CODE_SCAN()) {
+			if (resultCode == ScannerActivity.Companion.getRESULT_GET_RESULT()) {
+				String code = intent.getStringExtra(ScannerActivity.Companion.getEXTRA_RESULT());
 				mEditText.setText(code);
 				mButtonBar.onRightButtonClick();
 			}
@@ -127,13 +127,13 @@ public class StepInput extends AbsStepFragment {
 				getAddActivity().setNumber(number);
 				getAddActivity().setPackage(p);
 				if (p.status.equals("200")) {
-					getAddActivity().addStep(AddActivity.STEP_SUCCESS);
+					getAddActivity().addStep(AddActivity.Companion.getSTEP_SUCCESS());
 				} else {
 					Toast.makeText(getContext(), p.message, Toast.LENGTH_SHORT).show();
-					getAddActivity().addStep(AddActivity.STEP_NO_FOUND);
+					getAddActivity().addStep(AddActivity.Companion.getSTEP_NO_FOUND());
 				}
 			} else {
-				getAddActivity().addStep(AddActivity.STEP_NO_FOUND);
+				getAddActivity().addStep(AddActivity.Companion.getSTEP_NO_FOUND());
 			}
 		}
 

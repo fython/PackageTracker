@@ -22,7 +22,7 @@ public class ScannerShortcutCreator extends Activity {
 			intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, icon);
 
 			Intent launchIntent = new Intent(getApplicationContext(), MainActivity.class);
-			launchIntent.setAction(ScannerActivity.ACTION_SCAN_TO_ADD);
+			launchIntent.setAction(ScannerActivity.Companion.getACTION_SCAN_TO_ADD());
 			launchIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
 
 			intent.putExtra(Intent.EXTRA_SHORTCUT_INTENT, launchIntent);
