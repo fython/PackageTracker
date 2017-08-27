@@ -41,7 +41,7 @@ public class ImportExportActivity extends AbsActivity implements View.OnClickLis
 
 		mActionBar.setDisplayHomeAsUpEnabled(true);
 
-		database = PackageDatabase.getInstance(getApplicationContext());
+		database = PackageDatabase.Companion.getInstance(getApplicationContext());
 	}
 
 	@Override

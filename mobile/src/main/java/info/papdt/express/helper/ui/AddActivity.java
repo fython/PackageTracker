@@ -198,7 +198,7 @@ public class AddActivity extends AbsActivity{
 			intent.putExtra(RESULT_EXTRA_PACKAGE_JSON, getPackage().toJsonString());
 			setResult(MainActivity.RESULT_NEW_PACKAGE, intent);
 		} else {
-			PackageDatabase database = PackageDatabase.getInstance(getApplicationContext());
+			PackageDatabase database = PackageDatabase.Companion.getInstance(getApplicationContext());
 			database.add(getPackage());
 			database.save();
 		}

@@ -35,7 +35,7 @@ public class ListFactory implements RemoteViewsService.RemoteViewsFactory {
 		this.mAppWidgetId = intent.getIntExtra(
 				AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID
 		);
-		this.mDatabase = PackageDatabase.getInstance(context.getApplicationContext());
+		this.mDatabase = PackageDatabase.Companion.getInstance(context.getApplicationContext());
 
 		DP_16_TO_PX = ScreenUtils.dpToPx(context, 8);
 		STATUS_STRING_ARRAY = context.getResources().getStringArray(R.array.item_status_description);

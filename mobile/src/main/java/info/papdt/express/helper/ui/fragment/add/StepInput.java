@@ -106,7 +106,7 @@ public class StepInput extends AbsStepFragment {
 	}
 
 	private boolean checkExistance() {
-		return PackageDatabase.getInstance(getContext()).indexOf(mEditText.getText().toString().trim()) != -1;
+		return PackageDatabase.Companion.getInstance(getContext()).indexOf(mEditText.getText().toString().trim()) != -1;
 	}
 
 	private class FindPackageTask extends GetPackageTask {

@@ -61,7 +61,7 @@ public abstract class BaseFragment extends AbsFragment implements OnRefreshListe
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.mDatabase = PackageDatabase.getInstance(sInstance);
+		this.mDatabase = PackageDatabase.Companion.getInstance(sInstance);
 	}
 
 	@Override

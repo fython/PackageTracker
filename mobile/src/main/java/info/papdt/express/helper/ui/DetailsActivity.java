@@ -178,7 +178,7 @@ public class DetailsActivity extends AbsActivity {
 			intent.putExtra("id", data.number);
 			setResult(MainActivity.RESULT_RENAMED, intent);
 
-			PackageDatabase db = PackageDatabase.getInstance(getApplicationContext());
+			PackageDatabase db = PackageDatabase.Companion.getInstance(getApplicationContext());
 			db.set(db.indexOf(data.number), data);
 
 			finish();
@@ -210,7 +210,7 @@ public class DetailsActivity extends AbsActivity {
 								new Thread() {
 									@Override
 									public void run() {
-										PackageDatabase db = PackageDatabase.getInstance(getApplicationContext());
+										PackageDatabase db = PackageDatabase.Companion.getInstance(getApplicationContext());
 										db.set(db.indexOf(data.number), data);
 										db.save();
 									}
@@ -242,7 +242,7 @@ public class DetailsActivity extends AbsActivity {
 					.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
 						@Override
 						public void onClick(DialogInterface dialogInterface, int i) {
-							PackageDatabase.getInstance(getApplicationContext()).remove(data);
+							PackageDatabase.Companion.getInstance(getApplicationContext()).remove(data);
 
 							Intent intent = new Intent();
 							intent.putExtra("title", data.name);
@@ -292,7 +292,7 @@ public class DetailsActivity extends AbsActivity {
 				data = Package.buildFromJson(getIntent().getStringExtra(EXTRA_PACKAGE_JSON));
 			}
 
-			PackageDatabase db = PackageDatabase.getInstance(getApplicationContext());
+			PackageDatabase db = PackageDatabase.Companion.getInstance(getApplicationContext());
 			if (data.unreadNew) {
 				data.unreadNew = false;
 
@@ -345,7 +345,7 @@ public class DetailsActivity extends AbsActivity {
 			BaseMessage<Package> newPack = PackageApi.getPackage(data.companyType, data.number);
 			if (newPack.getCode() == BaseMessage.CODE_OKAY && newPack.getData().data != null) {
 				data.applyNewData(newPack.getData());
-				PackageDatabase db = PackageDatabase.getInstance(getApplicationContext());
+				PackageDatabase db = PackageDatabase.Companion.getInstance(getApplicationContext());
 				db.set(db.indexOf(data.number), data);
 				db.save();
 				return true;

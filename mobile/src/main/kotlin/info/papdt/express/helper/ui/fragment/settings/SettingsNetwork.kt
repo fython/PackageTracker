@@ -34,6 +34,8 @@ class SettingsNetwork : AbsPrefFragment(), Preference.OnPreferenceChangeListener
 
 	private var needRegister = false
 
+	private val database by lazy { PackageDatabase.getInstance(activity) }
+
 	override fun onCreatePreferences(bundle: Bundle?, s: String?) {
 		addPreferencesFromResource(R.xml.settings_network)
 
@@ -50,6 +52,7 @@ class SettingsNetwork : AbsPrefFragment(), Preference.OnPreferenceChangeListener
 
 		/** Hide development items */
 		mPrefInstanceId.isVisible = false
+		mPrefReqPush.isVisible = false
 
 		/** Set callback  */
 		mPrefDontDisturb.onPreferenceChangeListener = this
@@ -77,14 +80,13 @@ class SettingsNetwork : AbsPrefFragment(), Preference.OnPreferenceChangeListener
 		}
 		mPrefSync.setOnPreferenceClickListener {
 			if (needRegister) {
-				PushApi.register().subscribe {
-					PushApi.sync(PackageDatabase.getInstance(activity).data.map { "${it.number}+${it.companyType}" })
-							.subscribe {
-								makeSnackbar(if (it.code >= 0) "Succeed" else "Failed", Snackbar.LENGTH_LONG).show()
-							}
+				PushApi.register().flatMap {
+					PushApi.sync(database.getPackageIdList())
+				}.subscribe {
+					makeSnackbar(if (it.code >= 0) "Succeed" else "Failed", Snackbar.LENGTH_LONG).show()
 				}
 				needRegister = false
-			} else PushApi.sync(PackageDatabase.getInstance(activity).data.map { "${it.number}+${it.companyType}" })
+			} else PushApi.sync(database.getPackageIdList())
 					.subscribe {
 						makeSnackbar(if (it.code >= 0) "Succeed" else "Failed", Snackbar.LENGTH_LONG).show()
 					}
@@ -92,8 +94,8 @@ class SettingsNetwork : AbsPrefFragment(), Preference.OnPreferenceChangeListener
 		}
 		mPrefReqPush.setOnPreferenceClickListener {
 			if (needRegister) {
-				PushApi.register().subscribe {
-					PushApi.requestPush().subscribe { makeSnackbar(it.message, Snackbar.LENGTH_LONG).show() }
+				PushApi.register().flatMap { PushApi.requestPush() }.subscribe {
+					makeSnackbar(it.message, Snackbar.LENGTH_LONG).show()
 				}
 				needRegister = false
 			} else PushApi.requestPush().subscribe { makeSnackbar(it.message, Snackbar.LENGTH_LONG).show() }
@@ -108,7 +110,9 @@ class SettingsNetwork : AbsPrefFragment(), Preference.OnPreferenceChangeListener
 
 	override fun onStop() {
 		super.onStop()
-		if (needRegister) PushApi.register(FirebaseInstanceId.getInstance().token ?: "null").subscribe()
+		if (needRegister) {
+			PushApi.register().flatMap { PushApi.sync(database.getPackageIdList()) }.subscribe()
+		}
 	}
 
 	private fun setEnablePush(b: Boolean) {
@@ -144,16 +148,19 @@ class SettingsNetwork : AbsPrefFragment(), Preference.OnPreferenceChangeListener
 				val b = o as Boolean
 				setEnablePush(b)
 				if (b) needRegister = true
+				database.size()
 				true
 			}
 			mPrefApiHost -> {
 				SettingsInstance.pushApiHost = o as String
 				needRegister = true
+				database.size()
 				true
 			}
 			mPrefApiPort -> {
 				SettingsInstance.pushApiPort = (o as String).toInt()
 				needRegister = true
+				database.size()
 				true
 			}
 			else -> false

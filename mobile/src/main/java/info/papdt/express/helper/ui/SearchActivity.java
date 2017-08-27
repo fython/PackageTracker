@@ -269,7 +269,7 @@ public class SearchActivity extends AbsActivity {
 		@Override
 		protected ArrayList<Package> doInBackground(String... str) {
 			if (mDatabase == null) {
-				mDatabase = PackageDatabase.getInstance(getApplicationContext());
+				mDatabase = PackageDatabase.Companion.getInstance(getApplicationContext());
 			}
 
 			String keyword = str[0].trim().toLowerCase();

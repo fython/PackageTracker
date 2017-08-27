@@ -63,7 +63,7 @@ public class MainActivity extends AbsActivity implements OnMenuTabClickListener 
 
 		setContentView(R.layout.activity_main);
 
-		mDatabase = PackageDatabase.getInstance(getApplicationContext());
+		mDatabase = PackageDatabase.Companion.getInstance(getApplicationContext());
 
 		fragments = new BaseFragment[]{
 				FragmentAll.newInstance(mDatabase, FragmentAll.TYPE_ALL),
