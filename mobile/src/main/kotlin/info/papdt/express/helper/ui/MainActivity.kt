@@ -1,7 +1,8 @@
 package info.papdt.express.helper.ui
 
 import android.app.Activity
-import android.app.FragmentTransaction
+import android.app.Fragment
+import android.app.FragmentManager
 import android.content.Intent
 import android.graphics.Color
 import android.os.AsyncTask
@@ -9,16 +10,15 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
-import android.support.annotation.IdRes
 import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
+import android.support.design.widget.TabLayout
+import android.support.v4.view.ViewPager
+import android.support.v13.app.FragmentPagerAdapter
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-
-import com.roughike.bottombar.BottomBar
-import com.roughike.bottombar.OnMenuTabClickListener
 
 import info.papdt.express.helper.R
 import info.papdt.express.helper.dao.PackageDatabase
@@ -29,14 +29,17 @@ import info.papdt.express.helper.support.Settings
 import info.papdt.express.helper.ui.common.AbsActivity
 import info.papdt.express.helper.ui.fragment.home.FragmentAll
 import info.papdt.express.helper.ui.launcher.AppWidgetProvider
+import moe.feng.kotlinyan.common.lazyFindNonNullView
 
-class MainActivity : AbsActivity(), OnMenuTabClickListener {
+class MainActivity : AbsActivity() {
 
-	private lateinit var mBottomBar: BottomBar
+	private val tabLayout: TabLayout by lazyFindNonNullView(R.id.tab_layout)
+	private val viewPager: ViewPager by lazyFindNonNullView(R.id.view_pager)
+
 	private val fragments by lazy { arrayOf(
-			FragmentAll.newInstance(mDatabase, FragmentAll.TYPE_ALL),
+			FragmentAll.newInstance(mDatabase, FragmentAll.TYPE_DELIVERING),
 			FragmentAll.newInstance(mDatabase, FragmentAll.TYPE_DELIVERED),
-			FragmentAll.newInstance(mDatabase, FragmentAll.TYPE_DELIVERING)
+			FragmentAll.newInstance(mDatabase, FragmentAll.TYPE_ALL)
 	) }
 
 	private val TAG = "express.MainActivity"
@@ -60,11 +63,10 @@ class MainActivity : AbsActivity(), OnMenuTabClickListener {
 
 		setContentView(R.layout.activity_main)
 
-		mBottomBar = BottomBar.attach(this, savedInstanceState)
-		mBottomBar.setItems(R.menu.bottombar_menu_home)
-		mBottomBar.setOnMenuTabClickListener(this)
+		tabLayout.setupWithViewPager(viewPager)
+		viewPager.adapter = TabsAdapter(fragmentManager)
 
-		if (ScannerActivity.ACTION_SCAN_TO_ADD.equals(intent.action)) {
+		if (ScannerActivity.ACTION_SCAN_TO_ADD == intent.action) {
 			val intent = Intent(this@MainActivity, AddActivity::class.java)
 			intent.action = ScannerActivity.ACTION_SCAN_TO_ADD
 			intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
@@ -84,35 +86,11 @@ class MainActivity : AbsActivity(), OnMenuTabClickListener {
 		CheatSheet.setup(fab)
 	}
 
-	override fun onSaveInstanceState(outState: Bundle) {
-		super.onSaveInstanceState(outState)
-		mBottomBar!!.onSaveInstanceState(outState)
-	}
-
 	override fun onStop() {
 		super.onStop()
 		mDatabase.save()
 	}
 
-	override fun onMenuTabSelected(@IdRes menuItemId: Int) {
-		fragmentManager.executePendingTransactions()
-		val ft = fragmentManager.beginTransaction()
-		ft.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-		when (menuItemId) {
-			R.id.menu_item_all -> ft.replace(R.id.container, fragments!![0])
-			R.id.menu_item_delivered -> ft.replace(R.id.container, fragments!![1])
-			R.id.menu_item_on_the_way -> ft.replace(R.id.container, fragments!![2])
-		}
-		ft.commit()
-	}
-
-	override fun onMenuTabReSelected(@IdRes menuItemId: Int) {
-		when (menuItemId) {
-			R.id.menu_item_all -> fragments!![0].scrollToTop()
-			R.id.menu_item_delivered -> fragments!![1].scrollToTop()
-			R.id.menu_item_on_the_way -> fragments!![2].scrollToTop()
-		}
-	}
 
 	override fun onCreateOptionsMenu(menu: Menu): Boolean {
 		menuInflater.inflate(R.menu.menu_home, menu)
@@ -163,7 +141,7 @@ class MainActivity : AbsActivity(), OnMenuTabClickListener {
 				RESULT_RENAMED -> notifyDataChanged(-1)
 				RESULT_DELETED -> {
 					notifyDataChanged(-1)
-					val fragId = mBottomBar!!.getCurrentTabPosition()
+					val fragId = viewPager.currentItem
 					Snackbar.make(
 							`$`(R.id.coordinator_layout)!!,
 							String.format(getString(R.string.toast_item_removed), data!!["title"]),
@@ -226,7 +204,7 @@ class MainActivity : AbsActivity(), OnMenuTabClickListener {
 						String.format(getString(R.string.toast_item_removed), msg.data.getString("title")),
 						Snackbar.LENGTH_LONG
 				)
-						.setAction(R.string.toast_item_removed_action) { fragments[mBottomBar!!.getCurrentTabPosition()].onUndoActionClicked() }
+						.setAction(R.string.toast_item_removed_action) { fragments[viewPager.currentItem].onUndoActionClicked() }
 						.show()
 			}
 		}
@@ -237,6 +215,19 @@ class MainActivity : AbsActivity(), OnMenuTabClickListener {
 		msg.what = MSG_NOTIFY_DATA_CHANGED
 		msg.arg1 = fromFragId
 		mHandler.sendMessage(msg)
+	}
+
+	private inner class TabsAdapter(fm: FragmentManager): FragmentPagerAdapter(fm) {
+
+		override fun getItem(position: Int): Fragment = fragments[position]
+		override fun getCount(): Int = fragments.size
+		override fun getPageTitle(position: Int): CharSequence? = when (position) {
+			0 -> resources.string[R.string.navigation_item_on_the_way]
+			1 -> resources.string[R.string.navigation_item_delivered]
+			2 -> resources.string[R.string.navigation_item_all]
+			else -> null
+		}
+
 	}
 
 	private inner class ReadAllTask : AsyncTask<Void, Void, Int>() {

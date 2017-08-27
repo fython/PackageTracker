@@ -1,2 +1,0 @@
-configurations.maybeCreate("default")
-artifacts.add("default", file('bottom-bar-1.4.0.1.aar'))

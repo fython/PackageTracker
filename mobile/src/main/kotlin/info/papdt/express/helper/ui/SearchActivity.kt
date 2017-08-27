@@ -4,7 +4,6 @@ import android.animation.Animator
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.graphics.Color
-import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -32,7 +31,6 @@ import info.papdt.express.helper.support.Settings
 import info.papdt.express.helper.ui.adapter.SearchResultAdapter
 import info.papdt.express.helper.ui.common.AbsActivity
 import io.reactivex.Observable
-import io.reactivex.Scheduler
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import moe.feng.kotlinyan.common.AndroidExtensions
