@@ -20,6 +20,7 @@ import java.util.ArrayList
 
 import info.papdt.express.helper.R
 import info.papdt.express.helper.api.PackageApi
+import info.papdt.express.helper.api.RxPackageApi
 import info.papdt.express.helper.support.Settings
 import info.papdt.express.helper.ui.adapter.CompanyListAdapter
 import info.papdt.express.helper.ui.common.AbsActivity
@@ -40,7 +41,20 @@ class CompanyChooserActivity : AbsActivity() {
 			addTextChangedListener(object : TextWatcher {
 				override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
 				override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
-					CompanyFilterTask().execute(charSequence.toString())
+					RxPackageApi.filterCompany(
+							charSequence.toString(),
+							parentActivity = this@CompanyChooserActivity
+					).subscribe { data ->
+						if (data.size == 0) {
+							mEmptyView.makeVisible()
+							mList.makeGone()
+						} else {
+							mEmptyView.makeGone()
+							mList.makeVisible()
+							mAdapter.setList(data)
+							mAdapter.notifyDataSetChanged()
+						}
+					}
 				}
 				override fun afterTextChanged(editable: Editable) {}
 			})
@@ -99,22 +113,6 @@ class CompanyChooserActivity : AbsActivity() {
 			}
 		})
 		mList.adapter = mAdapter
-	}
-
-	internal inner class CompanyFilterTask : info.papdt.express.helper.asynctask.CompanyFilterTask() {
-
-		public override fun onPostExecute(data: ArrayList<PackageApi.CompanyInfo.Company>) {
-			if (data.size == 0) {
-				mEmptyView.makeVisible()
-				mList.makeGone()
-			} else {
-				mEmptyView.makeGone()
-				mList.makeVisible()
-				mAdapter.setList(data)
-				mAdapter.notifyDataSetChanged()
-			}
-		}
-
 	}
 
 	companion object {

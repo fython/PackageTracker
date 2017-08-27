@@ -19,17 +19,22 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
 import android.view.inputmethod.EditorInfo
+import cn.nekocode.rxlifecycle.RxLifecycle
 
 import java.util.ArrayList
 
 import info.papdt.express.helper.R
 import info.papdt.express.helper.api.PackageApi
-import info.papdt.express.helper.asynctask.CompanyFilterTask
+import info.papdt.express.helper.api.RxPackageApi
 import info.papdt.express.helper.dao.PackageDatabase
 import info.papdt.express.helper.model.Package
 import info.papdt.express.helper.support.Settings
 import info.papdt.express.helper.ui.adapter.SearchResultAdapter
 import info.papdt.express.helper.ui.common.AbsActivity
+import io.reactivex.Observable
+import io.reactivex.Scheduler
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import moe.feng.kotlinyan.common.AndroidExtensions
 import moe.feng.kotlinyan.common.lazyFindNonNullView
 
@@ -60,8 +65,31 @@ class SearchActivity : AbsActivity() {
 					mAdapter.setItems(buildItems())
 					mAdapter.notifyDataSetChanged()
 					if (charSequence.isNotEmpty()) {
-						CompanySearchTask().execute(charSequence.toString().trim { it <= ' ' })
-						PackageSearchTask().execute(charSequence.toString().trim { it <= ' ' })
+						RxPackageApi.filterCompany(
+								charSequence.toString().trim(),
+								parentActivity = this@SearchActivity
+						).subscribe { companies ->
+							this@SearchActivity.companies = companies
+							mAdapter.setCompanies(companies)
+							mAdapter.setItems(buildItems())
+							mAdapter.notifyDataSetChanged()
+						}
+						Observable.just(charSequence.toString().trim())
+								.compose(RxLifecycle.bind(this@SearchActivity).withObservable())
+								.map {
+									val keyword = it.trim().toLowerCase()
+									(0 until mDatabase.size())
+											.filter { mDatabase[it].name.toLowerCase().contains(keyword) || mDatabase[it].number.toLowerCase().contains(keyword) }
+											.mapTo(ArrayList()) { mDatabase[it] }
+								}
+								.subscribeOn(Schedulers.computation())
+								.observeOn(AndroidSchedulers.mainThread())
+								.subscribe { packages ->
+									this@SearchActivity.packages = packages
+									mAdapter.setPackages(packages)
+									mAdapter.setItems(buildItems())
+									mAdapter.notifyDataSetChanged()
+								}
 					}
 				}
 
@@ -215,35 +243,6 @@ class SearchActivity : AbsActivity() {
 			items.add(SearchResultAdapter.ItemType(SearchResultAdapter.ItemType.TYPE_EMPTY))
 		}
 		return items
-	}
-
-	private inner class CompanySearchTask : CompanyFilterTask() {
-
-		override fun onPostExecute(companies: ArrayList<PackageApi.CompanyInfo.Company>) {
-			this@SearchActivity.companies = companies
-			mAdapter.setCompanies(companies)
-			mAdapter.setItems(buildItems())
-			mAdapter.notifyDataSetChanged()
-		}
-
-	}
-
-	private inner class PackageSearchTask : AsyncTask<String, Void, ArrayList<Package>>() {
-
-		override fun doInBackground(vararg str: String): ArrayList<Package> {
-			val keyword = str[0].trim { it <= ' ' }.toLowerCase()
-			return (0 until mDatabase.size())
-					.filter { mDatabase[it].name.toLowerCase().contains(keyword) || mDatabase[it].number.toLowerCase().contains(keyword) }
-					.mapTo(ArrayList()) { mDatabase[it] }
-		}
-
-		override fun onPostExecute(packages: ArrayList<Package>) {
-			this@SearchActivity.packages = packages
-			mAdapter.setPackages(packages)
-			mAdapter.setItems(buildItems())
-			mAdapter.notifyDataSetChanged()
-		}
-
 	}
 
 	companion object: AndroidExtensions {

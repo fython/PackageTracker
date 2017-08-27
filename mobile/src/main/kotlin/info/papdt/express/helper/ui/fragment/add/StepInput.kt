@@ -11,18 +11,16 @@ import android.widget.Toast
 import com.rengwuxian.materialedittext.MaterialEditText
 
 import info.papdt.express.helper.R
-import info.papdt.express.helper.api.PackageApi
-import info.papdt.express.helper.asynctask.CompanyFilterTask
-import info.papdt.express.helper.asynctask.GetPackageTask
+import info.papdt.express.helper.api.RxPackageApi
 import info.papdt.express.helper.dao.PackageDatabase
 import info.papdt.express.helper.model.BaseMessage
 import info.papdt.express.helper.model.Package
 import info.papdt.express.helper.receiver.ConnectivityReceiver
 import info.papdt.express.helper.ui.AddActivity
 import info.papdt.express.helper.ui.ScannerActivity
+import io.reactivex.Observable
+import io.reactivex.disposables.Disposable
 import moe.feng.kotlinyan.common.findNonNullView
-
-import java.util.ArrayList
 
 class StepInput : AbsStepFragment() {
 
@@ -68,9 +66,15 @@ class StepInput : AbsStepFragment() {
 			number = mEditText.text.toString()
 			if (ConnectivityReceiver.readNetworkState(activity)) {
 				if (TextUtils.isEmpty(addActivity.preCompany)) {
-					FindPackageTask().execute(number)
+					RxPackageApi.getPackage(number = number!!, parentFragment = this).start()
 				} else {
-					FindCompanyAndGetPackageTask().execute(addActivity.preCompany)
+					RxPackageApi.filterCompany(addActivity.preCompany!!).subscribe {
+						if (it.size == 1) {
+							RxPackageApi.getPackage(number = number!!, com = it[0].code, parentFragment = this)
+						} else {
+							RxPackageApi.getPackage(number = number!!, parentFragment = this)
+						}.start()
+					}
 				}
 			} else {
 				addActivity.addStep(AddActivity.STEP_NO_INTERNET_CONNECTION)
@@ -95,15 +99,11 @@ class StepInput : AbsStepFragment() {
 		return PackageDatabase.getInstance(context!!).indexOf(mEditText.text.toString().trim { it <= ' ' }) != -1
 	}
 
-	private inner class FindPackageTask : GetPackageTask() {
-
-		public override fun onPreExecute() {
+	private fun Observable<BaseMessage<Package>>.start(): Disposable {
+		return doOnSubscribe {
 			addActivity.showProgressBar()
 			mEditText.isEnabled = false
-		}
-
-		public override fun onPostExecute(message: BaseMessage<Package>) {
-			if (activity == null) return
+		}.subscribe { message ->
 			addActivity.hideProgressBar()
 			mEditText.isEnabled = true
 			if (message.code == BaseMessage.CODE_OKAY) {
@@ -120,19 +120,6 @@ class StepInput : AbsStepFragment() {
 				addActivity.addStep(AddActivity.STEP_NO_FOUND)
 			}
 		}
-
-	}
-
-	private inner class FindCompanyAndGetPackageTask : CompanyFilterTask() {
-
-		public override fun onPostExecute(lists: ArrayList<PackageApi.CompanyInfo.Company>) {
-			if (lists.size == 1) {
-				FindPackageTask().execute(number, lists[0].code)
-			} else {
-				FindPackageTask().execute(number)
-			}
-		}
-
 	}
 
 }

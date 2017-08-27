@@ -209,12 +209,7 @@ object PackageApi {
 		class Company(var name: String, var code: String, var phone: String, var website: String)
 
 		fun findCompanyByCode(code: String): Int {
-			for (i in info!!.indices) {
-				if (info!![i].code == code) {
-					return i
-				}
-			}
-			return -1
+			return info!!.indices.firstOrNull { info!![it].code == code } ?: -1
 		}
 
 		fun getNameByCode(code: String): String? {

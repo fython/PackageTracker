@@ -8,11 +8,13 @@ import android.widget.Button
 import android.widget.Toast
 
 import info.papdt.express.helper.R
-import info.papdt.express.helper.asynctask.GetPackageTask
+import info.papdt.express.helper.api.RxPackageApi
 import info.papdt.express.helper.model.BaseMessage
 import info.papdt.express.helper.model.Package
 import info.papdt.express.helper.ui.AddActivity
 import info.papdt.express.helper.ui.CompanyChooserActivity
+import io.reactivex.Observable
+import io.reactivex.disposables.Disposable
 import moe.feng.kotlinyan.common.findNonNullView
 
 class StepNoFound : AbsStepFragment() {
@@ -51,35 +53,27 @@ class StepNoFound : AbsStepFragment() {
 		if (requestCode == AbsStepFragment.Companion.REQUEST_CODE_CHOOSE_COMPANY) {
 			if (resultCode == Activity.RESULT_OK) {
 				val companyCode = intent?.getStringExtra(AbsStepFragment.Companion.RESULT_EXTRA_COMPANY_CODE)
-				FindPackageTask().execute(addActivity.number, companyCode)
+				RxPackageApi.getPackage(number = addActivity.number!!, com = companyCode, parentFragment = this)
+						.doOnSubscribe {
+							addActivity.showProgressBar()
+						}
+						.subscribe { message ->
+							addActivity.hideProgressBar()
+							if (message.code == BaseMessage.CODE_OKAY) {
+								val p = message.data
+								addActivity.`package` = p
+								updateForceButton()
+								if (p.status == "200") {
+									addActivity.addStep(AddActivity.STEP_SUCCESS)
+								} else {
+									Toast.makeText(context, p.message, Toast.LENGTH_SHORT).show()
+									addActivity.addStep(AddActivity.STEP_NO_FOUND)
+								}
+							} else {
+								addActivity.addStep(AddActivity.STEP_NO_FOUND)
+							}
+						}
 			}
 		}
 	}
-
-	private inner class FindPackageTask : GetPackageTask() {
-
-		public override fun onPreExecute() {
-			addActivity.showProgressBar()
-		}
-
-		public override fun onPostExecute(message: BaseMessage<Package>) {
-			if (activity == null) return
-			addActivity.hideProgressBar()
-			if (message.code == BaseMessage.CODE_OKAY) {
-				val p = message.data
-				addActivity.`package` = p
-				updateForceButton()
-				if (p.status == "200") {
-					addActivity.addStep(AddActivity.STEP_SUCCESS)
-				} else {
-					Toast.makeText(context, p.message, Toast.LENGTH_SHORT).show()
-					addActivity.addStep(AddActivity.STEP_NO_FOUND)
-				}
-			} else {
-				addActivity.addStep(AddActivity.STEP_NO_FOUND)
-			}
-		}
-
-	}
-
 }
