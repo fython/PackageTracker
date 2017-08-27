@@ -22,6 +22,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
+import cn.nekocode.rxlifecycle.RxLifecycle
 
 import info.papdt.express.helper.R
 import info.papdt.express.helper.api.PackageApi
@@ -37,6 +38,9 @@ import info.papdt.express.helper.ui.items.DetailsStatusItemBinder
 import info.papdt.express.helper.ui.items.DetailsTwoLineItem
 import info.papdt.express.helper.ui.items.DetailsTwoLineItemBinder
 import info.papdt.express.helper.ui.items.SubheaderItemBinder
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import me.drakeet.multitype.Items
 import me.drakeet.multitype.MultiTypeAdapter
 import moe.feng.kotlinyan.common.AndroidExtensions
@@ -108,6 +112,13 @@ class DetailsActivity : AbsActivity() {
 
 	private var data: Package? = null
 	private var state: Int = 0
+
+	private val progressDialog: ProgressDialog by lazy {
+		ProgressDialog(this@DetailsActivity).apply {
+			setMessage("")
+			setCancelable(false)
+		}
+	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -217,7 +228,32 @@ class DetailsActivity : AbsActivity() {
 				return true
 			}
 			R.id.action_refresh -> {
-				RefreshTask().execute()
+				Observable.just("")
+						.compose(RxLifecycle.bind(this).withObservable())
+						.map {
+							val newPack = PackageApi.getPackage(data!!.companyType, data!!.number)
+							if (newPack.code != BaseMessage.CODE_OKAY || newPack.data.data == null) {
+								false
+							} else {
+								data!!.applyNewData(newPack.data)
+								val db = PackageDatabase.getInstance(applicationContext)
+								db[db.indexOf(data!!.number)] = data!!
+								db.save()
+								true
+							}
+						}
+						.subscribeOn(Schedulers.io())
+						.observeOn(AndroidSchedulers.mainThread())
+						.doOnSubscribe { progressDialog.show() }
+						.subscribe { isSucceed ->
+							progressDialog.dismiss()
+							if (isSucceed) {
+								val intent = Intent()
+								intent["id"] = data!!.number
+								setResult(MainActivity.RESULT_RENAMED, intent)
+								setUpData()
+							}
+						}
 				return true
 			}
 			else -> return super.onOptionsItemSelected(item)
@@ -283,45 +319,6 @@ class DetailsActivity : AbsActivity() {
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 				val taskDesc = ActivityManager.TaskDescription(data!!.name, null, color)
 				setTaskDescription(taskDesc)
-			}
-		}
-
-	}
-
-	private inner class RefreshTask : AsyncTask<Void, Void, Boolean>() {
-
-		internal lateinit var progressDialog: ProgressDialog
-
-		override fun onPreExecute() {
-			progressDialog = ProgressDialog(this@DetailsActivity)
-			progressDialog.setMessage("")
-			progressDialog.setCancelable(false)
-			progressDialog.show()
-		}
-
-		override fun doInBackground(vararg params: Void): Boolean? {
-			val newPack = PackageApi.getPackage(data!!.companyType, data!!.number)
-			return if (newPack.code != BaseMessage.CODE_OKAY || newPack.data.data == null) {
-				false
-			} else {
-				data!!.applyNewData(newPack.data)
-				val db = PackageDatabase.getInstance(applicationContext)
-				db[db.indexOf(data!!.number)] = data!!
-				db.save()
-				true
-			}
-		}
-
-		override fun onPostExecute(isSucceed: Boolean) {
-			if (!isFinishing) {
-				progressDialog.dismiss()
-				if (isSucceed) {
-					val intent = Intent()
-					intent["id"] = data!!.number
-					setResult(MainActivity.RESULT_RENAMED, intent)
-
-					setUpData()
-				}
 			}
 		}
 

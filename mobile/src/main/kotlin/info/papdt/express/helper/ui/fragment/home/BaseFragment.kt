@@ -2,7 +2,6 @@ package info.papdt.express.helper.ui.fragment.home
 
 import android.app.Activity
 import android.content.Context
-import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
@@ -24,6 +23,9 @@ import info.papdt.express.helper.ui.adapter.HomePackageListAdapter
 import info.papdt.express.helper.ui.common.AbsFragment
 import info.papdt.express.helper.view.AnimatedRecyclerView
 import info.papdt.express.helper.view.DeliveryHeader
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import moe.feng.kotlinyan.common.findNonNullView
 
 abstract class BaseFragment : AbsFragment, OnRefreshListener {
@@ -154,7 +156,14 @@ abstract class BaseFragment : AbsFragment, OnRefreshListener {
 					if (!mRefreshLayout.isRefreshing) {
 						mRefreshLayout.autoRefresh()
 					}
-					RefreshTask().execute()
+					Observable.just(false).map(database!!::pullDataFromNetwork)
+							.subscribeOn(Schedulers.io())
+							.observeOn(AndroidSchedulers.mainThread())
+							.subscribe {
+								hasPlayedAnimation = false
+								mRefreshLayout.finishRefresh()
+								sendEmptyMessage(FLAG_UPDATE_ADAPTER_ONLY)
+							}
 				}
 				FLAG_UPDATE_ADAPTER_ONLY -> if (mAdapter != null) {
 					mAdapter!!.notifyDataSetChanged()
@@ -163,21 +172,6 @@ abstract class BaseFragment : AbsFragment, OnRefreshListener {
 				}
 			}
 		}
-	}
-
-	inner class RefreshTask : AsyncTask<Void, Void, Void>() {
-
-		override fun doInBackground(vararg voids: Void): Void? {
-			database!!.pullDataFromNetwork(false)
-			return null
-		}
-
-		override fun onPostExecute(msg: Void) {
-			hasPlayedAnimation = false
-			mRefreshLayout.finishRefresh()
-			mHandler.sendEmptyMessage(FLAG_UPDATE_ADAPTER_ONLY)
-		}
-
 	}
 
 	companion object {
