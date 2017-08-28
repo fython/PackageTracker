@@ -99,7 +99,7 @@ class StepInput : AbsStepFragment() {
 		return PackageDatabase.getInstance(context!!).indexOf(mEditText.text.toString().trim { it <= ' ' }) != -1
 	}
 
-	private fun Observable<BaseMessage<out Package?>>.start(): Disposable {
+	private fun Observable<BaseMessage<Package?>>.start(): Disposable {
 		return doOnSubscribe {
 			addActivity.showProgressBar()
 			mEditText.isEnabled = false

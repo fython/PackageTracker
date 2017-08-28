@@ -232,7 +232,7 @@ class DetailsActivity : AbsActivity() {
 						.compose(RxLifecycle.bind(this).withObservable())
 						.map {
 							val newPack = PackageApi.getPackage(data!!.companyType, data!!.number)
-							if (newPack.code != BaseMessage.CODE_OKAY || newPack.data.data == null) {
+							if (newPack.code != BaseMessage.CODE_OKAY || newPack.data?.data == null) {
 								false
 							} else {
 								data!!.applyNewData(newPack.data)

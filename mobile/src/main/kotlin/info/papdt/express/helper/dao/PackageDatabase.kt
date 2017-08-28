@@ -170,7 +170,7 @@ class PackageDatabase private constructor(private val mContext: Context) {
 				continue
 			}
 			val newPack = PackageApi.getPackage(pack.companyType, pack.number)
-			if (newPack.code == BaseMessage.CODE_OKAY && newPack.data.data != null) {
+			if (newPack.code == BaseMessage.CODE_OKAY && newPack.data?.data != null) {
 				pack.applyNewData(newPack.data)
 				this[i] = pack
 			} else {

@@ -73,7 +73,7 @@ class AddDialogFragment: DialogFragment(), AndroidExtensions, AppCompatExtension
 		}
 		detectTryAgainButton.setOnClickListener { doStep() }
 		view.findViewById<Button>(R.id.choose_company_next_btn).setOnClickListener {
-			currentStep++
+			currentStep = 2
 			step1.nextStep()
 			doStep()
 		}
@@ -98,7 +98,7 @@ class AddDialogFragment: DialogFragment(), AndroidExtensions, AppCompatExtension
 							}
 							.subscribe {
 								step0.setErrorText(0)
-								currentStep++
+								currentStep = 1
 								step0.nextStep()
 								it?.let(this::setCompany)
 							}
@@ -109,7 +109,6 @@ class AddDialogFragment: DialogFragment(), AndroidExtensions, AppCompatExtension
 					loadingLayout.makeGone()
 				}
 			}
-			1 -> {}
 			2 -> {
 				if (ConnectivityReceiver.readNetworkState(activity)) {
 					RxPackageApi.getPackage(number, companyCode, activity)
@@ -117,9 +116,10 @@ class AddDialogFragment: DialogFragment(), AndroidExtensions, AppCompatExtension
 								addLoadingView.makeVisible()
 								addErrorView.makeGone()
 								addFinishLayout.makeGone()
+								step2.setErrorText(0)
 							}
 							.subscribe {
-								if (it.code == BaseMessage.CODE_OKAY) {
+								if (it.code == BaseMessage.CODE_OKAY && it.data?.state != Package.STATUS_FAILED) {
 									addErrorView.makeGone()
 									addLoadingView.makeGone()
 									addFinishLayout.makeVisible()
@@ -133,6 +133,7 @@ class AddDialogFragment: DialogFragment(), AndroidExtensions, AppCompatExtension
 									addFinishLayout.makeGone()
 									addErrorMsg.setText(R.string.message_no_found)
 									addErrorDesc.setText(R.string.description_no_found)
+									step2.setErrorText(R.string.message_no_found)
 								}
 							}
 				} else {
@@ -141,6 +142,7 @@ class AddDialogFragment: DialogFragment(), AndroidExtensions, AppCompatExtension
 					addFinishLayout.makeGone()
 					addErrorMsg.setText(R.string.message_no_internet_connection)
 					addErrorDesc.setText(R.string.description_no_internet_connection)
+					step2.setErrorText(R.string.message_no_internet_connection)
 				}
 			}
 		}

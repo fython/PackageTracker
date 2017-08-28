@@ -114,7 +114,7 @@ object PackageApi {
 	 * @param number The number of package which you want to query
 	 * @return Package and status code
 	 */
-	@JvmStatic fun getPackageByNumber(number: String): BaseMessage<Package> {
+	@JvmStatic fun getPackageByNumber(number: String): BaseMessage<Package?> {
 		val comcode = detectCompanyByNumber(number)
 		return getPackage(comcode, number)
 	}

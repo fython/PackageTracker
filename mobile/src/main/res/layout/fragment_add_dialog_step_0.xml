@@ -26,4 +26,19 @@
 
 	</LinearLayout>
 
+	<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/error_text"
+			android:text="@string/message_no_internet_connection"/>
+
+	<Button
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:id="@+id/stepper_try_again"
+			android:layout_marginTop="8dp"
+			android:text="@string/stepper_try_again_button"
+			android:textColor="@android:color/white"
+			android:backgroundTint="@color/colorAccent"/>
+
 </LinearLayout>

@@ -14,7 +14,7 @@ object RxPackageApi {
 
 	fun getPackage(number: String, com: String? = null,
 	               parentActivity: Activity? = null)
-			: Observable<BaseMessage<out Package?>> {
+			: Observable<BaseMessage<Package?>> {
 		var observable = Observable.just("")
 		parentActivity?.let { observable = observable.compose(RxLifecycle.bind(parentActivity).withObservable()) }
 		return observable
