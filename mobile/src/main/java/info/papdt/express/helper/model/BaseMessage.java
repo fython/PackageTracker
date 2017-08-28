@@ -3,7 +3,7 @@ package info.papdt.express.helper.model;
 public class BaseMessage<T> {
 
 	private int code;
-	private T object;
+	private T object = null;
 
 	public final static int CODE_OKAY = 200, CODE_ERROR = -1;
 

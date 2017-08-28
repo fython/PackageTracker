@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+		xmlns:android="http://schemas.android.com/apk/res/android"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:layout_marginTop="16dp"
+		android:orientation="vertical">
+
+	<LinearLayout
+			android:id="@+id/loading_layout_add"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center_vertical"
+			android:orientation="horizontal">
+
+		<ProgressBar
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				style="?android:attr/progressBarStyle"/>
+
+		<TextView
+				android:layout_marginStart="16dp"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/stepper_detect_company_text"/>
+
+	</LinearLayout>
+
+	<LinearLayout
+			android:id="@+id/error_layout_add"
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:gravity="center_vertical"
+			android:orientation="vertical">
+
+		<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/add_error_message_text"
+				android:text="@string/message_no_found"/>
+
+		<TextView
+				android:layout_marginTop="8dp"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/add_error_desc_text"
+				android:text="@string/description_no_found"/>
+
+		<LinearLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="8dp"
+				android:orientation="horizontal">
+
+			<Button
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:id="@+id/try_again_btn_step_2"
+					android:text="@string/stepper_try_again_button"
+					android:textColor="@android:color/white"
+					android:backgroundTint="@color/colorAccent"/>
+
+			<Button
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:id="@+id/back_button_step_2"
+					android:text="@string/stepper_back_button"
+					style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
+
+		</LinearLayout>
+
+	</LinearLayout>
+
+	<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:id="@+id/set_name_layout"
+			android:orientation="vertical">
+
+		<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/add_message_text"
+				android:text="@string/message_successful_format"/>
+
+		<android.support.design.widget.TextInputLayout
+				android:layout_width="match_parent"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="8dp">
+
+			<android.support.design.widget.TextInputEditText
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:id="@+id/name_edit"
+					android:singleLine="true"
+					android:hint="@string/text_field_name"/>
+
+		</android.support.design.widget.TextInputLayout>
+
+		<LinearLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:layout_marginTop="8dp"
+				android:orientation="horizontal">
+
+			<Button
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:id="@+id/stepper_add_button"
+					android:layout_marginTop="8dp"
+					android:text="@string/stepper_add_button"
+					android:textColor="@android:color/white"
+					android:backgroundTint="@color/colorAccent"/>
+
+			<Button
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:id="@+id/back_button_step_2_2"
+					android:text="@string/stepper_back_button"
+					style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
+
+		</LinearLayout>
+
+	</LinearLayout>
+
+</LinearLayout>

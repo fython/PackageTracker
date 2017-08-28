@@ -63,10 +63,10 @@ class StepNoFound : AbsStepFragment() {
 								val p = message.data
 								addActivity.`package` = p
 								updateForceButton()
-								if (p.status == "200") {
+								if (p?.status == "200") {
 									addActivity.addStep(AddActivity.STEP_SUCCESS)
 								} else {
-									Toast.makeText(context, p.message, Toast.LENGTH_SHORT).show()
+									Toast.makeText(context, p?.message, Toast.LENGTH_SHORT).show()
 									addActivity.addStep(AddActivity.STEP_NO_FOUND)
 								}
 							} else {

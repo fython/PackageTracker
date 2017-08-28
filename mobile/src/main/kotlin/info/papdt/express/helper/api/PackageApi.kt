@@ -124,7 +124,7 @@ object PackageApi {
 	 * @param number The number of package
 	 * @return Package and status code
 	 */
-	@JvmStatic fun getPackage(comcode: String?, number: String): BaseMessage<Package> {
+	@JvmStatic fun getPackage(comcode: String?, number: String): BaseMessage<Package?> {
 		val message = HttpUtils.getString(getQueryUrl(comcode, number), false)
 		return if (message.code == BaseMessage.CODE_OKAY) {
 			try {
@@ -140,7 +140,7 @@ object PackageApi {
 				}
 			} catch (e: Exception) {
 				e.printStackTrace()
-				BaseMessage<Package>(BaseMessage.CODE_ERROR)
+				BaseMessage<Package?>(BaseMessage.CODE_ERROR)
 			}
 		} else {
 			BaseMessage(BaseMessage.CODE_ERROR)
@@ -161,7 +161,7 @@ object PackageApi {
 		return src
 	}
 
-	private class DetectResult {
+	class DetectResult {
 		internal var comCode: String? = null
 		internal var num: String? = null
 		internal var auto: ArrayList<AutoInfo>? = null
@@ -208,8 +208,8 @@ object PackageApi {
 
 		class Company(var name: String, var code: String, var phone: String, var website: String)
 
-		fun findCompanyByCode(code: String): Int {
-			return info!!.indices.firstOrNull { info!![it].code == code } ?: -1
+		fun findCompanyByCode(code: String?): Int {
+			return if (code == null) -1 else (info!!.indices.firstOrNull { info!![it].code == code } ?: -1)
 		}
 
 		fun getNameByCode(code: String): String? {

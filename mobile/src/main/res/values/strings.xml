@@ -45,12 +45,25 @@
 	<string name="message_no_internet_connection">No Internet connection.</string>
 	<string name="description_no_internet_connection">Please turn on Wi-Fi or mobile network and retry.</string>
 	<string name="message_no_found">The package seems not exist.</string>
-	<string name="description_no_found">Check your package number or choose the correct company manually.</string>
+	<string name="description_no_found">Check your package number or choose the correct company.</string>
 	<string name="text_field_name">Package name (Optional)</string>
 	<string name="message_successful_format">The package \"%1$s(%2$s)\" is ready to be added. Now you can give it a name as recognition.</string>
 	<string name="description_successful_format">Latest status: %1$s (%2$s)</string>
 	<string name="package_name_unnamed">Package %s</string>
 	<string name="toast_unknown_error">Something wrong happened! Back to input and try again.</string>
+
+	<string name="stepper_detect_company_title">Detect delivery company</string>
+	<string name="stepper_detect_company_summary">Package number: %s</string>
+	<string name="stepper_detect_company_text">Please wait…</string>
+	<string name="stepper_choose_company_title">Choose correct company</string>
+	<string name="stepper_try_again_button">Try again</string>
+	<string name="stepper_next_button">Next</string>
+	<string name="stepper_choose_button">Choose another</string>
+	<string name="stepper_back_button">Back</string>
+	<string name="stepper_add_button">Add</string>
+	<string name="stepper_find_package">Finish add</string>
+	<string name="stepper_find_package_summary">Set name for package</string>
+	<string name="stepper_company_cannot_detect">Cannot detect company</string>
 
 	<!-- Scanner -->
 	<string name="activity_scanner">Scan barcode</string>

@@ -1,7 +1,6 @@
 package info.papdt.express.helper.api
 
 import android.app.Activity
-import android.app.Fragment
 import cn.nekocode.rxlifecycle.RxLifecycle
 import com.spreada.utils.chinese.ZHConverter
 import info.papdt.express.helper.model.BaseMessage
@@ -15,7 +14,7 @@ object RxPackageApi {
 
 	fun getPackage(number: String, com: String? = null,
 	               parentActivity: Activity? = null)
-			: Observable<BaseMessage<Package>> {
+			: Observable<BaseMessage<out Package?>> {
 		var observable = Observable.just("")
 		parentActivity?.let { observable = observable.compose(RxLifecycle.bind(parentActivity).withObservable()) }
 		return observable
@@ -49,6 +48,15 @@ object RxPackageApi {
 
 	fun filterCompanySync(k: String): ArrayList<PackageApi.CompanyInfo.Company> {
 		return filterCompany(k).blockingFirst()
+	}
+
+	fun detectCompany(id: String, parentActivity: Activity? = null): Observable<String> {
+		var observable = Observable.just(id)
+		parentActivity?.let { observable = observable.compose(RxLifecycle.bind(parentActivity).withObservable()) }
+		return observable
+				.map { PackageApi.detectCompanyByNumber(it) ?: "" }
+				.subscribeOn(Schedulers.io())
+				.observeOn(AndroidSchedulers.mainThread())
 	}
 
 }

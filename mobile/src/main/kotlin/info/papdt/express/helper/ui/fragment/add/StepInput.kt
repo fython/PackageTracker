@@ -99,7 +99,7 @@ class StepInput : AbsStepFragment() {
 		return PackageDatabase.getInstance(context!!).indexOf(mEditText.text.toString().trim { it <= ' ' }) != -1
 	}
 
-	private fun Observable<BaseMessage<Package>>.start(): Disposable {
+	private fun Observable<BaseMessage<out Package?>>.start(): Disposable {
 		return doOnSubscribe {
 			addActivity.showProgressBar()
 			mEditText.isEnabled = false
@@ -110,10 +110,10 @@ class StepInput : AbsStepFragment() {
 				val p = message.data
 				addActivity.number = number
 				addActivity.`package` = p
-				if (p.status == "200") {
+				if (p?.status == "200") {
 					addActivity.addStep(AddActivity.STEP_SUCCESS)
 				} else {
-					Toast.makeText(context, p.message, Toast.LENGTH_SHORT).show()
+					Toast.makeText(context, p?.message, Toast.LENGTH_SHORT).show()
 					addActivity.addStep(AddActivity.STEP_NO_FOUND)
 				}
 			} else {

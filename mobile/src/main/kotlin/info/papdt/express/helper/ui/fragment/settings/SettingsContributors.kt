@@ -8,7 +8,7 @@ import moe.shizuku.preference.Preference
 class SettingsContributors : AbsPrefFragment(), Preference.OnPreferenceClickListener {
 
 	private val mPrefCoderFox: Preference by PreferenceProperty("coderfox")
-	private val mPrefHearSilent: Preference by PreferenceProperty("hearslient")
+	private val mPrefHearSilent: Preference by PreferenceProperty("hearsilent")
 	private val mPrefArchieMeng: Preference by PreferenceProperty("archiemeng")
 
 	override fun onCreatePreferences(bundle: Bundle?, s: String?) {

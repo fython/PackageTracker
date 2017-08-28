@@ -8,7 +8,6 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.support.annotation.RequiresApi
-import android.support.v4.graphics.drawable.DrawableCompat
 import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.AppCompatEditText
@@ -16,7 +15,6 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.*
 import cn.nekocode.rxlifecycle.RxLifecycle
 
@@ -30,6 +28,7 @@ import info.papdt.express.helper.model.Package
 import info.papdt.express.helper.support.Settings
 import info.papdt.express.helper.ui.adapter.SearchResultAdapter
 import info.papdt.express.helper.ui.common.AbsActivity
+import info.papdt.express.helper.ui.fragment.add.AddDialogFragment
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -164,6 +163,12 @@ class SearchActivity : AbsActivity() {
 		// create the animator for this view (the start radius is zero)
 		val circularReveal = ViewAnimationUtils.createCircularReveal(rootLayout, cx, cy, 0f, finalRadius)
 		circularReveal.duration = 300
+		circularReveal.addListener(object : Animator.AnimatorListener {
+			override fun onAnimationRepeat(p0: Animator?) {}
+			override fun onAnimationEnd(p0: Animator?) { mSearchEdit.showKeyboard() }
+			override fun onAnimationCancel(p0: Animator?) {}
+			override fun onAnimationStart(p0: Animator?) {}
+		})
 
 		// make the view visible and start the animation
 		rootLayout.makeVisible()
@@ -183,17 +188,15 @@ class SearchActivity : AbsActivity() {
 			override fun onAnimationStart(animator: Animator) {}
 			override fun onAnimationCancel(animator: Animator) {}
 			override fun onAnimationRepeat(animator: Animator) {}
-			override fun onAnimationEnd(animator: Animator) {
-				rootLayout.makeInvisible()
-				finish()
-			}
+			override fun onAnimationEnd(animator: Animator) { rootLayout.makeInvisible(); finish() }
 		})
 		circularReveal.duration = 400
 		circularReveal.start()
 	}
 
 	fun onAddButtonClicked() {
-		Log.i("TAG", "Clicked")
+		mSearchEdit.hideKeyboard()
+		AddDialogFragment.newInstance(mSearchEdit.text.toString()).show(supportFragmentManager, "add_dialog")
 	}
 
 	override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -220,7 +223,7 @@ class SearchActivity : AbsActivity() {
 		} else {
 			items.add(SearchResultAdapter.ItemType(SearchResultAdapter.ItemType.TYPE_EMPTY))
 		}
-		if (mSearchEdit.text.isNotBlank() && mDatabase.indexOf(mSearchEdit.text.toString()) == -1) {
+		if (mSearchEdit.text.isNotBlank() && mDatabase.indexOf(mSearchEdit.text.toString().trim()) == -1) {
 			items.add(SearchResultAdapter.ItemType(SearchResultAdapter.ItemType.TYPE_NEW_PACKAGE))
 		}
 		items.add(SearchResultAdapter.ItemType(SearchResultAdapter.ItemType.TYPE_SUBHEADER))
