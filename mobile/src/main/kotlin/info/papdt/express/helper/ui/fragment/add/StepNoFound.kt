@@ -53,7 +53,7 @@ class StepNoFound : AbsStepFragment() {
 		if (requestCode == AbsStepFragment.Companion.REQUEST_CODE_CHOOSE_COMPANY) {
 			if (resultCode == Activity.RESULT_OK) {
 				val companyCode = intent?.getStringExtra(AbsStepFragment.Companion.RESULT_EXTRA_COMPANY_CODE)
-				RxPackageApi.getPackage(number = addActivity.number!!, com = companyCode, parentFragment = this)
+				RxPackageApi.getPackage(number = addActivity.number!!, com = companyCode, parentActivity = activity)
 						.doOnSubscribe {
 							addActivity.showProgressBar()
 						}

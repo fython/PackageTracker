@@ -66,13 +66,13 @@ class StepInput : AbsStepFragment() {
 			number = mEditText.text.toString()
 			if (ConnectivityReceiver.readNetworkState(activity)) {
 				if (TextUtils.isEmpty(addActivity.preCompany)) {
-					RxPackageApi.getPackage(number = number!!, parentFragment = this).start()
+					RxPackageApi.getPackage(number = number!!, parentActivity = activity).start()
 				} else {
 					RxPackageApi.filterCompany(addActivity.preCompany!!).subscribe {
 						if (it.size == 1) {
-							RxPackageApi.getPackage(number = number!!, com = it[0].code, parentFragment = this)
+							RxPackageApi.getPackage(number = number!!, com = it[0].code, parentActivity = activity)
 						} else {
-							RxPackageApi.getPackage(number = number!!, parentFragment = this)
+							RxPackageApi.getPackage(number = number!!, parentActivity = activity)
 						}.start()
 					}
 				}

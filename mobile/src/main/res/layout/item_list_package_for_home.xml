@@ -2,36 +2,14 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
-             android:layout_height="wrap_content"
-			 android:background="@color/red_500">
-
-	<ImageView
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_gravity="center_vertical|start"
-		android:layout_marginStart="32dp"
-		android:src="@drawable/ic_delete_black_24dp"
-		android:tint="#FFFFFF"
-		android:alpha="0.87"/>
-
-	<android.support.v7.widget.AppCompatTextView
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_gravity="center_vertical|end"
-		android:layout_marginEnd="32dp"
-		android:text="@string/action_remove"
-		android:textAppearance="@style/TextAppearance.AppCompat.Button"
-		android:textColor="#FFFFFF"
-		android:alpha="0.87"/>
+             android:layout_height="wrap_content">
 
 	<LinearLayout android:id="@+id/item_container"
 	              android:orientation="horizontal"
 	              android:layout_width="match_parent"
 	              android:layout_height="wrap_content"
 	              android:clickable="true"
-	              android:foreground="?attr/selectableItemBackground"
-	              android:background="@color/light_theme_background"
-				  tools:translationX="64dp">
+	              android:foreground="?attr/selectableItemBackground">
 
 		<FrameLayout
 			android:layout_width="wrap_content"

@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.provider.Settings
 import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 
@@ -91,8 +92,8 @@ class ScannerActivity : AbsActivity(), ZXingScannerView.ResultHandler {
 
 	companion object {
 
-		const val REQUEST_CODE_SCAN = 10001
-		const val RESULT_GET_RESULT = 1000
+		const val REQUEST_CODE_SCAN = 30001
+		const val RESULT_GET_RESULT = 3000
 		const val EXTRA_RESULT = "extra_result"
 
 		private const val REQUEST_PERMISSION = 20001

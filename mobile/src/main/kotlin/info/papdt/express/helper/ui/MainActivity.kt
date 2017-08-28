@@ -66,12 +66,7 @@ class MainActivity : AbsActivity() {
 
 		supportActionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
 
-		mToolbar?.setOnClickListener {
-			val location = IntArray(2)
-			toolbarBox.getLocationOnScreen(location)
-			SearchActivity.launch(this,
-					window.decorView.width / 2, location[0] + toolbarBox.height / 2)
-		}
+		mToolbar?.setOnClickListener { startSearch() }
 
 		tabLayout.setupWithViewPager(viewPager)
 		tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -137,6 +132,13 @@ class MainActivity : AbsActivity() {
 		startActivityForResult(intent, ScannerActivity.REQUEST_CODE_SCAN)
 	}
 
+	private fun startSearch(keyword: String? = null) {
+		val location = IntArray(2)
+		toolbarBox.getLocationOnScreen(location)
+		SearchActivity.launch(this,
+				window.decorView.width / 2, location[0] + toolbarBox.height / 2, keyword)
+	}
+
 	public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 		Log.i("Main", "result received, requestCode=$requestCode, resultCode=$resultCode")
 		if (requestCode == REQUEST_ADD) {
@@ -168,7 +170,7 @@ class MainActivity : AbsActivity() {
 		}
 		if (requestCode == ScannerActivity.REQUEST_CODE_SCAN) {
 			if (resultCode == ScannerActivity.RESULT_GET_RESULT) {
-
+				startSearch(data!![ScannerActivity.EXTRA_RESULT]?.asString())
 			}
 		}
 	}

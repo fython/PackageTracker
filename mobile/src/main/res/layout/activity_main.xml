@@ -45,6 +45,7 @@
 					android:text="@string/search_hint_common"
 					android:gravity="center_vertical"
 					android:background="@null"
+					android:textColor="?android:textColorHint"
 					android:textSize="16sp"
 					android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
 

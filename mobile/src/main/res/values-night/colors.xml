@@ -27,7 +27,7 @@
 	<color name="light_theme_status_bar">@color/grey_900</color>
 	<color name="light_theme_app_bar">@color/grey_850</color>
 	<color name="light_theme_background">@color/grey_850</color>
-	<color name="light_theme_background_translucent">#df303030</color>
+	<color name="light_theme_background_translucent">#e7000000</color>
 
 	<color name="grey_theme_status_bar">@color/blue_grey_700</color>
 	<color name="grey_theme_app_bar">@color/blue_grey_500</color>

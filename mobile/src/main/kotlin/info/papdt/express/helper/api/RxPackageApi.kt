@@ -14,11 +14,10 @@ import java.util.ArrayList
 object RxPackageApi {
 
 	fun getPackage(number: String, com: String? = null,
-	               parentActivity: Activity? = null, parentFragment: Fragment? = null)
+	               parentActivity: Activity? = null)
 			: Observable<BaseMessage<Package>> {
 		var observable = Observable.just("")
 		parentActivity?.let { observable = observable.compose(RxLifecycle.bind(parentActivity).withObservable()) }
-		parentFragment?.let { observable = observable.compose(RxLifecycle.bind(parentFragment).withObservable()) }
 		return observable
 				.map {
 					if (com == null) PackageApi.getPackageByNumber(number) else PackageApi.getPackage(com, number)
@@ -27,11 +26,10 @@ object RxPackageApi {
 				.observeOn(AndroidSchedulers.mainThread())
 	}
 
-	fun filterCompany(k: String, parentActivity: Activity? = null, parentFragment: Fragment? = null)
+	fun filterCompany(k: String, parentActivity: Activity? = null)
 			: Observable<ArrayList<PackageApi.CompanyInfo.Company>> {
 		var observable = Observable.just(k)
 		parentActivity?.let { observable = observable.compose(RxLifecycle.bind(parentActivity).withObservable()) }
-		parentFragment?.let { observable = observable.compose(RxLifecycle.bind(parentFragment).withObservable()) }
 		return observable
 				.map {
 					val keyword = ZHConverter.convert(it, ZHConverter.SIMPLIFIED).replace("快递".toRegex(), "")

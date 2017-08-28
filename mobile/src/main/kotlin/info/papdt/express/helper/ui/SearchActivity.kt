@@ -17,7 +17,6 @@ import android.support.v7.widget.RecyclerView
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.*
-import android.view.inputmethod.EditorInfo
 import cn.nekocode.rxlifecycle.RxLifecycle
 
 import java.util.ArrayList
@@ -58,6 +57,8 @@ class SearchActivity : AbsActivity() {
 		}
 
 		setContentView(R.layout.activity_search)
+
+		intent[EXTRA_KEYWORD]?.asString()?.let { mSearchEdit.setText(it) }
 
 		if (savedInstanceState == null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 			rootLayout.makeInvisible()
@@ -229,14 +230,17 @@ class SearchActivity : AbsActivity() {
 
 		private const val EXTRA_CX = "cx"
 		private const val EXTRA_CY = "cy"
+		private const val EXTRA_KEYWORD = "keyword"
 
-		fun launch(activity: AppCompatActivity, cx: Int, cy: Int) {
+		fun launch(activity: AppCompatActivity, cx: Int, cy: Int, keyword: String? = null) {
 			val intent = Intent(activity, SearchActivity::class.java)
 			intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
 			intent[EXTRA_CX] = cx
 			intent[EXTRA_CY] = cy
+			intent[EXTRA_KEYWORD] = keyword
 			activity.startActivity(intent)
 		}
+
 	}
 
 }

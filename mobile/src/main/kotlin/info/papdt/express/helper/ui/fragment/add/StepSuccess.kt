@@ -64,11 +64,11 @@ class StepSuccess : AbsStepFragment() {
 		}
 	}
 
-	override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent) {
+	override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
 		if (requestCode == AbsStepFragment.Companion.REQUEST_CODE_CHOOSE_COMPANY) {
 			if (resultCode == Activity.RESULT_OK) {
-				val companyCode = intent.getStringExtra(AbsStepFragment.Companion.RESULT_EXTRA_COMPANY_CODE)
-				RxPackageApi.getPackage(number = addActivity.number!!, com = companyCode, parentFragment = this)
+				val companyCode = intent?.getStringExtra(AbsStepFragment.Companion.RESULT_EXTRA_COMPANY_CODE)
+				RxPackageApi.getPackage(number = addActivity.number!!, com = companyCode,  parentActivity = activity)
 						.doOnSubscribe {
 							addActivity.showProgressBar()
 						}
