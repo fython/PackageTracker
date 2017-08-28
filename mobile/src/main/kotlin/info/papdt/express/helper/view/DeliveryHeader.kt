@@ -182,13 +182,13 @@ class DeliveryHeader: View, RefreshHeader {
 
 	override fun onPullingDown(percent: Float, offset: Int, headerHeight: Int, extendHeight: Int) {
 		if (mState != RefreshState.Refreshing) {
-			mBoxDrawable!!.paint.alpha = (255 * (1f - Math.max(0f, percent - 1))).toInt()
+			mBoxDrawable!!.paint.alpha = (255 * Math.max(0f, Math.min(percent, 1f))).toInt()
 		}
 	}
 
 	override fun onReleasing(percent: Float, offset: Int, headerHeight: Int, extendHeight: Int) {
 		if (mState != RefreshState.Refreshing) {
-			mBoxDrawable!!.paint.alpha = (255 * (1f - Math.max(0f, percent - 1))).toInt()
+			mBoxDrawable!!.paint.alpha = (255 * Math.max(0f, Math.min(percent, 1f))).toInt()
 		}
 	}
 

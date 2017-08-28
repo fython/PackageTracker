@@ -32,9 +32,13 @@
 		<item name="android:textColorPrimary">@android:color/white</item>
 	</style>
 
+	<style name="Toolbar.Main" parent="ThemeOverlay.AppCompat.ActionBar">
+	</style>
+
 	<style name="AppTheme.Translucent" parent="AppTheme">
 		<item name="android:windowIsTranslucent">true</item>
 		<item name="android:windowBackground">@android:color/transparent</item>
+		<item name="android:windowEnterAnimation">@null</item>
 	</style>
 
 	<style name="AppTheme.Grey" parent="AppTheme">

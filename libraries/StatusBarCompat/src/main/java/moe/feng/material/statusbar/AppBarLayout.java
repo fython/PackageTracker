@@ -39,7 +39,7 @@ public class AppBarLayout extends LinearLayout {
 		}
 		enableMode = a.getInt(R.styleable.StatusBarHeaderView_enableMode, MODE_ALL);
 		headerView = new StatusBarHeaderView(context, colorNormal, colorDark, enableMode);
-		this.setBackgroundColorWithoutAlpha(colorNormal);
+		this.setBackgroundColor(colorNormal);
 		this.setOrientation(LinearLayout.VERTICAL);
 		this.addView(headerView);
 		a.recycle();
@@ -50,7 +50,7 @@ public class AppBarLayout extends LinearLayout {
 
 	public void setNormalColor(@ColorInt int colorNormal) {
 		this.colorNormal = colorNormal;
-		this.setBackgroundColorWithoutAlpha(colorNormal);
+		this.setBackgroundColor(colorNormal);
 		headerView.setNormalColor(colorNormal);
 		headerView.init();
 	}
@@ -64,7 +64,7 @@ public class AppBarLayout extends LinearLayout {
 	public void setColor(@ColorInt int colorNormal,@ColorInt int colorDark) {
 		this.colorNormal = colorNormal;
 		this.colorDark = colorDark;
-		this.setBackgroundColorWithoutAlpha(colorNormal);
+		this.setBackgroundColor(colorNormal);
 		headerView.setNormalColor(colorNormal);
 		headerView.setDarkColor(colorDark);
 		headerView.init();
@@ -93,10 +93,6 @@ public class AppBarLayout extends LinearLayout {
 
 	public int getMode(){
 		return this.enableMode;
-	}
-
-	private void setBackgroundColorWithoutAlpha(int color) {
-		this.setBackgroundColor(Color.argb(255, Color.red(color), Color.green(color), Color.blue(color)));
 	}
 
 }

@@ -178,7 +178,7 @@
 	<!-- Search -->
 	<string name="activity_search">搜索</string>
 	<string name="action_clear">清空</string>
-	<string name="search_hint_common">包裹或公司....</string>
+	<string name="search_hint_common">搜索包裹或公司</string>
 	<string name="subheader_package">包裹</string>
 	<string name="subheader_company">快递公司</string>
 	<string name="item_title_please_wait">请稍候....</string>

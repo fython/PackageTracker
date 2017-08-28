@@ -39,64 +39,7 @@ import moe.feng.kotlinyan.common.lazyFindNonNullView
 class SearchActivity : AbsActivity() {
 
 	private val mList: RecyclerView by lazyFindNonNullView(R.id.recycler_view)
-	private val mSearchEdit: AppCompatEditText by lazy {
-		AppCompatEditText(this@SearchActivity).apply {
-			/** Create search edit widget  */
-			setTextAppearance(this@SearchActivity, R.style.TextAppearance_AppCompat_Widget_ActionBar_Title)
-			setSingleLine(true)
-			setBackgroundColor(Color.TRANSPARENT)
-			setHint(R.string.search_hint_common)
-			imeOptions = EditorInfo.IME_ACTION_DONE
-			addTextChangedListener(object : TextWatcher {
-				override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
-
-				override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
-					if (charSequence.isNotEmpty()) {
-						companies = null
-						packages = null
-					} else {
-						companies = ArrayList()
-						packages = ArrayList()
-					}
-					mAdapter.setCompanies(companies)
-					mAdapter.setPackages(packages)
-					mAdapter.setItems(buildItems())
-					mAdapter.notifyDataSetChanged()
-					if (charSequence.isNotEmpty()) {
-						RxPackageApi.filterCompany(
-								charSequence.toString().trim(),
-								parentActivity = this@SearchActivity
-						).subscribe { companies ->
-							this@SearchActivity.companies = companies
-							mAdapter.setCompanies(companies)
-							mAdapter.setItems(buildItems())
-							mAdapter.notifyDataSetChanged()
-						}
-						Observable.just(charSequence.toString().trim())
-								.compose(RxLifecycle.bind(this@SearchActivity).withObservable())
-								.map {
-									val keyword = it.trim().toLowerCase()
-									(0 until mDatabase.size())
-											.filter { mDatabase[it].name.toLowerCase().contains(keyword) || mDatabase[it].number.toLowerCase().contains(keyword) }
-											.mapTo(ArrayList()) { mDatabase[it] }
-								}
-								.subscribeOn(Schedulers.computation())
-								.observeOn(AndroidSchedulers.mainThread())
-								.subscribe { packages ->
-									this@SearchActivity.packages = packages
-									mAdapter.setPackages(packages)
-									mAdapter.setItems(buildItems())
-									mAdapter.notifyDataSetChanged()
-								}
-					}
-				}
-
-				override fun afterTextChanged(editable: Editable) {
-
-				}
-			})
-		}
-	}
+	private val mSearchEdit: AppCompatEditText by lazyFindNonNullView(R.id.search_edit)
 	private val rootLayout: View by lazyFindNonNullView(R.id.root_layout)
 
 	private lateinit var mAdapter: SearchResultAdapter
@@ -144,18 +87,57 @@ class SearchActivity : AbsActivity() {
 
 	@SuppressLint("NewApi")
 	override fun setUpViews() {
-		/** Set up custom view on ActionBar  */
-		val lp = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT)
-		mSearchEdit.layoutParams = lp
+		mActionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
 
-		val lp2 = ActionBar.LayoutParams(lp)
-		mActionBar!!.setCustomView(mSearchEdit, lp2)
+		findViewById<View>(R.id.action_back).setOnClickListener { onBackPressed() }
+		mSearchEdit.addTextChangedListener(object : TextWatcher {
+			override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
 
-		mActionBar!!.setDisplayHomeAsUpEnabled(true)
-		mActionBar!!.setDisplayShowCustomEnabled(true)
-		mActionBar!!.setDisplayShowTitleEnabled(false)
+			override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
+				if (charSequence.isNotEmpty()) {
+					companies = null
+					packages = null
+				} else {
+					companies = ArrayList()
+					packages = ArrayList()
+				}
+				mAdapter.setCompanies(companies)
+				mAdapter.setPackages(packages)
+				mAdapter.setItems(buildItems())
+				mAdapter.notifyDataSetChanged()
+				if (charSequence.isNotEmpty()) {
+					RxPackageApi.filterCompany(
+							charSequence.toString().trim(),
+							parentActivity = this@SearchActivity
+					).subscribe { companies ->
+						this@SearchActivity.companies = companies
+						mAdapter.setCompanies(companies)
+						mAdapter.setItems(buildItems())
+						mAdapter.notifyDataSetChanged()
+					}
+					Observable.just(charSequence.toString().trim())
+							.compose(RxLifecycle.bind(this@SearchActivity).withObservable())
+							.map {
+								val keyword = it.trim().toLowerCase()
+								(0 until mDatabase.size())
+										.filter { mDatabase[it].name.toLowerCase().contains(keyword) || mDatabase[it].number.toLowerCase().contains(keyword) }
+										.mapTo(ArrayList()) { mDatabase[it] }
+							}
+							.subscribeOn(Schedulers.computation())
+							.observeOn(AndroidSchedulers.mainThread())
+							.subscribe { packages ->
+								this@SearchActivity.packages = packages
+								mAdapter.setPackages(packages)
+								mAdapter.setItems(buildItems())
+								mAdapter.notifyDataSetChanged()
+							}
+				}
+			}
 
-		DrawableCompat.wrap(mToolbar!!.navigationIcon!!).setTint(resources.getColor(R.color.black_in_light))
+			override fun afterTextChanged(editable: Editable) {
+
+			}
+		})
 
 		/** Set up company list  */
 		mList.setHasFixedSize(true)

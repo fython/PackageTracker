@@ -2,12 +2,14 @@ package info.papdt.express.helper.ui
 
 import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import android.support.design.widget.Snackbar
+import android.support.v4.content.ContextCompat
 import android.view.View
 import android.view.WindowManager
 
@@ -49,7 +51,9 @@ class ScannerActivity : AbsActivity(), ZXingScannerView.ResultHandler {
 
 	override fun onResume() {
 		super.onResume()
-		runWithPermissionNoRationale (Manifest.permission.CAMERA) { startScan() }
+		if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+			startScan()
+		}
 	}
 
 	public override fun onPause() {

@@ -4,7 +4,6 @@ import android.app.Activity
 import android.app.Fragment
 import android.app.FragmentManager
 import android.content.Intent
-import android.graphics.Color
 import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
@@ -15,6 +14,7 @@ import android.support.design.widget.Snackbar
 import android.support.design.widget.TabLayout
 import android.support.v4.view.ViewPager
 import android.support.v13.app.FragmentPagerAdapter
+import android.support.v7.app.ActionBar
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
@@ -35,6 +35,7 @@ class MainActivity : AbsActivity() {
 
 	private val tabLayout: TabLayout by lazyFindNonNullView(R.id.tab_layout)
 	private val viewPager: ViewPager by lazyFindNonNullView(R.id.view_pager)
+	private val toolbarBox: View by lazyFindNonNullView(R.id.toolbar_box)
 
 	private val fragments by lazy { arrayOf(
 			FragmentAll.newInstance(mDatabase, FragmentAll.TYPE_DELIVERING),
@@ -63,6 +64,15 @@ class MainActivity : AbsActivity() {
 
 		setContentView(R.layout.activity_main)
 
+		supportActionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
+
+		mToolbar?.setOnClickListener {
+			val location = IntArray(2)
+			toolbarBox.getLocationOnScreen(location)
+			SearchActivity.launch(this,
+					window.decorView.width / 2, location[0] + toolbarBox.height / 2)
+		}
+
 		tabLayout.setupWithViewPager(viewPager)
 		tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
 			override fun onTabReselected(tab: TabLayout.Tab?) { fragments[viewPager.currentItem].scrollToTop() }
@@ -70,13 +80,10 @@ class MainActivity : AbsActivity() {
 			override fun onTabSelected(tab: TabLayout.Tab?) {}
 		})
 		viewPager.adapter = TabsAdapter(fragmentManager)
+		viewPager.offscreenPageLimit = 3
 
 		if (ScannerActivity.ACTION_SCAN_TO_ADD == intent.action) {
-			val intent = Intent(this@MainActivity, AddActivity::class.java)
-			intent.action = ScannerActivity.ACTION_SCAN_TO_ADD
-			intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-			intent.putExtra(AddActivity.EXTRA_IS_FROM_MAIN_ACTIVITY, true)
-			startActivityForResult(intent, REQUEST_ADD)
+			openScanner()
 		}
 	}
 
@@ -96,10 +103,9 @@ class MainActivity : AbsActivity() {
 		mDatabase.save()
 	}
 
-
 	override fun onCreateOptionsMenu(menu: Menu): Boolean {
 		menuInflater.inflate(R.menu.menu_home, menu)
-		menu.tintItemsColor(Color.WHITE)
+		menu.tintItemsColor(resources.color[R.color.black_in_light])
 		return super.onCreateOptionsMenu(menu)
 	}
 
@@ -113,11 +119,8 @@ class MainActivity : AbsActivity() {
 				ReadAllTask().execute()
 				return true
 			}
-			R.id.action_search -> {
-				val menuButton = findViewById<View>(R.id.action_search)
-				val location = IntArray(2)
-				menuButton.getLocationOnScreen(location)
-				SearchActivity.launch(this, location[0] + menuButton.height / 2, location[1] + menuButton.width / 2)
+			R.id.action_scan -> {
+				openScanner()
 				return true
 			}
 			R.id.action_import_export -> {
@@ -126,6 +129,12 @@ class MainActivity : AbsActivity() {
 			}
 			else -> return super.onOptionsItemSelected(item)
 		}
+	}
+
+	private fun openScanner() {
+		val intent = Intent(this, ScannerActivity::class.java)
+		intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+		startActivityForResult(intent, ScannerActivity.REQUEST_CODE_SCAN)
 	}
 
 	public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -155,6 +164,11 @@ class MainActivity : AbsActivity() {
 							.setAction(R.string.toast_item_removed_action) { fragments!![fragId].onUndoActionClicked() }
 							.show()
 				}
+			}
+		}
+		if (requestCode == ScannerActivity.REQUEST_CODE_SCAN) {
+			if (resultCode == ScannerActivity.RESULT_GET_RESULT) {
+
 			}
 		}
 	}

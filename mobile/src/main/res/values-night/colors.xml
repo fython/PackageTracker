@@ -27,6 +27,7 @@
 	<color name="light_theme_status_bar">@color/grey_900</color>
 	<color name="light_theme_app_bar">@color/grey_850</color>
 	<color name="light_theme_background">@color/grey_850</color>
+	<color name="light_theme_background_translucent">#df303030</color>
 
 	<color name="grey_theme_status_bar">@color/blue_grey_700</color>
 	<color name="grey_theme_app_bar">@color/blue_grey_500</color>
@@ -38,6 +39,8 @@
 
 	<color name="black_in_light">@android:color/white</color>
 	<color name="white_in_dark">@color/grey_900</color>
+
+	<color name="toolbar_box_background">@color/grey_800</color>
 
 	<color name="colorAccentDark">@color/indigo_accent_200</color>
 
