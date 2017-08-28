@@ -26,6 +26,7 @@ import info.papdt.express.helper.support.ColorGenerator;
 import info.papdt.express.helper.support.ScreenUtils;
 import info.papdt.express.helper.support.Spanny;
 import info.papdt.express.helper.ui.DetailsActivity;
+import info.papdt.express.helper.ui.SearchActivity;
 
 public class SearchResultAdapter extends RecyclerView.Adapter {
 
@@ -90,6 +91,12 @@ public class SearchResultAdapter extends RecyclerView.Adapter {
 				result = new PackageHolder(
 						LayoutInflater.from(parent.getContext())
 								.inflate(R.layout.item_list_package_for_home, parent, false)
+				);
+				break;
+			case ItemType.TYPE_NEW_PACKAGE:
+				result = new ClickableHolder(
+						LayoutInflater.from(parent.getContext())
+								.inflate(R.layout.item_search_result_new_package, parent, false)
 				);
 				break;
 		}
@@ -185,7 +192,11 @@ public class SearchResultAdapter extends RecyclerView.Adapter {
 
 	public static class ItemType {
 
-		public final static int TYPE_PACKAGE = 0, TYPE_COMPANY = 1, TYPE_SUBHEADER = 2, TYPE_EMPTY = 3;
+		public final static int TYPE_PACKAGE = 0,
+				TYPE_COMPANY = 1,
+				TYPE_SUBHEADER = 2,
+				TYPE_EMPTY = 3,
+				TYPE_NEW_PACKAGE = 4;
 
 		public int viewType;
 
@@ -194,6 +205,22 @@ public class SearchResultAdapter extends RecyclerView.Adapter {
 
 		public ItemType(int viewType) {
 			this.viewType = viewType;
+		}
+
+	}
+
+	private class ClickableHolder extends RecyclerView.ViewHolder {
+
+		public ClickableHolder(View itemView) {
+			super(itemView);
+			itemView.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View view) {
+					if (view.getContext() instanceof SearchActivity) {
+						((SearchActivity) view.getContext()).onAddButtonClicked();
+					}
+				}
+			});
 		}
 
 	}
@@ -208,11 +235,11 @@ public class SearchResultAdapter extends RecyclerView.Adapter {
 
 		PackageHolder(View itemView) {
 			super(itemView);
-			logoView = (CircleImageView) itemView.findViewById(R.id.iv_logo);
-			titleText = (AppCompatTextView) itemView.findViewById(R.id.tv_title);
-			descText = (AppCompatTextView) itemView.findViewById(R.id.tv_other);
-			timeText = (AppCompatTextView) itemView.findViewById(R.id.tv_time);
-			bigCharView = (TextView) itemView.findViewById(R.id.tv_first_char);
+			logoView = itemView.findViewById(R.id.iv_logo);
+			titleText = itemView.findViewById(R.id.tv_title);
+			descText = itemView.findViewById(R.id.tv_other);
+			timeText = itemView.findViewById(R.id.tv_time);
+			bigCharView = itemView.findViewById(R.id.tv_first_char);
 			containerView = itemView.findViewById(R.id.item_container);
 		}
 
@@ -228,7 +255,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter {
 
 		SubheaderItemHolder(View itemView) {
 			super(itemView);
-			title = (AppCompatTextView) itemView.findViewById(R.id.tv_title);
+			title = itemView.findViewById(R.id.tv_title);
 		}
 
 	}
@@ -239,7 +266,7 @@ public class SearchResultAdapter extends RecyclerView.Adapter {
 
 		EmptyHolder(View itemView) {
 			super(itemView);
-			title = (AppCompatTextView) itemView.findViewById(R.id.tv_title);
+			title = itemView.findViewById(R.id.tv_title);
 		}
 
 	}
@@ -255,10 +282,10 @@ public class SearchResultAdapter extends RecyclerView.Adapter {
 		CompanyHolder(View itemView) {
 			super(itemView);
 			rootView = itemView;
-			titleText = (AppCompatTextView) itemView.findViewById(R.id.tv_title);
-			otherText = (AppCompatTextView) itemView.findViewById(R.id.tv_other);
-			logoView = (CircleImageView) itemView.findViewById(R.id.iv_logo);
-			firstCharText = (TextView) itemView.findViewById(R.id.tv_first_char);
+			titleText = itemView.findViewById(R.id.tv_title);
+			otherText = itemView.findViewById(R.id.tv_other);
+			logoView = itemView.findViewById(R.id.iv_logo);
+			firstCharText =  itemView.findViewById(R.id.tv_first_char);
 		}
 
 	}

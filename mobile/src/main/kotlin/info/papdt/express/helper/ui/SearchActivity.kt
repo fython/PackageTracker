@@ -16,6 +16,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.*
 import cn.nekocode.rxlifecycle.RxLifecycle
 
@@ -191,6 +192,10 @@ class SearchActivity : AbsActivity() {
 		circularReveal.start()
 	}
 
+	fun onAddButtonClicked() {
+		Log.i("TAG", "Clicked")
+	}
+
 	override fun onCreateOptionsMenu(menu: Menu): Boolean {
 		menuInflater.inflate(R.menu.menu_search, menu)
 		menu.tintItemsColor(resources.color[R.color.black_in_light])
@@ -214,6 +219,9 @@ class SearchActivity : AbsActivity() {
 			})
 		} else {
 			items.add(SearchResultAdapter.ItemType(SearchResultAdapter.ItemType.TYPE_EMPTY))
+		}
+		if (mSearchEdit.text.isNotBlank() && mDatabase.indexOf(mSearchEdit.text.toString()) == -1) {
+			items.add(SearchResultAdapter.ItemType(SearchResultAdapter.ItemType.TYPE_NEW_PACKAGE))
 		}
 		items.add(SearchResultAdapter.ItemType(SearchResultAdapter.ItemType.TYPE_SUBHEADER))
 		if (companies?.size ?: 0 > 0) {

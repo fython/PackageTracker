@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/item_container"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:clickable="true"
+              android:foreground="?attr/selectableItemBackground">
+
+	<FrameLayout
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="8dp"
+			android:layout_marginBottom="8dp"
+			android:layout_marginLeft="16dp"
+			android:layout_marginRight="16dp">
+
+		<de.hdodenhof.circleimageview.CircleImageView
+				android:layout_width="64dp"
+				android:layout_height="64dp"
+				android:layout_gravity="center"
+				android:id="@+id/iv_logo"
+				android:src="@color/blue_500"/>
+
+		<ImageView
+				android:layout_width="36dp"
+				android:layout_height="36dp"
+				android:layout_gravity="center"
+				android:src="@drawable/ic_add_black_24dp"
+				android:tint="@android:color/white"/>
+
+	</FrameLayout>
+
+	<android.support.v7.widget.AppCompatTextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:textAppearance="@style/TextAppearance.AppCompat.Small"
+			android:textColor="@color/list_text_title_color"
+			android:layout_gravity="center_vertical"
+			android:alpha="0.87"
+			android:text="@string/activity_add"/>
+
+</LinearLayout>
