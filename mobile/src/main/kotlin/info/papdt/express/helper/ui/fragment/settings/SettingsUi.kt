@@ -5,6 +5,7 @@ import android.os.Bundle
 
 import info.papdt.express.helper.R
 import info.papdt.express.helper.support.Settings
+import info.papdt.express.helper.support.SettingsInstance
 import moe.shizuku.preference.ListPreference
 import moe.shizuku.preference.Preference
 import moe.shizuku.preference.SwitchPreference
@@ -13,6 +14,7 @@ class SettingsUi : AbsPrefFragment(), Preference.OnPreferenceChangeListener {
 
 	private val mPrefNavigationTint: SwitchPreference by PreferenceProperty("navigation_tint")
 	private val mPrefNightMode: ListPreference by PreferenceProperty("night_mode")
+	private val mPrefShowTipsAgain: Preference by PreferenceProperty("show_tips_again")
 
 	override fun onCreatePreferences(bundle: Bundle?, s: String?) {
 		addPreferencesFromResource(R.xml.settings_ui)
@@ -29,6 +31,11 @@ class SettingsUi : AbsPrefFragment(), Preference.OnPreferenceChangeListener {
 		/** Set callback  */
 		mPrefNavigationTint.onPreferenceChangeListener = this
 		mPrefNightMode.onPreferenceChangeListener = this
+		mPrefShowTipsAgain.setOnPreferenceClickListener {
+			SettingsInstance.shouldShowTips = true
+			makeRestartTips()
+			true
+		}
 	}
 
 	override fun onPreferenceChange(pref: Preference, o: Any): Boolean {

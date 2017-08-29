@@ -14,6 +14,9 @@
 		                      android:entryValues="@array/night_mode_choices_item"
 		                      android:defaultValue="0"/>
 
+		<Preference android:key="show_tips_again"
+		            android:title="@string/pref_show_tips_again"/>
+
 	</PreferenceCategory>
 
 </PreferenceScreen>
