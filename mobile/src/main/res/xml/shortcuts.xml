@@ -8,7 +8,7 @@
 		android:shortcutShortLabel="@string/label_shortcut_add"
 		android:shortcutLongLabel="@string/label_shortcut_add">
 		<intent
-			android:action="android.intent.action.VIEW"
+			android:action="info.papdt.express.helper.ACTION_SEARCH"
 			android:targetPackage="info.papdt.express.helper"
 			android:targetClass="info.papdt.express.helper.ui.MainActivity" />
 		<categories android:name="android.shortcut.conversation" />
