@@ -88,7 +88,8 @@
 
 		<activity android:name=".ui.SearchActivity"
 		          android:label="@string/activity_search"
-		          android:theme="@style/AppTheme.Translucent">
+		          android:theme="@style/AppTheme.Translucent"
+		          android:configChanges="screenSize|orientation">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 			</intent-filter>

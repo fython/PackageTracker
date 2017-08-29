@@ -5,19 +5,25 @@ import android.app.Dialog
 import android.content.Intent
 import android.content.res.ColorStateList
 import android.os.Bundle
+import android.support.design.widget.TextInputEditText
 import android.support.v4.app.DialogFragment
 import android.support.v7.app.AlertDialog
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.Button
 import android.widget.TextView
+import cn.nekocode.rxlifecycle.RxLifecycle
 import info.papdt.express.helper.R
 import info.papdt.express.helper.api.PackageApi.CompanyInfo
 import info.papdt.express.helper.api.RxPackageApi
+import info.papdt.express.helper.dao.PackageDatabase
 import info.papdt.express.helper.model.BaseMessage
 import info.papdt.express.helper.model.Package
 import info.papdt.express.helper.receiver.ConnectivityReceiver
 import info.papdt.express.helper.ui.CompanyChooserActivity
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import moe.feng.common.stepperview.VerticalStepperItemView
 import moe.feng.kotlinyan.common.AndroidExtensions
 import moe.feng.kotlinyan.common.AppCompatExtensions
@@ -37,6 +43,7 @@ class AddDialogFragment: DialogFragment(), AndroidExtensions, AppCompatExtension
 	private val addErrorDesc by lazy { contentView.findViewById<TextView>(R.id.add_error_desc_text) }
 	private val addLoadingView by lazy { contentView.findViewById<View>(R.id.loading_layout_add) }
 	private val addFinishLayout by lazy { contentView.findViewById<View>(R.id.set_name_layout) }
+	private val nameEdit by lazy { contentView.findViewById<TextInputEditText>(R.id.name_edit) }
 
 	private var currentStep = 0
 
@@ -80,6 +87,25 @@ class AddDialogFragment: DialogFragment(), AndroidExtensions, AppCompatExtension
 		view.findViewById<Button>(R.id.try_again_btn_step_2).setOnClickListener { doStep() }
 		view.findViewById<Button>(R.id.back_button_step_2).setOnClickListener { step2.prevStep() }
 		view.findViewById<Button>(R.id.back_button_step_2_2).setOnClickListener { step2.prevStep() }
+		view.findViewById<Button>(R.id.stepper_add_button).setOnClickListener {
+			result?.name = if (nameEdit.text.isNotBlank())
+				nameEdit.text.toString() else String.format(getString(R.string.package_name_unnamed), number?.substring(0, 4))
+			Observable.just(result!!)
+					.compose(RxLifecycle.bind(activity).withObservable())
+					.map {
+						val db = PackageDatabase.getInstance(context)
+						db.add(it)
+						db.save()
+					}
+					.subscribeOn(Schedulers.io())
+					.observeOn(AndroidSchedulers.mainThread())
+					.doOnSubscribe {
+						detectErrorView.makeGone()
+						detectTryAgainButton.makeGone()
+						loadingLayout.makeVisible()
+					}
+					.subscribe { dismiss() }
+		}
 
 		doStep()
 

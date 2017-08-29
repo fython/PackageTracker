@@ -58,9 +58,9 @@ class SearchActivity : AbsActivity() {
 
 		setContentView(R.layout.activity_search)
 
-		intent[EXTRA_KEYWORD]?.asString()?.let { mSearchEdit.setText(it) }
-
 		if (savedInstanceState == null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+			intent[EXTRA_KEYWORD]?.asString()?.let { mSearchEdit.setText(it) }
+
 			rootLayout.makeInvisible()
 
 			val viewTreeObserver = rootLayout.viewTreeObserver
