@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto">
+
+	<item android:id="@+id/action_donate"
+	      android:title="@string/alipay_support_title"
+	      android:icon="@drawable/ic_thumb_up_black_24dp"
+	      app:showAsAction="always"/>
+
+	<item android:id="@+id/action_play_store"
+	      android:title="@string/action_view_on_play_store"
+	      android:icon="@drawable/ic_shop_black_24dp"
+	      app:showAsAction="ifRoom"/>
+
+</menu>

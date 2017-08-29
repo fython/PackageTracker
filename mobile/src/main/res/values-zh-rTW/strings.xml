@@ -226,5 +226,27 @@
 	<string name="auto_detect_noti_action_add">新增</string>
 
 	<string name="label_clipboard_service">剪貼板自動偵測</string>
+	<string name="stepper_detect_company_title">檢測速遞公司</string>
+	<string name="action_view_on_play_store">在 Play 市集中檢視</string>
+	<string name="pref_show_tips_again">重新顯示介面提醒</string>
+	<string name="stepper_add_button">添加</string>
+	<string name="stepper_back_button">返回</string>
+	<string name="stepper_choose_button">選擇另一個</string>
+	<string name="stepper_choose_company_title">選擇正確的公司</string>
+	<string name="stepper_company_cannot_detect">無法檢測</string>
+	<string name="stepper_detect_company_summary">速遞單號: %s</string>
+	<string name="stepper_detect_company_text">請稍後……</string>
+	<string name="stepper_find_package">完成添加</string>
+	<string name="stepper_find_package_summary">為包裹設定名稱</string>
+	<string name="stepper_next_button">下一步</string>
+	<string name="stepper_try_again_button">重試</string>
+	<string name="tap_target_tips_1_desc">我們重新設計了水錶助手 3.0，現在你可以使用搜尋條去搜尋或添加包裹。</string>
+	<string name="tap_target_tips_1_title">新設計！</string>
+	<string name="tap_target_tips_2_desc">從相機快速偵測包裹單號</string>
+	<string name="tap_target_tips_2_title">掃描條形碼</string>
+	<string name="tap_target_tips_3_desc">你可以下拉列表刷新狀態。還可以設定背景定時刷新或使用更加節電的基於 FCM 推送服務。</string>
+	<string name="tap_target_tips_3_title">獲取最新狀態</string>
+	<string name="toast_clipboard_paste">在剪貼板找到文本</string>
+	<string name="toast_clipboard_paste_action">粘貼</string>
 
 </resources>

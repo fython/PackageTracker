@@ -39,26 +39,14 @@ class SettingsActivity : AbsActivity() {
 				f = SettingsMain()
 				mActionBar!!.setTitle(R.string.activity_settings)
 			}
-			FLAG_UI -> {
-				f = SettingsUi()
-				mActionBar!!.setTitle(R.string.category_user_interface)
-			}
 			FLAG_LICENSE -> {
 				fragmentManager.beginTransaction().replace(R.id.container, SettingsLicense()).commit()
 				mActionBar!!.setTitle(R.string.open_source_license)
 				return
 			}
-			FLAG_NETWORK -> {
-				f = SettingsNetwork()
-				mActionBar!!.setTitle(R.string.category_network)
-			}
 			FLAG_CONTRIBUTORS -> {
 				f = SettingsContributors()
 				mActionBar!!.setTitle(R.string.category_contributors)
-			}
-			FLAG_AUTO_DETECT -> {
-				f = SettingsAutoDetect()
-				mActionBar!!.setTitle(R.string.category_auto_detect_services)
 			}
 			else -> throw RuntimeException("Please set flag when launching activity.")
 		}
@@ -74,11 +62,8 @@ class SettingsActivity : AbsActivity() {
 		private const val EXTRA_SETTINGS_FLAG = "extra_flag"
 
 		const val FLAG_MAIN = 0
-		const val FLAG_UI = 1
 		const val FLAG_LICENSE = 2
-		const val FLAG_NETWORK = 3
 		const val FLAG_CONTRIBUTORS = 4
-		const val FLAG_AUTO_DETECT = 5
 
 		fun launch(activity: AppCompatActivity, flag: Int) {
 			val intent = Intent(activity, SettingsActivity::class.java)

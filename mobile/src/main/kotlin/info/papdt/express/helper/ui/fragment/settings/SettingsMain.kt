@@ -1,19 +1,54 @@
 package info.papdt.express.helper.ui.fragment.settings
 
+import android.app.AlertDialog
+import android.content.ComponentName
+import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.Snackbar
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.widget.TextView
+import com.google.firebase.iid.FirebaseInstanceId
 
 import info.papdt.express.helper.R
-import info.papdt.express.helper.support.ClipboardUtils
+import info.papdt.express.helper.api.PushApi
+import info.papdt.express.helper.dao.PackageDatabase
+import info.papdt.express.helper.services.ClipboardDetectService
+import info.papdt.express.helper.services.FCMService
+import info.papdt.express.helper.support.*
 import info.papdt.express.helper.ui.SettingsActivity
 import moe.feng.alipay.zerosdk.AlipayZeroSdk
+import moe.shizuku.preference.EditTextPreference
+import moe.shizuku.preference.ListPreference
 import moe.shizuku.preference.Preference
+import moe.shizuku.preference.SwitchPreference
 
-class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener {
+class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Preference.OnPreferenceChangeListener {
 
-	private val mPrefUI: Preference by PreferenceProperty("settings_ui")
-	private val mPrefNetwork: Preference by PreferenceProperty("settings_network")
+	// User interface preference
+	private val mPrefNavigationTint: SwitchPreference by PreferenceProperty("navigation_tint")
+	private val mPrefNightMode: ListPreference by PreferenceProperty("night_mode")
+	private val mPrefShowTipsAgain: Preference by PreferenceProperty("show_tips_again")
+
+	// Notification & push preference
+	private val mPrefDontDisturb: SwitchPreference by PreferenceProperty("dont_disturb")
+	private val mPrefIntervalTime: ListPreference by PreferenceProperty("interval")
+	private val mPrefEnable: SwitchPreference by PreferenceProperty("enable_push")
+	private val mPrefApiHost: EditTextPreference by PreferenceProperty("api_host")
+	private val mPrefApiPort: EditTextPreference by PreferenceProperty("api_port")
+	private val mPrefInstanceId: Preference by PreferenceProperty("firebase_instance_id")
+	private val mPrefSync: Preference by PreferenceProperty("push_sync")
+	private val mPrefReqPush: Preference by PreferenceProperty("request_push")
+
+	// Auto detect
+	private val mPrefFromClipboard: SwitchPreference by PreferenceProperty("from_clipboard")
+	private val mPrefFromScreen: Preference by PreferenceProperty("from_screen")
+
+	// About
 	private val mPrefVersion: Preference by PreferenceProperty("version")
 	private val mPrefSina: Preference by PreferenceProperty("sina")
 	private val mPrefGithub: Preference by PreferenceProperty("github")
@@ -22,7 +57,15 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener {
 	private val mPrefGooglePlus: Preference by PreferenceProperty("googleplus")
 	private val mPrefIconDesigner: Preference by PreferenceProperty("designer")
 	private val mPrefContributors: Preference by PreferenceProperty("contributors")
-	private val mPrefAutoDetect: Preference by PreferenceProperty("settings_auto_detect")
+
+	private var needRegister = false
+
+	private val database by lazy { PackageDatabase.getInstance(activity) }
+
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+		setHasOptionsMenu(true)
+	}
 
 	override fun onCreatePreferences(bundle: Bundle?, s: String?) {
 		addPreferencesFromResource(R.xml.settings_main)
@@ -42,9 +85,31 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener {
 
 		mPrefVersion.summary = String.format(getString(R.string.app_version_format), versionName, versionCode)
 
-		mPrefUI.onPreferenceClickListener = this
-		mPrefNetwork.onPreferenceClickListener = this
-		mPrefAutoDetect.onPreferenceClickListener = this
+		/** Default value  */
+		mPrefNavigationTint.isEnabled = Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP
+		mPrefNavigationTint.isChecked = settings.getBoolean(Settings.KEY_NAVIGATION_TINT, true)
+
+		val target = settings.getInt(Settings.KEY_NIGHT_MODE, 0)
+		if (mPrefNightMode.value == null) {
+			mPrefNightMode.setValueIndex(target)
+		}
+
+		mPrefDontDisturb.isChecked = settings.getBoolean(Settings.KEY_NOTIFICATION_DO_NOT_DISTURB, true)
+
+		val intervalTarget = settings.getInt(Settings.KEY_NOTIFICATION_INTERVAL, 1)
+		if (mPrefIntervalTime.value == null) {
+			mPrefIntervalTime.setValueIndex(intervalTarget)
+		}
+
+		mPrefApiHost.text = SettingsInstance.pushApiHost
+		mPrefApiPort.text = SettingsInstance.pushApiPort.toString()
+
+		mPrefFromClipboard.isChecked = settings.getBoolean(Settings.KEY_DETECT_FROM_CLIPBOARD, false)
+
+		/** Hide development items */
+		mPrefInstanceId.isVisible = false
+		mPrefReqPush.isVisible = false
+
 		mPrefVersion.onPreferenceClickListener = this
 		mPrefGithub.onPreferenceClickListener = this
 		mPrefSina.onPreferenceClickListener = this
@@ -53,14 +118,111 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener {
 		mPrefIconDesigner.onPreferenceClickListener = this
 		mPrefContributors.onPreferenceClickListener = this
 		mPrefGooglePlus.onPreferenceClickListener = this
+
+		// UI
+		mPrefNavigationTint.onPreferenceChangeListener = this
+		mPrefNightMode.onPreferenceChangeListener = this
+		mPrefShowTipsAgain.onPreferenceClickListener = this
+
+		// Notification & push
+		mPrefDontDisturb.onPreferenceChangeListener = this
+		mPrefIntervalTime.onPreferenceChangeListener = this
+		mPrefInstanceId.onPreferenceClickListener = this
+		mPrefSync.onPreferenceClickListener = this
+		mPrefReqPush.onPreferenceClickListener = this
+		mPrefEnable.onPreferenceChangeListener = this
+		mPrefApiHost.onPreferenceChangeListener = this
+		mPrefApiPort.onPreferenceChangeListener = this
+
+		// Auto detect
+		mPrefFromClipboard.onPreferenceChangeListener = this
+		mPrefFromScreen.onPreferenceClickListener = this
+
+		setEnablePush(SettingsInstance.enablePush)
+	}
+
+	override fun onStop() {
+		super.onStop()
+		if (needRegister) {
+			PushApi.register().flatMap { PushApi.sync(database.getPackageIdList()) }.subscribe()
+		}
+	}
+
+	private fun setEnablePush(b: Boolean) {
+		if (b) {
+			mPrefIntervalTime.setValueIndex(4)
+			mPrefIntervalTime.onPreferenceChangeListener.onPreferenceChange(mPrefIntervalTime, "4")
+		}
+		SettingsInstance.enablePush = b
+		mPrefSync.isEnabled = b
+		mPrefReqPush.isEnabled = b
+		mPrefIntervalTime.isEnabled = !b
+		context.packageManager.setComponentEnabledSetting(
+				ComponentName(context.applicationContext, FCMService::class.java),
+				if (b) PackageManager.COMPONENT_ENABLED_STATE_ENABLED else PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+				PackageManager.DONT_KILL_APP
+		)
 	}
 
 	override fun onPreferenceClick(pref: Preference): Boolean {
 		return when (pref) {
-			mPrefUI -> {
-				SettingsActivity.launch(parentActivity, SettingsActivity.FLAG_UI)
+			// UI
+			mPrefShowTipsAgain -> {
+				SettingsInstance.shouldShowTips = true
+				makeRestartTips()
 				true
 			}
+			// Notification & push
+			mPrefInstanceId -> {
+				AlertDialog.Builder(activity).apply {
+					titleRes = R.string.pref_firebase_instance_id
+					message = FirebaseInstanceId.getInstance().token ?: "null"
+					okButton()
+					negativeButton(R.string.pref_copy_button) { _, _ ->
+						ClipboardUtils.putString(activity, FirebaseInstanceId.getInstance().token)
+						makeSnackbar(resources.string[R.string.toast_copied_successfully], Snackbar.LENGTH_LONG).show()
+					}
+					neutralButton(R.string.pref_register_button) { _, _ ->
+						PushApi.register(FirebaseInstanceId.getInstance().token!!).subscribe {
+							makeSnackbar(if (it.code >= 0) "Succeed" else "Failed", Snackbar.LENGTH_LONG).show()
+						}
+					}
+				}.create().apply {
+					setOnShowListener {
+						findViewById<TextView>(android.R.id.message).setTextIsSelectable(true)
+					}
+				}.show()
+				true
+			}
+			mPrefSync -> {
+				if (needRegister) {
+					PushApi.register().flatMap {
+						PushApi.sync(database.getPackageIdList())
+					}.subscribe {
+						makeSnackbar(if (it.code >= 0) "Succeed" else "Failed", Snackbar.LENGTH_LONG).show()
+					}
+					needRegister = false
+				} else PushApi.sync(database.getPackageIdList())
+						.subscribe {
+							makeSnackbar(if (it.code >= 0) "Succeed" else "Failed", Snackbar.LENGTH_LONG).show()
+						}
+				true
+			}
+			mPrefReqPush -> {
+				if (needRegister) {
+					PushApi.register().flatMap { PushApi.requestPush() }.subscribe {
+						makeSnackbar(it.message, Snackbar.LENGTH_LONG).show()
+					}
+					needRegister = false
+				} else PushApi.requestPush().subscribe { makeSnackbar(it.message, Snackbar.LENGTH_LONG).show() }
+				true
+			}
+			// Auto detect
+			mPrefFromScreen -> {
+				startActivity(Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS))
+				return true
+			}
+			// About
 			mPrefGithub -> {
 				openWebsite(getString(R.string.github_repo_url))
 				true
@@ -83,10 +245,6 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener {
 				SettingsActivity.launch(parentActivity, SettingsActivity.FLAG_LICENSE)
 				true
 			}
-			mPrefNetwork -> {
-				SettingsActivity.launch(parentActivity, SettingsActivity.FLAG_NETWORK)
-				true
-			}
 			mPrefIconDesigner -> {
 				openWebsite(getString(R.string.icon_designer_url))
 				true
@@ -99,12 +257,95 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener {
 				openWebsite(getString(R.string.google_plus_url))
 				true
 			}
-			mPrefAutoDetect -> {
-				SettingsActivity.launch(parentActivity, SettingsActivity.FLAG_AUTO_DETECT)
+			else -> false
+		}
+	}
+
+
+	override fun onPreferenceChange(pref: Preference, o: Any?): Boolean {
+		return when (pref) {
+			// UI
+			mPrefNavigationTint -> {
+				val b = o as Boolean
+				settings.putBoolean(Settings.KEY_NAVIGATION_TINT, b)
+				makeRestartTips()
 				true
+			}
+			mPrefNightMode -> {
+				val value = Integer.parseInt(o as String)
+				settings.putInt(Settings.KEY_NIGHT_MODE, value)
+				makeRestartTips()
+				true
+			}
+			// Notification & push
+			mPrefDontDisturb -> {
+				val b = o as Boolean
+				settings.putBoolean(Settings.KEY_NOTIFICATION_DO_NOT_DISTURB, b)
+				true
+			}
+			mPrefIntervalTime -> {
+				val value = Integer.parseInt(o as String)
+				settings.putInt(Settings.KEY_NOTIFICATION_INTERVAL, value)
+				PushUtils.restartServices(activity.applicationContext)
+				true
+			}
+			mPrefEnable -> {
+				val b = o as Boolean
+				setEnablePush(b)
+				if (b) needRegister = true
+				database.size()
+				true
+			}
+			mPrefApiHost -> {
+				SettingsInstance.pushApiHost = o as String
+				needRegister = true
+				database.size()
+				true
+			}
+			mPrefApiPort -> {
+				SettingsInstance.pushApiPort = (o as String).toInt()
+				needRegister = true
+				database.size()
+				true
+			}
+			// Auto detect
+			mPrefFromClipboard -> {
+				val isOpen = o as Boolean
+				if (isOpen && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+					if (!android.provider.Settings.canDrawOverlays(activity)) {
+						val intent = Intent(android.provider.Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
+								Uri.parse("package:" + activity.packageName))
+						startActivity(intent)
+						return false
+					}
+				}
+				settings.putBoolean(Settings.KEY_DETECT_FROM_CLIPBOARD, isOpen)
+				val intent = Intent(activity.applicationContext, ClipboardDetectService::class.java)
+				intent.run(if (!isOpen) activity::stopService else activity::startService)
+				return true
 			}
 			else -> false
 		}
+	}
+
+	override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+		inflater?.inflate(R.menu.menu_settings_main, menu)
+		menu?.tintItemsColor(resources.color[android.R.color.white])
+		super.onCreateOptionsMenu(menu, inflater)
+	}
+
+	override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+		R.id.action_donate -> {
+			listView.smoothScrollToPosition(listView.adapter.itemCount - 1)
+			true
+		}
+		R.id.action_play_store -> {
+			val intent = Intent(Intent.ACTION_VIEW)
+			intent.data = Uri.parse("market://details?id=${activity.packageName}")
+			startActivity(intent)
+			true
+		}
+		else -> super.onOptionsItemSelected(item)
 	}
 
 }

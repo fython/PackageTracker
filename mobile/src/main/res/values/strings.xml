@@ -113,6 +113,7 @@
 	<string name="icon_designer_url">https://plus.google.com/+YoulunZhai</string>
 	<string name="google_plus_title">Google+ Community</string>
 	<string name="google_plus_url" translatable="false">https://plus.google.com/communities/101252804054752835772</string>
+	<string name="action_view_on_play_store">View on Play Store</string>
 
 	<string name="category_ui_common">Common</string>
 	<string name="pref_navigation_tint">Navigation Bar Tint</string>
