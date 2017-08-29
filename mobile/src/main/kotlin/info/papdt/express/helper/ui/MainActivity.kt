@@ -3,6 +3,7 @@ package info.papdt.express.helper.ui
 import android.app.Activity
 import android.app.Fragment
 import android.app.FragmentManager
+import android.content.Context
 import android.content.Intent
 import android.os.AsyncTask
 import android.os.Build
@@ -29,6 +30,7 @@ import info.papdt.express.helper.support.Settings
 import info.papdt.express.helper.ui.common.AbsActivity
 import info.papdt.express.helper.ui.fragment.home.FragmentAll
 import info.papdt.express.helper.ui.launcher.AppWidgetProvider
+import moe.feng.kotlinyan.common.AndroidExtensions
 import moe.feng.kotlinyan.common.lazyFindNonNullView
 
 class MainActivity : AbsActivity() {
@@ -78,18 +80,16 @@ class MainActivity : AbsActivity() {
 		viewPager.adapter = TabsAdapter(fragmentManager)
 		viewPager.offscreenPageLimit = 3
 
-		if (ScannerActivity.ACTION_SCAN_TO_ADD == intent.action) {
-			openScanner()
+		when (intent.action) {
+			ScannerActivity.ACTION_SCAN_TO_ADD -> openScanner()
+			ACTION_SEARCH -> startSearch(intent[EXTRA_SERACH]?.asString())
 		}
 	}
 
 	override fun setUpViews() {
 		val fab = `$`<FloatingActionButton>(R.id.fab)
 		fab!!.setOnClickListener {
-			val intent = Intent(this@MainActivity, AddActivity::class.java)
-			intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-			intent[AddActivity.EXTRA_IS_FROM_MAIN_ACTIVITY] = true
-			startActivityForResult(intent, REQUEST_ADD)
+
 		}
 		CheatSheet.setup(fab)
 	}
@@ -283,15 +283,29 @@ class MainActivity : AbsActivity() {
 
 	}
 
-	companion object {
+	companion object: AndroidExtensions {
 
 		const val MSG_NOTIFY_DATA_CHANGED = 1
 		const val MSG_NOTIFY_ITEM_REMOVE = 2
+
+		private const val EXTRA_SERACH = "search"
 
 		fun launch(activity: Activity) {
 			val intent = Intent(activity, MainActivity::class.java)
 			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 			activity.startActivity(intent)
+		}
+
+		fun search(context: Context, number: String? = null) {
+			context.startActivity(getSearchIntent(context, number))
+		}
+
+		fun getSearchIntent(context: Context, number: String? = null): Intent {
+			val intent = Intent(context, MainActivity::class.java)
+			intent.action = ACTION_SEARCH
+			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+			intent[EXTRA_SERACH] = number
+			return intent
 		}
 
 	}

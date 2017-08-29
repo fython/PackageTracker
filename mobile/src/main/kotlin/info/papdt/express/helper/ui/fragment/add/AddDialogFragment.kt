@@ -14,6 +14,8 @@ import android.widget.Button
 import android.widget.TextView
 import cn.nekocode.rxlifecycle.RxLifecycle
 import info.papdt.express.helper.R
+import info.papdt.express.helper.REQUEST_CODE_CHOOSE_COMPANY
+import info.papdt.express.helper.RESULT_EXTRA_COMPANY_CODE
 import info.papdt.express.helper.api.PackageApi.CompanyInfo
 import info.papdt.express.helper.api.RxPackageApi
 import info.papdt.express.helper.dao.PackageDatabase
@@ -76,7 +78,7 @@ class AddDialogFragment: DialogFragment(), AndroidExtensions, AppCompatExtension
 		view.findViewById<Button>(R.id.choose_company_change_btn).setOnClickListener {
 			val intent = Intent(activity, CompanyChooserActivity::class.java)
 			intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
-			startActivityForResult(intent, AbsStepFragment.REQUEST_CODE_CHOOSE_COMPANY)
+			startActivityForResult(intent, REQUEST_CODE_CHOOSE_COMPANY)
 		}
 		detectTryAgainButton.setOnClickListener { doStep() }
 		view.findViewById<Button>(R.id.choose_company_next_btn).setOnClickListener {
@@ -198,9 +200,9 @@ class AddDialogFragment: DialogFragment(), AndroidExtensions, AppCompatExtension
 	}
 
 	override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
-		if (requestCode == AbsStepFragment.Companion.REQUEST_CODE_CHOOSE_COMPANY) {
+		if (requestCode == REQUEST_CODE_CHOOSE_COMPANY) {
 			if (resultCode == Activity.RESULT_OK) {
-				intent!![AbsStepFragment.Companion.RESULT_EXTRA_COMPANY_CODE]?.asString()?.let(this::setCompany)
+				intent!![RESULT_EXTRA_COMPANY_CODE]?.asString()?.let(this::setCompany)
 			}
 		}
 	}

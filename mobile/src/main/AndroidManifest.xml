@@ -42,14 +42,8 @@
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 			</intent-filter>
-		</activity>
-
-		<activity android:name=".ui.AddActivity"
-		          android:label="@string/activity_add"
-		          android:theme="@style/AppTheme"
-		          android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation">
 			<intent-filter>
-				<action android:name="android.intent.action.MAIN"/>
+				<action android:name="info.papdt.express.helper.ACTION_SEARCH"/>
 			</intent-filter>
 		</activity>
 

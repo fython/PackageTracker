@@ -19,6 +19,7 @@ import android.view.inputmethod.EditorInfo
 import java.util.ArrayList
 
 import info.papdt.express.helper.R
+import info.papdt.express.helper.RESULT_EXTRA_COMPANY_CODE
 import info.papdt.express.helper.api.PackageApi
 import info.papdt.express.helper.api.RxPackageApi
 import info.papdt.express.helper.support.Settings
@@ -107,18 +108,12 @@ class CompanyChooserActivity : AbsActivity() {
 		mAdapter.setOnItemClickListener(object : SimpleRecyclerViewAdapter.OnItemClickListener {
 			override fun onItemClick(position: Int, holder: SimpleRecyclerViewAdapter.ClickableViewHolder) {
 				val intent = Intent()
-				intent[RESULT_EXTRA_COMPANY_CODE] = mAdapter!!.getItem(position).code
+				intent[RESULT_EXTRA_COMPANY_CODE] = mAdapter.getItem(position).code
 				setResult(Activity.RESULT_OK, intent)
 				finish()
 			}
 		})
 		mList.adapter = mAdapter
-	}
-
-	companion object {
-
-		const val RESULT_EXTRA_COMPANY_CODE = "company_code"
-
 	}
 
 }

@@ -11,7 +11,7 @@ import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
 import info.papdt.express.helper.R
 import info.papdt.express.helper.dao.PackageDatabase
-import info.papdt.express.helper.ui.AddActivity
+import info.papdt.express.helper.ui.MainActivity
 import moe.feng.kotlinyan.common.ServiceExtensions
 
 import java.util.ArrayList
@@ -279,12 +279,7 @@ class DetectNumberService : AccessibilityService(), ServiceExtensions {
 	}
 
 	private fun sendNotification(appName: String, company: String?, number: String, name: String?, headsUp: Boolean) {
-		val addIntent = Intent(applicationContext, AddActivity::class.java)
-		addIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-		addIntent.putExtra(AddActivity.EXTRA_HAS_PREINFO, true)
-		addIntent.putExtra(AddActivity.EXTRA_PRE_NUMBER, number)
-		addIntent.putExtra(AddActivity.EXTRA_PRE_COMPANY, company)
-		if (name != null) addIntent.putExtra(AddActivity.EXTRA_PRE_NAME, name)
+		val addIntent = MainActivity.getSearchIntent(applicationContext, number)
 		val notiTitle = if (name != null)
 			getString(R.string.auto_detect_noti_title_with_name, name)
 		else

@@ -18,7 +18,7 @@ import android.view.animation.BounceInterpolator
 import android.widget.ImageView
 import info.papdt.express.helper.R
 import info.papdt.express.helper.support.ScreenUtils
-import info.papdt.express.helper.ui.AddActivity
+import info.papdt.express.helper.ui.MainActivity
 import moe.feng.kotlinyan.common.ServiceExtensions
 
 class ClipboardDetectService : Service(), ClipboardManager.OnPrimaryClipChangedListener, ServiceExtensions {
@@ -72,7 +72,7 @@ class ClipboardDetectService : Service(), ClipboardManager.OnPrimaryClipChangedL
 	private fun initPopupView() {
 		mIconView = mLayout.findViewById(R.id.icon_view)
 		mLayout.setOnClickListener { view ->
-			AddActivity.launch(view.context, null, mLastNumber, null)
+			MainActivity.search(view.context, mLastNumber)
 			mHandler.sendEmptyMessage(0)
 		}
 		mLayout.setOnTouchListener(object : View.OnTouchListener {
