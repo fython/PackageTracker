@@ -2,12 +2,14 @@ package info.papdt.express.helper.ui
 
 import android.animation.Animator
 import android.annotation.SuppressLint
+import android.content.ClipDescription
 import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.support.annotation.RequiresApi
+import android.support.design.widget.Snackbar
 import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.AppCompatEditText
@@ -21,6 +23,9 @@ import cn.nekocode.rxlifecycle.RxLifecycle
 import java.util.ArrayList
 
 import info.papdt.express.helper.R
+import info.papdt.express.helper.REQUEST_ADD
+import info.papdt.express.helper.RESULT_EXTRA_PACKAGE_JSON
+import info.papdt.express.helper.RESULT_NEW_PACKAGE
 import info.papdt.express.helper.api.PackageApi
 import info.papdt.express.helper.api.RxPackageApi
 import info.papdt.express.helper.dao.PackageDatabase
@@ -35,7 +40,7 @@ import io.reactivex.schedulers.Schedulers
 import moe.feng.kotlinyan.common.AndroidExtensions
 import moe.feng.kotlinyan.common.lazyFindNonNullView
 
-class SearchActivity : AbsActivity() {
+class SearchActivity : AbsActivity(), AddDialogFragment.IAddDialogObserver {
 
 	private val mList: RecyclerView by lazyFindNonNullView(R.id.recycler_view)
 	private val mSearchEdit: AppCompatEditText by lazyFindNonNullView(R.id.search_edit)
@@ -78,6 +83,15 @@ class SearchActivity : AbsActivity() {
 									Color.TRANSPARENT else resources.color[R.color.lollipop_status_bar_grey]
 							}
 							circularRevealActivity()
+							if (intent[EXTRA_IS_LONGCLICK]!!.asBoolean()
+									&& clipboardManager
+									.primaryClipDescription.hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN)) {
+								Snackbar.make(rootLayout, R.string.toast_clipboard_paste, Snackbar.LENGTH_LONG)
+										.setAction(R.string.toast_clipboard_paste_action) {
+											mSearchEdit.onTextContextMenuItem(android.R.id.paste)
+										}
+										.show()
+							}
 						}, 100)
 						rootLayout.viewTreeObserver.removeOnGlobalLayoutListener(this)
 					}
@@ -116,22 +130,7 @@ class SearchActivity : AbsActivity() {
 						mAdapter.setItems(buildItems())
 						mAdapter.notifyDataSetChanged()
 					}
-					Observable.just(charSequence.toString().trim())
-							.compose(RxLifecycle.bind(this@SearchActivity).withObservable())
-							.map {
-								val keyword = it.trim().toLowerCase()
-								(0 until mDatabase.size())
-										.filter { mDatabase[it].name.toLowerCase().contains(keyword) || mDatabase[it].number.toLowerCase().contains(keyword) }
-										.mapTo(ArrayList()) { mDatabase[it] }
-							}
-							.subscribeOn(Schedulers.computation())
-							.observeOn(AndroidSchedulers.mainThread())
-							.subscribe { packages ->
-								this@SearchActivity.packages = packages
-								mAdapter.setPackages(packages)
-								mAdapter.setItems(buildItems())
-								mAdapter.notifyDataSetChanged()
-							}
+					startFindPackage()
 				}
 			}
 
@@ -149,6 +148,32 @@ class SearchActivity : AbsActivity() {
 		mAdapter.setPackages(null)
 
 		mList.adapter = mAdapter
+	}
+
+	private fun startFindPackage() {
+		Observable.just(mSearchEdit.text.toString().trim())
+				.compose(RxLifecycle.bind(this@SearchActivity).withObservable())
+				.map {
+					val keyword = it.trim().toLowerCase()
+					(0 until mDatabase.size())
+							.filter { mDatabase[it].name.toLowerCase().contains(keyword) || mDatabase[it].number.toLowerCase().contains(keyword) }
+							.mapTo(ArrayList()) { mDatabase[it] }
+				}
+				.subscribeOn(Schedulers.computation())
+				.observeOn(AndroidSchedulers.mainThread())
+				.subscribe { packages ->
+					this@SearchActivity.packages = packages
+					mAdapter.setPackages(packages)
+					mAdapter.setItems(buildItems())
+					mAdapter.notifyDataSetChanged()
+				}
+	}
+
+	override fun onPackageAdd(p: Package) {
+		startFindPackage()
+		val intent = Intent()
+		intent.putExtra(RESULT_EXTRA_PACKAGE_JSON, p.toJsonString())
+		setResult(RESULT_NEW_PACKAGE, intent)
 	}
 
 	@RequiresApi(Build.VERSION_CODES.LOLLIPOP)
@@ -242,14 +267,16 @@ class SearchActivity : AbsActivity() {
 		private const val EXTRA_CX = "cx"
 		private const val EXTRA_CY = "cy"
 		private const val EXTRA_KEYWORD = "keyword"
+		private const val EXTRA_IS_LONGCLICK = "is_longclick"
 
-		fun launch(activity: AppCompatActivity, cx: Int, cy: Int, keyword: String? = null) {
+		fun launch(activity: AppCompatActivity, cx: Int, cy: Int, keyword: String? = null, isLongClick: Boolean = false) {
 			val intent = Intent(activity, SearchActivity::class.java)
 			intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
 			intent[EXTRA_CX] = cx
 			intent[EXTRA_CY] = cy
 			intent[EXTRA_KEYWORD] = keyword
-			activity.startActivity(intent)
+			intent[EXTRA_IS_LONGCLICK] = isLongClick
+			activity.startActivityForResult(intent, REQUEST_ADD)
 		}
 
 	}

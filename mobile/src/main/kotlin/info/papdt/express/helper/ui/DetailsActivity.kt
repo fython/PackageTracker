@@ -25,6 +25,9 @@ import android.widget.ImageView
 import cn.nekocode.rxlifecycle.RxLifecycle
 
 import info.papdt.express.helper.R
+import info.papdt.express.helper.REQUEST_DETAILS
+import info.papdt.express.helper.RESULT_DELETED
+import info.papdt.express.helper.RESULT_RENAMED
 import info.papdt.express.helper.api.PackageApi
 import info.papdt.express.helper.dao.PackageDatabase
 import info.papdt.express.helper.model.BaseMessage
@@ -80,7 +83,7 @@ class DetailsActivity : AbsActivity() {
 
 					val intent = Intent()
 					intent["id"] = data!!.number
-					setResult(MainActivity.RESULT_RENAMED, intent)
+					setResult(RESULT_RENAMED, intent)
 
 					thread {
 						val db = PackageDatabase.getInstance(applicationContext)
@@ -103,7 +106,7 @@ class DetailsActivity : AbsActivity() {
 				PackageDatabase.getInstance(applicationContext).remove(data!!)
 				val intent = Intent()
 				intent["title"] = data!!.name
-				setResult(MainActivity.RESULT_DELETED, intent)
+				setResult(RESULT_DELETED, intent)
 				finish()
 			}
 			cancelButton()
@@ -219,7 +222,7 @@ class DetailsActivity : AbsActivity() {
 
 				val intent = Intent()
 				intent.putExtra("id", data!!.number)
-				setResult(MainActivity.RESULT_RENAMED, intent)
+				setResult(RESULT_RENAMED, intent)
 
 				val db = PackageDatabase.getInstance(applicationContext)
 				db[db.indexOf(data!!.number)] = data!!
@@ -250,7 +253,7 @@ class DetailsActivity : AbsActivity() {
 							if (isSucceed) {
 								val intent = Intent()
 								intent["id"] = data!!.number
-								setResult(MainActivity.RESULT_RENAMED, intent)
+								setResult(RESULT_RENAMED, intent)
 								setUpData()
 							}
 						}
@@ -298,7 +301,7 @@ class DetailsActivity : AbsActivity() {
 
 				val intent = Intent()
 				intent.putExtra("id", data!!.number)
-				setResult(MainActivity.RESULT_RENAMED, intent)
+				setResult(RESULT_RENAMED, intent)
 			}
 			db[db.indexOf(data!!.number)] = data!!
 			db.save()
@@ -334,7 +337,7 @@ class DetailsActivity : AbsActivity() {
 			intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
 			intent[EXTRA_PACKAGE_JSON] = p.toJsonString()
 			intent[EXTRA_STATE] = p.state
-			activity.startActivityForResult(intent, MainActivity.REQUEST_DETAILS)
+			activity.startActivityForResult(intent, REQUEST_DETAILS)
 		}
 	}
 

@@ -104,7 +104,10 @@ class AddDialogFragment: DialogFragment(), AndroidExtensions, AppCompatExtension
 						detectTryAgainButton.makeGone()
 						loadingLayout.makeVisible()
 					}
-					.subscribe { dismiss() }
+					.subscribe {
+						(activity as? IAddDialogObserver)?.onPackageAdd(result!!)
+						dismiss()
+					}
 		}
 
 		doStep()
@@ -209,6 +212,12 @@ class AddDialogFragment: DialogFragment(), AndroidExtensions, AppCompatExtension
 		fun newInstance(number: String) = AddDialogFragment().apply {
 			arguments = Bundle().apply { putString(ARG_NUMBER, number) }
 		}
+
+	}
+
+	interface IAddDialogObserver {
+
+		fun onPackageAdd(p: Package)
 
 	}
 

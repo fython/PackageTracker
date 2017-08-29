@@ -19,8 +19,8 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import info.papdt.express.helper.*
 
-import info.papdt.express.helper.R
 import info.papdt.express.helper.dao.PackageDatabase
 import info.papdt.express.helper.model.Package
 import info.papdt.express.helper.support.CheatSheet
@@ -67,6 +67,7 @@ class MainActivity : AbsActivity() {
 		supportActionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
 
 		mToolbar?.setOnClickListener { startSearch() }
+		mToolbar?.setOnLongClickListener { startSearch(isLongClick = true); true }
 
 		tabLayout.setupWithViewPager(viewPager)
 		tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
@@ -132,24 +133,18 @@ class MainActivity : AbsActivity() {
 		startActivityForResult(intent, ScannerActivity.REQUEST_CODE_SCAN)
 	}
 
-	private fun startSearch(keyword: String? = null) {
+	private fun startSearch(keyword: String? = null, isLongClick: Boolean = false) {
 		val location = IntArray(2)
 		toolbarBox.getLocationOnScreen(location)
 		SearchActivity.launch(this,
-				window.decorView.width / 2, location[0] + toolbarBox.height / 2, keyword)
+				window.decorView.width / 2, location[0] + toolbarBox.height / 2, keyword, isLongClick)
 	}
 
 	public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 		Log.i("Main", "result received, requestCode=$requestCode, resultCode=$resultCode")
 		if (requestCode == REQUEST_ADD) {
 			if (resultCode == RESULT_NEW_PACKAGE) {
-				val jsonData = data!![AddActivity.RESULT_EXTRA_PACKAGE_JSON]?.asString()
-				val p = Package.buildFromJson(jsonData)
-				if (p != null) {
-					Log.i("Main", p.toJsonString())
-					mDatabase.add(p)
-					this.notifyDataChanged(-1)
-				}
+				this.notifyDataChanged(-1)
 			}
 		}
 		if (requestCode == REQUEST_DETAILS) {
@@ -160,10 +155,10 @@ class MainActivity : AbsActivity() {
 					val fragId = viewPager.currentItem
 					Snackbar.make(
 							`$`(R.id.coordinator_layout)!!,
-							String.format(getString(R.string.toast_item_removed), data!!["title"]),
+							String.format(getString(R.string.toast_item_removed), data!!["title"]?.asString()),
 							Snackbar.LENGTH_LONG
 					)
-							.setAction(R.string.toast_item_removed_action) { fragments!![fragId].onUndoActionClicked() }
+							.setAction(R.string.toast_item_removed_action) { fragments[fragId].onUndoActionClicked() }
 							.show()
 				}
 			}
@@ -289,12 +284,6 @@ class MainActivity : AbsActivity() {
 	}
 
 	companion object {
-
-		const val REQUEST_ADD = 10001
-		const val RESULT_NEW_PACKAGE = 2000
-		const val REQUEST_DETAILS = 10002
-		const val RESULT_DELETED = 2001
-		const val RESULT_RENAMED = 2002
 
 		const val MSG_NOTIFY_DATA_CHANGED = 1
 		const val MSG_NOTIFY_ITEM_REMOVE = 2

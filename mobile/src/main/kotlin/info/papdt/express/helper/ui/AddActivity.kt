@@ -15,6 +15,7 @@ import android.widget.ProgressBar
 import android.widget.Toast
 
 import info.papdt.express.helper.R
+import info.papdt.express.helper.RESULT_NEW_PACKAGE
 import info.papdt.express.helper.dao.PackageDatabase
 import info.papdt.express.helper.model.Package
 import info.papdt.express.helper.services.DetectNumberService
@@ -145,7 +146,7 @@ class AddActivity : AbsActivity() {
 		if (isFromMainActivity) {
 			val intent = Intent()
 			intent.putExtra(RESULT_EXTRA_PACKAGE_JSON, `package`!!.toJsonString())
-			setResult(MainActivity.RESULT_NEW_PACKAGE, intent)
+			setResult(RESULT_NEW_PACKAGE, intent)
 		} else {
 			val database = PackageDatabase.getInstance(applicationContext)
 			database.add(`package`!!)

@@ -203,6 +203,9 @@
 	<string name="subheader_company">Company</string>
 	<string name="item_title_please_wait">Please wait....</string>
 
+	<string name="toast_clipboard_paste">Found text in your clipboard</string>
+	<string name="toast_clipboard_paste_action">Paste</string>
+
 	<!-- Import/Export -->
 	<string name="activity_import_export">Import/Export</string>
 	<string name="action_backup_all_data">Backup packages data</string>
