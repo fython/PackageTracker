@@ -26,9 +26,10 @@ import io.reactivex.schedulers.Schedulers
 
 abstract class BaseFragment : AbsFragment, OnRefreshListener {
 
-	private lateinit var mRefreshLayout: SmartRefreshLayout
+	lateinit var mRefreshLayout: SmartRefreshLayout
 	private lateinit var mRecyclerView: AnimatedRecyclerView
 	private lateinit var mEmptyView: LinearLayout
+	lateinit var mSwipeHeader: DeliveryHeader
 
 	private var mAdapter: RecyclerView.Adapter<*>? = null
 
@@ -38,6 +39,8 @@ abstract class BaseFragment : AbsFragment, OnRefreshListener {
 
 	internal var eggCount = 0
 	internal var bigEggCount = 0
+
+	var isDemoRefresh = false
 
 	constructor(database: PackageDatabase) {
 		this.database = database
@@ -65,6 +68,7 @@ abstract class BaseFragment : AbsFragment, OnRefreshListener {
 		mRefreshLayout = view.findViewById(R.id.refresh_layout)
 		mRecyclerView = view.findViewById(R.id.recycler_view)
 		mEmptyView = view.findViewById(R.id.empty_view)
+		mSwipeHeader = view.findViewById(R.id.refresh_header)
 
 		// Set up mRecyclerView
 		mRecyclerView.setHasFixedSize(false)
@@ -92,6 +96,10 @@ abstract class BaseFragment : AbsFragment, OnRefreshListener {
 	abstract val fragmentId: Int
 
 	override fun onRefresh(view: RefreshLayout) {
+		if (isDemoRefresh) {
+			isDemoRefresh = false
+			return
+		}
 		mHandler.sendEmptyMessage(FLAG_REFRESH_LIST)
 	}
 

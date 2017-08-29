@@ -5,12 +5,12 @@ import android.app.Fragment
 import android.app.FragmentManager
 import android.content.Context
 import android.content.Intent
+import android.graphics.Rect
 import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
-import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
 import android.support.design.widget.TabLayout
 import android.support.v4.view.ViewPager
@@ -20,13 +20,19 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewTreeObserver
+import android.widget.ImageButton
+import com.getkeepsafe.taptargetview.TapTarget
+import com.getkeepsafe.taptargetview.TapTargetSequence
+import com.getkeepsafe.taptargetview.TapTargetView
 import info.papdt.express.helper.*
 
 import info.papdt.express.helper.dao.PackageDatabase
 import info.papdt.express.helper.model.Package
-import info.papdt.express.helper.support.CheatSheet
 import info.papdt.express.helper.support.PushUtils
+import info.papdt.express.helper.support.ScreenUtils
 import info.papdt.express.helper.support.Settings
+import info.papdt.express.helper.support.SettingsInstance
 import info.papdt.express.helper.ui.common.AbsActivity
 import info.papdt.express.helper.ui.fragment.home.FragmentAll
 import info.papdt.express.helper.ui.launcher.AppWidgetProvider
@@ -68,9 +74,11 @@ class MainActivity : AbsActivity() {
 
 		supportActionBar?.displayOptions = ActionBar.DISPLAY_SHOW_CUSTOM
 
+		// Set up toolbar
 		mToolbar?.setOnClickListener { startSearch() }
 		mToolbar?.setOnLongClickListener { startSearch(isLongClick = true); true }
 
+		// Set up views
 		tabLayout.setupWithViewPager(viewPager)
 		tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
 			override fun onTabReselected(tab: TabLayout.Tab?) { fragments[viewPager.currentItem].scrollToTop() }
@@ -80,26 +88,91 @@ class MainActivity : AbsActivity() {
 		viewPager.adapter = TabsAdapter(fragmentManager)
 		viewPager.offscreenPageLimit = 3
 
+		// Do action
 		when (intent.action) {
 			ScannerActivity.ACTION_SCAN_TO_ADD -> openScanner()
 			ACTION_SEARCH -> startSearch(intent[EXTRA_SERACH]?.asString())
 		}
 	}
 
-	override fun setUpViews() {
-		val fab = `$`<FloatingActionButton>(R.id.fab)
-		fab!!.setOnClickListener {
-
-		}
-		CheatSheet.setup(fab)
-	}
+	override fun setUpViews() {}
 
 	override fun onStop() {
 		super.onStop()
 		mDatabase.save()
 	}
 
+	private fun showTapTargetTips() {
+		if (!SettingsInstance.shouldShowTips) return
+		// Show tap target views
+		val targets = listOf(
+				TapTarget.forView(
+						findViewById<ImageButton>(R.id.action_start_search),
+						resources.string[R.string.tap_target_tips_1_title],
+						resources.string[R.string.tap_target_tips_1_desc]
+				).tintTarget(true).targetCircleColor(R.color.white_in_dark),
+				TapTarget.forToolbarMenuItem(
+						mToolbar,
+						R.id.action_scan,
+						resources.string[R.string.tap_target_tips_2_title],
+						resources.string[R.string.tap_target_tips_2_desc]
+				).tintTarget(true).targetCircleColor(R.color.white_in_dark)
+		)
+		TapTargetSequence(this)
+				.targets(targets)
+				.continueOnCancel(true)
+				.listener(object : TapTargetSequence.Listener {
+					override fun onSequenceCanceled(lastTarget: TapTarget?) {}
+					override fun onSequenceStep(lastTarget: TapTarget?, targetClicked: Boolean) {}
+					override fun onSequenceFinish() {
+						val currentFragment = fragments[viewPager.currentItem]
+						currentFragment.isDemoRefresh = true
+						currentFragment.mRefreshLayout.autoRefresh()
+						TapTargetSequence(this@MainActivity)
+								.target(TapTarget.forBounds(
+										Rect(
+												// Left
+												(window.decorView.width / 2)
+														- 64f.dpToPx(this@MainActivity).toInt(),
+												// Top
+												tabLayout.bottom
+														+ ScreenUtils.getStatusBarHeight(this@MainActivity)
+														+ currentFragment.mSwipeHeader.measuredHeight,
+												// Right
+												(window.decorView.width / 2)
+														+ 64f.dpToPx(this@MainActivity).toInt(),
+												// Bottom
+												tabLayout.bottom
+														+ ScreenUtils.getStatusBarHeight(this@MainActivity)
+														+ currentFragment.mSwipeHeader.measuredHeight
+														+ 128f.dpToPx(this@MainActivity).toInt()
+										),
+										resources.string[R.string.tap_target_tips_3_title],
+										resources.string[R.string.tap_target_tips_3_desc]
+								).targetRadius(100).outerCircleColor(R.color.colorAccent).transparentTarget(true))
+								.listener(object : TapTargetSequence.Listener {
+									override fun onSequenceCanceled(lastTarget: TapTarget?) {}
+									override fun onSequenceStep(lastTarget: TapTarget?, targetClicked: Boolean) {}
+									override fun onSequenceFinish() {
+										fragments[viewPager.currentItem].mRefreshLayout.finishRefresh()
+										SettingsInstance.shouldShowTips = false
+									}
+								})
+								.continueOnCancel(true)
+								.start()
+					}
+				})
+				.start()
+	}
+
 	override fun onCreateOptionsMenu(menu: Menu): Boolean {
+		val observer = mToolbar?.viewTreeObserver
+		observer?.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+			override fun onGlobalLayout() {
+				observer.removeOnGlobalLayoutListener(this)
+				if (observer.isAlive) showTapTargetTips()
+			}
+		})
 		menuInflater.inflate(R.menu.menu_home, menu)
 		menu.tintItemsColor(resources.color[R.color.black_in_light])
 		return super.onCreateOptionsMenu(menu)
