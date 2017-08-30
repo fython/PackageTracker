@@ -43,6 +43,7 @@ object PushApi {
 
 	@JvmOverloads fun register(token: String = defaultToken): Observable<ResponseMessage>
 			= Observable.just(token).map { targetToken ->
+				if (apiHost.isEmpty()) return@map ResponseMessage()
 				val request = Request.Builder()
 						.postForm(mapOf("token" to targetToken))
 						.url("http://$apiHost/subscribe/register")
@@ -55,6 +56,7 @@ object PushApi {
 	@JvmOverloads fun sync(list: Collection<String>, token: String = defaultToken): Observable<ResponseMessage> {
 		return Observable.just(list)
 				.map { syncList ->
+					if (apiHost.isEmpty()) return@map ResponseMessage()
 					val strings = syncList.map { "\"$it\"" }
 					val dataString = if (strings.isEmpty()) "" else strings.reduce { acc, s -> "$acc,$s" }
 					val request = Request.Builder()
@@ -70,6 +72,7 @@ object PushApi {
 	@JvmOverloads fun add(number: String, company: String? = null, token: String = defaultToken): Observable<ResponseMessage> {
 		return Observable.just("")
 				.map {
+					if (apiHost.isEmpty()) return@map ResponseMessage()
 					val request = Request.Builder()
 							.postForm(mutableMapOf("token" to token, "id" to number).apply {
 								company?.let { this["com"] = it }
@@ -85,6 +88,7 @@ object PushApi {
 	@JvmOverloads fun remove(number: String, token: String = defaultToken): Observable<ResponseMessage> {
 		return Observable.just(number)
 				.map { id ->
+					if (apiHost.isEmpty()) return@map ResponseMessage()
 					val request = Request.Builder()
 							.postForm(mapOf("token" to token, "id" to id))
 							.url("http://$apiHost/subscribe/remove")
@@ -98,6 +102,7 @@ object PushApi {
 	@JvmOverloads fun list(token: String = defaultToken): Observable<Array<String>?> {
 		return Observable.just("")
 				.map {
+					if (apiHost.isEmpty()) return@map emptyArray<String>()
 					val request = Request.Builder()
 							.url("http://$apiHost/subscribe/list?token=$token")
 							.build()
@@ -110,6 +115,7 @@ object PushApi {
 	@JvmOverloads fun requestPush(token: String = defaultToken): Observable<ResponseMessage> {
 		return Observable.just("")
 				.map {
+					if (apiHost.isEmpty()) return@map ResponseMessage()
 					val request = Request.Builder()
 							.url("http://$apiHost/subscribe/request_push?token=$token")
 							.build()
