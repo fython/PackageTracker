@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.LinearLayout
+import android.widget.TextView
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 
@@ -30,6 +31,7 @@ abstract class BaseFragment : AbsFragment, OnRefreshListener {
 	private lateinit var mRecyclerView: AnimatedRecyclerView
 	private lateinit var mEmptyView: LinearLayout
 	lateinit var mSwipeHeader: DeliveryHeader
+	protected lateinit var mEmptyTips: TextView
 
 	private var mAdapter: RecyclerView.Adapter<*>? = null
 
@@ -69,6 +71,7 @@ abstract class BaseFragment : AbsFragment, OnRefreshListener {
 		mRecyclerView = view.findViewById(R.id.recycler_view)
 		mEmptyView = view.findViewById(R.id.empty_view)
 		mSwipeHeader = view.findViewById(R.id.refresh_header)
+		mEmptyTips = view.findViewById(R.id.frame_empty_tip)
 
 		// Set up mRecyclerView
 		mRecyclerView.setHasFixedSize(false)

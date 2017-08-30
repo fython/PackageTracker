@@ -11,6 +11,9 @@
 	<string name="navigation_item_delivered">已送達</string>
 	<string name="navigation_item_on_the_way">運輸中</string>
 	<string name="frame_empty_tip">點擊 “添加” 按鈕新增速遞包裹</string>
+	<string name="frame_empty_tip_delivering">沒有運輸中的包裹</string>
+	<string name="frame_empty_tip_delivered">沒有已送達的包裹</string>
+	<string name="frame_empty_tip_all">你可以通过搜尋欄添加包裹</string>
 
 	<string name="action_search">搜尋</string>
 	<string name="action_read_all">全部標為已讀</string>

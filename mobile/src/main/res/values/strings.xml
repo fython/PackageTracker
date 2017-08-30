@@ -18,6 +18,9 @@
 	<string name="navigation_item_delivered">Delivered</string>
 	<string name="navigation_item_on_the_way">On the way</string>
 	<string name="frame_empty_tip">Click \"Add\" button to add packages</string>
+	<string name="frame_empty_tip_delivering">No package delivering</string>
+	<string name="frame_empty_tip_delivered">No package delivered</string>
+	<string name="frame_empty_tip_all">You can add a package from search box</string>
 
 	<string name="action_search">Search</string>
 	<string name="action_read_all">Mark all read</string>
