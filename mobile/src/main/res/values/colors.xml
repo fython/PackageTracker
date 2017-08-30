@@ -21,7 +21,7 @@
 	<color name="pink_700">#C2185B</color>
 	<color name="pink_900">#880E4F</color>
 
-	<color name="indigo_accent_200">#536dfe</color>
+	<color name="indigo_accent_100">#8C9EFF</color>
 
 	<color name="blue_500">#2196F3</color>
 	<color name="blue_700">#1976D2</color>
@@ -63,7 +63,7 @@
 	<color name="light_theme_status_bar">@color/grey_300</color>
 	<color name="light_theme_app_bar">@color/grey_100</color>
 	<color name="light_theme_background">@color/grey_50</color>
-	<color name="light_theme_background_translucent">#DFFAFAFA</color>
+	<color name="light_theme_background_translucent">#EFFAFAFA</color>
 
 	<color name="grey_theme_status_bar">@color/grey_600</color>
 	<color name="grey_theme_app_bar">@color/grey_500</color>

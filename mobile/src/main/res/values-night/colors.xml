@@ -3,7 +3,7 @@
 
 	<color name="colorPrimary">@color/blue_grey_500</color>
 	<color name="colorPrimaryDark">@color/blue_grey_700</color>
-	<color name="colorAccent">@color/indigo_accent_200</color>
+	<color name="colorAccent">@color/indigo_accent_100</color>
 
 	<array name="statusColor">
 		<item>@color/teal_500</item>
@@ -27,7 +27,7 @@
 	<color name="light_theme_status_bar">@color/grey_900</color>
 	<color name="light_theme_app_bar">@color/grey_850</color>
 	<color name="light_theme_background">@color/grey_850</color>
-	<color name="light_theme_background_translucent">#e7000000</color>
+	<color name="light_theme_background_translucent">#f0000000</color>
 
 	<color name="grey_theme_status_bar">@color/blue_grey_700</color>
 	<color name="grey_theme_app_bar">@color/blue_grey_500</color>
@@ -42,6 +42,6 @@
 
 	<color name="toolbar_box_background">@color/grey_800</color>
 
-	<color name="colorAccentDark">@color/indigo_accent_200</color>
+	<color name="colorAccentDark">@color/indigo_accent_100</color>
 
 </resources>
