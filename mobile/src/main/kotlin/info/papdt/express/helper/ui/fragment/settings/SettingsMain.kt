@@ -157,8 +157,8 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 		mPrefSync.isEnabled = b
 		mPrefReqPush.isEnabled = b
 		mPrefIntervalTime.isEnabled = !b
-		context.packageManager.setComponentEnabledSetting(
-				ComponentName(context.applicationContext, FCMService::class.java),
+		activity.packageManager.setComponentEnabledSetting(
+				ComponentName(activity.applicationContext, FCMService::class.java),
 				if (b) PackageManager.COMPONENT_ENABLED_STATE_ENABLED else PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
 				PackageManager.DONT_KILL_APP
 		)

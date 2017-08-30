@@ -11,7 +11,6 @@ import android.widget.ImageView
 import info.papdt.express.helper.R
 import info.papdt.express.helper.support.MaterialImageLoader
 import info.papdt.express.helper.ui.common.AbsActivity
-import moe.feng.kotlinyan.common.colorRes
 import moe.feng.kotlinyan.common.lazyFindNonNullView
 
 class SplashActivity : AbsActivity() {
@@ -19,9 +18,8 @@ class SplashActivity : AbsActivity() {
 	private val mLogoView: ImageView by lazyFindNonNullView(R.id.iv_logo)
 	private val mTitleView: AppCompatTextView by lazyFindNonNullView(R.id.tv_title)
 
-	private val STATUS_BAR_COLOR by colorRes(R.color.lollipop_status_bar_grey)
-
 	override fun onCreate(savedInstanceState: Bundle?) {
+		val STATUS_BAR_COLOR = resources.color[R.color.lollipop_status_bar_grey]
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 			window.decorView.systemUiVisibility = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
 				View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
