@@ -15,6 +15,7 @@ import info.papdt.express.helper.api.PushApi
 import info.papdt.express.helper.model.BaseMessage
 import info.papdt.express.helper.model.Package
 import info.papdt.express.helper.support.FileUtils
+import info.papdt.express.helper.support.SettingsInstance
 
 class PackageDatabase private constructor(private val mContext: Context) {
 
@@ -163,7 +164,7 @@ class PackageDatabase private constructor(private val mContext: Context) {
 	fun getPackageIdList(): List<String> = data.map { "${it.number}+${it.companyType}" }
 
 	fun pullDataFromNetwork(shouldRefreshDelivered: Boolean) {
-		PushApi.sync(getPackageIdList()).subscribe()
+		if (SettingsInstance.enablePush) PushApi.sync(getPackageIdList()).subscribe()
 		for (i in 0 until size()) {
 			val pack = this[i]
 			if (!shouldRefreshDelivered && pack.state == Package.STATUS_DELIVERED) {

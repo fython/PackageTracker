@@ -55,8 +55,10 @@ object PushApi {
 	@JvmOverloads fun sync(list: Collection<String>, token: String = defaultToken): Observable<ResponseMessage> {
 		return Observable.just(list)
 				.map { syncList ->
+					val strings = syncList.map { "\"$it\"" }
+					val dataString = if (strings.isEmpty()) "" else strings.reduce { acc, s -> "$acc,$s" }
 					val request = Request.Builder()
-							.postJson("[${syncList.map { "\"$it\"" }.reduce { acc, s -> "$acc,$s" }}]")
+							.postJson("[$dataString]")
 							.url("http://$apiHost/subscribe/sync?token=$token")
 							.build()
 					return@map requestJsonObject<ResponseMessage>(request) ?: ResponseMessage()
