@@ -15,10 +15,9 @@ android {
     buildTypes {
         release {
             minifyEnabled false
-            shrinkResources true
+            shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             pseudoLocalesEnabled true
-            zipAlignEnabled true
         }
     }
     sourceSets {

@@ -68,7 +68,10 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 	}
 
 	override fun onCreatePreferences(bundle: Bundle?, s: String?) {
-		addPreferencesFromResource(R.xml.settings_main)
+		addPreferencesFromResource(
+				if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M)
+					R.xml.settings_main_old else R.xml.settings_main
+		)
 
 		mPrefAlipay = findPreference("alipay")
 

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+	<PreferenceCategory android:title="@string/category_user_interface">
+
+		<SwitchPreference android:key="navigation_tint"
+		                  android:title="@string/pref_navigation_tint"
+		                  android:summary="@string/pref_navigation_tint_summary"/>
+
+		<ListPreference android:key="night_mode"
+		                android:title="@string/pref_night_mode"
+		                android:summary="%s"
+		                android:entries="@array/night_mode_choices"
+		                android:entryValues="@array/night_mode_choices_item"
+		                android:defaultValue="0"/>
+
+		<Preference android:key="show_tips_again"
+		            android:title="@string/pref_show_tips_again"/>
+
+	</PreferenceCategory>
+
+	<PreferenceCategory android:title="@string/category_notification">
+
+		<SwitchPreference android:key="dont_disturb"
+		                  android:title="@string/item_notification_do_not_disturb"
+		                  android:summary="@string/item_notification_do_not_disturb_desc"/>
+
+		<ListPreference android:key="interval"
+		                android:title="@string/item_notification_interval"
+		                android:summary="%s"
+		                android:entries="@array/notification_interval"
+		                android:entryValues="@array/notification_interval_item"
+		                android:defaultValue="1"/>
+
+	</PreferenceCategory>
+
+	<PreferenceCategory android:title="@string/category_push">
+
+		<SwitchPreference android:key="enable_push"
+		                  android:title="@string/pref_enable_push"
+		                  android:summary="@string/pref_enable_push_summary"/>
+
+		<Preference android:key="firebase_instance_id"
+		            android:title="@string/pref_firebase_instance_id"
+		            android:summary="@string/pref_firebase_instance_id_summary"/>
+
+		<EditTextPreference android:key="api_host"
+		                    android:title="@string/pref_api_host"
+		                    android:summary="%s"
+		                    android:singleLine="true"
+		                    android:inputType="textUri"/>
+
+		<EditTextPreference android:key="api_port"
+		                    android:title="@string/pref_api_port"
+		                    android:summary="%s"
+		                    android:maxLength="5"
+		                    android:singleLine="true"
+		                    android:inputType="numberDecimal"/>
+
+		<Preference android:key="push_sync" android:title="@string/pref_push_sync"/>
+
+		<Preference android:key="request_push" android:title="@string/pref_request_push"/>
+
+	</PreferenceCategory>
+
+	<PreferenceCategory android:title="@string/category_auto_detect_services">
+
+		<SwitchPreference android:key="from_clipboard"
+		                  android:title="@string/item_detect_clipboard"
+		                  android:summary="@string/item_detect_clipboard_desc"/>
+
+		<Preference android:key="from_screen"
+		            android:title="@string/item_detect_screen_text"
+		            android:summary="@string/item_detect_screen_text_desc"/>
+
+	</PreferenceCategory>
+
+	<PreferenceCategory android:title="@string/category_about">
+
+		<Preference android:key="version" android:title="@string/app_name"/>
+		<Preference android:key="github" android:title="@string/github_repo_title" android:summary="@string/github_repo_url"/>
+		<Preference android:key="alipay" android:title="@string/alipay_support_title" android:summary="@string/alipay_support_summary"/>
+		<Preference android:key="sina" android:title="@string/author_sina_title" android:summary="@string/author_sina_desc"/>
+		<Preference android:key="designer" android:title="@string/icon_designer_title" android:summary="@string/icon_designer_summary"/>
+		<Preference android:key="googleplus" android:title="@string/google_plus_title" android:summary="@string/google_plus_url"/>
+		<Preference android:key="license" android:title="@string/open_source_license" android:summary="@string/open_source_license_summary"/>
+		<Preference android:key="contributors" android:title="@string/category_contributors" android:summary="@string/category_contributors_desc"/>
+
+	</PreferenceCategory>
+
+</PreferenceScreen>
