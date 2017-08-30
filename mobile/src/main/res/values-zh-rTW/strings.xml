@@ -140,6 +140,16 @@
 	<string name="pref_api_host">伺服器地址</string>
 	<string name="pref_api_port">伺服器端口</string>
 	<string name="pref_request_push">立即請求推送</string>
+	<string name="pref_whats_this">這是什麼？</string>
+	<string name="fcm_push_intro_title">基於 FCM 推送服務</string>
+	<string name="fcm_push_intro_msg">我們通過 Firebase 雲通知提供了一個更高效的途徑來獲取包裹資料。
+		你可以在自己的伺服器上運行水錶助手推送服務，然後設定到客戶端中。
+		\n\n客戶端將會與伺服器同步清單。當新的訊息來臨時，伺服器会通過 FCM 推送通知（客戶端需要 Google 服務框架）。
+		\n\n推送服務程式源代碼 (Node.js) 已經發佈在 GitHub。你可以將它下載下來並運行在你的伺服器中。
+		\nGitHub: https://github.com/fython/PackageTracker-NodeServer
+	</string>
+	<string name="fcm_push_no_server_button">沒有伺服器？</string>
+	<string name="no_server_message">點擊 \"通過支付寶捐贈\" 設定後，你可以使用我的自建伺服器。</string>
 
 	<string name="item_notification_do_not_disturb">勿擾模式</string>
 	<string name="item_notification_do_not_disturb_desc">在 23:00 至次日 06:00 期間不發出通知。</string>

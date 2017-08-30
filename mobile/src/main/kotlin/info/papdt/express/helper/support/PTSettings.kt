@@ -7,10 +7,11 @@ import kotlin.properties.Delegates
 class PTSettings(context: Context): SharedPreferencesProvider(context, "settings") {
 
 	var enablePush by booleanValue(defValue = false)
-	var pushApiHost by stringValue(defValue = "pt.api.rabi.coffee")
+	var pushApiHost by stringValue()
 	var pushApiPort by intValue(defValue = 3000)
 
 	var shouldShowTips by booleanValue(defValue = true)
+	var clickedDonate by booleanValue(defValue = false)
 
 }
 

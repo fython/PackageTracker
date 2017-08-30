@@ -43,6 +43,7 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 	private val mPrefInstanceId: Preference by PreferenceProperty("firebase_instance_id")
 	private val mPrefSync: Preference by PreferenceProperty("push_sync")
 	private val mPrefReqPush: Preference by PreferenceProperty("request_push")
+	private val mPrefWhatsThis: Preference by PreferenceProperty("push_intro")
 
 	// Auto detect
 	private val mPrefFromClipboard: SwitchPreference by PreferenceProperty("from_clipboard")
@@ -59,6 +60,7 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 	private val mPrefContributors: Preference by PreferenceProperty("contributors")
 
 	private var needRegister = false
+	private var needFreeServer = false
 
 	private val database by lazy { PackageDatabase.getInstance(activity) }
 
@@ -136,6 +138,7 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 		mPrefEnable.onPreferenceChangeListener = this
 		mPrefApiHost.onPreferenceChangeListener = this
 		mPrefApiPort.onPreferenceChangeListener = this
+		mPrefWhatsThis.onPreferenceClickListener = this
 
 		// Auto detect
 		mPrefFromClipboard.onPreferenceChangeListener = this
@@ -165,6 +168,13 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 				if (b) PackageManager.COMPONENT_ENABLED_STATE_ENABLED else PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
 				PackageManager.DONT_KILL_APP
 		)
+	}
+
+	private fun setFreeApiServer() {
+		mPrefApiHost.text = "pt.api.rabi.coffee"
+		mPrefApiPort.text = "3000"
+		SettingsInstance.pushApiHost = "pt.api.rabi.coffee"
+		SettingsInstance.pushApiPort = 3000
 	}
 
 	override fun onPreferenceClick(pref: Preference): Boolean {
@@ -220,6 +230,25 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 				} else PushApi.requestPush().subscribe { makeSnackbar(it.message, Snackbar.LENGTH_LONG).show() }
 				true
 			}
+			mPrefWhatsThis -> {
+				activity.buildAlertDialog {
+					titleRes = R.string.fcm_push_intro_title
+					messageRes = R.string.fcm_push_intro_msg
+					okButton()
+					neutralButton(R.string.fcm_push_no_server_button) { _, _ ->
+						if (SettingsInstance.clickedDonate) {
+							setFreeApiServer()
+						} else {
+							needFreeServer = true
+							activity.buildAlertDialog {
+								messageRes = R.string.no_server_message
+								okButton()
+							}.show()
+						}
+					}
+				}.show()
+				true
+			}
 			// Auto detect
 			mPrefFromScreen -> {
 				startActivity(Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS))
@@ -242,6 +271,8 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 					makeSnackbar(getString(R.string.toast_copied_successfully), Snackbar.LENGTH_SHORT)
 							.show()
 				}
+				SettingsInstance.clickedDonate = true
+				if (needFreeServer) setFreeApiServer()
 				true
 			}
 			mPrefLicense -> {

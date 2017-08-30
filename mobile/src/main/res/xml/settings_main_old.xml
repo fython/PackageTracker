@@ -61,6 +61,8 @@
 
 		<Preference android:key="request_push" android:title="@string/pref_request_push"/>
 
+		<Preference android:key="push_intro" android:title="@string/pref_whats_this"/>
+
 	</PreferenceCategory>
 
 	<PreferenceCategory android:title="@string/category_auto_detect_services">
