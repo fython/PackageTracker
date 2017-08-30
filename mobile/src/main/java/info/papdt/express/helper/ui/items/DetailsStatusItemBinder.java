@@ -149,8 +149,8 @@ public class DetailsStatusItemBinder extends ItemViewBinder<Package.Status, Deta
 					stepIcon.setScaleX(0f);
 					stepIcon.setScaleY(0f);
 					stepIcon.animate().scaleX(1f).scaleY(1f)
-							.setStartDelay(150 * (indexInStatus + 1))
-							.setDuration(500).setInterpolator(new OvershootInterpolator()).start();
+							.setStartDelay(100 * (indexInStatus + 1))
+							.setDuration(400).setInterpolator(new OvershootInterpolator()).start();
 				}
 			}
 		}
