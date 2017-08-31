@@ -85,7 +85,7 @@ class SearchActivity : AbsActivity(), AddDialogFragment.IAddDialogObserver {
 							circularRevealActivity()
 							if (intent[EXTRA_IS_LONGCLICK]!!.asBoolean()
 									&& clipboardManager
-									.primaryClipDescription.hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN)) {
+									?.primaryClipDescription?.hasMimeType(ClipDescription.MIMETYPE_TEXT_PLAIN) == true) {
 								Snackbar.make(rootLayout, R.string.toast_clipboard_paste, Snackbar.LENGTH_LONG)
 										.setAction(R.string.toast_clipboard_paste_action) {
 											mSearchEdit.onTextContextMenuItem(android.R.id.paste)
