@@ -169,6 +169,7 @@
 	<string name="pref_push_sync">Sync list now</string>
 	<string name="pref_enable_push">Enable push</string>
 	<string name="pref_enable_push_summary">Powered by Firebase Cloud Messaging</string>
+	<string name="pref_enable_https">Use HTTPS instead</string>
 	<string name="pref_api_host">Server host</string>
 	<string name="pref_api_port">Server port</string>
 	<string name="pref_request_push">Request push now</string>

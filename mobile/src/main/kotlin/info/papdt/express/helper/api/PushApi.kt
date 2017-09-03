@@ -24,7 +24,9 @@ object PushApi {
 			.readTimeout(10, TimeUnit.SECONDS)
 			.build()
 
-	private val apiHost: String get() = SettingsInstance.run { "$pushApiHost:$pushApiPort" }
+	private val apiHost: String get() = SettingsInstance.run {
+		"http${if (enableHttps) "s" else ""}://$pushApiHost:$pushApiPort"
+	}
 	private val defaultToken: String get() = FirebaseInstanceId.getInstance().token ?: "null"
 
 	private inline fun <reified T> requestJsonObject(request: Request): T? {
@@ -46,7 +48,7 @@ object PushApi {
 				if (apiHost.isEmpty()) return@map ResponseMessage()
 				val request = Request.Builder()
 						.postForm(mapOf("token" to targetToken))
-						.url("http://$apiHost/subscribe/register")
+						.url("$apiHost/subscribe/register")
 						.build()
 				return@map requestJsonObject<ResponseMessage>(request) ?: ResponseMessage()
 			}
@@ -61,7 +63,7 @@ object PushApi {
 					val dataString = if (strings.isEmpty()) "" else strings.reduce { acc, s -> "$acc,$s" }
 					val request = Request.Builder()
 							.postJson("[$dataString]")
-							.url("http://$apiHost/subscribe/sync?token=$token")
+							.url("$apiHost/subscribe/sync?token=$token")
 							.build()
 					return@map requestJsonObject<ResponseMessage>(request) ?: ResponseMessage()
 				}
@@ -77,7 +79,7 @@ object PushApi {
 							.postForm(mutableMapOf("token" to token, "id" to number).apply {
 								company?.let { this["com"] = it }
 							})
-							.url("http://$apiHost/subscribe/add")
+							.url("$apiHost/subscribe/add")
 							.build()
 					return@map requestJsonObject<ResponseMessage>(request) ?: ResponseMessage()
 				}
@@ -91,7 +93,7 @@ object PushApi {
 					if (apiHost.isEmpty()) return@map ResponseMessage()
 					val request = Request.Builder()
 							.postForm(mapOf("token" to token, "id" to id))
-							.url("http://$apiHost/subscribe/remove")
+							.url("$apiHost/subscribe/remove")
 							.build()
 					return@map requestJsonObject<ResponseMessage>(request) ?: ResponseMessage()
 				}
@@ -104,7 +106,7 @@ object PushApi {
 				.map {
 					if (apiHost.isEmpty()) return@map emptyArray<String>()
 					val request = Request.Builder()
-							.url("http://$apiHost/subscribe/list?token=$token")
+							.url("$apiHost/subscribe/list?token=$token")
 							.build()
 					return@map requestJsonObject<Array<String>>(request)
 				}
@@ -117,7 +119,7 @@ object PushApi {
 				.map {
 					if (apiHost.isEmpty()) return@map ResponseMessage()
 					val request = Request.Builder()
-							.url("http://$apiHost/subscribe/request_push?token=$token")
+							.url("$apiHost/subscribe/request_push?token=$token")
 							.build()
 					return@map requestJsonObject<ResponseMessage>(request) ?: ResponseMessage()
 				}

@@ -44,6 +44,9 @@
 		            android:title="@string/pref_firebase_instance_id"
 		            android:summary="@string/pref_firebase_instance_id_summary"/>
 
+		<SwitchPreference android:key="enable_https"
+		                  android:title="@string/pref_enable_https"/>
+
 		<EditTextPreference android:key="api_host"
 		                    android:title="@string/pref_api_host"
 		                    android:summary="%s"

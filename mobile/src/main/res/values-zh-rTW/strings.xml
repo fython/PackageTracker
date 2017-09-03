@@ -139,6 +139,7 @@
 	<string name="pref_register_button">登記</string>
 	<string name="pref_push_sync">現在同步清單</string>
 	<string name="pref_enable_push">啟用推送</string>
+	<string name="pref_enable_https">使用 HTTPS 替代</string>
 	<string name="pref_enable_push_summary">由 Firebase Cloud Messaging 提供</string>
 	<string name="pref_api_host">伺服器地址</string>
 	<string name="pref_api_port">伺服器端口</string>

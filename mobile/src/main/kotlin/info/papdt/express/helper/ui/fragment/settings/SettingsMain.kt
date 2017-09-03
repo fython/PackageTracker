@@ -38,6 +38,7 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 	private val mPrefDontDisturb: SwitchPreference by PreferenceProperty("dont_disturb")
 	private val mPrefIntervalTime: ListPreference by PreferenceProperty("interval")
 	private val mPrefEnable: SwitchPreference by PreferenceProperty("enable_push")
+	private val mPrefHttps: SwitchPreference by PreferenceProperty("enable_https")
 	private val mPrefApiHost: EditTextPreference by PreferenceProperty("api_host")
 	private val mPrefApiPort: EditTextPreference by PreferenceProperty("api_port")
 	private val mPrefInstanceId: Preference by PreferenceProperty("firebase_instance_id")
@@ -108,6 +109,7 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 
 		mPrefApiHost.text = SettingsInstance.pushApiHost
 		mPrefApiPort.text = SettingsInstance.pushApiPort.toString()
+		mPrefHttps.isChecked = SettingsInstance.enableHttps
 
 		mPrefFromClipboard.isChecked = settings.getBoolean(Settings.KEY_DETECT_FROM_CLIPBOARD, false)
 
@@ -139,6 +141,7 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 		mPrefApiHost.onPreferenceChangeListener = this
 		mPrefApiPort.onPreferenceChangeListener = this
 		mPrefWhatsThis.onPreferenceClickListener = this
+		mPrefHttps.onPreferenceChangeListener = this
 
 		// Auto detect
 		mPrefFromClipboard.onPreferenceChangeListener = this
@@ -172,9 +175,11 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 
 	private fun setFreeApiServer() {
 		mPrefApiHost.text = "pt.api.rabi.coffee"
-		mPrefApiPort.text = "3000"
+		mPrefApiPort.text = "3001"
+		mPrefHttps.isChecked = true
 		SettingsInstance.pushApiHost = "pt.api.rabi.coffee"
-		SettingsInstance.pushApiPort = 3000
+		SettingsInstance.pushApiPort = 3001
+		SettingsInstance.enableHttps = true
 	}
 
 	override fun onPreferenceClick(pref: Preference): Boolean {
@@ -235,7 +240,7 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 					titleRes = R.string.fcm_push_intro_title
 					messageRes = R.string.fcm_push_intro_msg
 					okButton()
-					neutralButton(R.string.fcm_push_no_server_button) { _, _ ->
+					/*neutralButton(R.string.fcm_push_no_server_button) { _, _ ->
 						if (SettingsInstance.clickedDonate) {
 							setFreeApiServer()
 						} else {
@@ -245,7 +250,7 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 								okButton()
 							}.show()
 						}
-					}
+					}*/
 				}.show()
 				true
 			}
@@ -328,6 +333,12 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 				setEnablePush(b)
 				if (b) needRegister = true
 				database.size()
+				true
+			}
+			mPrefHttps -> {
+				val b = o as Boolean
+				SettingsInstance.enableHttps = b
+				needRegister = true
 				true
 			}
 			mPrefApiHost -> {

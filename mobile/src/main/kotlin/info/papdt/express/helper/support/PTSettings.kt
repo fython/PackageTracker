@@ -7,6 +7,7 @@ import kotlin.properties.Delegates
 class PTSettings(context: Context): SharedPreferencesProvider(context, "settings") {
 
 	var enablePush by booleanValue(defValue = false)
+	var enableHttps by booleanValue(defValue = false)
 	var pushApiHost by stringValue()
 	var pushApiPort by intValue(defValue = 3000)
 
