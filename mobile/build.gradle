@@ -58,7 +58,7 @@ dependencies {
     compile project(':libraries:StatusBarCompat')
     compile 'de.hdodenhof:circleimageview:2.1.0'
     compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
-    compile 'moe.feng:MaterialStepperView:0.2.1'
+    compile 'moe.feng:MaterialStepperView:0.2.2'
     compile 'com.getkeepsafe.taptargetview:taptargetview:1.9.1'
     compile 'me.dm7.barcodescanner:zxing:1.9'
 

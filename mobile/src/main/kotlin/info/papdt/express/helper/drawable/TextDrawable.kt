@@ -22,6 +22,7 @@ class TextDrawable private constructor(builder: Builder) : ShapeDrawable(builder
 	private val fontSize: Int
 	private val radius: Float
 	private val borderThickness: Int
+	private val fullSizeFont: Boolean
 
 	init {
 		// shape properties
@@ -29,6 +30,7 @@ class TextDrawable private constructor(builder: Builder) : ShapeDrawable(builder
 		height = builder.height
 		width = builder.width
 		radius = builder.radius
+		fullSizeFont = builder.fullSizeFont
 
 		// text and color
 		text = if (builder.toUpperCase) builder.text!!.toUpperCase() else builder.text
@@ -80,7 +82,11 @@ class TextDrawable private constructor(builder: Builder) : ShapeDrawable(builder
 		// draw text
 		val width = if (this.width < 0) r.width() else this.width
 		val height = if (this.height < 0) r.height() else this.height
-		val fontSize = if (this.fontSize < 0) Math.min(width, height) / 2 else this.fontSize
+		val fontSize = if (fullSizeFont) {
+			if (this.fontSize < 0) Math.min(width, height) else this.fontSize
+		} else {
+			if (this.fontSize < 0) Math.min(width, height) / 2 else this.fontSize
+		}
 		textPaint.textSize = fontSize.toFloat()
 		canvas.drawText(text, (width / 2).toFloat(), height / 2 - (textPaint.descent() + textPaint.ascent()) / 2, textPaint)
 
@@ -119,7 +125,7 @@ class TextDrawable private constructor(builder: Builder) : ShapeDrawable(builder
 		return height
 	}
 
-	class Builder () : IConfigBuilder, IShapeBuilder, IBuilder {
+	class Builder : IConfigBuilder, IShapeBuilder, IBuilder {
 
 		var text: String? = null
 		var color: Int = 0
@@ -133,6 +139,7 @@ class TextDrawable private constructor(builder: Builder) : ShapeDrawable(builder
 		var isBold: Boolean = false
 		var toUpperCase: Boolean = false
 		var radius: Float = 0.toFloat()
+		var fullSizeFont: Boolean = false
 
 		init {
 			text = ""
@@ -233,6 +240,11 @@ class TextDrawable private constructor(builder: Builder) : ShapeDrawable(builder
 			this.text = text
 			return TextDrawable(this)
 		}
+
+		override fun fullSizeFont(): IConfigBuilder {
+			this.fullSizeFont = true
+			return this
+		}
 	}
 
 	interface IConfigBuilder {
@@ -244,6 +256,7 @@ class TextDrawable private constructor(builder: Builder) : ShapeDrawable(builder
 		fun fontSize(size: Int): IConfigBuilder
 		fun bold(): IConfigBuilder
 		fun toUpperCase(): IConfigBuilder
+		fun fullSizeFont(): IConfigBuilder
 		fun endConfig(): IShapeBuilder
 	}
 

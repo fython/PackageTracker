@@ -12,9 +12,10 @@ import android.util.AttributeSet
 import android.view.View
 import info.papdt.express.helper.R
 import info.papdt.express.helper.support.ScreenUtils
+import moe.feng.kotlinyan.common.AndroidExtensions
 
 class VerticalStepIconView @JvmOverloads
-constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : View(context, attrs, defStyleAttr) {
+constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : View(context, attrs, defStyleAttr), AndroidExtensions {
 
 	private var mPaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
 	private var mCirclePaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
@@ -111,7 +112,11 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 			val bitmap: Bitmap = if (d is ColorDrawable) {
 				Bitmap.createBitmap(1, 1, Bitmap.Config.ARGB_8888)
 			} else {
-				Bitmap.createBitmap(d.intrinsicWidth, d.intrinsicHeight, Bitmap.Config.ARGB_8888)
+				Bitmap.createBitmap(
+						Math.max(24f.dpToPx(context).toInt(), d.intrinsicWidth),
+						Math.max(24f.dpToPx(context).toInt(), d.intrinsicHeight),
+						Bitmap.Config.ARGB_8888
+				)
 			}
 
 			val canvas = Canvas(bitmap)

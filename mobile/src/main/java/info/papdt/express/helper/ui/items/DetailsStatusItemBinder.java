@@ -1,6 +1,7 @@
 package info.papdt.express.helper.ui.items;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.AppCompatTextView;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.OvershootInterpolator;
 import info.papdt.express.helper.R;
+import info.papdt.express.helper.drawable.TextDrawable;
 import info.papdt.express.helper.model.Package;
 import info.papdt.express.helper.view.VerticalStepIconView;
 import info.papdt.express.helper.view.VerticalStepLineView;
@@ -21,6 +23,7 @@ public class DetailsStatusItemBinder extends ItemViewBinder<Package.Status, Deta
 
 	private Package mPackage;
 	private boolean isShowed[] = new boolean[1000];
+	public boolean showChiba = false; // 是否为慢递
 
 	public void setData(Package src) {
 		mPackage = src;
@@ -127,6 +130,13 @@ public class DetailsStatusItemBinder extends ItemViewBinder<Package.Status, Deta
 				}
 				stepIcon.setPointColorResource(pointColorResId);
 				stepIcon.setCenterIcon(pointIconResId);
+                if (showChiba) {
+                    stepIcon.setCenterIcon(TextDrawable.Companion.builder()
+                            .beginConfig()
+                            .fullSizeFont()
+                            .endConfig()
+                            .buildRound("\uD83D\uDC22", Color.TRANSPARENT));
+                }
 			} else {
 				stepIcon.setIsMini(true);
 				stepIcon.setPointColorResource(R.color.blue_grey_500);

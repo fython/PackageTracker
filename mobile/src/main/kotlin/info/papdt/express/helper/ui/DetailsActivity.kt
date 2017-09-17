@@ -312,6 +312,7 @@ class DetailsActivity : AbsActivity() {
 		override fun onPostExecute(items: Items) {
 			mStatusBinder.setData(data)
 			mAdapter.items = items
+			mStatusBinder.showChiba = data?.data?.find { it.context.contains("佛山") || it.context.contains("广州") } != null
 			mAdapter.notifyDataSetChanged()
 
 			val color: Int = when (state) {
