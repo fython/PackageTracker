@@ -6,7 +6,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.ShareCompat
-import android.support.v4.content.IntentCompat
 import android.view.View
 
 import java.text.SimpleDateFormat
@@ -15,6 +14,8 @@ import java.util.Calendar
 import info.papdt.express.helper.R
 import info.papdt.express.helper.dao.PackageDatabase
 import info.papdt.express.helper.ui.common.AbsActivity
+
+import moe.feng.kotlinyan.common.*
 
 class ImportExportActivity : AbsActivity() {
 
@@ -116,7 +117,7 @@ class ImportExportActivity : AbsActivity() {
 									val intent = packageManager
 											.getLaunchIntentForPackage(packageName)
 									val componentName = intent.component
-									val i = IntentCompat.makeRestartActivityTask(componentName)
+									val i = Intent.makeRestartActivityTask(componentName)
 									startActivity(i)
 
 									System.exit(0)

@@ -24,8 +24,8 @@ import android.view.ViewTreeObserver
 import android.widget.ImageButton
 import com.getkeepsafe.taptargetview.TapTarget
 import com.getkeepsafe.taptargetview.TapTargetSequence
-import com.getkeepsafe.taptargetview.TapTargetView
 import info.papdt.express.helper.*
+import info.papdt.express.helper.R
 
 import info.papdt.express.helper.dao.PackageDatabase
 import info.papdt.express.helper.model.Package
@@ -36,8 +36,7 @@ import info.papdt.express.helper.support.SettingsInstance
 import info.papdt.express.helper.ui.common.AbsActivity
 import info.papdt.express.helper.ui.fragment.home.FragmentAll
 import info.papdt.express.helper.ui.launcher.AppWidgetProvider
-import moe.feng.kotlinyan.common.AndroidExtensions
-import moe.feng.kotlinyan.common.lazyFindNonNullView
+import moe.feng.kotlinyan.common.*
 
 class MainActivity : AbsActivity() {
 
@@ -356,7 +355,7 @@ class MainActivity : AbsActivity() {
 
 	}
 
-	companion object: AndroidExtensions {
+	companion object {
 
 		const val MSG_NOTIFY_DATA_CHANGED = 1
 		const val MSG_NOTIFY_ITEM_REMOVE = 2

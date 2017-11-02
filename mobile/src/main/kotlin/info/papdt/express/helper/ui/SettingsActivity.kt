@@ -11,7 +11,7 @@ import info.papdt.express.helper.R
 import info.papdt.express.helper.support.Settings
 import info.papdt.express.helper.ui.common.AbsActivity
 import info.papdt.express.helper.ui.fragment.settings.*
-import moe.feng.kotlinyan.common.AndroidExtensions
+import moe.feng.kotlinyan.common.*
 
 class SettingsActivity : AbsActivity() {
 
@@ -57,7 +57,7 @@ class SettingsActivity : AbsActivity() {
 		return Snackbar.make(findViewById(R.id.container), message, duration)
 	}
 
-	companion object: AndroidExtensions {
+	companion object {
 
 		private const val EXTRA_SETTINGS_FLAG = "extra_flag"
 

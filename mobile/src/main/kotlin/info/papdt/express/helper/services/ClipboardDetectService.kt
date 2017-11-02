@@ -19,9 +19,9 @@ import android.widget.ImageView
 import info.papdt.express.helper.R
 import info.papdt.express.helper.support.ScreenUtils
 import info.papdt.express.helper.ui.MainActivity
-import moe.feng.kotlinyan.common.ServiceExtensions
+import moe.feng.kotlinyan.common.*
 
-class ClipboardDetectService : Service(), ClipboardManager.OnPrimaryClipChangedListener, ServiceExtensions {
+class ClipboardDetectService : Service(), ClipboardManager.OnPrimaryClipChangedListener {
 
 	private var mLayoutParams: WindowManager.LayoutParams? = null
 

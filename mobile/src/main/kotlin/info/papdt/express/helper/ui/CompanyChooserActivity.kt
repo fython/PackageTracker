@@ -26,7 +26,7 @@ import info.papdt.express.helper.support.Settings
 import info.papdt.express.helper.ui.adapter.CompanyListAdapter
 import info.papdt.express.helper.ui.common.AbsActivity
 import info.papdt.express.helper.ui.common.SimpleRecyclerViewAdapter
-import moe.feng.kotlinyan.common.lazyFindNonNullView
+import moe.feng.kotlinyan.common.*
 
 class CompanyChooserActivity : AbsActivity() {
 

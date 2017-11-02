@@ -9,11 +9,11 @@ import info.papdt.express.helper.model.CommonStatus
 import info.papdt.express.helper.model.Package
 import info.papdt.express.helper.support.PushUtils
 import info.papdt.express.helper.support.Settings
-import moe.feng.kotlinyan.common.ServiceExtensions
+import moe.feng.kotlinyan.common.*
 import java.util.*
 import kotlin.concurrent.thread
 
-class FCMService : FirebaseMessagingService(), ServiceExtensions {
+class FCMService : FirebaseMessagingService() {
 
 	private val TAG = FCMService::class.java.simpleName
 

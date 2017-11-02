@@ -32,7 +32,7 @@ object PushApi {
 	private inline fun <reified T> requestJsonObject(request: Request): T? {
 		try {
 			val response = client.newCall(request).execute()
-			val string = response.body().string()
+			val string = response.body()!!.string()
 			Log.i(TAG, string)
 			return Gson().fromJson(string, T::class.java)
 		} catch (e: IOException) {

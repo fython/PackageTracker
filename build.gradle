@@ -1,12 +1,22 @@
+ext {
+    supportLibraryVersion = '27.0.0'
+    minSdkVersion = 21
+    targetSdkVersion = 26
+    buildToolsVersion = "27.0.0"
+    versionCode = 50
+    versionName = '3.0.3.1'
+    kotlinyanVersion = '0.3.0'
+    firebaseVersion = '11.4.2'
+    ankoVersion = '0.10.2'
+}
+
 buildscript {
-    ext.kotlin_version = '1.1.4-2'
-    ext.android_support_lib_version = '26.1.0'
-    ext.kotlinyan_version = '0.2.2.1'
+    ext.kotlin_version = '1.1.51'
     repositories {
         jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.2.3'
+        classpath 'com.android.tools.build:gradle:3.0.0'
         classpath 'com.google.gms:google-services:3.1.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
@@ -15,8 +25,8 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
+        google()
         maven { url 'https://jitpack.io' }
-        maven { url 'https://maven.google.com' }
         maven { url 'https://dl.bintray.com/rikkaw/MaterialPreference/' }
     }
 }

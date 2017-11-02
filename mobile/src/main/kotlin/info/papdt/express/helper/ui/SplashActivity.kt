@@ -11,7 +11,7 @@ import android.widget.ImageView
 import info.papdt.express.helper.R
 import info.papdt.express.helper.support.MaterialImageLoader
 import info.papdt.express.helper.ui.common.AbsActivity
-import moe.feng.kotlinyan.common.lazyFindNonNullView
+import moe.feng.kotlinyan.common.*
 
 class SplashActivity : AbsActivity() {
 

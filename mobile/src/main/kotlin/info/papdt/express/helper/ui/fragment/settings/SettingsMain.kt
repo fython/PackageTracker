@@ -26,6 +26,7 @@ import moe.shizuku.preference.EditTextPreference
 import moe.shizuku.preference.ListPreference
 import moe.shizuku.preference.Preference
 import moe.shizuku.preference.SwitchPreference
+import moe.feng.kotlinyan.common.*
 
 class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Preference.OnPreferenceChangeListener {
 
@@ -63,7 +64,7 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 	private var needRegister = false
 	private var needFreeServer = false
 
-	private val database by lazy { PackageDatabase.getInstance(activity) }
+	private val database by lazy { PackageDatabase.getInstance(activity!!) }
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -81,7 +82,7 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 		var versionName: String? = null
 		var versionCode = 0
 		try {
-			activity.packageManager.getPackageInfo(activity.packageName, 0).let {
+			activity?.packageManager?.getPackageInfo(activity?.packageName, 0)?.let {
 				versionName = it.versionName
 				versionCode = it.versionCode
 			}
@@ -166,8 +167,8 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 		mPrefSync.isEnabled = b
 		mPrefReqPush.isEnabled = b
 		mPrefIntervalTime.isEnabled = !b
-		activity.packageManager.setComponentEnabledSetting(
-				ComponentName(activity.applicationContext, FCMService::class.java),
+		activity?.packageManager?.setComponentEnabledSetting(
+				ComponentName(activity!!.applicationContext, FCMService::class.java),
 				if (b) PackageManager.COMPONENT_ENABLED_STATE_ENABLED else PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
 				PackageManager.DONT_KILL_APP
 		)
@@ -236,7 +237,7 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 				true
 			}
 			mPrefWhatsThis -> {
-				activity.buildAlertDialog {
+				activity?.buildAlertDialog {
 					titleRes = R.string.fcm_push_intro_title
 					messageRes = R.string.fcm_push_intro_msg
 					okButton()
@@ -251,7 +252,7 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 							}.show()
 						}
 					}*/
-				}.show()
+				}?.show()
 				true
 			}
 			// Auto detect
@@ -325,7 +326,7 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 			mPrefIntervalTime -> {
 				val value = Integer.parseInt(o as String)
 				settings.putInt(Settings.KEY_NOTIFICATION_INTERVAL, value)
-				PushUtils.restartServices(activity.applicationContext)
+				PushUtils.restartServices(activity?.applicationContext)
 				true
 			}
 			mPrefEnable -> {
@@ -359,14 +360,14 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 				if (isOpen && Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 					if (!android.provider.Settings.canDrawOverlays(activity)) {
 						val intent = Intent(android.provider.Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
-								Uri.parse("package:" + activity.packageName))
+								Uri.parse("package:" + activity!!.packageName))
 						startActivity(intent)
 						return false
 					}
 				}
 				settings.putBoolean(Settings.KEY_DETECT_FROM_CLIPBOARD, isOpen)
-				val intent = Intent(activity.applicationContext, ClipboardDetectService::class.java)
-				intent.run(if (!isOpen) activity::stopService else activity::startService)
+				val intent = Intent(activity?.applicationContext, ClipboardDetectService::class.java)
+				intent.run(if (!isOpen) activity!!::stopService else activity!!::startService)
 				return true
 			}
 			else -> false
@@ -386,7 +387,7 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 		}
 		R.id.action_play_store -> {
 			val intent = Intent(Intent.ACTION_VIEW)
-			intent.data = Uri.parse("market://details?id=${activity.packageName}")
+			intent.data = Uri.parse("market://details?id=${activity!!.packageName}")
 			startActivity(intent)
 			true
 		}

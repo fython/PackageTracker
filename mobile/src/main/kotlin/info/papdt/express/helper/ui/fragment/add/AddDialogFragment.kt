@@ -27,10 +27,9 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import moe.feng.common.stepperview.VerticalStepperItemView
-import moe.feng.kotlinyan.common.AndroidExtensions
-import moe.feng.kotlinyan.common.AppCompatExtensions
+import moe.feng.kotlinyan.common.*
 
-class AddDialogFragment: DialogFragment(), AndroidExtensions, AppCompatExtensions {
+class AddDialogFragment: DialogFragment() {
 
 	private lateinit var step0: VerticalStepperItemView
 	private lateinit var step1: VerticalStepperItemView
@@ -53,7 +52,7 @@ class AddDialogFragment: DialogFragment(), AndroidExtensions, AppCompatExtension
 
 	private var result: Package? = null
 
-	private val number get() = arguments.getString(ARG_NUMBER)
+	private val number get() = arguments!!.getString(ARG_NUMBER)
 
 	private lateinit var contentView: View
 
@@ -93,9 +92,9 @@ class AddDialogFragment: DialogFragment(), AndroidExtensions, AppCompatExtension
 			result?.name = if (nameEdit.text.isNotBlank())
 				nameEdit.text.toString() else String.format(getString(R.string.package_name_unnamed), number?.substring(0, 4))
 			Observable.just(result!!)
-					.compose(RxLifecycle.bind(activity).withObservable())
+					.compose(RxLifecycle.bind(activity!!).withObservable())
 					.map {
-						val db = PackageDatabase.getInstance(context)
+						val db = PackageDatabase.getInstance(context!!)
 						db.add(it)
 						db.save()
 					}
@@ -180,9 +179,9 @@ class AddDialogFragment: DialogFragment(), AndroidExtensions, AppCompatExtension
 	}
 
 	override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-		return AlertDialog.Builder(activity)
+		return AlertDialog.Builder(activity!!)
 				.setTitle(R.string.activity_add)
-				.setView(createView(activity.layoutInflater))
+				.setView(createView(activity!!.layoutInflater))
 				.setNegativeButton(android.R.string.cancel) { _, _ -> }
 				.create()
 	}

@@ -10,7 +10,6 @@ import android.os.Bundle
 import android.provider.Settings
 import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
-import android.util.Log
 import android.view.View
 import android.view.WindowManager
 
@@ -19,9 +18,9 @@ import com.google.zxing.Result
 import info.papdt.express.helper.R
 import info.papdt.express.helper.ui.common.AbsActivity
 import me.dm7.barcodescanner.zxing.ZXingScannerView
-import moe.feng.kotlinyan.common.lazyFindNonNullView
+import moe.feng.kotlinyan.common.*
 
-class ScannerActivity : AbsActivity(), ZXingScannerView.ResultHandler {
+class ScannerActivity : AbsActivity(), ZXingScannerView.ResultHandler, PermissionActivity {
 
 	private val mScannerView: ZXingScannerView by lazyFindNonNullView(R.id.scanner_view)
 	private val errorView: View by lazyFindNonNullView(R.id.iv_error)

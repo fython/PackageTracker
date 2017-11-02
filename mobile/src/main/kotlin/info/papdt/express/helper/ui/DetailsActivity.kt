@@ -1,5 +1,6 @@
 package info.papdt.express.helper.ui
 
+import android.annotation.SuppressLint
 import android.app.ActivityManager
 import android.app.ProgressDialog
 import android.content.Intent
@@ -46,10 +47,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import me.drakeet.multitype.Items
 import me.drakeet.multitype.MultiTypeAdapter
-import moe.feng.kotlinyan.common.AndroidExtensions
+import moe.feng.kotlinyan.common.*
 import moe.feng.kotlinyan.common.lazyFindNonNullView
 import kotlin.concurrent.thread
 
+@SuppressLint("RestrictedApi")
 class DetailsActivity : AbsActivity() {
 
 	private val mToolbarLayout: CollapsingToolbarLayout by lazyFindNonNullView(R.id.collapsing_layout)
@@ -330,7 +332,7 @@ class DetailsActivity : AbsActivity() {
 
 	}
 
-	companion object: AndroidExtensions {
+	companion object {
 
 		private const val EXTRA_PACKAGE_JSON = "extra_package_json"
 		private const val EXTRA_STATE = "extra_state"

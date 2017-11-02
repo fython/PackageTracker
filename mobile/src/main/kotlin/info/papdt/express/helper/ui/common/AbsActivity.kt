@@ -10,10 +10,8 @@ import android.view.View
 
 import info.papdt.express.helper.R
 import info.papdt.express.helper.support.Settings
-import moe.feng.kotlinyan.common.AndroidExtensions
-import moe.feng.kotlinyan.common.AppCompatExtensions
 
-abstract class AbsActivity : AppCompatActivity(), AndroidExtensions, AppCompatExtensions {
+abstract class AbsActivity : AppCompatActivity() {
 
 	@JvmField protected var mToolbar: Toolbar? = null
 	@JvmField protected var mActionBar: ActionBar? = null

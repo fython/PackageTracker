@@ -22,7 +22,7 @@ import info.papdt.express.helper.support.PushUtils
 import info.papdt.express.helper.support.Settings
 import info.papdt.express.helper.ui.DetailsActivity
 import info.papdt.express.helper.ui.launcher.AppWidgetProvider
-import moe.feng.kotlinyan.common.AndroidExtensions
+import moe.feng.kotlinyan.common.*
 
 class ReminderService : IntentService(TAG) {
 
@@ -61,7 +61,7 @@ class ReminderService : IntentService(TAG) {
 		db.save()
 	}
 
-	companion object: AndroidExtensions {
+	companion object {
 
 		private val TAG = ReminderService::class.java.simpleName
 

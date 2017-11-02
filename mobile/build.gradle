@@ -2,14 +2,14 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 
 android {
-    compileSdkVersion TARGET_SDK_VERSION.toInteger()
-    buildToolsVersion BUILD_TOOLS_VERSION
+    compileSdkVersion rootProject.ext.targetSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
     defaultConfig {
         applicationId "info.papdt.express.helper"
-        minSdkVersion MIN_SDK_VERSION.toInteger()
-        targetSdkVersion TARGET_SDK_VERSION.toInteger()
-        versionCode VERSION_CODE.toInteger()
-        versionName VERSION_NAME
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode rootProject.ext.versionCode
+        versionName rootProject.ext.versionName
         resConfigs "en", "zh_cn", "zh_tw"
     }
     buildTypes {
@@ -28,51 +28,51 @@ android {
 }
 
 dependencies {
-    compile fileTree(include: ['*.jar'], dir: 'libs')
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     // wearApp project(':wear')
 
     // Kotlin & Kotlinyan
-    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-    compile "moe.feng.kotlinyan:kotlinyan-common:$kotlinyan_version"
-    compile "moe.feng.kotlinyan:kotlinyan-appcompat-support:$kotlinyan_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation "moe.feng.kotlinyan:kotlinyan-common:$kotlinyanVersion"
+    implementation "moe.feng.kotlinyan:kotlinyan-appcompat-support:$kotlinyanVersion"
 
     // Android Support Libraries
-    compile "com.android.support:appcompat-v7:$android_support_lib_version"
-    compile "com.android.support:cardview-v7:$android_support_lib_version"
-    compile "com.android.support:recyclerview-v7:$android_support_lib_version"
-    compile "com.android.support:design:$android_support_lib_version"
-    compile "com.android.support:support-v13:$android_support_lib_version"
-    compile "com.android.support:customtabs:$android_support_lib_version"
+    implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
+    implementation "com.android.support:cardview-v7:$supportLibraryVersion"
+    implementation "com.android.support:recyclerview-v7:$supportLibraryVersion"
+    implementation "com.android.support:design:$supportLibraryVersion"
+    implementation "com.android.support:support-v13:$supportLibraryVersion"
+    implementation "com.android.support:customtabs:$supportLibraryVersion"
 
     // Network & Data
-    compile 'com.squareup.okhttp3:okhttp:3.6.0'
-    compile 'com.google.code.gson:gson:2.8.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.9.0'
+    implementation 'com.google.code.gson:gson:2.8.2'
 
     // Common UI Library
-    compile 'me.drakeet.multitype:multitype:3.1.0'
-    compile 'moe.shizuku.preference:preference:2.0.2'
-    compile 'moe.shizuku.preference:preference-simplemenu:2.0.2'
-    compile 'moe.shizuku.preference:preference-dialog-android:2.0.2'
+    implementation 'me.drakeet.multitype:multitype:3.3.3'
+    implementation 'moe.shizuku.preference:preference:2.0.6'
+    implementation 'moe.shizuku.preference:preference-simplemenu:2.0.6'
+    implementation 'moe.shizuku.preference:preference-dialog-android:2.0.6'
 
     // View & Widget
-    compile project(':libraries:StatusBarCompat')
-    compile 'de.hdodenhof:circleimageview:2.1.0'
-    compile 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
-    compile 'moe.feng:MaterialStepperView:0.2.2'
-    compile 'com.getkeepsafe.taptargetview:taptargetview:1.9.1'
-    compile 'me.dm7.barcodescanner:zxing:1.9'
+    implementation project(':libraries:StatusBarCompat')
+    implementation 'de.hdodenhof:circleimageview:2.2.0'
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
+    implementation 'moe.feng:MaterialStepperView:0.2.2'
+    implementation 'com.getkeepsafe.taptargetview:taptargetview:1.9.1'
+    implementation 'me.dm7.barcodescanner:zxing:1.9'
 
     // Reactive X
-    compile 'io.reactivex.rxjava2:rxjava:2.1.3'
-    compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    compile 'com.github.nekocode.rxlifecycle:rxlifecycle:1.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.5'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'com.github.nekocode.rxlifecycle:rxlifecycle:1.1'
 
     // Utils
-    compile 'com.tencent.bugly:crashreport:2.4.0'
-    compile 'moe.feng:AlipayZeroSdk:1.1'
+    api 'com.tencent.bugly:crashreport:2.4.0'
+    api 'moe.feng:AlipayZeroSdk:1.1'
 
     // Firebase SDK
-    compile 'com.google.firebase:firebase-messaging:11.2.0'
+    api "com.google.firebase:firebase-messaging:$firebaseVersion"
 }
 
 apply plugin: 'com.google.gms.google-services'

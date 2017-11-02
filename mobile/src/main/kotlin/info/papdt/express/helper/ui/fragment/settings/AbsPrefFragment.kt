@@ -1,28 +1,27 @@
 package info.papdt.express.helper.ui.fragment.settings
 
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.customtabs.CustomTabsIntent
 import android.support.design.widget.Snackbar
-import android.support.v4.content.IntentCompat
 
 import info.papdt.express.helper.R
 import info.papdt.express.helper.support.Settings
 import info.papdt.express.helper.ui.SettingsActivity
-import moe.feng.kotlinyan.common.AndroidExtensions
 import moe.shizuku.preference.Preference
 import moe.shizuku.preference.PreferenceFragment
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
-abstract class AbsPrefFragment : PreferenceFragment(), AndroidExtensions {
+abstract class AbsPrefFragment : PreferenceFragment() {
 
 	lateinit var settings: Settings
 
 	val parentActivity: SettingsActivity get() = activity as SettingsActivity
 
 	override fun onCreate(savedInstanceState: Bundle?) {
-		settings = Settings.getInstance(activity.applicationContext)
+		settings = Settings.getInstance(activity!!.applicationContext)
 		super.onCreate(savedInstanceState)
 	}
 
@@ -37,7 +36,7 @@ abstract class AbsPrefFragment : PreferenceFragment(), AndroidExtensions {
 					val packageManager = context.packageManager
 					val intent = packageManager.getLaunchIntentForPackage(context.packageName)
 					val componentName = intent.component
-					val i = IntentCompat.makeRestartActivityTask(componentName)
+					val i = Intent.makeRestartActivityTask(componentName)
 					parentActivity.startActivity(i)
 					System.exit(0)
 				}.show()
@@ -45,7 +44,7 @@ abstract class AbsPrefFragment : PreferenceFragment(), AndroidExtensions {
 
 	fun openWebsite(url: String) {
 		val builder = CustomTabsIntent.Builder()
-		builder.setToolbarColor(activity.resources.getColor(R.color.pink_500))
+		builder.setToolbarColor(resources.getColor(R.color.pink_500))
 		builder.build().launchUrl(activity, Uri.parse(url))
 	}
 

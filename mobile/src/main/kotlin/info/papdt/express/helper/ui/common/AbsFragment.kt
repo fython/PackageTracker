@@ -10,9 +10,9 @@ import android.view.View
 import android.view.ViewGroup
 
 import info.papdt.express.helper.support.Settings
-import moe.feng.kotlinyan.common.AndroidExtensions
+import moe.feng.kotlinyan.common.*
 
-abstract class AbsFragment : Fragment(), AndroidExtensions {
+abstract class AbsFragment : Fragment() {
 
 	protected var rootView: View? = null
 	protected lateinit var settings: Settings

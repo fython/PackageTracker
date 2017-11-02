@@ -6,6 +6,7 @@ import android.webkit.WebView
 
 import info.papdt.express.helper.R
 import info.papdt.express.helper.ui.common.AbsFragment
+import moe.feng.kotlinyan.common.get
 
 class SettingsLicense : AbsFragment() {
 

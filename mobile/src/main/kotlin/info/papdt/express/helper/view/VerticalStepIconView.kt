@@ -12,10 +12,10 @@ import android.util.AttributeSet
 import android.view.View
 import info.papdt.express.helper.R
 import info.papdt.express.helper.support.ScreenUtils
-import moe.feng.kotlinyan.common.AndroidExtensions
+import moe.feng.kotlinyan.common.*
 
 class VerticalStepIconView @JvmOverloads
-constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : View(context, attrs, defStyleAttr), AndroidExtensions {
+constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : View(context, attrs, defStyleAttr) {
 
 	private var mPaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)
 	private var mCirclePaint: Paint = Paint(Paint.ANTI_ALIAS_FLAG)

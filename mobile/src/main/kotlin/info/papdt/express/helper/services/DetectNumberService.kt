@@ -12,11 +12,11 @@ import android.view.accessibility.AccessibilityNodeInfo
 import info.papdt.express.helper.R
 import info.papdt.express.helper.dao.PackageDatabase
 import info.papdt.express.helper.ui.MainActivity
-import moe.feng.kotlinyan.common.ServiceExtensions
+import moe.feng.kotlinyan.common.*
 
 import java.util.ArrayList
 
-class DetectNumberService : AccessibilityService(), ServiceExtensions {
+class DetectNumberService : AccessibilityService() {
 
 	private lateinit var mPackageDatabase: PackageDatabase
 	private var mShowingNumber: String? = null

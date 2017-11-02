@@ -5,7 +5,7 @@ import android.content.Context
 import android.content.Intent
 
 import info.papdt.express.helper.support.PushUtils
-import moe.feng.kotlinyan.common.ServiceExtensions
+import moe.feng.kotlinyan.common.*
 
 class ConnectivityReceiver : BroadcastReceiver() {
 
@@ -13,7 +13,7 @@ class ConnectivityReceiver : BroadcastReceiver() {
 		context.run(if (readNetworkState(context)) PushUtils::startServices else PushUtils::stopServices)
 	}
 
-	companion object: ServiceExtensions {
+	companion object {
 
 		fun readNetworkState(context: Context?) = context?.connectivityManager?.activeNetworkInfo?.isConnected ?: false
 

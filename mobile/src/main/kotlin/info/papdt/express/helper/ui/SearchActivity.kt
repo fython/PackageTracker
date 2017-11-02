@@ -37,8 +37,7 @@ import info.papdt.express.helper.ui.fragment.add.AddDialogFragment
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import moe.feng.kotlinyan.common.AndroidExtensions
-import moe.feng.kotlinyan.common.lazyFindNonNullView
+import moe.feng.kotlinyan.common.*
 
 class SearchActivity : AbsActivity(), AddDialogFragment.IAddDialogObserver {
 
@@ -262,7 +261,7 @@ class SearchActivity : AbsActivity(), AddDialogFragment.IAddDialogObserver {
 		return items
 	}
 
-	companion object: AndroidExtensions {
+	companion object {
 
 		private const val EXTRA_CX = "cx"
 		private const val EXTRA_CY = "cy"
