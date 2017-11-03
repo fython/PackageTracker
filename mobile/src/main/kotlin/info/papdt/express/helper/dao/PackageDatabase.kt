@@ -19,11 +19,13 @@ import info.papdt.express.helper.support.SettingsInstance
 
 class PackageDatabase private constructor(private val mContext: Context) {
 
-	@Expose
+	@Expose @Volatile
 	lateinit var data: ArrayList<Package>
 		private set
+	@Volatile
 	lateinit var deliveredData: ArrayList<Package>
 		private set
+	@Volatile
 	lateinit var deliveringData: ArrayList<Package>
 		private set
 	@Expose

@@ -95,19 +95,15 @@ public class Package {
 	}
 
 	public long getId() {
-		if (TextUtils.isDigitsOnly(number)) {
-			return Long.parseLong(number);
-		} else {
-			StringBuffer sb = new StringBuffer();
-			List<String> DIGITS = Arrays.asList("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
-			for (int i = 0; i < number.length(); i++) {
-				String s;
-				if (DIGITS.contains(s = number.substring(i, i+1))) {
-					sb.append(s);
-				}
+		long l = 0;
+		List<String> DIGITS = Arrays.asList("0", "1", "2", "3", "4", "5", "6", "7", "8", "9");
+		for (int i = 0; i < number.length(); i++) {
+			String s;
+			if (DIGITS.contains(s = number.substring(i, i+1))) {
+				l = l * 10 + Long.parseLong(s);
 			}
-			return Long.parseLong(sb.toString());
 		}
+		return l;
 	}
 
 	public static class Status {
