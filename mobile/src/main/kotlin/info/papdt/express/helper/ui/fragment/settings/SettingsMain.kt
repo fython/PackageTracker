@@ -199,11 +199,11 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 					okButton()
 					negativeButton(R.string.pref_copy_button) { _, _ ->
 						ClipboardUtils.putString(activity, FirebaseInstanceId.getInstance().token)
-						makeSnackbar(resources.string[R.string.toast_copied_successfully], Snackbar.LENGTH_LONG).show()
+						makeSnackbar(resources.string[R.string.toast_copied_successfully], Snackbar.LENGTH_LONG)?.show()
 					}
 					neutralButton(R.string.pref_register_button) { _, _ ->
 						PushApi.register(FirebaseInstanceId.getInstance().token!!).subscribe {
-							makeSnackbar(if (it.code >= 0) "Succeed" else "Failed", Snackbar.LENGTH_LONG).show()
+							makeSnackbar(if (it.code >= 0) "Succeed" else "Failed", Snackbar.LENGTH_LONG)?.show()
 						}
 					}
 				}.create().apply {
@@ -218,22 +218,22 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 					PushApi.register().flatMap {
 						PushApi.sync(database.getPackageIdList())
 					}.subscribe {
-						makeSnackbar(if (it.code >= 0) "Succeed" else "Failed", Snackbar.LENGTH_LONG).show()
+						makeSnackbar(if (it.code >= 0) "Succeed" else "Failed", Snackbar.LENGTH_LONG)?.show()
 					}
 					needRegister = false
 				} else PushApi.sync(database.getPackageIdList())
 						.subscribe {
-							makeSnackbar(if (it.code >= 0) "Succeed" else "Failed", Snackbar.LENGTH_LONG).show()
+							makeSnackbar(if (it.code >= 0) "Succeed" else "Failed", Snackbar.LENGTH_LONG)?.show()
 						}
 				true
 			}
 			mPrefReqPush -> {
 				if (needRegister) {
 					PushApi.register().flatMap { PushApi.requestPush() }.subscribe {
-						makeSnackbar(it.message, Snackbar.LENGTH_LONG).show()
+						makeSnackbar(it.message, Snackbar.LENGTH_LONG)?.show()
 					}
 					needRegister = false
-				} else PushApi.requestPush().subscribe { makeSnackbar(it.message, Snackbar.LENGTH_LONG).show() }
+				} else PushApi.requestPush().subscribe { makeSnackbar(it.message, Snackbar.LENGTH_LONG)?.show() }
 				true
 			}
 			mPrefWhatsThis -> {
@@ -275,14 +275,16 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 				} else {
 					ClipboardUtils.putString(activity, getString(R.string.alipay_support_account))
 					makeSnackbar(getString(R.string.toast_copied_successfully), Snackbar.LENGTH_SHORT)
-							.show()
+							?.show()
 				}
 				SettingsInstance.clickedDonate = true
 				if (needFreeServer) setFreeApiServer()
 				true
 			}
 			mPrefLicense -> {
-				SettingsActivity.launch(parentActivity, SettingsActivity.FLAG_LICENSE)
+				parentActivity?.let {
+					SettingsActivity.launch(it, SettingsActivity.FLAG_LICENSE)
+				}
 				true
 			}
 			mPrefIconDesigner -> {
@@ -290,7 +292,9 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 				true
 			}
 			mPrefContributors -> {
-				SettingsActivity.launch(parentActivity, SettingsActivity.FLAG_CONTRIBUTORS)
+				parentActivity?.let {
+					SettingsActivity.launch(it, SettingsActivity.FLAG_CONTRIBUTORS)
+				}
 				true
 			}
 			mPrefGooglePlus -> {

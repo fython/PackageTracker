@@ -18,28 +18,28 @@ abstract class AbsPrefFragment : PreferenceFragment() {
 
 	lateinit var settings: Settings
 
-	val parentActivity: SettingsActivity get() = activity as SettingsActivity
+	val parentActivity: SettingsActivity? get() = activity as? SettingsActivity
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		settings = Settings.getInstance(activity!!.applicationContext)
 		super.onCreate(savedInstanceState)
 	}
 
-	fun makeSnackbar(message: String, duration: Int): Snackbar {
-		return parentActivity.makeSnackbar(message, duration)
+	fun makeSnackbar(message: String, duration: Int): Snackbar? {
+		return parentActivity?.makeSnackbar(message, duration)
 	}
 
 	fun makeRestartTips() {
 		makeSnackbar(getString(R.string.toast_need_restart), Snackbar.LENGTH_LONG)
-				.setAction(R.string.toast_need_restart_action) {
+				?.setAction(R.string.toast_need_restart_action) {
 					val context = parentActivity
-					val packageManager = context.packageManager
-					val intent = packageManager.getLaunchIntentForPackage(context.packageName)
-					val componentName = intent.component
+					val packageManager = context?.packageManager
+					val intent = packageManager?.getLaunchIntentForPackage(context.packageName)
+					val componentName = intent?.component
 					val i = Intent.makeRestartActivityTask(componentName)
-					parentActivity.startActivity(i)
+					parentActivity?.startActivity(i)
 					System.exit(0)
-				}.show()
+				}?.show()
 	}
 
 	fun openWebsite(url: String) {
