@@ -53,6 +53,7 @@ dependencies {
     implementation 'moe.shizuku.preference:preference:2.0.6'
     implementation 'moe.shizuku.preference:preference-simplemenu:2.0.6'
     implementation 'moe.shizuku.preference:preference-dialog-android:2.0.6'
+    implementation 'moe.shizuku.fontprovider:api:8'
 
     // View & Widget
     implementation project(':libraries:StatusBarCompat')

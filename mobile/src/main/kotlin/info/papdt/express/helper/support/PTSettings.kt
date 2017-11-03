@@ -17,3 +17,5 @@ class PTSettings(context: Context): SharedPreferencesProvider(context, "settings
 }
 
 var SettingsInstance: PTSettings by Delegates.notNull()
+
+var isFontProviderEnabled: Boolean = false

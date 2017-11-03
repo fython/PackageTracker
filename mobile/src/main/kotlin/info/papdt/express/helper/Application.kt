@@ -3,10 +3,8 @@ package info.papdt.express.helper
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.support.v7.app.AppCompatDelegate
-import com.google.firebase.iid.FirebaseInstanceId
 
 import com.tencent.bugly.crashreport.CrashReport
-import info.papdt.express.helper.api.PushApi
 
 import info.papdt.express.helper.services.ClipboardDetectService
 import info.papdt.express.helper.support.Settings

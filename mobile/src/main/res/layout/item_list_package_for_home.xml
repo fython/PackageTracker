@@ -9,6 +9,7 @@
 	              android:layout_width="match_parent"
 	              android:layout_height="wrap_content"
 	              android:clickable="true"
+				  android:focusable="true"
 	              android:foreground="?attr/selectableItemBackground">
 
 		<FrameLayout
@@ -48,7 +49,7 @@
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:id="@+id/tv_title"
-				android:textAppearance="@style/TextAppearance.AppCompat.Small"
+				android:textAppearance="@style/TextAppearance.AppCompat.Body2"
 				android:textColor="@color/list_text_title_color"
 				android:alpha="0.87"
 				tools:text="Title"/>

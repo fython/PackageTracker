@@ -1,6 +1,7 @@
 package info.papdt.express.helper.ui.common
 
 import android.content.res.Configuration
+import android.os.Bundle
 import android.support.annotation.LayoutRes
 import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
@@ -10,12 +11,29 @@ import android.view.View
 
 import info.papdt.express.helper.R
 import info.papdt.express.helper.support.Settings
+import info.papdt.express.helper.support.isFontProviderEnabled
+import moe.shizuku.fontprovider.FontProviderClient
 
 abstract class AbsActivity : AppCompatActivity() {
 
 	@JvmField protected var mToolbar: Toolbar? = null
 	@JvmField protected var mActionBar: ActionBar? = null
 	protected val settings: Settings by lazy { Settings.getInstance(applicationContext) }
+
+	override fun onCreate(savedInstanceState: Bundle?) {
+		super.onCreate(savedInstanceState)
+
+		// Load Noto Sans CJK from FontProvider
+		FontProviderClient.create(this)?.let { client ->
+			client.setNextRequestReplaceFallbackFonts(true)
+			val results = client.replace(
+					"Noto Sans CJK",
+					"sans-serif", "sans-serif-medium")
+			if (results.isNotEmpty()) {
+				isFontProviderEnabled = true
+			}
+		}
+	}
 
 	override fun setContentView(@LayoutRes layoutResId: Int) {
 		super.setContentView(layoutResId)
