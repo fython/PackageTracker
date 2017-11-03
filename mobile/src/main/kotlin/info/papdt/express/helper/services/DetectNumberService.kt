@@ -144,8 +144,12 @@ class DetectNumberService : AccessibilityService() {
 	}
 
 	override fun onInterrupt() {
-		unregisterReceiver(mActionReceiver)
-		mActionReceiver = null
+		try {
+			unregisterReceiver(mActionReceiver)
+			mActionReceiver = null
+		} catch (e: Exception) {
+			e.printStackTrace()
+		}
 	}
 
 	private fun findCompanyFromJd(nodeInfos: List<AccessibilityNodeInfo>?): String? {
