@@ -6,7 +6,6 @@ import android.app.FragmentManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
-import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
@@ -36,7 +35,11 @@ import info.papdt.express.helper.support.SettingsInstance
 import info.papdt.express.helper.ui.common.AbsActivity
 import info.papdt.express.helper.ui.fragment.home.FragmentAll
 import info.papdt.express.helper.ui.launcher.AppWidgetProvider
+import kotlinx.coroutines.experimental.Deferred
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.async
 import moe.feng.kotlinyan.common.*
+import org.jetbrains.anko.coroutines.experimental.bg
 
 class MainActivity : AbsActivity() {
 
@@ -184,7 +187,26 @@ class MainActivity : AbsActivity() {
 				return true
 			}
 			R.id.action_read_all -> {
-				ReadAllTask().execute()
+				async(UI) {
+					val data: Deferred<Int> = bg {
+						var count = 0
+						for (i in 0 until mDatabase.size()) {
+							if (mDatabase[i].unreadNew) {
+								count++
+								mDatabase[i].unreadNew = false
+							}
+						}
+						mDatabase.save()
+						count
+					}
+
+					notifyDataChanged(-1)
+					Snackbar.make(
+							findViewById(R.id.coordinator_layout),
+							getString(R.string.toast_all_read, data.await()),
+							Snackbar.LENGTH_LONG
+					).show()
+				}
 				return true
 			}
 			R.id.action_scan -> {
@@ -326,31 +348,6 @@ class MainActivity : AbsActivity() {
 			1 -> resources.string[R.string.navigation_item_delivered]
 			2 -> resources.string[R.string.navigation_item_all]
 			else -> null
-		}
-
-	}
-
-	private inner class ReadAllTask : AsyncTask<Void, Void, Int>() {
-
-		override fun doInBackground(vararg voids: Void): Int? {
-			var count = 0
-			for (i in 0 until mDatabase.size()) {
-				if (mDatabase[i].unreadNew) {
-					count++
-					mDatabase[i].unreadNew = false
-				}
-			}
-			mDatabase.save()
-			return count
-		}
-
-		override fun onPostExecute(count: Int?) {
-			notifyDataChanged(-1)
-			Snackbar.make(
-					`$`(R.id.coordinator_layout)!!,
-					getString(R.string.toast_all_read, count),
-					Snackbar.LENGTH_LONG
-			).show()
 		}
 
 	}

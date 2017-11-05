@@ -27,12 +27,20 @@ android {
     }
 }
 
+kotlin {
+	experimental {
+		coroutines "enable"
+	}
+}
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     // wearApp project(':wear')
 
     // Kotlin & Kotlinyan
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation "org.jetbrains.anko:anko-commons:$ankoVersion"
+    implementation "org.jetbrains.anko:anko-coroutines:$ankoVersion"
     implementation "moe.feng.kotlinyan:kotlinyan-common:$kotlinyanVersion"
     implementation "moe.feng.kotlinyan:kotlinyan-appcompat-support:$kotlinyanVersion"
 
@@ -50,9 +58,9 @@ dependencies {
 
     // Common UI Library
     implementation 'me.drakeet.multitype:multitype:3.3.3'
-    implementation 'moe.shizuku.preference:preference:2.0.6'
-    implementation 'moe.shizuku.preference:preference-simplemenu:2.0.6'
-    implementation 'moe.shizuku.preference:preference-dialog-android:2.0.6'
+    implementation "moe.shizuku.preference:preference:$materialPrefLibVersion"
+    implementation "moe.shizuku.preference:preference-simplemenu:$materialPrefLibVersion"
+    implementation "moe.shizuku.preference:preference-dialog-android:$materialPrefLibVersion"
     implementation 'moe.shizuku.fontprovider:api:8'
 
     // View & Widget
