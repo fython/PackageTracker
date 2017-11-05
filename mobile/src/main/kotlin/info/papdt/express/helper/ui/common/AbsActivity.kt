@@ -29,7 +29,7 @@ abstract class AbsActivity : AppCompatActivity() {
 			val results = client.replace(
 					"Noto Sans CJK",
 					"sans-serif", "sans-serif-medium")
-			if (results.isNotEmpty()) {
+			if (results?.isNotEmpty() == true) {
 				isFontProviderEnabled = true
 			}
 		}
