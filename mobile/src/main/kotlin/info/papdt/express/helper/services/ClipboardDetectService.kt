@@ -9,6 +9,7 @@ import android.os.Handler
 import android.os.IBinder
 import android.os.Message
 import android.text.TextUtils
+import android.util.Log
 import android.view.Gravity
 import android.view.MotionEvent
 import android.view.View
@@ -20,6 +21,7 @@ import info.papdt.express.helper.R
 import info.papdt.express.helper.support.ScreenUtils
 import info.papdt.express.helper.ui.MainActivity
 import moe.feng.kotlinyan.common.*
+import java.util.ArrayList
 
 class ClipboardDetectService : Service(), ClipboardManager.OnPrimaryClipChangedListener {
 
@@ -51,7 +53,7 @@ class ClipboardDetectService : Service(), ClipboardManager.OnPrimaryClipChangedL
 	}
 
 	override fun onPrimaryClipChanged() {
-		mLastNumber = DetectNumberService.getPackageNumber(clipboardManager.primaryClip.toString())
+		mLastNumber = getPackageNumber(clipboardManager.primaryClip.toString())
 		if (TextUtils.isEmpty(mLastNumber)) return
 		try {
 			windowManager.addView(mLayout, mLayoutParams)
@@ -145,6 +147,39 @@ class ClipboardDetectService : Service(), ClipboardManager.OnPrimaryClipChangedL
 							override fun onAnimationRepeat(animator: Animator) {}
 						})
 						.setDuration(500).setInterpolator(AnticipateInterpolator()).start()
+			}
+		}
+
+	}
+
+	companion object {
+
+		private val TAG = ClipboardDetectService::class.java.simpleName
+
+		fun getPackageNumber(source: String): String? {
+			val results = ArrayList<String>()
+			var sb = StringBuffer()
+			for (i in 0 until source.length) {
+				val next = if (i + 1 > source.length) source.length - 1 else i + 1
+				val c = source.substring(i, next)
+				if (TextUtils.isDigitsOnly(c)) {
+					sb.append(c)
+					if (i == source.length - 1) {
+						results.add(sb.toString())
+						Log.i(TAG, "getPackageNumber, found " + sb.toString())
+					}
+				} else if (sb.isNotEmpty()) {
+					results.add(sb.toString())
+					Log.i(TAG, "getPackageNumber, found " + sb.toString())
+					sb = StringBuffer()
+				}
+			}
+			return if (results.isEmpty()) {
+				null
+			} else {
+				var longest = ""
+				results.asSequence().filter { longest.length < it.length }.forEach { longest = it }
+				longest
 			}
 		}
 

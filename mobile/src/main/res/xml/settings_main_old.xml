@@ -74,10 +74,6 @@
 		                  android:title="@string/item_detect_clipboard"
 		                  android:summary="@string/item_detect_clipboard_desc"/>
 
-		<Preference android:key="from_screen"
-		            android:title="@string/item_detect_screen_text"
-		            android:summary="@string/item_detect_screen_text_desc"/>
-
 	</PreferenceCategory>
 
 	<PreferenceCategory android:title="@string/category_about">

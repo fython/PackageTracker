@@ -49,7 +49,6 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 
 	// Auto detect
 	private val mPrefFromClipboard: SwitchPreference by PreferenceProperty("from_clipboard")
-	private val mPrefFromScreen: Preference by PreferenceProperty("from_screen")
 
 	// About
 	private val mPrefVersion: Preference by PreferenceProperty("version")
@@ -146,7 +145,6 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 
 		// Auto detect
 		mPrefFromClipboard.onPreferenceChangeListener = this
-		mPrefFromScreen.onPreferenceClickListener = this
 
 		setEnablePush(SettingsInstance.enablePush)
 	}
@@ -254,11 +252,6 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 					}*/
 				}?.show()
 				true
-			}
-			// Auto detect
-			mPrefFromScreen -> {
-				startActivity(Intent(android.provider.Settings.ACTION_ACCESSIBILITY_SETTINGS))
-				return true
 			}
 			// About
 			mPrefGithub -> {
