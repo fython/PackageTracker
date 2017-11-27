@@ -1,7 +1,11 @@
 package info.papdt.express.helper
 
+import android.annotation.SuppressLint
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.support.v7.app.AppCompatDelegate
 
 import com.tencent.bugly.crashreport.CrashReport
@@ -9,10 +13,14 @@ import com.tencent.bugly.crashreport.CrashReport
 import info.papdt.express.helper.services.ClipboardDetectService
 import info.papdt.express.helper.support.Settings
 import info.papdt.express.helper.support.SettingsInstance
-import moe.feng.kotlinyan.common.getSharedPreferencesProvider
+import moe.feng.kotlinyan.common.getSharedPreferencesProvider 
+import moe.feng.kotlinyan.common.ifSupportSDK
+import moe.feng.kotlinyan.common.notificationManager
+import moe.feng.kotlinyan.common.string
 
 class Application : android.app.Application() {
 
+	@SuppressLint("NewApi")
 	override fun onCreate() {
 		val mSettings = Settings.getInstance(applicationContext)
 		val defaultNightMode: Int = when (mSettings.getInt(Settings.KEY_NIGHT_MODE, 0)) {
@@ -29,7 +37,7 @@ class Application : android.app.Application() {
 			startService(Intent(applicationContext, ClipboardDetectService::class.java))
 		}
 
-		/** Init CrashReport  */
+		// Init CrashReport
 		val strategy = CrashReport.UserStrategy(applicationContext)
 		strategy.appPackageName = packageName
 
@@ -46,6 +54,18 @@ class Application : android.app.Application() {
 		strategy.appVersion = "$versionName($versionCode)"
 		CrashReport.initCrashReport(applicationContext, BUGLY_APP_ID, BUGLY_ENABLE_DEBUG, strategy)
 
+		// Init notification channel
+		ifSupportSDK (Build.VERSION_CODES.O) {
+			notificationManager.createNotificationChannel(
+					NotificationChannel(
+							CHANNEL_ID_PACKAGE_STATUS,
+							resources.string[R.string.notification_channel_name_status],
+							NotificationManager.IMPORTANCE_HIGH
+					).apply { description = resources.string[R.string.notification_channel_summary_status] }
+			)
+		}
+
+		// Init settings
 		SettingsInstance = getSharedPreferencesProvider()
 	}
 

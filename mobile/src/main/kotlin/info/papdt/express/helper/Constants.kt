@@ -14,3 +14,5 @@ const val RESULT_DELETED = 2001
 const val RESULT_RENAMED = 2002
 
 const val ACTION_SEARCH = "info.papdt.express.helper.ACTION_SEARCH"
+
+const val CHANNEL_ID_PACKAGE_STATUS = "package_status"

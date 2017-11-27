@@ -221,6 +221,9 @@
 	<string name="export_list_end_text">從水錶助手 (https://play.google.com/store/apps/details?id=info.papdt.express.helper) 中分享</string>
 
 	<!-- Notification -->
+	<string name="notification_channel_name_status">包裹狀態</string>
+	<string name="notification_channel_summary_status">取得包裹的最新狀態</string>
+
 	<string name="notification_delivered">包裹已經送達。</string>
 	<string name="notification_on_the_way">包裹正在派送中。</string>
 	<string name="notification_new_message">包裹有一条新的物流訊息。</string>

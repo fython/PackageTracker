@@ -10,6 +10,7 @@ import android.os.Build
 import android.os.IBinder
 import android.support.v4.app.NotificationCompat
 import android.util.Log
+import info.papdt.express.helper.CHANNEL_ID_PACKAGE_STATUS
 
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -67,7 +68,7 @@ class ReminderService : IntentService(TAG) {
 
 		private val ID = 100000
 
-		fun parseDefaults(context: Context): Int {
+		private fun parseDefaults(context: Context): Int {
 			val settings = Settings.getInstance(context)
 
 			return (if (settings.getBoolean(Settings.KEY_NOTIFICATION_SOUND, true)) Notification.DEFAULT_SOUND else 0) or
@@ -75,8 +76,8 @@ class ReminderService : IntentService(TAG) {
 					Notification.DEFAULT_LIGHTS
 		}
 
-		fun buildNotification(context: Context, title: String, subject: String, longText: String, time: Long, icon: Int, color: Int,
-		                      defaults: Int, contentIntent: PendingIntent, deleteIntent: PendingIntent?): Notification {
+		private fun buildNotification(context: Context, title: String, subject: String, longText: String, time: Long, icon: Int, color: Int,
+		                              defaults: Int, contentIntent: PendingIntent, deleteIntent: PendingIntent?): Notification {
 			val n: Notification
 			val builder = NotificationCompat.Builder(context)
 			builder.setContentTitle(title)
@@ -86,6 +87,7 @@ class ReminderService : IntentService(TAG) {
 			builder.setDefaults(defaults)
 			builder.setSmallIcon(icon)
 			builder.setContentIntent(contentIntent)
+			builder.setChannelId(CHANNEL_ID_PACKAGE_STATUS)
 			if (time > 0) builder.setWhen(time)
 			builder.setAutoCancel(true)
 

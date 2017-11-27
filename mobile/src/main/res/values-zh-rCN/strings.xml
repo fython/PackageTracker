@@ -221,6 +221,9 @@
 	<string name="export_list_end_text">从水表助手 (http://coolapk.com/apk/info.papdt.express.helper) 中分享</string>
 
 	<!-- Notification -->
+	<string name="notification_channel_name_status">包裹状态</string>
+	<string name="notification_channel_summary_status">获得包裹的最新状态</string>
+
 	<string name="notification_delivered">包裹已经送达。</string>
 	<string name="notification_on_the_way">包裹正在派送中。</string>
 	<string name="notification_new_message">包裹有一条新的物流信息。</string>
