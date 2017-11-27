@@ -18,8 +18,6 @@
 		android:fullBackupContent="true"
 		android:theme="@style/AppTheme">
 
-		<meta-data android:name="android.support.VERSION" android:value="26.0.0" tools:replace="android:value"/>
-
 		<activity android:name=".EntryActivity"
 		          android:theme="@style/EmptyActivity">
 			<intent-filter>
