@@ -1,18 +1,18 @@
 ext {
-    supportLibraryVersion = '27.0.1'
+    supportLibraryVersion = '27.0.2'
     minSdkVersion = 21
     targetSdkVersion = 27
-    buildToolsVersion = "27.0.0"
+    buildToolsVersion = "27.0.2"
     versionCode = 51
     versionName = '3.0.4'
     kotlinyanVersion = '0.3.0'
     firebaseVersion = '11.6.0'
-    ankoVersion = '0.10.2'
-    materialPrefLibVersion = '2.2.2'
+    ankoVersion = '0.10.3'
+    materialPrefLibVersion = '2.2.3'
 }
 
 buildscript {
-    ext.kotlin_version = '1.1.61'
+    ext.kotlin_version = '1.2.0'
     repositories {
         jcenter()
         google()
