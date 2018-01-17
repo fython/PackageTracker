@@ -20,7 +20,7 @@ import java.util.ArrayList
 
 import info.papdt.express.helper.R
 import info.papdt.express.helper.RESULT_EXTRA_COMPANY_CODE
-import info.papdt.express.helper.api.PackageApi
+import info.papdt.express.helper.api.Kuaidi100PackageApi
 import info.papdt.express.helper.api.RxPackageApi
 import info.papdt.express.helper.support.Settings
 import info.papdt.express.helper.ui.adapter.CompanyListAdapter
@@ -64,7 +64,7 @@ class CompanyChooserActivity : AbsActivity() {
 	private val mEmptyView: View by lazyFindNonNullView(R.id.empty_view)
 
 	private lateinit var mAdapter: CompanyListAdapter
-	private var data: ArrayList<PackageApi.CompanyInfo.Company>? = null
+	private var data: ArrayList<Kuaidi100PackageApi.CompanyInfo.Company>? = null
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		ifSupportSDK (Build.VERSION_CODES.LOLLIPOP) {
@@ -82,7 +82,7 @@ class CompanyChooserActivity : AbsActivity() {
 			window.navigationBarColor = resources.getColor(R.color.lollipop_status_bar_grey)
 		}
 
-		data = PackageApi.CompanyInfo.info
+		data = Kuaidi100PackageApi.CompanyInfo.info
 
 		setContentView(R.layout.activity_choose_company)
 	}

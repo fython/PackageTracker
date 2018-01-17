@@ -26,7 +26,7 @@ import info.papdt.express.helper.R
 import info.papdt.express.helper.REQUEST_ADD
 import info.papdt.express.helper.RESULT_EXTRA_PACKAGE_JSON
 import info.papdt.express.helper.RESULT_NEW_PACKAGE
-import info.papdt.express.helper.api.PackageApi
+import info.papdt.express.helper.api.Kuaidi100PackageApi
 import info.papdt.express.helper.api.RxPackageApi
 import info.papdt.express.helper.dao.PackageDatabase
 import info.papdt.express.helper.model.Package
@@ -47,7 +47,7 @@ class SearchActivity : AbsActivity(), AddDialogFragment.IAddDialogObserver {
 
 	private lateinit var mAdapter: SearchResultAdapter
 
-	private var companies: ArrayList<PackageApi.CompanyInfo.Company>? = null
+	private var companies: ArrayList<Kuaidi100PackageApi.CompanyInfo.Company>? = null
 	private var packages: ArrayList<Package>? = null
 
 	private val mDatabase: PackageDatabase by lazy { PackageDatabase.getInstance(applicationContext) }

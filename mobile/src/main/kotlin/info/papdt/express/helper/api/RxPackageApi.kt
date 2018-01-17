@@ -19,34 +19,34 @@ object RxPackageApi {
 		parentActivity?.let { observable = observable.compose(RxLifecycle.bind(parentActivity).withObservable()) }
 		return observable
 				.map {
-					if (com == null) PackageApi.getPackageByNumber(number) else PackageApi.getPackage(com, number)
+					if (com == null) Kuaidi100PackageApi.getPackageByNumber(number) else Kuaidi100PackageApi.getPackage(com, number)
 				}
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread())
 	}
 
 	fun filterCompany(k: String, parentActivity: Activity? = null)
-			: Observable<ArrayList<PackageApi.CompanyInfo.Company>> {
+			: Observable<ArrayList<Kuaidi100PackageApi.CompanyInfo.Company>> {
 		var observable = Observable.just(k)
 		parentActivity?.let { observable = observable.compose(RxLifecycle.bind(parentActivity).withObservable()) }
 		return observable
 				.map {
 					val keyword = ZHConverter.convert(it, ZHConverter.SIMPLIFIED).replace("快递".toRegex(), "")
-					val src = ArrayList<PackageApi.CompanyInfo.Company>()
+					val src = ArrayList<Kuaidi100PackageApi.CompanyInfo.Company>()
 					if (keyword?.trim()?.isNotEmpty()) {
-						(0 until PackageApi.CompanyInfo.info!!.size)
-								.filterNot { !PackageApi.CompanyInfo.names[it].toLowerCase().contains(keyword.toLowerCase()) && !PackageApi.CompanyInfo.pinyin[it].contains(keyword) }
-								.mapTo(src) { PackageApi.CompanyInfo.info!![it] }
+						(0 until Kuaidi100PackageApi.CompanyInfo.info!!.size)
+								.filterNot { !Kuaidi100PackageApi.CompanyInfo.names[it].toLowerCase().contains(keyword.toLowerCase()) && !Kuaidi100PackageApi.CompanyInfo.pinyin[it].contains(keyword) }
+								.mapTo(src) { Kuaidi100PackageApi.CompanyInfo.info!![it] }
 						src
 					} else {
-						PackageApi.CompanyInfo.info!!
+						Kuaidi100PackageApi.CompanyInfo.info!!
 					}
 				}
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread())
 	}
 
-	fun filterCompanySync(k: String): ArrayList<PackageApi.CompanyInfo.Company> {
+	fun filterCompanySync(k: String): ArrayList<Kuaidi100PackageApi.CompanyInfo.Company> {
 		return filterCompany(k).blockingFirst()
 	}
 
@@ -54,7 +54,7 @@ object RxPackageApi {
 		var observable = Observable.just(id)
 		parentActivity?.let { observable = observable.compose(RxLifecycle.bind(parentActivity).withObservable()) }
 		return observable
-				.map { PackageApi.detectCompanyByNumber(it) ?: "" }
+				.map { Kuaidi100PackageApi.detectCompanyByNumber(it) ?: "" }
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread())
 	}

@@ -20,7 +20,7 @@ import info.papdt.express.helper.support.HttpUtils
  * @author Fung Go (fython@163.com)
  * @version 2.0
  */
-object PackageApi {
+object Kuaidi100PackageApi {
 
 	/** API Url  */
 	private val API_HOST = "http://www.kuaidi100.com"
@@ -31,7 +31,7 @@ object PackageApi {
 	 */
 	val companyListUrl = API_HOST + "/js/share/company.js"
 
-	private val TAG = PackageApi::class.java.simpleName
+	private val TAG = Kuaidi100PackageApi::class.java.simpleName
 
 	/**
 	 * @param com Shipment company
@@ -134,7 +134,7 @@ object PackageApi {
 				} else {
 					pkg.number = number
 					pkg.companyType = comcode
-					pkg.companyChineseName = PackageApi.CompanyInfo.getNameByCode(pkg.companyType)
+					pkg.companyChineseName = Kuaidi100PackageApi.CompanyInfo.getNameByCode(pkg.companyType)
 					pkg.data = ArrayList()
 					BaseMessage(BaseMessage.CODE_OKAY, pkg)
 				}

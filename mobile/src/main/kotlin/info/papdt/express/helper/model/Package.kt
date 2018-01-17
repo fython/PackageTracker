@@ -7,7 +7,7 @@ import com.google.gson.annotations.SerializedName
 import java.util.ArrayList
 import java.util.regex.Pattern
 
-import info.papdt.express.helper.api.PackageApi
+import info.papdt.express.helper.api.Kuaidi100PackageApi
 
 class Package {
 
@@ -173,7 +173,7 @@ class Package {
             try {
                 val p = Gson().fromJson(json, Package::class.java)
                 if (p.companyChineseName == null && p.companyType != null) {
-                    p.companyChineseName = PackageApi.CompanyInfo.getNameByCode(p.companyType!!)
+                    p.companyChineseName = Kuaidi100PackageApi.CompanyInfo.getNameByCode(p.companyType!!)
                 }
                 if (p.companyType == null) {
                     p.companyType = p.companyType1

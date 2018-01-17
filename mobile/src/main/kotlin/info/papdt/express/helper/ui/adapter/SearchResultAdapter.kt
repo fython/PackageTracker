@@ -20,7 +20,7 @@ import java.util.ArrayList
 
 import de.hdodenhof.circleimageview.CircleImageView
 import info.papdt.express.helper.R
-import info.papdt.express.helper.api.PackageApi
+import info.papdt.express.helper.api.Kuaidi100PackageApi
 import info.papdt.express.helper.model.Package
 import info.papdt.express.helper.support.ColorGenerator
 import info.papdt.express.helper.support.ScreenUtils
@@ -33,7 +33,7 @@ class SearchResultAdapter(
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private var packages: ArrayList<Package>? = null
-    private var companies: ArrayList<PackageApi.CompanyInfo.Company>? = null
+    private var companies: ArrayList<Kuaidi100PackageApi.CompanyInfo.Company>? = null
 
     private var items: ArrayList<ItemType>? = null
 
@@ -46,7 +46,7 @@ class SearchResultAdapter(
         this.packages = packages
     }
 
-    fun setCompanies(companies: ArrayList<PackageApi.CompanyInfo.Company>?) {
+    fun setCompanies(companies: ArrayList<Kuaidi100PackageApi.CompanyInfo.Company>?) {
         this.companies = companies
     }
 

@@ -12,16 +12,16 @@ import java.util.ArrayList
 
 import de.hdodenhof.circleimageview.CircleImageView
 import info.papdt.express.helper.R
-import info.papdt.express.helper.api.PackageApi
+import info.papdt.express.helper.api.Kuaidi100PackageApi
 import info.papdt.express.helper.support.ColorGenerator
 import info.papdt.express.helper.ui.common.SimpleRecyclerViewAdapter
 
 class CompanyListAdapter(
         recyclerView: RecyclerView,
-        private var list: ArrayList<PackageApi.CompanyInfo.Company>?
+        private var list: ArrayList<Kuaidi100PackageApi.CompanyInfo.Company>?
 ) : SimpleRecyclerViewAdapter(recyclerView) {
 
-    fun setList(list: ArrayList<PackageApi.CompanyInfo.Company>) {
+    fun setList(list: ArrayList<Kuaidi100PackageApi.CompanyInfo.Company>) {
         this.list = list
     }
 
@@ -45,7 +45,7 @@ class CompanyListAdapter(
 
     override fun getItemCount(): Int = list?.size ?: 0
 
-    fun getItem(pos: Int): PackageApi.CompanyInfo.Company = list!![pos]
+    fun getItem(pos: Int): Kuaidi100PackageApi.CompanyInfo.Company = list!![pos]
 
     inner class ItemHolder(itemView: View) : SimpleRecyclerViewAdapter.ClickableViewHolder(itemView) {
 

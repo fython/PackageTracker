@@ -16,7 +16,7 @@ import cn.nekocode.rxlifecycle.RxLifecycle
 import info.papdt.express.helper.R
 import info.papdt.express.helper.REQUEST_CODE_CHOOSE_COMPANY
 import info.papdt.express.helper.RESULT_EXTRA_COMPANY_CODE
-import info.papdt.express.helper.api.PackageApi.CompanyInfo
+import info.papdt.express.helper.api.Kuaidi100PackageApi.CompanyInfo
 import info.papdt.express.helper.api.RxPackageApi
 import info.papdt.express.helper.dao.PackageDatabase
 import info.papdt.express.helper.model.BaseMessage
