@@ -43,14 +43,14 @@ class HomePackageListAdapter(private var db: PackageDatabase?, private val type:
 	override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
 		val p = getItemData(position)
 
-		if (p.name.isNotEmpty()) {
+		if (p.name?.isNotEmpty() == true) {
 			holder.titleText.text = p.name
 		} else {
 			holder.titleText.text = p.companyChineseName
 		}
-		if (p.data != null && p.data.size > 0) {
-			val status = p.data[0]
-			val spanny = Spanny(STATUS_STRING_ARRAY!![p.state], ForegroundColorSpan(statusTitleColor))
+		if (p.data != null && p.data!!.size > 0) {
+			val status = p.data!![0]
+			val spanny = Spanny(STATUS_STRING_ARRAY!![p.getState()], ForegroundColorSpan(statusTitleColor))
 					.append(" - " + status.context, ForegroundColorSpan(statusSubtextColor))
 			holder.descText.text = spanny
 			holder.timeText.text = status.ftime
@@ -66,12 +66,12 @@ class HomePackageListAdapter(private var db: PackageDatabase?, private val type:
 		holder.titleText.paint.isFakeBoldText = p.unreadNew || !isFontProviderEnabled
 
 		/** Set CircleImageView  */
-		if (p.name.isNotEmpty()) {
-			holder.bigCharView.text = p.name.substring(0, 1).toUpperCase()
-			holder.logoView.setImageDrawable(ColorDrawable(ColorGenerator.MATERIAL.getColor(p.name)))
-		} else if (p.companyChineseName.isNotEmpty()) {
-			holder.bigCharView.text = p.companyChineseName.substring(0, 1).toUpperCase()
-			holder.logoView.setImageDrawable(ColorDrawable(ColorGenerator.MATERIAL.getColor(p.companyChineseName)))
+		if (p.name?.isNotEmpty() == true) {
+			holder.bigCharView.text = p.name!!.substring(0, 1).toUpperCase()
+			holder.logoView.setImageDrawable(ColorDrawable(ColorGenerator.MATERIAL.getColor(p.name!!)))
+		} else if (p.companyChineseName?.isNotEmpty() == true) {
+			holder.bigCharView.text = p.companyChineseName!!.substring(0, 1).toUpperCase()
+			holder.logoView.setImageDrawable(ColorDrawable(ColorGenerator.MATERIAL.getColor(p.companyChineseName!!)))
 		}
 
 		/** Add paddingTop/Bottom to the first or last item  */

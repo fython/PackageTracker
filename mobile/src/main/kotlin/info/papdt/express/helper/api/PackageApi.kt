@@ -82,7 +82,7 @@ object PackageApi {
 		get() {
 			val message = HttpUtils.getString(companyListUrl, false)
 			if (message.code == BaseMessage.CODE_OKAY) {
-				var strJson = message.data.replace("var jsoncom=", "")
+				var strJson = message.data!!.replace("var jsoncom=", "")
 				strJson = strJson.replace("};", "}")
 				strJson = strJson.replace("'", "\"")
 				try {
@@ -114,7 +114,7 @@ object PackageApi {
 	 * @param number The number of package which you want to query
 	 * @return Package and status code
 	 */
-	@JvmStatic fun getPackageByNumber(number: String): BaseMessage<Package?> {
+	@JvmStatic fun getPackageByNumber(number: String): BaseMessage<out Package?> {
 		val comcode = detectCompanyByNumber(number)
 		return getPackage(comcode, number)
 	}
@@ -124,18 +124,18 @@ object PackageApi {
 	 * @param number The number of package
 	 * @return Package and status code
 	 */
-	@JvmStatic fun getPackage(comcode: String?, number: String): BaseMessage<Package?> {
+	@JvmStatic fun getPackage(comcode: String?, number: String): BaseMessage<out Package?> {
 		val message = HttpUtils.getString(getQueryUrl(comcode, number), false)
 		return if (message.code == BaseMessage.CODE_OKAY) {
 			try {
-				val pkg = Package.buildFromJson(message.data)
+				val pkg = Package.buildFromJson(message.data!!)
 				if (pkg.status == "200") {
 					BaseMessage(BaseMessage.CODE_OKAY, pkg)
 				} else {
 					pkg.number = number
 					pkg.companyType = comcode
 					pkg.companyChineseName = PackageApi.CompanyInfo.getNameByCode(pkg.companyType)
-					pkg.data = ArrayList<Package.Status>()
+					pkg.data = ArrayList()
 					BaseMessage(BaseMessage.CODE_OKAY, pkg)
 				}
 			} catch (e: Exception) {
@@ -206,13 +206,13 @@ object PackageApi {
 		var names: Array<String>
 		var pinyin: Array<String>
 
-		class Company(var name: String, var code: String, var phone: String, var website: String)
+		class Company(var name: String, var code: String, var phone: String?, var website: String?)
 
 		fun findCompanyByCode(code: String?): Int {
 			return if (code == null) -1 else (info!!.indices.firstOrNull { info!![it].code == code } ?: -1)
 		}
 
-		fun getNameByCode(code: String): String? {
+		fun getNameByCode(code: String?): String? {
 			val index = findCompanyByCode(code)
 			return if (index != -1) info!![index].name else null
 		}

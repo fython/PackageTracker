@@ -26,7 +26,7 @@ class FCMService : FirebaseMessagingService() {
 			val index = db.indexOf(data.id)
 			if (index != -1) {
 				Log.d(TAG, "当前主动推送包裹位置为 $index")
-				if (data.getData().size > db[index].data.size) {
+				if (data.getData().size > db[index].data?.size ?: 0) {
 					Log.d(TAG, "包裹 $index 需要产生通知")
 					val oldPackage = db[index]
 					oldPackage.data = data.getData().map(CommonStatus::toOldPackageStatus).toMutableList() as ArrayList<Package.Status>

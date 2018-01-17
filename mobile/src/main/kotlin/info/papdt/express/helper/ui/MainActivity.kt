@@ -1,5 +1,6 @@
 package info.papdt.express.helper.ui
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.Fragment
 import android.app.FragmentManager
@@ -288,8 +289,8 @@ class MainActivity : AbsActivity() {
 						data!!.name,
 						data.number,
 						data.companyChineseName,
-						if (data.data.size > 0) data.data[0].context else "Unknown",
-						if (data.data.size > 0) data.data[0].time else ""
+						if (data.data!!.size > 0) data.data!![0].context else "Unknown",
+						if (data.data!!.size > 0) data.data!![0].time else ""
 				)
 
 				val intent = Intent(Intent.ACTION_SEND)
@@ -314,7 +315,8 @@ class MainActivity : AbsActivity() {
 		return super.onContextItemSelected(item)
 	}
 
-	var mHandler: Handler = object : Handler() {
+	@SuppressLint("HandlerLeak")
+	val mHandler: Handler = object : Handler() {
 		override fun handleMessage(msg: Message) {
 			when (msg.what) {
 				MSG_NOTIFY_DATA_CHANGED -> {

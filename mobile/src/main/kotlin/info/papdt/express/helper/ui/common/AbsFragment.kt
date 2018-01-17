@@ -22,7 +22,7 @@ abstract class AbsFragment : Fragment() {
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
-		settings = Settings.getInstance(context)
+		settings = Settings.getInstance(context!!)
 	}
 
 	override fun onCreateView(inflater: LayoutInflater, parent: ViewGroup?, state: Bundle?): View? {

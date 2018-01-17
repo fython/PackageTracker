@@ -81,7 +81,7 @@ class DetailsActivity : AbsActivity() {
 			okButton { _, _ ->
 				if (!TextUtils.isEmpty(mNameEdit.text.toString())) {
 					data!!.name = mNameEdit.text.toString().trim { it <= ' ' }
-					mAdapter.notifyDataSetChanged()
+					setUpData()
 
 					val intent = Intent()
 					intent["id"] = data!!.number
@@ -89,9 +89,9 @@ class DetailsActivity : AbsActivity() {
 
 					thread {
 						val db = PackageDatabase.getInstance(applicationContext)
-						db[db.indexOf(data!!.number)] = data!!
+						db[db.indexOf(data!!.number!!)] = data!!
 						db.save()
-					}.start()
+					}
 				} else {
 					Snackbar.make(`$`(R.id.coordinator_layout)!!, R.string.toast_edit_name_is_empty, Snackbar.LENGTH_SHORT)
 							.show()
@@ -190,10 +190,10 @@ class DetailsActivity : AbsActivity() {
 
 	private fun buildItems(): Items {
 		val newItems = Items()
-		newItems.add(DetailsTwoLineItem(DetailsTwoLineItem.TYPE_NAME, data!!.name))
-		newItems.add(DetailsTwoLineItem(DetailsTwoLineItem.TYPE_NUMBER, data!!.number, data!!.companyChineseName))
+		newItems.add(DetailsTwoLineItem(DetailsTwoLineItem.TYPE_NAME, data!!.name!!))
+		newItems.add(DetailsTwoLineItem(DetailsTwoLineItem.TYPE_NUMBER, data!!.number!!, data!!.companyChineseName))
 		newItems.add(getString(R.string.list_status_subheader))
-		newItems.addAll(data!!.data)
+		newItems.addAll(data!!.data!!)
 		return newItems
 	}
 
@@ -227,7 +227,7 @@ class DetailsActivity : AbsActivity() {
 				setResult(RESULT_RENAMED, intent)
 
 				val db = PackageDatabase.getInstance(applicationContext)
-				db[db.indexOf(data!!.number)] = data!!
+				db[db.indexOf(data!!.number!!)] = data!!
 
 				finish()
 				return true
@@ -236,13 +236,13 @@ class DetailsActivity : AbsActivity() {
 				Observable.just("")
 						.compose(RxLifecycle.bind(this).withObservable())
 						.map {
-							val newPack = PackageApi.getPackage(data!!.companyType, data!!.number)
+							val newPack = PackageApi.getPackage(data!!.companyType, data!!.number!!)
 							if (newPack.code != BaseMessage.CODE_OKAY || newPack.data?.data == null) {
 								false
 							} else {
 								data!!.applyNewData(newPack.data)
 								val db = PackageDatabase.getInstance(applicationContext)
-								db[db.indexOf(data!!.number)] = data!!
+								db[db.indexOf(data!!.number!!)] = data!!
 								db.save()
 								true
 							}
@@ -267,7 +267,7 @@ class DetailsActivity : AbsActivity() {
 
 	fun showNameEditDialog() {
 		mNameEdit.setText(data!!.name)
-		mNameEdit.setSelection(data!!.name.length)
+		mNameEdit.setSelection(data!!.name!!.length)
 		mEditDialog.show()
 	}
 
@@ -280,8 +280,8 @@ class DetailsActivity : AbsActivity() {
 				data!!.name,
 				data!!.number,
 				data!!.companyChineseName,
-				if (data!!.data.size > 0) data!!.data[0].context else "Unknown",
-				if (data!!.data.size > 0) data!!.data[0].time else ""
+				if (data!!.data!!.size > 0) data!!.data!![0].context else "Unknown",
+				if (data!!.data!!.size > 0) data!!.data!![0].time else ""
 		)
 
 		val intent = Intent(Intent.ACTION_SEND)
@@ -305,7 +305,7 @@ class DetailsActivity : AbsActivity() {
 				intent.putExtra("id", data!!.number)
 				setResult(RESULT_RENAMED, intent)
 			}
-			db[db.indexOf(data!!.number)] = data!!
+			db[db.indexOf(data!!.number!!)] = data!!
 			db.save()
 
 			return buildItems()
@@ -315,7 +315,7 @@ class DetailsActivity : AbsActivity() {
 			mStatusBinder.setData(data)
 			mAdapter.items = items
 			mStatusBinder.showChiba =
-					(data?.data?.find { it.context.contains("佛山") || it.context.contains("广州") } != null)
+					(data?.data?.find { it.context!!.contains("佛山") || it.context!!.contains("广州") } != null)
 							&& (data?.companyChineseName?.contains("圆通") == true)
 			mAdapter.notifyDataSetChanged()
 
@@ -341,7 +341,7 @@ class DetailsActivity : AbsActivity() {
 			val intent = Intent(activity, DetailsActivity::class.java)
 			intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
 			intent[EXTRA_PACKAGE_JSON] = p.toJsonString()
-			intent[EXTRA_STATE] = p.state
+			intent[EXTRA_STATE] = p.getState()
 			activity.startActivityForResult(intent, REQUEST_DETAILS)
 		}
 	}

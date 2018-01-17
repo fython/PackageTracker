@@ -63,7 +63,7 @@ class BackupApi(val context: Activity) {
 								R.string.export_list_item_format,
 								pack.name,
 								pack.number + " " + pack.companyChineseName,
-								if ((pack.data?.size ?: 0) > 0) pack.data[0].context
+								if ((pack.data?.size ?: 0) > 0) pack.data!![0].context
 								else context.getString(R.string.item_text_cannot_get_package_status)
 						)
 					}.reduce { acc, s -> "$acc\n\n$s" } + "\n\n" + context.getString(R.string.export_list_end_text)

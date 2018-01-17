@@ -323,7 +323,7 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 			mPrefIntervalTime -> {
 				val value = Integer.parseInt(o as String)
 				settings.putInt(Settings.KEY_NOTIFICATION_INTERVAL, value)
-				PushUtils.restartServices(activity?.applicationContext)
+				activity?.applicationContext?.let(PushUtils::restartServices)
 				true
 			}
 			mPrefEnable -> {

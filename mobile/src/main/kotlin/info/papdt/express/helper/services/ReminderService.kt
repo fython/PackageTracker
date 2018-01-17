@@ -50,8 +50,8 @@ class ReminderService : IntentService(TAG) {
 		AppWidgetProvider.updateManually(application)
 
 		for (i in 0 until db.size()) {
-			val p = db.get(i)
-			if (p.state != Package.STATUS_FAILED && p.shouldPush) {
+			val p = db[i]
+			if (p.getState() != Package.STATUS_FAILED && p.shouldPush) {
 				Log.i(TAG, "包裹 $i 需要产生通知")
 				val n = produceNotifications(this, i, p)
 				nm.notify(i + 20000, n)
@@ -109,24 +109,24 @@ class ReminderService : IntentService(TAG) {
 						Intent(context.applicationContext, DetailsActivity::class.java).apply {
 							flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
 							this["extra_package_json"] = exp.toJsonString()
-							this["extra_state"] = exp.state
+							this["extra_state"] = exp.getState()
 						},
 						PendingIntent.FLAG_UPDATE_CURRENT)
 
 				val title = exp.name
-				val subject: String = when (exp.state) {
+				val subject: String = when (exp.getState()) {
 					Package.STATUS_DELIVERED -> R.string.notification_delivered
 					Package.STATUS_ON_THE_WAY -> R.string.notification_on_the_way
 					else -> R.string.notification_new_message
 				}.run(context::getString)
 
-				val smallIcon = when (exp.state) {
+				val smallIcon = when (exp.getState()) {
 					Package.STATUS_DELIVERED -> R.drawable.ic_done_white_24dp
 					Package.STATUS_ON_THE_WAY -> R.drawable.ic_local_shipping_white_24dp
 					else -> R.drawable.ic_assignment_returned_white_24dp
 				}
 
-				val myDate = exp.data[0].time
+				val myDate = exp.data!![0].time
 				val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
 				var millis: Long = 0
 				try {
@@ -137,12 +137,12 @@ class ReminderService : IntentService(TAG) {
 				}
 
 				val n = buildNotification(context.applicationContext,
-						title,
+						title!!,
 						subject,
-						exp.data[0].context,
+						exp.data!![0].context!!,
 						millis,
 						smallIcon,
-						context.resources.getIntArray(R.array.statusColor)[exp.state],
+						context.resources.getIntArray(R.array.statusColor)[exp.getState()],
 						defaults,
 						pi, null)
 

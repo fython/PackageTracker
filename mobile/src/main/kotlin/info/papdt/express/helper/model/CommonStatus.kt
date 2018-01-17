@@ -10,7 +10,7 @@ data class CommonStatus(
 		val status = Package.Status()
 		status.context = content
 		status.time = time
-		status.location = location
+		status._location = location
 		return status
 	}
 }

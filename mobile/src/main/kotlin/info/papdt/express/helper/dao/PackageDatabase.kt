@@ -81,7 +81,7 @@ class PackageDatabase private constructor(private val mContext: Context) {
 		deliveredData = ArrayList()
 		deliveringData = ArrayList()
 		for (p in data) {
-			if (p.state == Package.STATUS_DELIVERED) {
+			if (p.getState() == Package.STATUS_DELIVERED) {
 				deliveredData.add(p)
 			} else {
 				deliveringData.add(p)
@@ -91,13 +91,13 @@ class PackageDatabase private constructor(private val mContext: Context) {
 
 	fun add(pack: Package) {
 		data.add(pack)
-		PushApi.add(pack.number, pack.companyType).subscribe()
+		PushApi.add(pack.number!!, pack.companyType).subscribe()
 		refreshList()
 	}
 
 	fun add(index: Int, pack: Package) {
 		data.add(index, pack)
-		PushApi.add(pack.number, pack.companyType).subscribe()
+		PushApi.add(pack.number!!, pack.companyType).subscribe()
 		refreshList()
 	}
 
@@ -109,7 +109,7 @@ class PackageDatabase private constructor(private val mContext: Context) {
 	fun remove(index: Int) {
 		val removedItem = data.removeAt(index)
 
-		PushApi.remove(removedItem.number).subscribe()
+		PushApi.remove(removedItem.number!!).subscribe()
 
 		lastRemovedData = removedItem
 		lastRemovedPosition = index
@@ -143,7 +143,7 @@ class PackageDatabase private constructor(private val mContext: Context) {
 	}
 
 	fun indexOf(p: Package): Int {
-		return indexOf(p.number)
+		return indexOf(p.number!!)
 	}
 
 	fun indexOf(number: String): Int {
@@ -169,10 +169,10 @@ class PackageDatabase private constructor(private val mContext: Context) {
 		if (SettingsInstance.enablePush) PushApi.sync(getPackageIdList()).subscribe()
 		for (i in 0 until size()) {
 			val pack = this[i]
-			if (!shouldRefreshDelivered && pack.state == Package.STATUS_DELIVERED) {
+			if (!shouldRefreshDelivered && pack.getState() == Package.STATUS_DELIVERED) {
 				continue
 			}
-			val newPack = PackageApi.getPackage(pack.companyType, pack.number)
+			val newPack = PackageApi.getPackage(pack.companyType, pack.number!!)
 			if (newPack.code == BaseMessage.CODE_OKAY && newPack.data?.data != null) {
 				pack.applyNewData(newPack.data)
 				this[i] = pack

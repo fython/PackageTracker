@@ -155,7 +155,7 @@ class SearchActivity : AbsActivity(), AddDialogFragment.IAddDialogObserver {
 				.map {
 					val keyword = it.trim().toLowerCase()
 					(0 until mDatabase.size())
-							.filter { mDatabase[it].name.toLowerCase().contains(keyword) || mDatabase[it].number.toLowerCase().contains(keyword) }
+							.filter { mDatabase[it].name!!.toLowerCase().contains(keyword) || mDatabase[it].number!!.toLowerCase().contains(keyword) }
 							.mapTo(ArrayList()) { mDatabase[it] }
 				}
 				.subscribeOn(Schedulers.computation())

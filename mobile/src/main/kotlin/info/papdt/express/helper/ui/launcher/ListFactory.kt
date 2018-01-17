@@ -51,9 +51,9 @@ class ListFactory(private val mContext: Context, intent: Intent) : RemoteViewsSe
 
 		views.setTextViewText(R.id.tv_title, p.name)
 
-		if (p.data != null && p.data.size > 0) {
-			val status = p.data[0]
-			val spanny = Spanny(STATUS_STRING_ARRAY[p.state], ForegroundColorSpan(statusTitleColor))
+		if (p.data != null && p.data!!.size > 0) {
+			val status = p.data!![0]
+			val spanny = Spanny(STATUS_STRING_ARRAY[p.getState()], ForegroundColorSpan(statusTitleColor))
 					.append(" - " + status.context, ForegroundColorSpan(statusSubtextColor))
 			views.setTextViewText(R.id.tv_other, spanny)
 		} else {
@@ -62,8 +62,8 @@ class ListFactory(private val mContext: Context, intent: Intent) : RemoteViewsSe
 		}
 
 		/** Set CircleImageView  */
-		views.setTextViewText(R.id.tv_first_char, p.name.substring(0, 1))
-		val b = ScreenUtils.drawableToBitmap(ColorDrawable(ColorGenerator.MATERIAL.getColor(p.name)))
+		views.setTextViewText(R.id.tv_first_char, p.name!!.substring(0, 1))
+		val b = ScreenUtils.drawableToBitmap(ColorDrawable(ColorGenerator.MATERIAL.getColor(p.name!!)))
 		views.setImageViewBitmap(R.id.iv_logo, b)
 
 		/** Add paddingTop/Bottom to the first or last item  */
@@ -75,7 +75,7 @@ class ListFactory(private val mContext: Context, intent: Intent) : RemoteViewsSe
 
 		val intent = Intent()
 		intent.putExtra(EXTRA_PACKAGE_JSON, p.toJsonString())
-		intent.putExtra(EXTRA_STATE, p.state)
+		intent.putExtra(EXTRA_STATE, p.getState())
 		views.setOnClickFillInIntent(R.id.item_container, intent)
 
 		return views

@@ -149,7 +149,7 @@ class AddDialogFragment: DialogFragment() {
 								step2.setErrorText(0)
 							}
 							.subscribe {
-								if (it.code == BaseMessage.CODE_OKAY && it.data?.state != Package.STATUS_FAILED) {
+								if (it.code == BaseMessage.CODE_OKAY && it.data?.getState() != Package.STATUS_FAILED) {
 									addErrorView.makeGone()
 									addLoadingView.makeGone()
 									addFinishLayout.makeVisible()
