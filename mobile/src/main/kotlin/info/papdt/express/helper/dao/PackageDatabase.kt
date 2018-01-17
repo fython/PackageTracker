@@ -13,26 +13,26 @@ import java.util.ArrayList
 import info.papdt.express.helper.api.Kuaidi100PackageApi
 import info.papdt.express.helper.api.PushApi
 import info.papdt.express.helper.model.BaseMessage
-import info.papdt.express.helper.model.Package
+import info.papdt.express.helper.model.Kuaidi100Package
 import info.papdt.express.helper.support.FileUtils
 import info.papdt.express.helper.support.SettingsInstance
 
 class PackageDatabase private constructor(private val mContext: Context) {
 
 	@Expose @Volatile
-	lateinit var data: ArrayList<Package>
+	lateinit var data: ArrayList<Kuaidi100Package>
 		private set
 	@Volatile
-	lateinit var deliveredData: ArrayList<Package>
+	lateinit var deliveredData: ArrayList<Kuaidi100Package>
 		private set
 	@Volatile
-	lateinit var deliveringData: ArrayList<Package>
+	lateinit var deliveringData: ArrayList<Kuaidi100Package>
 		private set
 	@Expose
 	var dataVersion: String? = "2.5.0"
 		private set
 
-	private var lastRemovedData: Package? = null
+	private var lastRemovedData: Kuaidi100Package? = null
 	private var lastRemovedPosition = -1
 
 	init {
@@ -81,7 +81,7 @@ class PackageDatabase private constructor(private val mContext: Context) {
 		deliveredData = ArrayList()
 		deliveringData = ArrayList()
 		for (p in data) {
-			if (p.getState() == Package.STATUS_DELIVERED) {
+			if (p.getState() == Kuaidi100Package.STATUS_DELIVERED) {
 				deliveredData.add(p)
 			} else {
 				deliveringData.add(p)
@@ -89,19 +89,19 @@ class PackageDatabase private constructor(private val mContext: Context) {
 		}
 	}
 
-	fun add(pack: Package) {
+	fun add(pack: Kuaidi100Package) {
 		data.add(pack)
 		PushApi.add(pack.number!!, pack.companyType).subscribe()
 		refreshList()
 	}
 
-	fun add(index: Int, pack: Package) {
+	fun add(index: Int, pack: Kuaidi100Package) {
 		data.add(index, pack)
 		PushApi.add(pack.number!!, pack.companyType).subscribe()
 		refreshList()
 	}
 
-	operator fun set(index: Int, pack: Package) {
+	operator fun set(index: Int, pack: Kuaidi100Package) {
 		data[index] = pack
 		refreshList()
 	}
@@ -117,7 +117,7 @@ class PackageDatabase private constructor(private val mContext: Context) {
 		refreshList()
 	}
 
-	fun remove(pack: Package) {
+	fun remove(pack: Kuaidi100Package) {
 		val nowPos = indexOf(pack)
 		remove(nowPos)
 	}
@@ -142,7 +142,7 @@ class PackageDatabase private constructor(private val mContext: Context) {
 		}
 	}
 
-	fun indexOf(p: Package): Int {
+	fun indexOf(p: Kuaidi100Package): Int {
 		return indexOf(p.number!!)
 	}
 
@@ -159,7 +159,7 @@ class PackageDatabase private constructor(private val mContext: Context) {
 		return data.size
 	}
 
-	operator fun get(index: Int): Package {
+	operator fun get(index: Int): Kuaidi100Package {
 		return data[index]
 	}
 
@@ -169,7 +169,7 @@ class PackageDatabase private constructor(private val mContext: Context) {
 		if (SettingsInstance.enablePush) PushApi.sync(getPackageIdList()).subscribe()
 		for (i in 0 until size()) {
 			val pack = this[i]
-			if (!shouldRefreshDelivered && pack.getState() == Package.STATUS_DELIVERED) {
+			if (!shouldRefreshDelivered && pack.getState() == Kuaidi100Package.STATUS_DELIVERED) {
 				continue
 			}
 			val newPack = Kuaidi100PackageApi.getPackage(pack.companyType, pack.number!!)
@@ -177,7 +177,7 @@ class PackageDatabase private constructor(private val mContext: Context) {
 				pack.applyNewData(newPack.data)
 				this[i] = pack
 			} else {
-				Log.e(TAG, "Package " + pack.codeNumber + " couldn\'t get new info.")
+				Log.e(TAG, "Kuaidi100Package " + pack.codeNumber + " couldn\'t get new info.")
 			}
 		}
 		refreshList()

@@ -20,7 +20,7 @@ import info.papdt.express.helper.api.Kuaidi100PackageApi.CompanyInfo
 import info.papdt.express.helper.api.RxPackageApi
 import info.papdt.express.helper.dao.PackageDatabase
 import info.papdt.express.helper.model.BaseMessage
-import info.papdt.express.helper.model.Package
+import info.papdt.express.helper.model.Kuaidi100Package
 import info.papdt.express.helper.receiver.ConnectivityReceiver
 import info.papdt.express.helper.ui.CompanyChooserActivity
 import io.reactivex.Observable
@@ -50,7 +50,7 @@ class AddDialogFragment: DialogFragment() {
 
 	private var companyCode: String = ""
 
-	private var result: Package? = null
+	private var result: Kuaidi100Package? = null
 
 	private val number get() = arguments!!.getString(ARG_NUMBER)
 
@@ -149,7 +149,7 @@ class AddDialogFragment: DialogFragment() {
 								step2.setErrorText(0)
 							}
 							.subscribe {
-								if (it.code == BaseMessage.CODE_OKAY && it.data?.getState() != Package.STATUS_FAILED) {
+								if (it.code == BaseMessage.CODE_OKAY && it.data?.getState() != Kuaidi100Package.STATUS_FAILED) {
 									addErrorView.makeGone()
 									addLoadingView.makeGone()
 									addFinishLayout.makeVisible()
@@ -218,7 +218,7 @@ class AddDialogFragment: DialogFragment() {
 
 	interface IAddDialogObserver {
 
-		fun onPackageAdd(p: Package)
+		fun onPackageAdd(p: Kuaidi100Package)
 
 	}
 

@@ -15,7 +15,7 @@ import android.widget.TextView
 import de.hdodenhof.circleimageview.CircleImageView
 import info.papdt.express.helper.R
 import info.papdt.express.helper.dao.PackageDatabase
-import info.papdt.express.helper.model.Package
+import info.papdt.express.helper.model.Kuaidi100Package
 import info.papdt.express.helper.support.ColorGenerator
 import info.papdt.express.helper.support.Spanny
 import info.papdt.express.helper.support.isFontProviderEnabled
@@ -82,7 +82,7 @@ class HomePackageListAdapter(private var db: PackageDatabase?, private val type:
 		}
 	}
 
-	fun getItemData(pos: Int): Package = when (type) {
+	fun getItemData(pos: Int): Kuaidi100Package = when (type) {
 		TYPE_DELIVERED -> db!!.deliveredData[db!!.deliveredData.size - pos - 1]
 		TYPE_DELIVERING -> db!!.deliveringData[db!!.deliveringData.size - pos - 1]
 		TYPE_ALL -> db!![db!!.size() - pos - 1]

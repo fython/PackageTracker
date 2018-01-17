@@ -4,7 +4,7 @@ import android.app.Activity
 import cn.nekocode.rxlifecycle.RxLifecycle
 import com.spreada.utils.chinese.ZHConverter
 import info.papdt.express.helper.model.BaseMessage
-import info.papdt.express.helper.model.Package
+import info.papdt.express.helper.model.Kuaidi100Package
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -14,7 +14,7 @@ object RxPackageApi {
 
 	fun getPackage(number: String, com: String? = null,
 	               parentActivity: Activity? = null)
-			: Observable<BaseMessage<out Package?>> {
+			: Observable<BaseMessage<out Kuaidi100Package?>> {
 		var observable = Observable.just("")
 		parentActivity?.let { observable = observable.compose(RxLifecycle.bind(parentActivity).withObservable()) }
 		return observable

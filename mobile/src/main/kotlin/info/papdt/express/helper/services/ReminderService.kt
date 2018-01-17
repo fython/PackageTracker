@@ -18,7 +18,7 @@ import java.util.Calendar
 
 import info.papdt.express.helper.R
 import info.papdt.express.helper.dao.PackageDatabase
-import info.papdt.express.helper.model.Package
+import info.papdt.express.helper.model.Kuaidi100Package
 import info.papdt.express.helper.support.PushUtils
 import info.papdt.express.helper.support.Settings
 import info.papdt.express.helper.ui.DetailsActivity
@@ -51,7 +51,7 @@ class ReminderService : IntentService(TAG) {
 
 		for (i in 0 until db.size()) {
 			val p = db[i]
-			if (p.getState() != Package.STATUS_FAILED && p.shouldPush) {
+			if (p.getState() != Kuaidi100Package.STATUS_FAILED && p.shouldPush) {
 				Log.i(TAG, "包裹 $i 需要产生通知")
 				val n = produceNotifications(this, i, p)
 				nm.notify(i + 20000, n)
@@ -99,7 +99,7 @@ class ReminderService : IntentService(TAG) {
 			return n
 		}
 
-		fun produceNotifications(context: Context, position: Int, exp: Package?): Notification? {
+		fun produceNotifications(context: Context, position: Int, exp: Kuaidi100Package?): Notification? {
 			if (exp != null) {
 				val defaults = parseDefaults(context.applicationContext)
 
@@ -115,14 +115,14 @@ class ReminderService : IntentService(TAG) {
 
 				val title = exp.name
 				val subject: String = when (exp.getState()) {
-					Package.STATUS_DELIVERED -> R.string.notification_delivered
-					Package.STATUS_ON_THE_WAY -> R.string.notification_on_the_way
+					Kuaidi100Package.STATUS_DELIVERED -> R.string.notification_delivered
+					Kuaidi100Package.STATUS_ON_THE_WAY -> R.string.notification_on_the_way
 					else -> R.string.notification_new_message
 				}.run(context::getString)
 
 				val smallIcon = when (exp.getState()) {
-					Package.STATUS_DELIVERED -> R.drawable.ic_done_white_24dp
-					Package.STATUS_ON_THE_WAY -> R.drawable.ic_local_shipping_white_24dp
+					Kuaidi100Package.STATUS_DELIVERED -> R.drawable.ic_done_white_24dp
+					Kuaidi100Package.STATUS_ON_THE_WAY -> R.drawable.ic_local_shipping_white_24dp
 					else -> R.drawable.ic_assignment_returned_white_24dp
 				}
 

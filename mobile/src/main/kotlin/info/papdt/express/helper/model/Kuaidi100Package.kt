@@ -9,7 +9,7 @@ import java.util.regex.Pattern
 
 import info.papdt.express.helper.api.Kuaidi100PackageApi
 
-class Package {
+class Kuaidi100Package {
 
     /** Query data  */
     @Expose @SerializedName("message") var message: String? = null
@@ -50,7 +50,7 @@ class Package {
         this.state = status.toString()
     }
 
-    fun applyNewData(newData: Package?) {
+    fun applyNewData(newData: Kuaidi100Package?) {
         if (newData == null) return
 
         try {
@@ -169,9 +169,9 @@ class Package {
         const val STATUS_RETURNING = 6
         const val STATUS_OTHER = 1
 
-        @JvmStatic fun buildFromJson(json: String): Package {
+        @JvmStatic fun buildFromJson(json: String): Kuaidi100Package {
             try {
-                val p = Gson().fromJson(json, Package::class.java)
+                val p = Gson().fromJson(json, Kuaidi100Package::class.java)
                 if (p.companyChineseName == null && p.companyType != null) {
                     p.companyChineseName = Kuaidi100PackageApi.CompanyInfo.getNameByCode(p.companyType!!)
                 }
@@ -182,7 +182,7 @@ class Package {
             } catch (e: Exception) {
                 //may not be a json string
                 e.printStackTrace()
-                return Package()
+                return Kuaidi100Package()
             }
         }
     }

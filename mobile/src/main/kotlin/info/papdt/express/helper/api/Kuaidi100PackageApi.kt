@@ -13,7 +13,7 @@ import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombi
 import java.util.ArrayList
 
 import info.papdt.express.helper.model.BaseMessage
-import info.papdt.express.helper.model.Package
+import info.papdt.express.helper.model.Kuaidi100Package
 import info.papdt.express.helper.support.HttpUtils
 
 /**
@@ -35,7 +35,7 @@ object Kuaidi100PackageApi {
 
 	/**
 	 * @param com Shipment company
-	 * @param number Package number
+	 * @param number Kuaidi100Package number
 	 * @return query url
 	 */
 	@JvmStatic fun getQueryUrl(com: String?, number: String): String {
@@ -112,9 +112,9 @@ object Kuaidi100PackageApi {
 
 	/**
 	 * @param number The number of package which you want to query
-	 * @return Package and status code
+	 * @return Kuaidi100Package and status code
 	 */
-	@JvmStatic fun getPackageByNumber(number: String): BaseMessage<out Package?> {
+	@JvmStatic fun getPackageByNumber(number: String): BaseMessage<out Kuaidi100Package?> {
 		val comcode = detectCompanyByNumber(number)
 		return getPackage(comcode, number)
 	}
@@ -122,13 +122,13 @@ object Kuaidi100PackageApi {
 	/**
 	 * @param comcode The company code of package
 	 * @param number The number of package
-	 * @return Package and status code
+	 * @return Kuaidi100Package and status code
 	 */
-	@JvmStatic fun getPackage(comcode: String?, number: String): BaseMessage<out Package?> {
+	@JvmStatic fun getPackage(comcode: String?, number: String): BaseMessage<out Kuaidi100Package?> {
 		val message = HttpUtils.getString(getQueryUrl(comcode, number), false)
 		return if (message.code == BaseMessage.CODE_OKAY) {
 			try {
-				val pkg = Package.buildFromJson(message.data!!)
+				val pkg = Kuaidi100Package.buildFromJson(message.data!!)
 				if (pkg.status == "200") {
 					BaseMessage(BaseMessage.CODE_OKAY, pkg)
 				} else {
@@ -140,7 +140,7 @@ object Kuaidi100PackageApi {
 				}
 			} catch (e: Exception) {
 				e.printStackTrace()
-				BaseMessage<Package?>(BaseMessage.CODE_ERROR)
+				BaseMessage<Kuaidi100Package?>(BaseMessage.CODE_ERROR)
 			}
 		} else {
 			BaseMessage(BaseMessage.CODE_ERROR)

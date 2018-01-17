@@ -28,7 +28,7 @@ import info.papdt.express.helper.*
 import info.papdt.express.helper.R
 
 import info.papdt.express.helper.dao.PackageDatabase
-import info.papdt.express.helper.model.Package
+import info.papdt.express.helper.model.Kuaidi100Package
 import info.papdt.express.helper.support.PushUtils
 import info.papdt.express.helper.support.ScreenUtils
 import info.papdt.express.helper.support.Settings
@@ -57,7 +57,7 @@ class MainActivity : AbsActivity() {
 	private val TAG = "express.MainActivity"
 
 	private val mDatabase: PackageDatabase by lazy { PackageDatabase.getInstance(applicationContext) }
-	private var mContextMenuPackage: Package? = null
+	private var mContextMenuPackage: Kuaidi100Package? = null
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		Log.i(TAG, "MainActivity launch")
@@ -265,7 +265,7 @@ class MainActivity : AbsActivity() {
 		}
 	}
 
-	fun onContextMenuCreate(pack: Package) {
+	fun onContextMenuCreate(pack: Kuaidi100Package) {
 		mContextMenuPackage = pack
 	}
 

@@ -6,7 +6,7 @@ import com.google.firebase.messaging.RemoteMessage
 import info.papdt.express.helper.dao.PackageDatabase
 import info.papdt.express.helper.model.CommonPackage
 import info.papdt.express.helper.model.CommonStatus
-import info.papdt.express.helper.model.Package
+import info.papdt.express.helper.model.Kuaidi100Package
 import info.papdt.express.helper.support.PushUtils
 import info.papdt.express.helper.support.Settings
 import moe.feng.kotlinyan.common.*
@@ -29,7 +29,7 @@ class FCMService : FirebaseMessagingService() {
 				if (data.getData().size > db[index].data?.size ?: 0) {
 					Log.d(TAG, "包裹 $index 需要产生通知")
 					val oldPackage = db[index]
-					oldPackage.data = data.getData().map(CommonStatus::toOldPackageStatus).toMutableList() as ArrayList<Package.Status>
+					oldPackage.data = data.getData().map(CommonStatus::toOldPackageStatus).toMutableList() as ArrayList<Kuaidi100Package.Status>
 					thread { db.save() }
 					if (isEnabledDontDisturbMode && PushUtils.isDisturbTime(Calendar.getInstance())) {
 						Log.i(TAG, "现在是勿扰时间段，跳过通知。")

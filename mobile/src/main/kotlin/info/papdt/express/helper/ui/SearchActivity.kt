@@ -29,7 +29,7 @@ import info.papdt.express.helper.RESULT_NEW_PACKAGE
 import info.papdt.express.helper.api.Kuaidi100PackageApi
 import info.papdt.express.helper.api.RxPackageApi
 import info.papdt.express.helper.dao.PackageDatabase
-import info.papdt.express.helper.model.Package
+import info.papdt.express.helper.model.Kuaidi100Package
 import info.papdt.express.helper.support.Settings
 import info.papdt.express.helper.ui.adapter.SearchResultAdapter
 import info.papdt.express.helper.ui.common.AbsActivity
@@ -48,7 +48,7 @@ class SearchActivity : AbsActivity(), AddDialogFragment.IAddDialogObserver {
 	private lateinit var mAdapter: SearchResultAdapter
 
 	private var companies: ArrayList<Kuaidi100PackageApi.CompanyInfo.Company>? = null
-	private var packages: ArrayList<Package>? = null
+	private var packages: ArrayList<Kuaidi100Package>? = null
 
 	private val mDatabase: PackageDatabase by lazy { PackageDatabase.getInstance(applicationContext) }
 
@@ -168,7 +168,7 @@ class SearchActivity : AbsActivity(), AddDialogFragment.IAddDialogObserver {
 				}
 	}
 
-	override fun onPackageAdd(p: Package) {
+	override fun onPackageAdd(p: Kuaidi100Package) {
 		startFindPackage()
 		val intent = Intent()
 		intent.putExtra(RESULT_EXTRA_PACKAGE_JSON, p.toJsonString())

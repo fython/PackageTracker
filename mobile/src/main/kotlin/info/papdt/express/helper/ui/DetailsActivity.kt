@@ -32,7 +32,7 @@ import info.papdt.express.helper.RESULT_RENAMED
 import info.papdt.express.helper.api.Kuaidi100PackageApi
 import info.papdt.express.helper.dao.PackageDatabase
 import info.papdt.express.helper.model.BaseMessage
-import info.papdt.express.helper.model.Package
+import info.papdt.express.helper.model.Kuaidi100Package
 import info.papdt.express.helper.support.CheatSheet
 import info.papdt.express.helper.support.ClipboardUtils
 import info.papdt.express.helper.support.ScreenUtils
@@ -68,7 +68,7 @@ class DetailsActivity : AbsActivity() {
 		MultiTypeAdapter().apply {
 			register(DetailsTwoLineItem::class.java, DetailsTwoLineItemBinder())
 			register(String::class.java, SubheaderItemBinder())
-			register(Package.Status::class.java, mStatusBinder)
+			register(Kuaidi100Package.Status::class.java, mStatusBinder)
 		}
 	}
 	private val mStatusBinder: DetailsStatusItemBinder by lazy { DetailsStatusItemBinder() }
@@ -115,7 +115,7 @@ class DetailsActivity : AbsActivity() {
 		}
 	}
 
-	private var data: Package? = null
+	private var data: Kuaidi100Package? = null
 	private var state: Int = 0
 
 	private val progressDialog: ProgressDialog by lazy {
@@ -132,7 +132,7 @@ class DetailsActivity : AbsActivity() {
 		}
 		super.onCreate(savedInstanceState)
 
-		state = intent.getIntExtra(EXTRA_STATE, Package.STATUS_FAILED)
+		state = intent.getIntExtra(EXTRA_STATE, Kuaidi100Package.STATUS_FAILED)
 
 		setContentView(R.layout.activity_details)
 
@@ -163,12 +163,12 @@ class DetailsActivity : AbsActivity() {
 		val color: Int
 		val colorDark: Int
 		when (state) {
-			Package.STATUS_DELIVERED -> {
+			Kuaidi100Package.STATUS_DELIVERED -> {
 				mBackground.setImageResource(R.drawable.banner_background_delivered)
 				color = resources.color[R.color.teal_500]
 				colorDark = resources.color[R.color.teal_700]
 			}
-			Package.STATUS_FAILED -> {
+			Kuaidi100Package.STATUS_FAILED -> {
 				mBackground.setImageResource(R.drawable.banner_background_error)
 				color = resources.color[R.color.blue_grey_500]
 				colorDark = resources.color[R.color.blue_grey_700]
@@ -294,7 +294,7 @@ class DetailsActivity : AbsActivity() {
 
 		override fun doInBackground(vararg voids: Void): Items {
 			if (data == null) {
-				data = Package.buildFromJson(intent.getStringExtra(EXTRA_PACKAGE_JSON))
+				data = Kuaidi100Package.buildFromJson(intent.getStringExtra(EXTRA_PACKAGE_JSON))
 			}
 
 			val db = PackageDatabase.getInstance(applicationContext)
@@ -320,8 +320,8 @@ class DetailsActivity : AbsActivity() {
 			mAdapter.notifyDataSetChanged()
 
 			val color: Int = when (state) {
-				Package.STATUS_DELIVERED -> resources.color[R.color.teal_500]
-				Package.STATUS_FAILED -> resources.color[R.color.blue_grey_500]
+				Kuaidi100Package.STATUS_DELIVERED -> resources.color[R.color.teal_500]
+				Kuaidi100Package.STATUS_FAILED -> resources.color[R.color.blue_grey_500]
 				else -> resources.color[R.color.blue_500]
 			}
 			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -337,7 +337,7 @@ class DetailsActivity : AbsActivity() {
 		private const val EXTRA_PACKAGE_JSON = "extra_package_json"
 		private const val EXTRA_STATE = "extra_state"
 
-		fun launch(activity: AppCompatActivity, p: Package) {
+		fun launch(activity: AppCompatActivity, p: Kuaidi100Package) {
 			val intent = Intent(activity, DetailsActivity::class.java)
 			intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
 			intent[EXTRA_PACKAGE_JSON] = p.toJsonString()

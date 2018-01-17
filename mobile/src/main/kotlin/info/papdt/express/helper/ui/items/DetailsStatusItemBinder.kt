@@ -13,18 +13,18 @@ import android.view.ViewGroup
 import android.view.animation.OvershootInterpolator
 import info.papdt.express.helper.R
 import info.papdt.express.helper.drawable.TextDrawable
-import info.papdt.express.helper.model.Package
+import info.papdt.express.helper.model.Kuaidi100Package
 import info.papdt.express.helper.view.VerticalStepIconView
 import info.papdt.express.helper.view.VerticalStepLineView
 import me.drakeet.multitype.ItemViewBinder
 
-class DetailsStatusItemBinder : ItemViewBinder<Package.Status, DetailsStatusItemBinder.ItemHolder>() {
+class DetailsStatusItemBinder : ItemViewBinder<Kuaidi100Package.Status, DetailsStatusItemBinder.ItemHolder>() {
 
-    private var mPackage: Package? = null
+    private var mPackage: Kuaidi100Package? = null
     private val isShowed = BooleanArray(1000)
     var showChiba = false // 是否为慢递
 
-    fun setData(src: Package?) {
+    fun setData(src: Kuaidi100Package?) {
         mPackage = src
     }
 
@@ -32,13 +32,13 @@ class DetailsStatusItemBinder : ItemViewBinder<Package.Status, DetailsStatusItem
         return ItemHolder(inflater.inflate(R.layout.item_list_details_info_status, parent, false))
     }
 
-    override fun onBindViewHolder(holder: ItemHolder, item: Package.Status) {
+    override fun onBindViewHolder(holder: ItemHolder, item: Kuaidi100Package.Status) {
         holder.setData(item)
     }
 
     inner class ItemHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        private var data: Package.Status? = null
+        private var data: Kuaidi100Package.Status? = null
 
         var title: AppCompatTextView = itemView.findViewById(R.id.tv_title)
         var time: AppCompatTextView = itemView.findViewById(R.id.tv_time)
@@ -60,7 +60,7 @@ class DetailsStatusItemBinder : ItemViewBinder<Package.Status, DetailsStatusItem
             itemView.findViewById<View>(R.id.btn_call_contact).setOnClickListener(callPhone)
         }
 
-        fun setData(newData: Package.Status) {
+        fun setData(newData: Kuaidi100Package.Status) {
             this.data = newData
 
             /** Show time and location (if available)  */
@@ -91,23 +91,23 @@ class DetailsStatusItemBinder : ItemViewBinder<Package.Status, DetailsStatusItem
                 val pointColorResId: Int
                 val pointIconResId: Int
                 when (mPackage!!.getState()) {
-                    Package.STATUS_DELIVERED -> {
+                    Kuaidi100Package.STATUS_DELIVERED -> {
                         pointColorResId = R.color.green_500
                         pointIconResId = R.drawable.ic_done_white_24dp
                     }
-                    Package.STATUS_FAILED, Package.STATUS_OTHER -> {
+                    Kuaidi100Package.STATUS_FAILED, Kuaidi100Package.STATUS_OTHER -> {
                         pointColorResId = R.color.red_500
                         pointIconResId = R.drawable.ic_close_white_24dp
                     }
-                    Package.STATUS_RETURNED -> {
+                    Kuaidi100Package.STATUS_RETURNED -> {
                         pointColorResId = R.color.brown_500
                         pointIconResId = R.drawable.ic_assignment_return_white_24dp
                     }
-                    Package.STATUS_ON_THE_WAY -> {
+                    Kuaidi100Package.STATUS_ON_THE_WAY -> {
                         pointColorResId = R.color.blue_700
                         pointIconResId = R.drawable.ic_local_shipping_white_24dp
                     }
-                    Package.STATUS_NORMAL -> {
+                    Kuaidi100Package.STATUS_NORMAL -> {
                         pointColorResId = R.color.blue_500
                         pointIconResId = R.drawable.ic_flight_white_24dp
                     }

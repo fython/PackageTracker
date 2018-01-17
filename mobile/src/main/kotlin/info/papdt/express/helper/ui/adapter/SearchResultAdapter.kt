@@ -21,7 +21,7 @@ import java.util.ArrayList
 import de.hdodenhof.circleimageview.CircleImageView
 import info.papdt.express.helper.R
 import info.papdt.express.helper.api.Kuaidi100PackageApi
-import info.papdt.express.helper.model.Package
+import info.papdt.express.helper.model.Kuaidi100Package
 import info.papdt.express.helper.support.ColorGenerator
 import info.papdt.express.helper.support.ScreenUtils
 import info.papdt.express.helper.support.Spanny
@@ -32,7 +32,7 @@ class SearchResultAdapter(
         private val parentActivity: AppCompatActivity
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    private var packages: ArrayList<Package>? = null
+    private var packages: ArrayList<Kuaidi100Package>? = null
     private var companies: ArrayList<Kuaidi100PackageApi.CompanyInfo.Company>? = null
 
     private var items: ArrayList<ItemType>? = null
@@ -42,7 +42,7 @@ class SearchResultAdapter(
     private var statusSubtextColor = -1
     private var STATUS_STRING_ARRAY: Array<String>? = null
 
-    fun setPackages(packages: ArrayList<Package>?) {
+    fun setPackages(packages: ArrayList<Kuaidi100Package>?) {
         this.packages = packages
     }
 
