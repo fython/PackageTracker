@@ -52,16 +52,20 @@ dependencies {
     implementation "com.android.support:support-v13:$supportLibraryVersion"
     implementation "com.android.support:customtabs:$supportLibraryVersion"
 
+    implementation "android.arch.persistence.room:runtime:1.0.0"
+    annotationProcessor "android.arch.persistence.room:compiler:1.0.0"
+    implementation "android.arch.persistence.room:rxjava2:1.0.0"
+
     // Network & Data
-    implementation 'com.squareup.okhttp3:okhttp:3.9.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.9.1'
     implementation 'com.google.code.gson:gson:2.8.2'
 
     // Common UI Library
-    implementation 'me.drakeet.multitype:multitype:3.3.3'
+    implementation 'me.drakeet.multitype:multitype:3.4.0'
     implementation "moe.shizuku.preference:preference:$materialPrefLibVersion"
     implementation "moe.shizuku.preference:preference-simplemenu:$materialPrefLibVersion"
     implementation "moe.shizuku.preference:preference-dialog-android:$materialPrefLibVersion"
-    implementation 'moe.shizuku.fontprovider:api:8'
+    implementation 'moe.shizuku.fontprovider:api:10'
 
     // View & Widget
     implementation project(':libraries:StatusBarCompat')
@@ -72,7 +76,7 @@ dependencies {
     implementation 'me.dm7.barcodescanner:zxing:1.9'
 
     // Reactive X
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.5'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.6'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
     implementation 'com.github.nekocode.rxlifecycle:rxlifecycle:1.1'
 
