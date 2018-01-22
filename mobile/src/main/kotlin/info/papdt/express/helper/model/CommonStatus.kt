@@ -1,8 +1,5 @@
 package info.papdt.express.helper.model
 
-import android.arch.persistence.room.Entity
-
-@Entity
 data class CommonStatus(
 		val content: String?,
 		val time: String?,
