@@ -202,6 +202,8 @@
 	<string name="subheader_company">速遞公司</string>
 	<string name="item_title_please_wait">請稍後....</string>
 
+	<string name="summary_baidu_not_support_choose_company">速遞公司會由百度接口選擇。</string>
+
 	<!-- Import/Export -->
 	<string name="activity_import_export">匯入/匯出</string>
 	<string name="action_backup_all_data">備份所有包裹資料</string>

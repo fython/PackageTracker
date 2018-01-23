@@ -22,6 +22,8 @@ import info.papdt.express.helper.dao.PackageDatabase
 import info.papdt.express.helper.model.BaseMessage
 import info.papdt.express.helper.model.Kuaidi100Package
 import info.papdt.express.helper.receiver.ConnectivityReceiver
+import info.papdt.express.helper.support.PackageApiType
+import info.papdt.express.helper.support.SettingsInstance
 import info.papdt.express.helper.ui.CompanyChooserActivity
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -72,6 +74,10 @@ class AddDialogFragment: DialogFragment() {
 		VerticalStepperItemView.bindSteppers(step0, step1, step2)
 
 		step0.summary = resources.string[R.string.stepper_detect_company_summary].format(number)
+		step1.summary = when (SettingsInstance.packageApiType) {
+			PackageApiType.BAIDU -> resources.string[R.string.summary_baidu_not_support_choose_company]
+			else -> null
+		}
 
 		step1NextButton.setOnClickListener { step1.nextStep() }
 		view.findViewById<Button>(R.id.choose_company_change_btn).setOnClickListener {
@@ -86,8 +92,22 @@ class AddDialogFragment: DialogFragment() {
 			doStep()
 		}
 		view.findViewById<Button>(R.id.try_again_btn_step_2).setOnClickListener { doStep() }
-		view.findViewById<Button>(R.id.back_button_step_2).setOnClickListener { step2.prevStep() }
-		view.findViewById<Button>(R.id.back_button_step_2_2).setOnClickListener { step2.prevStep() }
+		view.findViewById<Button>(R.id.back_button_step_2).apply {
+			if (SettingsInstance.packageApiType == PackageApiType.BAIDU) {
+				isEnabled = false
+			}
+			setOnClickListener {
+				step2.prevStep()
+			}
+		}
+		view.findViewById<Button>(R.id.back_button_step_2_2).apply {
+			if (SettingsInstance.packageApiType == PackageApiType.BAIDU) {
+				isEnabled = false
+			}
+			setOnClickListener {
+				step2.prevStep()
+			}
+		}
 		view.findViewById<Button>(R.id.stepper_add_button).setOnClickListener {
 			result?.name = if (nameEdit.text.isNotBlank())
 				nameEdit.text.toString() else String.format(getString(R.string.package_name_unnamed), number?.substring(0, 4))
@@ -128,8 +148,18 @@ class AddDialogFragment: DialogFragment() {
 							}
 							.subscribe {
 								step0.setErrorText(0)
-								currentStep = 1
-								step0.nextStep()
+								when (SettingsInstance.packageApiType) {
+									PackageApiType.BAIDU -> {
+										currentStep = 2
+										step0.state = VerticalStepperItemView.STATE_DONE
+										step1.nextStep()
+										doStep()
+									}
+									else -> {
+										currentStep = 1
+										step0.nextStep()
+									}
+								}
 								it?.let(this::setCompany)
 							}
 				} else {
@@ -182,7 +212,6 @@ class AddDialogFragment: DialogFragment() {
 		return AlertDialog.Builder(activity!!)
 				.setTitle(R.string.activity_add)
 				.setView(createView(activity!!.layoutInflater))
-				.setNegativeButton(android.R.string.cancel) { _, _ -> }
 				.create()
 	}
 

@@ -242,6 +242,8 @@
 	<string name="toast_clipboard_paste">Found text in your clipboard</string>
 	<string name="toast_clipboard_paste_action">Paste</string>
 
+	<string name="summary_baidu_not_support_choose_company">Delivery company will be chosen by Baidu API.</string>
+
 	<!-- Import/Export -->
 	<string name="activity_import_export">Import/Export</string>
 	<string name="action_backup_all_data">Backup packages data</string>
