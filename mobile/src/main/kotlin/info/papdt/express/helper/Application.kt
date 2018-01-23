@@ -6,6 +6,7 @@ import android.app.NotificationManager
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
+import android.support.multidex.MultiDexApplication
 import android.support.v7.app.AppCompatDelegate
 
 import com.tencent.bugly.crashreport.CrashReport
@@ -18,7 +19,7 @@ import moe.feng.kotlinyan.common.ifSupportSDK
 import moe.feng.kotlinyan.common.notificationManager
 import moe.feng.kotlinyan.common.string
 
-class Application : android.app.Application() {
+class Application : MultiDexApplication() {
 
 	@SuppressLint("NewApi")
 	override fun onCreate() {

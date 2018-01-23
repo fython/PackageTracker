@@ -124,13 +124,6 @@
 		<item>90 分钟</item>
 		<item>从不</item>
 	</string-array>
-	<string-array name="notification_interval_item">
-		<item>0</item>
-		<item>1</item>
-		<item>2</item>
-		<item>3</item>
-		<item>4</item>
-	</string-array>
 
 	<string name="category_push">主動推送</string>
 	<string name="pref_firebase_instance_id">設備實例 ID</string>

@@ -11,6 +11,7 @@ android {
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
         resConfigs "en", "zh_cn", "zh_tw"
+        multiDexEnabled true
     }
     buildTypes {
         release {
@@ -36,6 +37,8 @@ kotlin {
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     // wearApp project(':wear')
+
+    implementation 'com.android.support:multidex:1.0.2'
 
     // Kotlin & Kotlinyan
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
