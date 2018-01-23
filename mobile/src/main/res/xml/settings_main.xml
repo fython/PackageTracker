@@ -34,6 +34,17 @@
 
 	</PreferenceCategory>
 
+    <PreferenceCategory android:title="@string/category_api">
+
+        <SimpleMenuPreference android:key="api_type"
+            android:title="@string/item_package_api_type"
+            android:summary="%s"
+            android:entries="@array/item_package_api_types"
+            android:entryValues="@array/item_package_api_types_values"
+            android:defaultValue="0"/>
+
+    </PreferenceCategory>
+
 	<PreferenceCategory android:title="@string/category_push">
 
 		<SwitchPreference android:key="enable_push"

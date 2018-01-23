@@ -164,6 +164,11 @@
 	<string name="item_detect_clipboard">从剪贴板检测</string>
 	<string name="item_detect_clipboard_desc">当你复制了一串带有数字的文本时，水表助手会显示一个气泡快速入口。</string>
 
+	<string name="category_api">查询接口</string>
+	<string name="item_package_api_type">当前提供者</string>
+	<string name="item_package_api_type_kd100">快递 100</string>
+	<string name="item_package_api_type_baidu">百度</string>
+
 	<!-- Details -->
 	<string name="activity_details">详情</string>
 	<string name="action_set_unread">标为未读</string>

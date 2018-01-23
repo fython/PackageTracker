@@ -153,7 +153,7 @@
 		<item>90 minutes</item>
 		<item>Never</item>
 	</string-array>
-	<string-array name="notification_interval_item">
+	<string-array name="notification_interval_item" translatable="false">
 		<item>0</item>
 		<item>1</item>
 		<item>2</item>
@@ -192,6 +192,19 @@
 	<string name="item_detect_screen_text_desc">@string/description_detect_service</string>
 	<string name="item_detect_clipboard">Detect from clipboard</string>
 	<string name="item_detect_clipboard_desc">When you copied a text including long number, it will show up a bubble to enter app and track your package.</string>
+
+    <string name="category_api">Query API</string>
+    <string name="item_package_api_type">Current provider</string>
+    <string name="item_package_api_type_kd100">Kuaidi 100</string>
+    <string name="item_package_api_type_baidu">Baidu</string>
+    <string-array name="item_package_api_types">
+        <item>@string/item_package_api_type_kd100</item>
+        <item>@string/item_package_api_type_baidu</item>
+    </string-array>
+    <string-array name="item_package_api_types_values" translatable="false">
+        <item>0</item>
+        <item>1</item>
+    </string-array>
 
 	<!-- Details -->
 	<string name="activity_details">Details</string>

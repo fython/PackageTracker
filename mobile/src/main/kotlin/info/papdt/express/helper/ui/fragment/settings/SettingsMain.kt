@@ -47,6 +47,9 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 	private val mPrefReqPush: Preference by PreferenceProperty("request_push")
 	private val mPrefWhatsThis: Preference by PreferenceProperty("push_intro")
 
+    // Query api settings
+    private val mPrefApiType: ListPreference by PreferenceProperty("api_type")
+
 	// Auto detect
 	private val mPrefFromClipboard: SwitchPreference by PreferenceProperty("from_clipboard")
 
@@ -107,6 +110,8 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 			mPrefIntervalTime.setValueIndex(intervalTarget)
 		}
 
+        mPrefApiType.value = SettingsInstance.packageApiType.toString()
+
 		mPrefApiHost.text = SettingsInstance.pushApiHost
 		mPrefApiPort.text = SettingsInstance.pushApiPort.toString()
 		mPrefHttps.isChecked = SettingsInstance.enableHttps
@@ -142,6 +147,9 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 		mPrefApiPort.onPreferenceChangeListener = this
 		mPrefWhatsThis.onPreferenceClickListener = this
 		mPrefHttps.onPreferenceChangeListener = this
+
+        // Query api type
+        mPrefApiType.onPreferenceChangeListener = this
 
 		// Auto detect
 		mPrefFromClipboard.onPreferenceChangeListener = this
@@ -312,6 +320,11 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 				val value = Integer.parseInt(o as String)
 				settings.putInt(Settings.KEY_NIGHT_MODE, value)
 				makeRestartTips()
+				true
+			}
+			// Query Api
+			mPrefApiType -> {
+				SettingsInstance.packageApiType = (o as String).toLong()
 				true
 			}
 			// Notification & push

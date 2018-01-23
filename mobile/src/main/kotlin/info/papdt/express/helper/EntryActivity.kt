@@ -14,7 +14,7 @@ class EntryActivity : Activity() {
 		super.onCreate(savedInstanceState)
 
 		/** Open activity  */
-		if (SettingsInstance.firstRun || !SettingsInstance.usingNewDatabase) {
+		if (SettingsInstance.firstRun) {
 			SettingsInstance.firstRun = false
 			val intent = Intent(this, SplashActivity::class.java)
 			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
