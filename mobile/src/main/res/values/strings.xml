@@ -206,6 +206,9 @@
         <item>1</item>
     </string-array>
 
+	<string name="item_dark_launcher_icon">Dark launcher icon</string>
+	<string name="item_dark_launcher_summary">This feature is only supported on Android 8.0+</string>
+
 	<!-- Details -->
 	<string name="activity_details">Details</string>
 	<string name="action_set_unread">Set unread</string>

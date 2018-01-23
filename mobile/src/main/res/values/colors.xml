@@ -51,6 +51,10 @@
 		<item>@color/yellow_500</item>
 	</array>
 
+	<!-- Logo -->
+	<color name="logo_light_background">#FFFFFF</color>
+	<color name="logo_dark_background">#424242</color>
+
 	<!-- UI -->
 	<color name="list_text_title_color">#000000</color>
 	<color name="list_text_hint_color">#4F000000</color>

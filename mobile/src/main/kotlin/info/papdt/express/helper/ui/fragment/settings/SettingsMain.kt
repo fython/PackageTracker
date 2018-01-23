@@ -34,6 +34,7 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 	private val mPrefNavigationTint: SwitchPreference by PreferenceProperty("navigation_tint")
 	private val mPrefNightMode: ListPreference by PreferenceProperty("night_mode")
 	private val mPrefShowTipsAgain: Preference by PreferenceProperty("show_tips_again")
+	private val mPrefDarkIcon: SwitchPreference by PreferenceProperty("dark_launcher_icon")
 
 	// Notification & push preference
 	private val mPrefDontDisturb: SwitchPreference by PreferenceProperty("dont_disturb")
@@ -103,6 +104,8 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 			mPrefNightMode.setValueIndex(target)
 		}
 
+		mPrefDarkIcon.isChecked = LauncherIconUtils.isDarkLauncherIcon(activity!!)
+
 		mPrefDontDisturb.isChecked = settings.getBoolean(Settings.KEY_NOTIFICATION_DO_NOT_DISTURB, true)
 
 		val intervalTarget = settings.getInt(Settings.KEY_NOTIFICATION_INTERVAL, 1)
@@ -135,6 +138,7 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 		mPrefNavigationTint.onPreferenceChangeListener = this
 		mPrefNightMode.onPreferenceChangeListener = this
 		mPrefShowTipsAgain.onPreferenceClickListener = this
+		mPrefDarkIcon.onPreferenceChangeListener = this
 
 		// Notification & push
 		mPrefDontDisturb.onPreferenceChangeListener = this
@@ -320,6 +324,11 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 				val value = Integer.parseInt(o as String)
 				settings.putInt(Settings.KEY_NIGHT_MODE, value)
 				makeRestartTips()
+				true
+			}
+			mPrefDarkIcon -> {
+				val value = o as Boolean
+				LauncherIconUtils.setDarkLauncherIcon(activity!!, value)
 				true
 			}
 			// Query Api

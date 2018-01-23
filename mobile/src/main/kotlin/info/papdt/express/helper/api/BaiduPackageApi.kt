@@ -7,6 +7,8 @@ import info.papdt.express.helper.model.BaseMessage
 import info.papdt.express.helper.model.Kuaidi100Package
 import info.papdt.express.helper.support.HttpUtils
 import okhttp3.Request
+import okhttp3.Response
+import okhttp3.ResponseBody
 import java.io.IOException
 
 object BaiduPackageApi {
@@ -27,7 +29,7 @@ object BaiduPackageApi {
         }.build().toString()
     }
 
-    @JvmStatic fun getPackageByNumber(number: String): BaseMessage<out Kuaidi100Package> {
+    @JvmStatic fun getPackageByNumber(number: String): BaseMessage<out Kuaidi100Package?> {
         try {
             if (shouldRequestBaidu) {
                 initBaiduCookies() ?: throw IOException("Cannot access cookie.")
@@ -39,9 +41,8 @@ object BaiduPackageApi {
                     .build()
                     .let(HttpUtils.client::newCall)
                     .execute()
-                    .let { response ->
-                        response.body()!!.string()
-                    }
+                    .let(Response::body)!!
+                    .let(ResponseBody::string)
             val baiduModel = Gson().fromJson(string, BaiduPackage::class.java)
             baiduModel.number = number
             return BaseMessage(BaseMessage.CODE_OKAY, baiduModel.toKuaidi100PackageType())

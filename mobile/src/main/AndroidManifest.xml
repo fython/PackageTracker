@@ -19,13 +19,27 @@
 		android:theme="@style/AppTheme">
 
 		<activity android:name=".EntryActivity"
-		          android:theme="@style/EmptyActivity">
+		          android:theme="@style/EmptyActivity"
+				  android:icon="@mipmap/ic_launcher">
 			<intent-filter>
 				<action android:name="android.intent.action.MAIN"/>
 				<category android:name="android.intent.category.LAUNCHER"/>
 			</intent-filter>
 			<meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts"/>
 		</activity>
+
+		<activity-alias
+			android:name=".EntryActivity.DarkLogo"
+			android:targetActivity=".EntryActivity"
+			android:theme="@style/EmptyActivity"
+			android:enabled="false"
+			android:icon="@mipmap/ic_launcher_dark">
+			<intent-filter>
+				<action android:name="android.intent.action.MAIN"/>
+				<category android:name="android.intent.category.LAUNCHER"/>
+			</intent-filter>
+			<meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts"/>
+		</activity-alias>
 
 		<activity android:name=".ui.SplashActivity"
 		          android:theme="@style/AppTheme">

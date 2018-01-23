@@ -169,6 +169,9 @@
 	<string name="item_package_api_type_kd100">快递 100</string>
 	<string name="item_package_api_type_baidu">百度</string>
 
+	<string name="item_dark_launcher_icon">暗色启动器图标</string>
+	<string name="item_dark_launcher_summary">这个特性只在 Android 8.0 及以上支持。</string>
+
 	<!-- Details -->
 	<string name="activity_details">详情</string>
 	<string name="action_set_unread">标为未读</string>
