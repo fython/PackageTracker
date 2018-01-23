@@ -10,7 +10,7 @@ import com.google.gson.annotations.Expose
 import java.io.IOException
 import java.util.ArrayList
 
-import info.papdt.express.helper.api.Kuaidi100PackageApi
+import info.papdt.express.helper.api.PackageApi
 import info.papdt.express.helper.api.PushApi
 import info.papdt.express.helper.model.BaseMessage
 import info.papdt.express.helper.model.Kuaidi100Package
@@ -172,7 +172,7 @@ class PackageDatabase private constructor(private val mContext: Context) {
 			if (!shouldRefreshDelivered && pack.getState() == Kuaidi100Package.STATUS_DELIVERED) {
 				continue
 			}
-			val newPack = Kuaidi100PackageApi.getPackage(pack.companyType, pack.number!!)
+			val newPack = PackageApi.getPackage(pack.number!!, pack.companyType)
 			if (newPack.code == BaseMessage.CODE_OKAY && newPack.data?.data != null) {
 				pack.applyNewData(newPack.data)
 				this[i] = pack

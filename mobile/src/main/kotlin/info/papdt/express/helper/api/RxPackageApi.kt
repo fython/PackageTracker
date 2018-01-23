@@ -5,8 +5,6 @@ import cn.nekocode.rxlifecycle.RxLifecycle
 import com.spreada.utils.chinese.ZHConverter
 import info.papdt.express.helper.model.BaseMessage
 import info.papdt.express.helper.model.Kuaidi100Package
-import info.papdt.express.helper.support.PackageApiType
-import info.papdt.express.helper.support.SettingsInstance
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -20,21 +18,7 @@ object RxPackageApi {
 		var observable = Observable.just("")
 		parentActivity?.let { observable = observable.compose(RxLifecycle.bind(parentActivity).withObservable()) }
 		return observable
-				.map {
-                    when (SettingsInstance.packageApiType) {
-                        PackageApiType.KUAIDI100 -> {
-                            if (com == null) {
-                                Kuaidi100PackageApi.getPackageByNumber(number)
-                            } else {
-                                Kuaidi100PackageApi.getPackage(com, number)
-                            }
-                        }
-                        PackageApiType.BAIDU -> {
-                            BaiduPackageApi.getPackageByNumber(number)
-                        }
-                        else -> throw IllegalArgumentException("This api type is unsupported")
-                    }
-				}
+				.map { PackageApi.getPackage(number, com) }
 				.subscribeOn(Schedulers.io())
 				.observeOn(AndroidSchedulers.mainThread())
 	}

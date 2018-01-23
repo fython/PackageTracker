@@ -29,7 +29,7 @@ import info.papdt.express.helper.R
 import info.papdt.express.helper.REQUEST_DETAILS
 import info.papdt.express.helper.RESULT_DELETED
 import info.papdt.express.helper.RESULT_RENAMED
-import info.papdt.express.helper.api.Kuaidi100PackageApi
+import info.papdt.express.helper.api.PackageApi
 import info.papdt.express.helper.dao.PackageDatabase
 import info.papdt.express.helper.model.BaseMessage
 import info.papdt.express.helper.model.Kuaidi100Package
@@ -236,7 +236,7 @@ class DetailsActivity : AbsActivity() {
 				Observable.just("")
 						.compose(RxLifecycle.bind(this).withObservable())
 						.map {
-							val newPack = Kuaidi100PackageApi.getPackage(data!!.companyType, data!!.number!!)
+							val newPack = PackageApi.getPackage(data!!.number!!, data!!.companyType)
 							if (newPack.code != BaseMessage.CODE_OKAY || newPack.data?.data == null) {
 								false
 							} else {
