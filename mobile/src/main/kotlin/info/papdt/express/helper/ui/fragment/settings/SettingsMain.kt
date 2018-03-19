@@ -368,7 +368,7 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 				true
 			}
 			mPrefApiPort -> {
-				SettingsInstance.pushApiPort = (o as String).toInt()
+				SettingsInstance.pushApiPort = (o as? String)?.toIntOrNull() ?: 6000
 				needRegister = true
 				database.size()
 				true

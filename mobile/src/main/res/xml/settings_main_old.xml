@@ -14,6 +14,12 @@
 		                android:entryValues="@array/night_mode_choices_item"
 		                android:defaultValue="0"/>
 
+		<SwitchPreference android:key="dark_launcher_icon"
+						  android:title="@string/item_dark_launcher_icon"
+						  android:summary="@string/item_dark_launcher_summary"
+						  android:enabled="@bool/is_adaptive_icon_supported"
+						  android:defaultValue="false"/>
+
 		<Preference android:key="show_tips_again"
 		            android:title="@string/pref_show_tips_again"/>
 
