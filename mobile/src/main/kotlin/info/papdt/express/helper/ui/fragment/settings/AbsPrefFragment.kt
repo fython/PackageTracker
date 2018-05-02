@@ -50,15 +50,28 @@ abstract class AbsPrefFragment : PreferenceFragment() {
 
 	class PreferenceProperty<out T: Preference>(private val key: String): ReadOnlyProperty<PreferenceFragment, T> {
 
-		private var value: T? = null
+        private var value: T? = null
 
-		override fun getValue(thisRef: PreferenceFragment, property: KProperty<*>): T {
-			if (value == null) {
-				value = thisRef.findPreference(key) as T
-			}
-			return value!!
-		}
+        override fun getValue(thisRef: PreferenceFragment, property: KProperty<*>): T {
+            if (value == null) {
+                value = thisRef.findPreference(key) as T
+            }
+            return value!!
+        }
 
-	}
+    }
+
+    class NullablePreferenceProperty<out T: Preference>(private val key: String): ReadOnlyProperty<PreferenceFragment, T?> {
+
+        private var value: T? = null
+
+        override fun getValue(thisRef: PreferenceFragment, property: KProperty<*>): T? {
+            if (value == null) {
+                value = thisRef.findPreference(key) as? T
+            }
+            return value
+        }
+
+    }
 
 }
