@@ -333,7 +333,7 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 			}
 			// Query Api
 			mPrefApiType -> {
-				SettingsInstance.packageApiType = (o as String).toLong()
+				SettingsInstance.packageApiType = (o as String).toInt()
 				true
 			}
 			// Notification & push
