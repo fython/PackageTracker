@@ -38,10 +38,10 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     // wearApp project(':wear')
 
-    implementation 'com.android.support:multidex:1.0.2'
+    implementation 'com.android.support:multidex:1.0.3'
 
     // Kotlin & Kotlinyan
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "org.jetbrains.anko:anko-commons:$ankoVersion"
     implementation "org.jetbrains.anko:anko-coroutines:$ankoVersion"
     implementation "moe.feng.kotlinyan:kotlinyan-common:$kotlinyanVersion"
@@ -56,7 +56,7 @@ dependencies {
     implementation "com.android.support:customtabs:$supportLibraryVersion"
 
     // Network & Data
-    implementation 'com.squareup.okhttp3:okhttp:3.9.1'
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.9.1'
     implementation 'com.google.code.gson:gson:2.8.2'
 
@@ -76,8 +76,8 @@ dependencies {
     implementation 'me.dm7.barcodescanner:zxing:1.9.8'
 
     // Reactive X
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.6'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.12'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
     implementation 'com.github.nekocode.rxlifecycle:rxlifecycle:1.1'
 
     // Utils
