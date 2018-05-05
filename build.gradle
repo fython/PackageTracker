@@ -3,8 +3,8 @@ ext {
     minSdkVersion = 21
     targetSdkVersion = 27
     buildToolsVersion = "27.0.3"
-    versionCode = 52
-    versionName = '3.1.0'
+    versionCode = 53
+    versionName = '3.1.1'
     kotlinyanVersion = '0.3.0'
     firebaseVersion = '15.0.0'
     ankoVersion = '0.10.3'

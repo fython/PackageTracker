@@ -1,0 +1,275 @@
+<resources>
+
+	<string name="app_name">水錶助手</string>
+
+	<!-- Shortcuts -->
+	<string name="label_shortcut_add">手動添加</string>
+	<string name="label_shortcut_scan">掃碼</string>
+
+	<!-- Home design -->
+	<string name="navigation_item_all">全部</string>
+	<string name="navigation_item_delivered">送達左</string>
+	<string name="navigation_item_on_the_way">運送緊</string>
+	<string name="frame_empty_tip">撳下“添加”按掣添加快遞包裹</string>
+	<string name="frame_empty_tip_delivering">冇運緊嘅包</string>
+	<string name="frame_empty_tip_delivered">冇送到嘅包</string>
+	<string name="frame_empty_tip_all">你可以從搜尋欄添加包裹</string>
+
+	<string name="action_search">搵野</string>
+	<string name="action_read_all">全部記成已讀</string>
+	<string name="action_import_export">匯入/匯出</string>
+	<string name="action_settings">設定</string>
+	<string name="action_refresh">重新拉取</string>
+
+	<string name="item_text_cannot_get_package_status">拉唔到最新狀態</string>
+	<string-array name="item_status_description">
+		<item>運送緊</item>
+		<item>其它</item>
+		<item>出錯</item>
+		<item>送達左</item>
+		<item>退返左</item>
+		<item>派送緊</item>
+		<item>退緊貨</item>
+	</string-array>
+
+	<string name="action_remove">刪除</string>
+	<string name="toast_item_removed">%s 已經刪左。</string>
+	<string name="toast_item_removed_action">撤銷</string>
+	<string name="toast_all_read">%d 個包已記成已讀。</string>
+
+	<!-- Add -->
+	<string name="activity_add">新增包裹</string>
+	<string name="text_field_number">運單號碼</string>
+	<string name="toast_number_wrong">你嘅運單號碼唔啱，檢查下再試過。</string>
+	<string name="toast_number_exist">速遞包裹已經喺列表內，唔好重複添加。</string>
+	<string name="operation_scan">掃描條碼</string>
+	<string name="operation_manually_choose_company">快遞公司唔啱？</string>
+	<string name="operation_manually_choose_company_when_cannot_find">手動揀快遞公司</string>
+	<string name="message_no_internet_connection">連接唔到網際網路。</string>
+	<string name="description_no_internet_connection">請打開 Wi-Fi 或流動數據網路再試。</string>
+	<string name="message_no_found">快遞包好似唔存在。</string>
+	<string name="description_no_found">檢查你嘅運單號碼或者手動揀啱快遞公司。</string>
+	<string name="text_field_name">包裹名稱（可選）</string>
+	<string name="message_successful_format">搞掂添加速遞包裹 \"%1$s (%2$s)\"。而家你仲可以同佢起個好認嘅名。</string>
+	<string name="description_successful_format">最新狀態：%1$s (%2$s)</string>
+	<string name="package_name_unnamed">快遞 %s</string>
+	<string name="toast_unknown_error">發生左未知錯誤！請返回輸入再試過。</string>
+
+	<!-- Scanner -->
+	<string name="activity_scanner">掃描條碼</string>
+	<string name="dialog_explanation_permission_title">冇權限</string>
+	<string name="dialog_explanation_permission_message">掃描器係內建功能，因此要你畀應用程式拍照權限先可以保證正常運作，唔係噶話就掃唔到條碼。</string>
+	<string name="dialog_explanation_permission_pos_btn">去設定</string>
+	<string name="toast_permission_denied">權限被拒絕。冇得啟動掃描器。</string>
+	<string name="toast_permission_denied_action">設定</string>
+
+	<!-- Widget ButtonBar -->
+	<string name="buttonbar_default_left">返去</string>
+	<string name="buttonbar_default_right">繼續</string>
+
+	<!-- Choose company -->
+	<string name="activity_choose_company">揀速遞公司</string>
+	<string name="search_hint_company">搵公司....</string>
+	<string name="search_no_result">冇料</string>
+
+	<!-- Settings -->
+	<string name="activity_settings">設定</string>
+	<string name="category_user_interface">用戶介面</string>
+	<string name="category_network">網路</string>
+	<string name="toast_need_restart">設定將喺重啟程式後生效。</string>
+	<string name="toast_need_restart_action">而家重啟</string>
+	<string name="category_about">關於</string>
+	<string name="app_version_format">%1$s (%2$d)</string>
+	<string name="author_sina_title">新浪微博</string>
+	<string name="author_sina_desc">\@FungGo</string>
+	<string name="author_sina_url">http://weibo.com/fython</string>
+	<string name="github_repo_title">Github 源代碼</string>
+	<string name="github_repo_url">https://github.com/fython/PackageTracker</string>
+	<string name="alipay_support_title">通過支付寶捐贈</string>
+	<string name="alipay_support_summary">fythonx@gmail.com</string>
+	<string name="alipay_support_account">fythonx\@gmail.com</string>
+	<string name="toast_copied_successfully">支付寶帳號已成功拷貝到剪貼板。</string>
+	<string name="open_source_license">開放源代碼許可證</string>
+	<string name="open_source_license_summary">GPL v3</string>
+	<string name="icon_designer_title">徽標 &amp; 海報設計師</string>
+	<string name="icon_designer_summary">\@翟宅宅Jack</string>
+	<string name="icon_designer_url">http://weibo.com/u/1934471601</string>
+	<string name="google_plus_title">Google+ 社群</string>
+
+	<string name="category_ui_common">通用</string>
+	<string name="pref_navigation_tint">導航欄變色</string>
+	<string name="pref_navigation_tint_summary">呢項特性只會喺 Android 5.0 同更高版本啟用。</string>
+	<string name="pref_night_mode">夜間主題</string>
+
+	<string-array name="night_mode_choices">
+		<item>跟隨系統設定 (默認)</item>
+		<item>自動</item>
+		<item>強制開啟</item>
+		<item>強制關閉</item>
+	</string-array>
+
+	<string name="category_notification">通知</string>
+	<string name="item_notification_interval">檢查頻率</string>
+
+	<string name="category_contributors">代碼貢獻者</string>
+	<string name="category_contributors_desc">冇佢地嘅努力就冇更好嘅體驗</string>
+	<string name="contributors_coderfox">小傅Fox</string>
+	<string name="contributors_coderfox_desc">自動拉取速遞公司列表; 允許強制添加包裹; 改進翻譯</string>
+	<string name="contributors_coderfox_weibo_url">http://weibo.com/coderfox</string>
+
+	<string-array name="notification_interval">
+		<item>10 分鐘</item>
+		<item>30 分鐘</item>
+		<item>60 分鐘</item>
+		<item>90 分鐘</item>
+		<item>從不</item>
+	</string-array>
+
+	<string name="category_push">主動推送</string>
+	<string name="pref_firebase_instance_id">設備實例 ID</string>
+	<string name="pref_firebase_instance_id_summary">撳落睇下或者拷貝你嘅實例 ID</string>
+	<string name="pref_copy_button">拷貝</string>
+	<string name="pref_register_button">登記</string>
+	<string name="pref_push_sync">而家同步清單</string>
+	<string name="pref_enable_push">啟用推送</string>
+	<string name="pref_enable_https">用 HTTPS 替代</string>
+	<string name="pref_enable_push_summary">由 Firebase Cloud Messaging 提供</string>
+	<string name="pref_api_host">伺服器地址</string>
+	<string name="pref_api_port">伺服器端口</string>
+	<string name="pref_request_push">即刻請求推送</string>
+	<string name="pref_whats_this">呢個係乜嘢？</string>
+	<string name="fcm_push_intro_title">基於 FCM 推送服務</string>
+	<string name="fcm_push_intro_msg">我們通過 Firebase 雲通知提供了一個更高效嘅途徑來獲取包裹資料。
+		你可以喺自己嘅伺服器上運行水錶助手推送服務，然後設定到客戶端中。
+		\n\n客戶端將會同伺服器同步清單。有新訊息來嘅時候，伺服器會通過 FCM 推送通知（客戶端需要 Google 服務框架）。
+		\n\n推送服務程式源代碼 (Node.js) 已經發佈喺 GitHub。你可以將它下載落來運行喺你嘅伺服器入面。
+		\nGitHub: https://github.com/fython/PackageTracker-NodeServer
+	</string>
+	<string name="fcm_push_no_server_button">冇伺服器？</string>
+	<string name="no_server_message">撳 \"通過支付寶捐贈\" 設定後，你可以用我嘅自建伺服器。</string>
+
+	<string name="item_notification_do_not_disturb">勿擾模式</string>
+	<string name="item_notification_do_not_disturb_desc">喺 23:00 到第二日 06:00 期間都唔發出通知。</string>
+
+	<string name="category_auto_detect_services">自動偵測新包裹</string>
+	<string name="item_detect_screen_text">從介面偵測</string>
+	<string name="item_detect_screen_text_desc">@string/description_detect_service</string>
+	<string name="item_detect_clipboard">從剪貼板偵測</string>
+	<string name="item_detect_clipboard_desc">喺你拷貝了一串帶有數字嘅文本時，水錶助手會顯示一個氣泡快速入口。</string>
+
+	<string name="category_api">查詢接口</string>
+	<string name="item_package_api_type">當前提供者</string>
+	<string name="item_package_api_type_kd100">快遞 100</string>
+	<string name="item_package_api_type_baidu">百度</string>
+
+	<string name="item_dark_launcher_icon">暗色啟動器圖標</string>
+	<string name="item_dark_launcher_summary">呢個特性僅喺 Android 8.0 同更新版本支援。</string>
+
+	<!-- Details -->
+	<string name="activity_details">詳情</string>
+	<string name="action_set_unread">標為未讀</string>
+	<string name="action_copy_code">拷貝單號</string>
+	<string name="action_share">分享</string>
+	<string name="action_delete">移除</string>
+	<string name="toast_copied_code">運單號碼已成功拷貝到剪貼板。</string>
+
+	<string name="list_status_subheader">物流讯息</string>
+	<string name="list_package_name">名稱</string>
+	<string name="list_package_number">運單號碼</string>
+	<string name="list_package_number_format">%1$s (%2$s)</string>
+	<string name="list_package_show_toggle_desc">顯示/隱藏單號</string>
+	<string name="list_package_contact_name">快遞員</string>
+	<string name="list_package_contact_button_desc">Call佢</string>
+
+	<string name="dialog_edit_name_title">編輯名稱</string>
+	<string name="toast_edit_name_is_empty">包裹名稱唔可以係空嘅。</string>
+
+	<string name="dialog_share_title">分享我嘅包裹</string>
+	<string name="share_info_format">%1$s (%2$s %3$s) 最新狀態： %4$s - %5$s (發自水錶助手)</string>
+
+	<string name="dialog_delete_title">刪除</string>
+	<string name="dialog_delete_message">你唔會再跟蹤呢個包嘅物流訊息。</string>
+
+	<!-- Search -->
+	<string name="activity_search">搜尋</string>
+	<string name="action_clear">清空</string>
+	<string name="search_hint_common">搵包或者公司</string>
+	<string name="subheader_package">包裹</string>
+	<string name="subheader_company">快遞公司</string>
+	<string name="item_title_please_wait">請等下....</string>
+
+	<string name="summary_baidu_not_support_choose_company">速遞公司會由百度接口選擇。</string>
+
+	<!-- Import/Export -->
+	<string name="activity_import_export">匯入/匯出</string>
+	<string name="action_backup_all_data">備份所有包裹資料</string>
+	<string name="action_backup_all_data_desc">將包裹資料匯出到檔案（內置儲存、Google 雲端硬碟等位置）入面，以後可以喺<b>水錶助手</b>當前版本或更新的版本中還原。</string>
+	<string name="action_export_list">匯出清單</string>
+	<string name="action_export_list_desc">匯出一份清單並分享給你嘅好友。</string>
+	<string name="action_restore_all_data">從檔案還原包裹資料</string>
+	<string name="action_restore_all_data_desc">在內置儲存、Google 雲端硬碟等位置入面選擇<b>水錶助手</b>備份檔案還原所有包裹資料。</string>
+
+	<string name="dialog_restoring_title">還原緊包裹資料，請等下……</string>
+	<string name="dialog_backup_title">備份緊包裹資料，請等下……</string>
+	<string name="toast_backup_succeed">備份成功</string>
+	<string name="toast_backup_send_action">作為附件傳送</string>
+	<string name="toast_backup_failed">儲存失敗</string>
+	<string name="dialog_restored_title">成功</string>
+	<string name="dialog_restored_message">你嘅包裹資料已還原，需要重新啟動來生效。</string>
+	<string name="dialog_restored_restart_button">而家重新啟動</string>
+	<string name="toast_restore_failed">還原資料失敗左，請檢查選定嘅檔案係唔係啱嘅。</string>
+
+	<string name="toast_list_empty">列表係空嘅，請加啲包。</string>
+	<string name="export_list_item_format">%1$s （%2$s） 最新狀態： %3$s</string>
+	<string name="export_list_end_text">從水錶助手 (https://play.google.com/store/apps/details?id=info.papdt.express.helper) 中分享</string>
+
+	<!-- Notification -->
+	<string name="notification_channel_name_status">包裹狀態</string>
+	<string name="notification_channel_summary_status">拿到包裹嘅最新狀態</string>
+
+	<string name="notification_delivered">包裹送達左。</string>
+	<string name="notification_on_the_way">包裹派送緊。</string>
+	<string name="notification_new_message">包裹有条新嘅物流訊息。</string>
+	<string name="operation_force_add_when_cannot_find">強制添加(%s)</string>
+	<string name="message_failure_forced">冇訊息──包裹被強制添加。</string>
+	<string name="message_invalid_company">冇識別到速遞公司</string>
+
+	<!-- Widget -->
+	<string name="hint_all_package_delivered">所有包裹送達左。</string>
+
+	<!-- Auto Detect Number -->
+	<string name="label_detect_service">水錶助手 - 運單自動偵測</string>
+	<string name="description_detect_service">當你打開淘寶或京東應用程式，水錶助手會檢測當前頁面係唔係有新包裹資料（通常只會出現在訂單頁面中）並幫助你添加追蹤。</string>
+	<string name="auto_detect_noti_title">發現新嘅運單號碼</string>
+	<string name="auto_detect_noti_title_with_name">發現新嘅運單：%s</string>
+	<string name="auto_detect_noti_result">來自%1$s嘅【%2$s】%3$s</string>
+	<string name="auto_detect_noti_action_add">新增</string>
+
+	<string name="label_clipboard_service">剪貼板自動偵測</string>
+	<string name="stepper_detect_company_title">檢測快遞公司</string>
+	<string name="action_view_on_play_store">在 Play 市集中檢視</string>
+	<string name="pref_show_tips_again">重新顯示介面提醒</string>
+	<string name="stepper_add_button">添加</string>
+	<string name="stepper_back_button">返去</string>
+	<string name="stepper_choose_button">揀另一個</string>
+	<string name="stepper_choose_company_title">揀啱嘅公司</string>
+	<string name="stepper_company_cannot_detect">無法檢測</string>
+	<string name="stepper_detect_company_summary">速遞單號: %s</string>
+	<string name="stepper_detect_company_text">請等下……</string>
+	<string name="stepper_find_package">搞掂添加</string>
+	<string name="stepper_find_package_summary">為包裹起名稱</string>
+	<string name="stepper_next_button">繼續</string>
+	<string name="stepper_try_again_button">再試過</string>
+	<string name="tap_target_tips_1_desc">我地重新設計左水錶助手 3.0，而家你可以用搜尋條去搵或者加包裹。</string>
+	<string name="tap_target_tips_1_title">新設計！</string>
+	<string name="tap_target_tips_2_desc">從相機快速偵測包裹單號</string>
+	<string name="tap_target_tips_2_title">掃描條形碼</string>
+	<string name="tap_target_tips_3_desc">你可以下拉列表刷新狀態。仲可以設定背景定時刷新或用更加節電嘅基於 FCM 推送服務。</string>
+	<string name="tap_target_tips_3_title">獲取最新狀態</string>
+	<string name="toast_clipboard_paste">喺剪貼板搵到左文本</string>
+	<string name="toast_clipboard_paste_action">粘貼</string>
+
+    <string name="label_process_text_receiver">查尋包裹</string>
+    <string name="toast_process_text_failed">無法從選定嘅文本入面搵到運單號碼。</string>
+
+</resources>

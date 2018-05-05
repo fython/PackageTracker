@@ -10,7 +10,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
-        resConfigs "en", "zh_cn", "zh_tw"
+        resConfigs "en", "zh_cn", "zh_tw", "zh_hk", "yue"
         multiDexEnabled true
     }
     buildTypes {
