@@ -40,13 +40,13 @@ class PackageDatabase private constructor(private val mContext: Context) {
 	}
 
 	fun load() {
-		var json: String
+		var json: String? = null
 		try {
 			json = FileUtils.readFile(mContext, FILE_NAME)
 		} catch (e: IOException) {
-			json = "{\"data\":[]}"
 			e.printStackTrace()
 		}
+        json = json ?: "{\"data\":[]}"
 
 		this.data = Gson().fromJson(json, PackageDatabase::class.java).data
 		refreshList()
@@ -77,6 +77,7 @@ class PackageDatabase private constructor(private val mContext: Context) {
 		}
 	}
 
+    @Synchronized
 	fun refreshList() {
 		deliveredData = ArrayList()
 		deliveringData = ArrayList()
@@ -89,23 +90,27 @@ class PackageDatabase private constructor(private val mContext: Context) {
 		}
 	}
 
+    @Synchronized
 	fun add(pack: Kuaidi100Package) {
 		data.add(pack)
 		PushApi.add(pack.number!!, pack.companyType).subscribe()
 		refreshList()
 	}
 
+    @Synchronized
 	fun add(index: Int, pack: Kuaidi100Package) {
 		data.add(index, pack)
 		PushApi.add(pack.number!!, pack.companyType).subscribe()
 		refreshList()
 	}
 
+    @Synchronized
 	operator fun set(index: Int, pack: Kuaidi100Package) {
 		data[index] = pack
 		refreshList()
 	}
 
+    @Synchronized
 	fun remove(index: Int) {
 		val removedItem = data.removeAt(index)
 
@@ -117,11 +122,13 @@ class PackageDatabase private constructor(private val mContext: Context) {
 		refreshList()
 	}
 
+    @Synchronized
 	fun remove(pack: Kuaidi100Package) {
 		val nowPos = indexOf(pack)
 		remove(nowPos)
 	}
 
+    @Synchronized
 	fun undoLastRemoval(): Int {
 		if (lastRemovedData != null) {
 			val insertedPosition: Int = if (lastRemovedPosition >= 0 && lastRemovedPosition < data.size) {

@@ -219,7 +219,7 @@ object Kuaidi100PackageApi {
 
 		init {
 			val fetchedList = companyList
-			if (fetchedList == null) {
+			if (fetchedList == null || fetchedList.isEmpty()) {
 				info = ArrayList()
 				info!!.add(Company("申通快递", "shentong", "95543", "http://www.sto.cn"))
 				info!!.add(Company("EMS", "ems", "11183", "http://www.ems.com.cn/"))

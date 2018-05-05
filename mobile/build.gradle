@@ -71,7 +71,7 @@ dependencies {
     implementation project(':libraries:StatusBarCompat')
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
-    implementation 'moe.feng:MaterialStepperView:0.2.3'
+    implementation 'moe.feng:MaterialStepperView:0.2.4.2'
     implementation 'com.getkeepsafe.taptargetview:taptargetview:1.11.0'
     implementation 'me.dm7.barcodescanner:zxing:1.9.8'
 
