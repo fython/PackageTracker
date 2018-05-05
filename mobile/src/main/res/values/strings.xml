@@ -293,5 +293,7 @@
 	<string name="auto_detect_noti_action_add">Add</string>
 
 	<string name="label_clipboard_service">Clipboard auto-detection</string>
+    <string name="label_process_text_receiver">Search Package</string>
+    <string name="toast_process_text_failed">Failed to recognize package number from selected text.</string>
 
 </resources>

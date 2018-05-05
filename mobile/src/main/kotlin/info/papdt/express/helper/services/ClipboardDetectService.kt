@@ -19,10 +19,18 @@ import android.view.animation.BounceInterpolator
 import android.widget.ImageView
 import info.papdt.express.helper.R
 import info.papdt.express.helper.support.ScreenUtils
+import info.papdt.express.helper.support.Settings
 import info.papdt.express.helper.ui.MainActivity
 import moe.feng.kotlinyan.common.*
 import java.util.ArrayList
 
+/**
+ * 剪切板检测服务
+ *
+ * 主动监听剪贴板，在获取订单号后显示气泡提供快捷添加入口。
+ *
+ * 在 Android 7.0 开始弃用（由于后台服务限制，显示通知不太优雅）
+ */
 class ClipboardDetectService : Service(), ClipboardManager.OnPrimaryClipChangedListener {
 
 	private var mLayoutParams: WindowManager.LayoutParams? = null
@@ -38,9 +46,13 @@ class ClipboardDetectService : Service(), ClipboardManager.OnPrimaryClipChangedL
 
 	override fun onCreate() {
 		super.onCreate()
-		clipboardManager.addPrimaryClipChangedListener(this)
-		mPositionY = ScreenUtils.dpToPx(this, 128f)
-		initPopupView()
+        if (Settings.getInstance(this).isClipboardDetectServiceEnabled()) {
+            clipboardManager.addPrimaryClipChangedListener(this)
+            mPositionY = ScreenUtils.dpToPx(this, 128f)
+            initPopupView()
+        } else {
+            stopSelf()
+        }
 	}
 
 	override fun onDestroy() {

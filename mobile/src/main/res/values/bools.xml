@@ -2,5 +2,6 @@
 <resources>
 
     <bool name="is_adaptive_icon_supported">false</bool>
+    <bool name="is_clipboard_service_supported">true</bool>
 
 </resources>

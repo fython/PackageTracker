@@ -1,153 +1,184 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="info.papdt.express.helper">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="info.papdt.express.helper">
 
-	<uses-permission android:name="android.permission.INTERNET"/>
-	<uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-	<uses-permission android:name="android.permission.CAMERA"/>
-	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-	<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
-	<application
-		android:allowBackup="true"
-		android:name=".Application"
-		android:icon="@mipmap/ic_launcher"
-		android:label="@string/app_name"
-		android:supportsRtl="true"
-		android:fullBackupContent="true"
-		android:theme="@style/AppTheme">
+    <application
+        android:name=".Application"
+        android:allowBackup="true"
+        android:fullBackupContent="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
 
-		<activity android:name=".EntryActivity"
-		          android:theme="@style/EmptyActivity"
-				  android:icon="@mipmap/ic_launcher">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN"/>
-				<category android:name="android.intent.category.LAUNCHER"/>
-			</intent-filter>
-			<meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts"/>
-		</activity>
+        <activity
+            android:name=".EntryActivity"
+            android:icon="@mipmap/ic_launcher"
+            android:theme="@style/EmptyActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity>
 
-		<activity-alias
-			android:name=".EntryActivity.DarkLogo"
-			android:targetActivity=".EntryActivity"
-			android:theme="@style/EmptyActivity"
-			android:enabled="false"
-			android:icon="@mipmap/ic_launcher_dark">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN"/>
-				<category android:name="android.intent.category.LAUNCHER"/>
-			</intent-filter>
-			<meta-data android:name="android.app.shortcuts" android:resource="@xml/shortcuts"/>
-		</activity-alias>
+        <activity-alias
+            android:name=".EntryActivity.DarkLogo"
+            android:enabled="false"
+            android:icon="@mipmap/ic_launcher_dark"
+            android:targetActivity=".EntryActivity"
+            android:theme="@style/EmptyActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
+        </activity-alias>
 
-		<activity android:name=".ui.SplashActivity"
-		          android:theme="@style/AppTheme">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN"/>
-			</intent-filter>
-		</activity>
+        <activity
+            android:name=".ui.SplashActivity"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
 
-		<activity android:name=".ui.MainActivity"
-		          android:windowSoftInputMode="stateAlwaysHidden"
-		          android:theme="@style/AppTheme">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN"/>
-			</intent-filter>
-			<intent-filter>
-				<action android:name="info.papdt.express.helper.ACTION_SEARCH"/>
-			</intent-filter>
-		</activity>
+        <activity
+            android:name=".ui.MainActivity"
+            android:theme="@style/AppTheme"
+            android:windowSoftInputMode="stateAlwaysHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="info.papdt.express.helper.ACTION_SEARCH" />
+            </intent-filter>
+        </activity>
 
-		<activity android:name=".ui.CompanyChooserActivity"
-		          android:label="@string/activity_choose_company"
-		          android:theme="@style/AppTheme"
-		          android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN"/>
-			</intent-filter>
-		</activity>
+        <activity
+            android:name=".ui.CompanyChooserActivity"
+            android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
+            android:label="@string/activity_choose_company"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
 
-		<activity android:name=".ui.DetailsActivity"
-		          android:label="@string/activity_details"
-		          android:theme="@style/AppTheme">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN"/>
-			</intent-filter>
-		</activity>
+        <activity
+            android:name=".ui.DetailsActivity"
+            android:label="@string/activity_details"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
 
-		<activity android:name=".ui.SettingsActivity"
-		          android:label="@string/activity_settings"
-		          android:theme="@style/AppTheme">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN"/>
-			</intent-filter>
-		</activity>
+        <activity
+            android:name=".ui.SettingsActivity"
+            android:label="@string/activity_settings"
+            android:theme="@style/AppTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
 
-		<activity android:name=".ui.ScannerActivity"
-		          android:label="@string/activity_scanner"
-		          android:theme="@style/AppTheme.Dark">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN"/>
-			</intent-filter>
-		</activity>
+        <activity
+            android:name=".ui.ScannerActivity"
+            android:label="@string/activity_scanner"
+            android:theme="@style/AppTheme.Dark">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
 
-		<activity android:name=".ui.SearchActivity"
-		          android:label="@string/activity_search"
-		          android:theme="@style/AppTheme.Translucent"
-		          android:configChanges="screenSize|orientation">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN"/>
-			</intent-filter>
-		</activity>
+        <activity
+            android:name=".ui.SearchActivity"
+            android:configChanges="screenSize|orientation"
+            android:label="@string/activity_search"
+            android:theme="@style/AppTheme.Translucent">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
 
-		<activity android:name=".ui.ImportExportActivity"
-		          android:label="@string/activity_import_export"
-		          android:theme="@style/AppTheme.Grey">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN"/>
-			</intent-filter>
-		</activity>
+        <activity
+            android:name=".ui.ImportExportActivity"
+            android:label="@string/activity_import_export"
+            android:theme="@style/AppTheme.Grey">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
 
-		<activity android:name=".ui.shortcut.ScannerShortcutCreator"
-		          android:label="@string/activity_scanner"
-		          android:icon="@mipmap/ic_scanner_launcher"
-		          android:theme="@style/EmptyActivity">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN"/>
-				<action android:name="android.intent.action.CREATE_SHORTCUT"/>
-			</intent-filter>
-		</activity>
+        <activity
+            android:name=".ui.shortcut.ScannerShortcutCreator"
+            android:icon="@mipmap/ic_scanner_launcher"
+            android:label="@string/activity_scanner"
+            android:theme="@style/EmptyActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.CREATE_SHORTCUT" />
+            </intent-filter>
+        </activity>
 
-		<service android:name="info.papdt.express.helper.services.ReminderService"/>
-		<service android:name="info.papdt.express.helper.services.ClipboardDetectService"
-				 android:label="@string/label_clipboard_service"/>
-		<service android:name="info.papdt.express.helper.services.AppWidgetService"
-		         android:permission="android.permission.BIND_REMOTEVIEWS"/>
-		<service android:name="info.papdt.express.helper.services.FCMService" android:enabled="false">
-			<intent-filter>
-				<action android:name="com.google.firebase.MESSAGING_EVENT"/>
-			</intent-filter>
-		</service>
-		<service android:name="info.papdt.express.helper.services.FCMInstanceIdService">
-			<intent-filter>
-				<action android:name="com.google.firebase.INSTANCE_ID_EVENT"/>
-			</intent-filter>
-		</service>
+        <service android:name="info.papdt.express.helper.services.ReminderService" />
+        <service
+            android:name="info.papdt.express.helper.services.ClipboardDetectService"
+            android:label="@string/label_clipboard_service" />
+        <service
+            android:name="info.papdt.express.helper.services.AppWidgetService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+        <service
+            android:name="info.papdt.express.helper.services.FCMService"
+            android:enabled="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name="info.papdt.express.helper.services.FCMInstanceIdService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
 
-		<receiver android:name="info.papdt.express.helper.receiver.ConnectivityReceiver">
-			<intent-filter>
-				<action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
-			</intent-filter>
-		</receiver>
+        <receiver android:name="info.papdt.express.helper.receiver.ConnectivityReceiver">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+            </intent-filter>
+        </receiver>
 
-		<receiver android:name=".ui.launcher.AppWidgetProvider">
-			<intent-filter>
-				<action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
-			</intent-filter>
-			<meta-data android:name="android.appwidget.provider" android:resource="@xml/appwidget_provider"/>
-		</receiver>
+        <activity
+            android:name="info.papdt.express.helper.receiver.ProcessTextReceiver"
+            android:label="@string/label_process_text_receiver"
+            android:theme="@android:style/Theme.NoDisplay">
+            <intent-filter>
+                <action android:name="android.intent.action.PROCESS_TEXT" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/plain" />
+            </intent-filter>
+        </activity>
 
-	</application>
+        <receiver android:name=".ui.launcher.AppWidgetProvider">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/appwidget_provider" />
+        </receiver>
+
+    </application>
 
 </manifest>

@@ -89,7 +89,8 @@
 
 		<SwitchPreference android:key="from_clipboard"
 		                  android:title="@string/item_detect_clipboard"
-		                  android:summary="@string/item_detect_clipboard_desc"/>
+		                  android:summary="@string/item_detect_clipboard_desc"
+                          android:enabled="@bool/is_clipboard_service_supported"/>
 
 	</PreferenceCategory>
 

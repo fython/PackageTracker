@@ -119,7 +119,7 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 		mPrefApiPort.text = SettingsInstance.pushApiPort.toString()
 		mPrefHttps.isChecked = SettingsInstance.enableHttps
 
-		mPrefFromClipboard.isChecked = settings.getBoolean(Settings.KEY_DETECT_FROM_CLIPBOARD, false)
+		mPrefFromClipboard.isChecked = settings.isClipboardDetectServiceEnabled()
 
 		/** Hide development items */
 		mPrefInstanceId.isVisible = false
