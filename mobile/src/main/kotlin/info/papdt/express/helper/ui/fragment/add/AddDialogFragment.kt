@@ -74,7 +74,7 @@ class AddDialogFragment: DialogFragment() {
 		VerticalStepperItemView.bindSteppers(step0, step1, step2)
 
 		step0.summary = resources.string[R.string.stepper_detect_company_summary].format(number)
-		step1.summary = when (SettingsInstance.packageApiType) {
+		step1.summary = when (SettingsInstance.packageApiTypeInt) {
 			PackageApiType.BAIDU -> resources.string[R.string.summary_baidu_not_support_choose_company]
 			else -> null
 		}
@@ -93,7 +93,7 @@ class AddDialogFragment: DialogFragment() {
 		}
 		view.findViewById<Button>(R.id.try_again_btn_step_2).setOnClickListener { doStep() }
 		view.findViewById<Button>(R.id.back_button_step_2).apply {
-			if (SettingsInstance.packageApiType == PackageApiType.BAIDU) {
+			if (SettingsInstance.packageApiTypeInt == PackageApiType.BAIDU) {
 				isEnabled = false
 			}
 			setOnClickListener {
@@ -101,7 +101,7 @@ class AddDialogFragment: DialogFragment() {
 			}
 		}
 		view.findViewById<Button>(R.id.back_button_step_2_2).apply {
-			if (SettingsInstance.packageApiType == PackageApiType.BAIDU) {
+			if (SettingsInstance.packageApiTypeInt == PackageApiType.BAIDU) {
 				isEnabled = false
 			}
 			setOnClickListener {
@@ -148,7 +148,7 @@ class AddDialogFragment: DialogFragment() {
 							}
 							.subscribe {
 								step0.setErrorText(0)
-								when (SettingsInstance.packageApiType) {
+								when (SettingsInstance.packageApiTypeInt) {
 									PackageApiType.BAIDU -> {
 										currentStep = 2
 										step0.state = VerticalStepperItemView.STATE_DONE

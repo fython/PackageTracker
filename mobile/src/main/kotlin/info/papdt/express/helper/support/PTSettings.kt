@@ -17,7 +17,7 @@ class PTSettings(context: Context): SharedPreferencesProvider(context, "settings
 	var shouldShowTips by booleanValue(defValue = true)
 	var clickedDonate by booleanValue(defValue = false)
 
-    @ApiType var packageApiType by intValue(defValue = PackageApiType.KUAIDI100)
+    @ApiType var packageApiTypeInt by intValue(defValue = PackageApiType.KUAIDI100)
 
 	var usingNewDatabase by booleanValue(defValue = false)
 

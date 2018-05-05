@@ -113,7 +113,7 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 			mPrefIntervalTime.setValueIndex(intervalTarget)
 		}
 
-        mPrefApiType.value = SettingsInstance.packageApiType.toString()
+        mPrefApiType.value = SettingsInstance.packageApiTypeInt.toString()
 
 		mPrefApiHost.text = SettingsInstance.pushApiHost
 		mPrefApiPort.text = SettingsInstance.pushApiPort.toString()
@@ -333,7 +333,7 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 			}
 			// Query Api
 			mPrefApiType -> {
-				SettingsInstance.packageApiType = (o as String).toInt()
+				SettingsInstance.packageApiTypeInt = (o as String).toInt()
 				true
 			}
 			// Notification & push
