@@ -1,1 +1,1 @@
-include ':mobile', ':wear', ':libraries:StatusBarCompat'
+include ':mobile', ':wear', ':StatusBarCompat'

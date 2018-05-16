@@ -68,7 +68,7 @@ dependencies {
     implementation 'moe.shizuku.fontprovider:api:10'
 
     // View & Widget
-    implementation project(':libraries:StatusBarCompat')
+    implementation project(':StatusBarCompat')
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
     implementation 'moe.feng:MaterialStepperView:0.2.4.2'
@@ -85,7 +85,8 @@ dependencies {
     api 'moe.feng:AlipayZeroSdk:1.1'
 
     // Firebase SDK
-    api "com.google.firebase:firebase-messaging:$firebaseVersion"
+    implementation "com.google.firebase:firebase-core:$firebaseVersion"
+    implementation "com.google.firebase:firebase-messaging:$firebaseVersion"
 }
 
 apply plugin: 'com.google.gms.google-services'
