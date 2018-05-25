@@ -1,6 +1,5 @@
 package info.papdt.express.helper.ui.fragment.home
 
-import android.app.Activity
 import android.content.Context
 import android.os.Bundle
 import android.os.Handler
@@ -10,6 +9,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.scwang.smartrefresh.header.DeliveryHeader
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 
@@ -20,7 +20,6 @@ import info.papdt.express.helper.dao.PackageDatabase
 import info.papdt.express.helper.ui.MainActivity
 import info.papdt.express.helper.ui.common.AbsFragment
 import info.papdt.express.helper.view.AnimatedRecyclerView
-import info.papdt.express.helper.view.DeliveryHeader
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -79,7 +78,7 @@ abstract class BaseFragment : AbsFragment, OnRefreshListener {
 
 		// Set up mRefreshLayout
 		mRefreshLayout.setOnRefreshListener(this)
-		mRefreshLayout.refreshHeader = DeliveryHeader(view.context)
+		mRefreshLayout.setRefreshHeader(DeliveryHeader(view.context))
 
 		setUpAdapter()
 		mEmptyView.visibility = if (mAdapter != null && mAdapter!!.itemCount > 0) View.GONE else View.VISIBLE
@@ -144,9 +143,7 @@ abstract class BaseFragment : AbsFragment, OnRefreshListener {
 		override fun handleMessage(msg: Message) {
 			when (msg.what) {
 				FLAG_REFRESH_LIST -> {
-					if (!mRefreshLayout.isRefreshing) {
-						mRefreshLayout.autoRefresh()
-					}
+					mRefreshLayout.autoRefresh()
 					Observable.just(false).map(database!!::pullDataFromNetwork)
 							.subscribeOn(Schedulers.io())
 							.observeOn(AndroidSchedulers.mainThread())
