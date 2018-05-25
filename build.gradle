@@ -6,7 +6,6 @@ ext {
     versionCode = 55
     versionName = '3.1.2'
     kotlinyanVersion = '0.3.0'
-    firebaseVersion = '15.0.2'
     ankoVersion = '0.10.3'
     materialPrefLibVersion = '2.2.3'
 }
@@ -18,8 +17,8 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.1'
-        classpath 'com.google.gms:google-services:3.2.1'
+        classpath 'com.android.tools.build:gradle:3.1.2'
+        classpath 'com.google.gms:google-services:4.0.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }

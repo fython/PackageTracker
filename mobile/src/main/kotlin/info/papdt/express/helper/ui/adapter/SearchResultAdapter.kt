@@ -3,6 +3,7 @@ package info.papdt.express.helper.ui.adapter
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
 import android.net.Uri
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.AppCompatTextView
 import android.support.v7.widget.RecyclerView
@@ -59,8 +60,8 @@ class SearchResultAdapter(
         if (DP_16_TO_PX == -1f) DP_16_TO_PX = ScreenUtils.dpToPx(parent.context, 8f)
         if (STATUS_STRING_ARRAY == null) STATUS_STRING_ARRAY = parent.context.resources.getStringArray(R.array.item_status_description)
         if (statusSubtextColor == -1) {
-            statusTitleColor = parent.context.resources.getColor(R.color.package_list_status_title_color)
-            statusSubtextColor = parent.context.resources.getColor(R.color.package_list_status_subtext_color)
+            statusTitleColor = ContextCompat.getColor(parent.context, R.color.package_list_status_title_color)
+            statusSubtextColor = ContextCompat.getColor(parent.context, R.color.package_list_status_subtext_color)
         }
 
         return when (viewType) {

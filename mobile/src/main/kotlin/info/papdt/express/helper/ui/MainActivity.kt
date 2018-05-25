@@ -2,8 +2,6 @@ package info.papdt.express.helper.ui
 
 import android.annotation.SuppressLint
 import android.app.Activity
-import android.app.Fragment
-import android.app.FragmentManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.Rect
@@ -13,8 +11,11 @@ import android.os.Handler
 import android.os.Message
 import android.support.design.widget.Snackbar
 import android.support.design.widget.TabLayout
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentPagerAdapter
 import android.support.v4.view.ViewPager
-import android.support.v13.app.FragmentPagerAdapter
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.ActionBar
 import android.util.Log
 import android.view.Menu
@@ -65,7 +66,7 @@ class MainActivity : AbsActivity() {
 
 		if (settings.getBoolean(Settings.KEY_NAVIGATION_TINT, true)
 				&& Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !isNightMode) {
-			window.navigationBarColor = resources.getColor(R.color.colorPrimaryDark)
+			window.navigationBarColor = ContextCompat.getColor(this, R.color.colorPrimaryDark)
 		}
 
 		/** Dirty fix for N  */
@@ -88,13 +89,13 @@ class MainActivity : AbsActivity() {
 			override fun onTabUnselected(tab: TabLayout.Tab?) {}
 			override fun onTabSelected(tab: TabLayout.Tab?) {}
 		})
-		viewPager.adapter = TabsAdapter(fragmentManager)
+		viewPager.adapter = TabsAdapter(supportFragmentManager)
 		viewPager.offscreenPageLimit = 3
 
 		// Do action
 		when (intent.action) {
 			ScannerActivity.ACTION_SCAN_TO_ADD -> openScanner()
-			ACTION_SEARCH -> startSearch(intent[EXTRA_SERACH]?.asString())
+			ACTION_SEARCH -> startSearch(intent[EXTRA_SEARCH]?.asString())
 		}
 	}
 
@@ -359,7 +360,7 @@ class MainActivity : AbsActivity() {
 		const val MSG_NOTIFY_DATA_CHANGED = 1
 		const val MSG_NOTIFY_ITEM_REMOVE = 2
 
-		private const val EXTRA_SERACH = "search"
+		private const val EXTRA_SEARCH = "search"
 
 		fun launch(activity: Activity) {
 			val intent = Intent(activity, MainActivity::class.java)
@@ -375,7 +376,7 @@ class MainActivity : AbsActivity() {
 			val intent = Intent(context, MainActivity::class.java)
 			intent.action = ACTION_SEARCH
 			intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-			intent[EXTRA_SERACH] = number
+			intent[EXTRA_SEARCH] = number
 			return intent
 		}
 

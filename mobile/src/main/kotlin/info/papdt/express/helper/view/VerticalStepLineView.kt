@@ -7,6 +7,7 @@ import android.graphics.Paint
 import android.graphics.RectF
 import android.support.annotation.ColorInt
 import android.support.annotation.ColorRes
+import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
 
@@ -30,7 +31,7 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 
 		init()
 
-		lineColor = context.resources.getColor(R.color.blue_grey_500)
+		lineColor = ContextCompat.getColor(context, R.color.blue_grey_500)
 	}
 
 	private fun init() {
@@ -48,7 +49,7 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 	}
 
 	fun setLineColorResource(@ColorRes resId: Int) {
-		lineColor = resources.getColor(resId)
+		lineColor = ContextCompat.getColor(context, resId)
 	}
 
 	fun setPointOffsetY(pointOffsetY: Float) {

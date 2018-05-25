@@ -51,9 +51,9 @@ abstract class BaseFragment : AbsFragment, OnRefreshListener {
 	constructor() : super()
 
 	// official method to get Activity Context
-	override fun onAttach(activity: Activity) {
-		super.onAttach(activity)
-		sInstance = activity
+	override fun onAttach(context: Context?) {
+		super.onAttach(context)
+		sInstance = context
 	}
 
 	// restore database to reconstruct express info

@@ -5,6 +5,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.customtabs.CustomTabsIntent
 import android.support.design.widget.Snackbar
+import android.support.v4.content.ContextCompat
 
 import info.papdt.express.helper.R
 import info.papdt.express.helper.support.Settings
@@ -44,7 +45,7 @@ abstract class AbsPrefFragment : PreferenceFragment() {
 
 	fun openWebsite(url: String) {
 		val builder = CustomTabsIntent.Builder()
-		builder.setToolbarColor(resources.getColor(R.color.pink_500))
+		builder.setToolbarColor(ContextCompat.getColor(activity!!, R.color.pink_500))
 		builder.build().launchUrl(activity, Uri.parse(url))
 	}
 

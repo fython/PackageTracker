@@ -58,7 +58,7 @@ dependencies {
     // Network & Data
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.9.1'
-    implementation 'com.google.code.gson:gson:2.8.2'
+    implementation 'com.google.code.gson:gson:2.8.4'
 
     // Common UI Library
     implementation 'me.drakeet.multitype:multitype:3.4.0'
@@ -85,8 +85,8 @@ dependencies {
     api 'moe.feng:AlipayZeroSdk:1.1'
 
     // Firebase SDK
-    implementation "com.google.firebase:firebase-core:$firebaseVersion"
-    implementation "com.google.firebase:firebase-messaging:$firebaseVersion"
+    implementation 'com.google.firebase:firebase-core:16.0.0'
+    implementation 'com.google.firebase:firebase-messaging:17.0.0'
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -15,9 +15,9 @@ class FragmentAll : BaseFragment {
 	constructor() : super()
 
 	override fun setUpAdapter() {
-		val adapter = HomePackageListAdapter(database, arguments.getInt(ARG_TYPE), mainActivity)
+		val adapter = HomePackageListAdapter(database, arguments!!.getInt(ARG_TYPE), mainActivity)
 		setAdapter(adapter)
-		when (arguments.getInt(ARG_TYPE)) {
+		when (arguments!!.getInt(ARG_TYPE)) {
 			TYPE_ALL -> mEmptyTips.setText(R.string.frame_empty_tip_all)
 			TYPE_DELIVERED -> mEmptyTips.setText(R.string.frame_empty_tip_delivered)
 			TYPE_DELIVERING -> mEmptyTips.setText(R.string.frame_empty_tip_delivering)
@@ -25,7 +25,7 @@ class FragmentAll : BaseFragment {
 	}
 
 	override val fragmentId: Int
-		get() = arguments.getInt(ARG_TYPE)
+		get() = arguments!!.getInt(ARG_TYPE)
 
 	companion object {
 
