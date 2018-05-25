@@ -55,7 +55,7 @@ class SearchResultAdapter(
         Log.i("test", Gson().toJson(items))
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder? {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         if (DP_16_TO_PX == -1f) DP_16_TO_PX = ScreenUtils.dpToPx(parent.context, 8f)
         if (STATUS_STRING_ARRAY == null) STATUS_STRING_ARRAY = parent.context.resources.getStringArray(R.array.item_status_description)
         if (statusSubtextColor == -1) {

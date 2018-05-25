@@ -34,7 +34,7 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 	private val mPrefNavigationTint: SwitchPreference by PreferenceProperty("navigation_tint")
 	private val mPrefNightMode: ListPreference by PreferenceProperty("night_mode")
 	private val mPrefShowTipsAgain: Preference by PreferenceProperty("show_tips_again")
-	private val mPrefDarkIcon: SwitchPreference by PreferenceProperty("dark_launcher_icon")
+	private val mPrefDarkIcon: SwitchPreference? by NullablePreferenceProperty("dark_launcher_icon")
 
 	// Notification & push preference
 	private val mPrefDontDisturb: SwitchPreference by PreferenceProperty("dont_disturb")
@@ -104,7 +104,7 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 			mPrefNightMode.setValueIndex(target)
 		}
 
-		mPrefDarkIcon.isChecked = LauncherIconUtils.isDarkLauncherIcon(activity!!)
+		mPrefDarkIcon?.isChecked = LauncherIconUtils.isDarkLauncherIcon(activity!!)
 
 		mPrefDontDisturb.isChecked = settings.getBoolean(Settings.KEY_NOTIFICATION_DO_NOT_DISTURB, true)
 
@@ -113,13 +113,13 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 			mPrefIntervalTime.setValueIndex(intervalTarget)
 		}
 
-        mPrefApiType.value = SettingsInstance.packageApiType.toString()
+        mPrefApiType.value = SettingsInstance.packageApiTypeInt.toString()
 
 		mPrefApiHost.text = SettingsInstance.pushApiHost
 		mPrefApiPort.text = SettingsInstance.pushApiPort.toString()
 		mPrefHttps.isChecked = SettingsInstance.enableHttps
 
-		mPrefFromClipboard.isChecked = settings.getBoolean(Settings.KEY_DETECT_FROM_CLIPBOARD, false)
+		mPrefFromClipboard.isChecked = settings.isClipboardDetectServiceEnabled()
 
 		/** Hide development items */
 		mPrefInstanceId.isVisible = false
@@ -138,7 +138,7 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 		mPrefNavigationTint.onPreferenceChangeListener = this
 		mPrefNightMode.onPreferenceChangeListener = this
 		mPrefShowTipsAgain.onPreferenceClickListener = this
-		mPrefDarkIcon.onPreferenceChangeListener = this
+		mPrefDarkIcon?.onPreferenceChangeListener = this
 
 		// Notification & push
 		mPrefDontDisturb.onPreferenceChangeListener = this
@@ -333,7 +333,7 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 			}
 			// Query Api
 			mPrefApiType -> {
-				SettingsInstance.packageApiType = (o as String).toLong()
+				SettingsInstance.packageApiTypeInt = (o as String).toInt()
 				true
 			}
 			// Notification & push
@@ -368,7 +368,7 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 				true
 			}
 			mPrefApiPort -> {
-				SettingsInstance.pushApiPort = (o as String).toInt()
+				SettingsInstance.pushApiPort = (o as? String)?.toIntOrNull() ?: 6000
 				needRegister = true
 				database.size()
 				true

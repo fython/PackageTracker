@@ -269,4 +269,7 @@
 	<string name="toast_clipboard_paste">在剪貼板找到文本</string>
 	<string name="toast_clipboard_paste_action">粘貼</string>
 
+    <string name="label_process_text_receiver">查尋包裹</string>
+    <string name="toast_process_text_failed">無法從選定的文本中找到運單號碼。</string>
+
 </resources>

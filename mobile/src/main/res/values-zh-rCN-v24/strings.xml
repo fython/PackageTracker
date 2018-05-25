@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="item_detect_clipboard_desc">从 Android 7.0 开始，剪贴板检测服务不再支持。</string>
+
+</resources>

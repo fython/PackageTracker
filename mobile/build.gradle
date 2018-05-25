@@ -10,7 +10,7 @@ android {
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode rootProject.ext.versionCode
         versionName rootProject.ext.versionName
-        resConfigs "en", "zh_cn", "zh_tw"
+        resConfigs "en", "zh_cn", "zh_tw", "zh_hk", "yue"
         multiDexEnabled true
     }
     buildTypes {
@@ -38,10 +38,10 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     // wearApp project(':wear')
 
-    implementation 'com.android.support:multidex:1.0.2'
+    implementation 'com.android.support:multidex:1.0.3'
 
     // Kotlin & Kotlinyan
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "org.jetbrains.anko:anko-commons:$ankoVersion"
     implementation "org.jetbrains.anko:anko-coroutines:$ankoVersion"
     implementation "moe.feng.kotlinyan:kotlinyan-common:$kotlinyanVersion"
@@ -56,7 +56,7 @@ dependencies {
     implementation "com.android.support:customtabs:$supportLibraryVersion"
 
     // Network & Data
-    implementation 'com.squareup.okhttp3:okhttp:3.9.1'
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.9.1'
     implementation 'com.google.code.gson:gson:2.8.2'
 
@@ -68,16 +68,16 @@ dependencies {
     implementation 'moe.shizuku.fontprovider:api:10'
 
     // View & Widget
-    implementation project(':libraries:StatusBarCompat')
+    implementation project(':StatusBarCompat')
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
-    implementation 'moe.feng:MaterialStepperView:0.2.3'
+    implementation 'moe.feng:MaterialStepperView:0.2.4.2'
     implementation 'com.getkeepsafe.taptargetview:taptargetview:1.11.0'
     implementation 'me.dm7.barcodescanner:zxing:1.9.8'
 
     // Reactive X
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.6'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.12'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
     implementation 'com.github.nekocode.rxlifecycle:rxlifecycle:1.1'
 
     // Utils
@@ -85,7 +85,8 @@ dependencies {
     api 'moe.feng:AlipayZeroSdk:1.1'
 
     // Firebase SDK
-    api "com.google.firebase:firebase-messaging:$firebaseVersion"
+    implementation "com.google.firebase:firebase-core:$firebaseVersion"
+    implementation "com.google.firebase:firebase-messaging:$firebaseVersion"
 }
 
 apply plugin: 'com.google.gms.google-services'

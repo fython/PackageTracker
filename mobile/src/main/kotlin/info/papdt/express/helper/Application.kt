@@ -34,7 +34,7 @@ class Application : MultiDexApplication() {
 
 		super.onCreate()
 
-		if (mSettings.getBoolean(Settings.KEY_DETECT_FROM_CLIPBOARD, false)) {
+		if (mSettings.isClipboardDetectServiceEnabled()) {
 			startService(Intent(applicationContext, ClipboardDetectService::class.java))
 		}
 

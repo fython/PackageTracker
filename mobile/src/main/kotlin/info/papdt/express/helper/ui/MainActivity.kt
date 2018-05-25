@@ -374,7 +374,7 @@ class MainActivity : AbsActivity() {
 		fun getSearchIntent(context: Context, number: String? = null): Intent {
 			val intent = Intent(context, MainActivity::class.java)
 			intent.action = ACTION_SEARCH
-			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+			intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
 			intent[EXTRA_SERACH] = number
 			return intent
 		}

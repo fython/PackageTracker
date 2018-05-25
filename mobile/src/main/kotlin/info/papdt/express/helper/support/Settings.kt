@@ -2,6 +2,7 @@ package info.papdt.express.helper.support
 
 import android.content.Context
 import android.content.SharedPreferences
+import android.os.Build
 
 class Settings private constructor(context: Context) {
 
@@ -34,6 +35,11 @@ class Settings private constructor(context: Context) {
 
     fun getString(key: String, defValue: String): String? {
         return mPrefs.getString(key, defValue)
+    }
+
+    fun isClipboardDetectServiceEnabled(): Boolean {
+        return (Build.VERSION.SDK_INT < Build.VERSION_CODES.N)
+                && mPrefs.getBoolean(Settings.KEY_DETECT_FROM_CLIPBOARD, false)
     }
 
     companion object {

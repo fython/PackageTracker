@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="item_detect_clipboard_desc">Starting from Android 7.0, Clipboard detect service is no longer supported.</string>
+
+</resources>
