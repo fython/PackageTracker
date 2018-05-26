@@ -40,7 +40,7 @@ class SettingsActivity : AbsActivity() {
 				mActionBar!!.setTitle(R.string.activity_settings)
 			}
 			FLAG_LICENSE -> {
-				fragmentManager.beginTransaction().replace(R.id.container, SettingsLicense()).commit()
+				supportFragmentManager.beginTransaction().replace(R.id.container, SettingsLicense()).commit()
 				mActionBar!!.setTitle(R.string.open_source_license)
 				return
 			}

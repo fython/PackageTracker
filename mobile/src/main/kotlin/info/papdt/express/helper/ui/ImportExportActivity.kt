@@ -9,13 +9,13 @@ import android.support.v4.app.ShareCompat
 import android.view.View
 
 import java.text.SimpleDateFormat
-import java.util.Calendar
 
 import info.papdt.express.helper.R
 import info.papdt.express.helper.dao.PackageDatabase
 import info.papdt.express.helper.ui.common.AbsActivity
 
 import moe.feng.kotlinyan.common.*
+import java.util.*
 
 class ImportExportActivity : AbsActivity() {
 
@@ -38,7 +38,7 @@ class ImportExportActivity : AbsActivity() {
 			intent.type = "text/*"
 
 			val date = Calendar.getInstance().time
-			val format = SimpleDateFormat("yyyyMMdd_HHmmss")
+			val format = SimpleDateFormat("yyyyMMdd_HHmmss", Locale.getDefault())
 
 			intent[Intent.EXTRA_TITLE] = String.format(BACKUP_FILE_NAME, format.format(date))
 			startActivityForResult(intent, REQUEST_WRITE_BACKUP_FILE)

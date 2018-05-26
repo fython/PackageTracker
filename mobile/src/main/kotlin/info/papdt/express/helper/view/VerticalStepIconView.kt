@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable
 import android.support.annotation.ColorInt
 import android.support.annotation.ColorRes
 import android.support.annotation.DrawableRes
+import android.support.v4.content.ContextCompat
 import android.util.AttributeSet
 import android.view.View
 import info.papdt.express.helper.R
@@ -38,7 +39,7 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 
 		init()
 
-		pointColor = context.resources.getColor(R.color.blue_500)
+		pointColor = ContextCompat.getColor(context, R.color.blue_500)
 	}
 
 	internal fun init() {
@@ -55,7 +56,7 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 	}
 
 	fun setPointColorResource(@ColorRes resId: Int) {
-		pointColor = resources.getColor(resId)
+		pointColor = ContextCompat.getColor(context, resId)
 	}
 
 	fun setIsMini(isMini: Boolean) {
@@ -68,7 +69,7 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 	}
 
 	fun setCenterIcon(@DrawableRes resId: Int) {
-		setCenterIcon(resources.getDrawable(resId))
+		setCenterIcon(ContextCompat.getDrawable(context, resId))
 	}
 
 	fun setPointOffsetY(pointOffsetY: Float) {
