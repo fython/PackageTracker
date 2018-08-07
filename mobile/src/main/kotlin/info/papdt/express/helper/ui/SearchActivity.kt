@@ -247,7 +247,8 @@ class SearchActivity : AbsActivity(), AddDialogFragment.IAddDialogObserver {
 		} else {
 			items.add(SearchResultAdapter.ItemType(SearchResultAdapter.ItemType.TYPE_EMPTY))
 		}
-		if (mSearchEdit.text.isNotBlank() && mDatabase.indexOf(mSearchEdit.text.toString().trim()) == -1) {
+		if (mSearchEdit.text?.isNotBlank() == true
+				&& mDatabase.indexOf(mSearchEdit.text.toString().trim()) == -1) {
 			items.add(SearchResultAdapter.ItemType(SearchResultAdapter.ItemType.TYPE_NEW_PACKAGE))
 		}
 		items.add(SearchResultAdapter.ItemType(SearchResultAdapter.ItemType.TYPE_SUBHEADER))

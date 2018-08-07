@@ -109,7 +109,7 @@ class AddDialogFragment: DialogFragment() {
 			}
 		}
 		view.findViewById<Button>(R.id.stepper_add_button).setOnClickListener {
-			result?.name = if (nameEdit.text.isNotBlank())
+			result?.name = if (nameEdit.text?.isNotBlank() == true)
 				nameEdit.text.toString() else String.format(getString(R.string.package_name_unnamed), number?.substring(0, 4))
 			Observable.just(result!!)
 					.compose(RxLifecycle.bind(activity!!).withObservable())

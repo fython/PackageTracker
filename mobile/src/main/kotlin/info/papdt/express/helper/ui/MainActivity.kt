@@ -11,6 +11,7 @@ import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
+import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
 import android.support.design.widget.TabLayout
 import android.support.v4.view.ViewPager
@@ -47,6 +48,7 @@ class MainActivity : AbsActivity() {
 	private val tabLayout: TabLayout by lazyFindNonNullView(R.id.tab_layout)
 	private val viewPager: ViewPager by lazyFindNonNullView(R.id.view_pager)
 	private val toolbarBox: View by lazyFindNonNullView(R.id.toolbar_box)
+	private val fab: FloatingActionButton by lazyFindNonNullView(R.id.fab)
 
 	private val fragments by lazy { arrayOf(
 			FragmentAll.newInstance(mDatabase, FragmentAll.TYPE_DELIVERING),
@@ -90,6 +92,7 @@ class MainActivity : AbsActivity() {
 		})
 		viewPager.adapter = TabsAdapter(fragmentManager)
 		viewPager.offscreenPageLimit = 3
+		fab.setOnClickListener { startSearch() }
 
 		// Do action
 		when (intent.action) {

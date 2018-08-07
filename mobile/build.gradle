@@ -56,7 +56,7 @@ dependencies {
     implementation "com.android.support:customtabs:$supportLibraryVersion"
 
     // Network & Data
-    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.11.0'
     implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.9.1'
     implementation 'com.google.code.gson:gson:2.8.2'
 
@@ -70,13 +70,14 @@ dependencies {
     // View & Widget
     implementation project(':StatusBarCompat')
     implementation 'de.hdodenhof:circleimageview:2.2.0'
-    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.3'
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-14'
     implementation 'moe.feng:MaterialStepperView:0.2.4.2'
     implementation 'com.getkeepsafe.taptargetview:taptargetview:1.11.0'
     implementation 'me.dm7.barcodescanner:zxing:1.9.8'
 
     // Reactive X
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.12'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.0'
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
     implementation 'com.github.nekocode.rxlifecycle:rxlifecycle:1.1'
 
@@ -85,8 +86,8 @@ dependencies {
     api 'moe.feng:AlipayZeroSdk:1.1'
 
     // Firebase SDK
-    implementation "com.google.firebase:firebase-core:$firebaseVersion"
-    implementation "com.google.firebase:firebase-messaging:$firebaseVersion"
+    implementation "com.google.firebase:firebase-core:16.0.1"
+    implementation "com.google.firebase:firebase-messaging:17.1.0"
 }
 
 apply plugin: 'com.google.gms.google-services'

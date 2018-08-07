@@ -15,13 +15,13 @@ abstract class SimpleRecyclerViewAdapter(protected var mRecyclerView: RecyclerVi
 
 	init {
 		this.mRecyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-			override fun onScrollStateChanged(rv: RecyclerView?, newState: Int) {
+			override fun onScrollStateChanged(rv: RecyclerView, newState: Int) {
 				for (listener in mListeners) {
 					listener.onScrollStateChanged(rv, newState)
 				}
 			}
 
-			override fun onScrolled(rv: RecyclerView?, dx: Int, dy: Int) {
+			override fun onScrolled(rv: RecyclerView, dx: Int, dy: Int) {
 				for (listener in mListeners) {
 					listener.onScrolled(rv, dx, dy)
 				}

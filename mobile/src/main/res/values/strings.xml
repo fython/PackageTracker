@@ -102,7 +102,7 @@
 	<string name="app_version_format">%1$s (%2$d)</string>
 	<string name="author_sina_title">Sina weibo</string>
 	<string name="author_sina_desc">\@FungGo</string>
-	<string name="author_sina_url">http://weibo.com/fython</string>
+	<string name="author_sina_url">https://weibo.com/fython</string>
 	<string name="github_repo_title">Github Source</string>
 	<string name="github_repo_url">https://github.com/fython/PackageTracker</string>
 	<string name="alipay_support_title">Donate through Alipay</string>
@@ -144,7 +144,7 @@
 	<string name="category_contributors_desc">Without their efforts, we can\'t enjoy better experience.</string>
 	<string name="contributors_coderfox">CoderFox</string>
 	<string name="contributors_coderfox_desc">Automatically pull company list; Allow to force add package; Enhance Translation</string>
-	<string name="contributors_coderfox_weibo_url">http://weibo.com/coderfox</string>
+	<string name="contributors_coderfox_weibo_url">https://weibo.com/coderfox</string>
 
 	<string-array name="notification_interval">
 		<item>10 minutes</item>
@@ -295,5 +295,6 @@
 	<string name="label_clipboard_service">Clipboard auto-detection</string>
     <string name="label_process_text_receiver">Search Package</string>
     <string name="toast_process_text_failed">Failed to recognize package number from selected text.</string>
+	<string name="pref_enable_https_force_reason">Cleartext connections is disallowed since Android 9.0+. If you want to connect your server without HTTPS, you can compile your own PackageTracker. Learn more: https://tinyurl.com/pietls</string>
 
 </resources>

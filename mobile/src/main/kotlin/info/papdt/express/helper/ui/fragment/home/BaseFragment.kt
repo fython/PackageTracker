@@ -1,5 +1,6 @@
 package info.papdt.express.helper.ui.fragment.home
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.os.Bundle
@@ -10,17 +11,18 @@ import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.LinearLayout
 import android.widget.TextView
+import com.scwang.smartrefresh.header.DeliveryHeader
 
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 
 import com.scwang.smartrefresh.layout.api.RefreshLayout
+import com.scwang.smartrefresh.layout.constant.RefreshState
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
 import info.papdt.express.helper.R
 import info.papdt.express.helper.dao.PackageDatabase
 import info.papdt.express.helper.ui.MainActivity
 import info.papdt.express.helper.ui.common.AbsFragment
 import info.papdt.express.helper.view.AnimatedRecyclerView
-import info.papdt.express.helper.view.DeliveryHeader
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -39,8 +41,8 @@ abstract class BaseFragment : AbsFragment, OnRefreshListener {
 		private set
 	private var hasPlayedAnimation = false
 
-	internal var eggCount = 0
-	internal var bigEggCount = 0
+	private var eggCount = 0
+	private var bigEggCount = 0
 
 	var isDemoRefresh = false
 
@@ -79,7 +81,7 @@ abstract class BaseFragment : AbsFragment, OnRefreshListener {
 
 		// Set up mRefreshLayout
 		mRefreshLayout.setOnRefreshListener(this)
-		mRefreshLayout.refreshHeader = DeliveryHeader(view.context)
+		mRefreshLayout.setRefreshHeader(DeliveryHeader(view.context))
 
 		setUpAdapter()
 		mEmptyView.visibility = if (mAdapter != null && mAdapter!!.itemCount > 0) View.GONE else View.VISIBLE
@@ -140,11 +142,12 @@ abstract class BaseFragment : AbsFragment, OnRefreshListener {
 		}
 	}
 
-	private val mHandler = object : Handler() {
+	private val mHandler = @SuppressLint("HandlerLeak")
+	object : Handler() {
 		override fun handleMessage(msg: Message) {
 			when (msg.what) {
 				FLAG_REFRESH_LIST -> {
-					if (!mRefreshLayout.isRefreshing) {
+					if (mRefreshLayout.state != RefreshState.Refreshing) {
 						mRefreshLayout.autoRefresh()
 					}
 					Observable.just(false).map(database!!::pullDataFromNetwork)
@@ -167,6 +170,7 @@ abstract class BaseFragment : AbsFragment, OnRefreshListener {
 
 	companion object {
 
+		@SuppressLint("StaticFieldLeak")
 		private var sInstance: Context? = null
 		private const val FLAG_REFRESH_LIST = 0
 		private const val FLAG_UPDATE_ADAPTER_ONLY = 1

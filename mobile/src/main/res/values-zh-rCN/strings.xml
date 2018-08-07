@@ -82,7 +82,7 @@
 	<string name="app_version_format">%1$s (%2$d)</string>
 	<string name="author_sina_title">新浪微博</string>
 	<string name="author_sina_desc">\@FungGo</string>
-	<string name="author_sina_url">http://weibo.com/fython</string>
+	<string name="author_sina_url">https://weibo.com/fython</string>
 	<string name="github_repo_title">Github 源码</string>
 	<string name="github_repo_url">https://github.com/fython/PackageTracker</string>
 	<string name="alipay_support_title">通过支付宝捐赠</string>
@@ -93,7 +93,7 @@
 	<string name="open_source_license_summary">GPL v3</string>
 	<string name="icon_designer_title">图标 &amp; 海报设计师</string>
 	<string name="icon_designer_summary">\@翟宅宅Jack</string>
-	<string name="icon_designer_url">http://weibo.com/u/1934471601</string>
+	<string name="icon_designer_url">https://weibo.com/u/1934471601</string>
 	<string name="google_plus_title">Google+ 社群</string>
 
 	<string name="category_ui_common">通用</string>
@@ -115,7 +115,7 @@
 	<string name="category_contributors_desc">没有他们的努力就没有更好的体验</string>
 	<string name="contributors_coderfox">小傅Fox</string>
 	<string name="contributors_coderfox_desc">自动拉取快递公司列表; 允许强制添加包裹; 改进翻译</string>
-	<string name="contributors_coderfox_weibo_url">http://weibo.com/coderfox</string>
+	<string name="contributors_coderfox_weibo_url">https://weibo.com/coderfox</string>
 
 	<string-array name="notification_interval">
 		<item>10 分钟</item>
@@ -271,5 +271,6 @@
 
     <string name="label_process_text_receiver">查询包裹</string>
     <string name="toast_process_text_failed">无法从选择的文本中找到运单号码。</string>
+	<string name="pref_enable_https_force_reason">从 Android 9.0 开始明文连接是不被允许的。如果你想不通过 HTTPS 连接你的服务器，你可以编译自己的水表助手。了解更多：https://tinyurl.com/pietls</string>
 
 </resources>
