@@ -14,7 +14,6 @@ import info.papdt.express.helper.CHANNEL_ID_PACKAGE_STATUS
 
 import java.text.ParseException
 import java.text.SimpleDateFormat
-import java.util.Calendar
 
 import info.papdt.express.helper.R
 import info.papdt.express.helper.dao.PackageDatabase
@@ -24,6 +23,7 @@ import info.papdt.express.helper.support.Settings
 import info.papdt.express.helper.ui.DetailsActivity
 import info.papdt.express.helper.ui.launcher.AppWidgetProvider
 import moe.feng.kotlinyan.common.*
+import java.util.*
 
 class ReminderService : IntentService(TAG) {
 
@@ -79,7 +79,7 @@ class ReminderService : IntentService(TAG) {
 		private fun buildNotification(context: Context, title: String, subject: String, longText: String, time: Long, icon: Int, color: Int,
 		                              defaults: Int, contentIntent: PendingIntent, deleteIntent: PendingIntent?): Notification {
 			val n: Notification
-			val builder = NotificationCompat.Builder(context)
+			val builder = NotificationCompat.Builder(context, CHANNEL_ID_PACKAGE_STATUS)
 			builder.setContentTitle(title)
 			builder.setContentText(subject)
 			builder.priority = NotificationCompat.PRIORITY_MAX
@@ -87,7 +87,6 @@ class ReminderService : IntentService(TAG) {
 			builder.setDefaults(defaults)
 			builder.setSmallIcon(icon)
 			builder.setContentIntent(contentIntent)
-			builder.setChannelId(CHANNEL_ID_PACKAGE_STATUS)
 			if (time > 0) builder.setWhen(time)
 			builder.setAutoCancel(true)
 
@@ -127,7 +126,7 @@ class ReminderService : IntentService(TAG) {
 				}
 
 				val myDate = exp.data!![0].time
-				val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
+				val sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
 				var millis: Long = 0
 				try {
 					val date = sdf.parse(myDate)

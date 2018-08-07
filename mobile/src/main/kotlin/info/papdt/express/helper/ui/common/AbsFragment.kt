@@ -1,10 +1,9 @@
 package info.papdt.express.helper.ui.common
 
-import android.app.Activity
-import android.app.Fragment
 import android.content.Context
 import android.os.Bundle
 import android.support.annotation.IdRes
+import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -35,11 +34,11 @@ abstract class AbsFragment : Fragment() {
 		return rootView
 	}
 
-	override fun onAttach(activity: Activity) {
-		super.onAttach(activity)
+	override fun onAttach(context: Context?) {
+		super.onAttach(context)
 
-		// Use activity instead of getApplicationContext in order to prevent memory leak
-		mContext = activity
+		// Use context instead of getApplicationContext in order to prevent memory leak
+		mContext = context
 	}
 
 	protected fun <T : View> `$`(@IdRes viewId: Int): T? {

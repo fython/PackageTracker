@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
+import android.support.v4.content.ContextCompat
 import android.support.v4.graphics.drawable.DrawableCompat
 import android.support.v7.app.ActionBar
 import android.support.v7.widget.AppCompatEditText
@@ -79,7 +80,7 @@ class CompanyChooserActivity : AbsActivity() {
 		super.onCreate(savedInstanceState)
 
 		if (settings.getBoolean(Settings.KEY_NAVIGATION_TINT, true) && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-			window.navigationBarColor = resources.getColor(R.color.lollipop_status_bar_grey)
+			window.navigationBarColor = ContextCompat.getColor(this, R.color.lollipop_status_bar_grey)
 		}
 
 		data = Kuaidi100PackageApi.CompanyInfo.info
@@ -99,7 +100,7 @@ class CompanyChooserActivity : AbsActivity() {
 		mActionBar!!.setDisplayShowCustomEnabled(true)
 		mActionBar!!.setDisplayShowTitleEnabled(false)
 
-		DrawableCompat.wrap(mToolbar!!.navigationIcon!!).setTint(resources.getColor(R.color.black_in_light))
+		DrawableCompat.wrap(mToolbar!!.navigationIcon!!).setTint(ContextCompat.getColor(this, R.color.black_in_light))
 
 		/** Set up company list  */
 		mList.setHasFixedSize(true)

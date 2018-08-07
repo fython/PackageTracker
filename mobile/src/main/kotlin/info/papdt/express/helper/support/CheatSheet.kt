@@ -2,6 +2,7 @@ package info.papdt.express.helper.support
 
 import android.content.res.Configuration
 import android.graphics.Rect
+import android.support.v4.content.ContextCompat
 import android.text.TextUtils
 import android.view.Gravity
 import android.view.View
@@ -33,7 +34,7 @@ object CheatSheet {
      * @param view The view to add a cheat sheet for.
      */
     fun setup(view: View) {
-        view.setOnLongClickListener { view -> showCheatSheet(view, view.contentDescription) }
+        view.setOnLongClickListener { v -> showCheatSheet(v, v.contentDescription) }
     }
 
     /**
@@ -45,7 +46,7 @@ object CheatSheet {
      * @param textResId The string resource containing the text to show on long-press.
      */
     fun setup(view: View, textResId: Int) {
-        view.setOnLongClickListener { view -> showCheatSheet(view, view.context.getString(textResId)) }
+        view.setOnLongClickListener { v -> showCheatSheet(v, v.context.getString(textResId)) }
     }
 
     /**
@@ -57,7 +58,7 @@ object CheatSheet {
      * @param text The text to show on long-press.
      */
     fun setup(view: View, text: CharSequence) {
-        view.setOnLongClickListener { view -> showCheatSheet(view, text) }
+        view.setOnLongClickListener { v -> showCheatSheet(v, text) }
     }
 
     /**
@@ -99,7 +100,7 @@ object CheatSheet {
                     android.support.v7.appcompat.R.drawable.tooltip_frame_light)
         val textView = cheatSheet.view.findViewById<TextView>(android.R.id.message)
         textView.setTextAppearance(context, R.style.TextAppearance_AppCompat_Body1)
-        textView.setTextColor(context.resources.getColor(R.color.white_in_dark))
+        textView.setTextColor(ContextCompat.getColor(context, R.color.white_in_dark))
         val dp16 = ScreenUtils.dpToPx(context, 16f).toInt()
         textView.setPaddingRelative(dp16, 0, dp16, 0)
         val showBelow = screenPos[1] < estimatedToastHeight

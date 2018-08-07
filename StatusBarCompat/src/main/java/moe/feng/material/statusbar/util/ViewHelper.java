@@ -7,8 +7,8 @@ import android.util.TypedValue;
 
 public class ViewHelper {
 
-	public static boolean isChrome(){
-		return Build.BRAND == "chromium" || Build.BRAND == "chrome";
+	public static boolean isChrome() {
+		return Build.BRAND.equals("chromium") || Build.BRAND.equals("chrome");
 	}
 
 	public static int getStatusBarHeight(Context context) {
@@ -27,7 +27,7 @@ public class ViewHelper {
 	public static int getMiddleColor(int prevColor, int curColor, float factor) {
 		if (prevColor == curColor) {
 			return curColor;
-		};
+		}
 
 		if (factor == 0f) {
 			return prevColor;

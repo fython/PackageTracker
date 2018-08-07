@@ -4,6 +4,7 @@ import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
+import android.support.v4.content.ContextCompat
 import android.text.style.ForegroundColorSpan
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
@@ -23,8 +24,8 @@ class ListFactory(private val mContext: Context, intent: Intent) : RemoteViewsSe
 	private val mDatabase: PackageDatabase = PackageDatabase.getInstance(mContext.applicationContext)
 
 	private val DP_16_TO_PX: Float = ScreenUtils.dpToPx(mContext, 8f)
-	private val statusTitleColor: Int = mContext.resources.getColor(R.color.package_list_status_title_color)
-	private val statusSubtextColor: Int = mContext.resources.getColor(R.color.package_list_status_subtext_color)
+	private val statusTitleColor: Int = ContextCompat.getColor(mContext, R.color.package_list_status_title_color)
+	private val statusSubtextColor: Int = ContextCompat.getColor(mContext, R.color.package_list_status_subtext_color)
 	private val STATUS_STRING_ARRAY: Array<String> = mContext.resources.getStringArray(R.array.item_status_description)
 	private val STATUS_ERROR: String = mContext.getString(R.string.item_text_cannot_get_package_status)
 

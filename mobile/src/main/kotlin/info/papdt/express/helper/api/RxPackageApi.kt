@@ -31,7 +31,7 @@ object RxPackageApi {
 				.map {
 					val keyword = ZHConverter.convert(it, ZHConverter.SIMPLIFIED).replace("快递".toRegex(), "")
 					val src = ArrayList<Kuaidi100PackageApi.CompanyInfo.Company>()
-					if (keyword?.trim()?.isNotEmpty()) {
+					if (keyword.trim().isNotEmpty()) {
 						(0 until Kuaidi100PackageApi.CompanyInfo.info!!.size)
 								.filterNot { !Kuaidi100PackageApi.CompanyInfo.names[it].toLowerCase().contains(keyword.toLowerCase()) && !Kuaidi100PackageApi.CompanyInfo.pinyin[it].contains(keyword) }
 								.mapTo(src) { Kuaidi100PackageApi.CompanyInfo.info!![it] }

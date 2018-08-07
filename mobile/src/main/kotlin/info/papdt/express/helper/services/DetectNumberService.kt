@@ -5,10 +5,13 @@ import android.app.Notification
 import android.app.PendingIntent
 import android.content.*
 import android.os.Build
+import android.support.v4.app.NotificationCompat
+import android.support.v4.content.ContextCompat
 import android.text.TextUtils
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent
 import android.view.accessibility.AccessibilityNodeInfo
+import info.papdt.express.helper.CHANNEL_ID_PACKAGE_STATUS
 import info.papdt.express.helper.R
 import info.papdt.express.helper.dao.PackageDatabase
 import info.papdt.express.helper.ui.MainActivity
@@ -159,9 +162,7 @@ class DetectNumberService : AccessibilityService() {
 			if (cur.viewIdResourceName != null && cur.viewIdResourceName.contains(JD_TEXT_LEFT_VIEW_ID)) {
 				if (cur.text.toString().contains("国内承运人")) {
 					val next = iterator.next()
-					if (next != null
-							&& next.viewIdResourceName != null
-							&& next.viewIdResourceName.contains(JD_TEXT_RIGHT_VIEW_ID)
+					if (next.viewIdResourceName!!.contains(JD_TEXT_RIGHT_VIEW_ID)
 							&& !TextUtils.isEmpty(next.text)) {
 						return if (next.text.toString().contains("京东")) {
 							"京东快递"
@@ -200,9 +201,7 @@ class DetectNumberService : AccessibilityService() {
 			if (cur.viewIdResourceName != null && cur.viewIdResourceName.contains(JD_TEXT_LEFT_VIEW_ID)) {
 				if (cur.text.toString().contains("订单编号")) {
 					val next = iterator.next()
-					if (next != null
-							&& next.viewIdResourceName != null
-							&& next.viewIdResourceName.contains(JD_TEXT_RIGHT_VIEW_ID)
+					if (next.viewIdResourceName!!.contains(JD_TEXT_RIGHT_VIEW_ID)
 							&& !TextUtils.isEmpty(next.text)) {
 						result = next.text.toString()
 					}
@@ -289,11 +288,11 @@ class DetectNumberService : AccessibilityService() {
 		else
 			getString(R.string.auto_detect_noti_title)
 		val notiText = getString(R.string.auto_detect_noti_result, appName, company, number)
-		val builder = Notification.Builder(this)
+		val builder = NotificationCompat.Builder(this, CHANNEL_ID_PACKAGE_STATUS)
 				.setContentTitle(notiTitle)
 				.setContentText(notiText)
 				.setSmallIcon(R.drawable.ic_assistant_black_24dp)
-				.setPriority(Notification.PRIORITY_HIGH)
+				.setPriority(NotificationCompat.PRIORITY_HIGH)
 				.setShowWhen(false)
 				.setAutoCancel(true)
 				.setContentIntent(PendingIntent.getActivity(
@@ -308,7 +307,7 @@ class DetectNumberService : AccessibilityService() {
 						Intent(ACTION_DELETE_ASSIST_NOTI), PendingIntent.FLAG_CANCEL_CURRENT
 				))
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-			builder.setColor(resources.getColor(R.color.teal_500))
+			builder.color = ContextCompat.getColor(this, R.color.teal_500)
 		}
 		if (headsUp) {
 			builder.setDefaults(Notification.DEFAULT_VIBRATE)
