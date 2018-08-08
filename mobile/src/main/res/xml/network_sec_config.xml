@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<network-security-config>
+    <!-- TODO: This configuration is only for Bugly SDK's cleartext connections. -->
+    <domain-config cleartextTrafficPermitted="true" usesCleartextTraffic="true">
+        <domain includeSubdomains="true">bugly.qq.com</domain>
+        <domain includeSubdomains="true">astat.bugly.qq.com</domain>
+        <domain includeSubdomains="true">aexception.bugly.qq.com</domain>
+        <domain includeSubdomains="true">android.bugly.qq.com</domain>
+        <!-- WARNING: Do not commit any personal sites to git repository for whitelist here! -->
+    </domain-config>
+</network-security-config>
