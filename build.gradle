@@ -3,8 +3,8 @@ ext {
     minSdkVersion = 21
     targetSdkVersion = 28
     buildToolsVersion = "28.0.1"
-    versionCode = 56
-    versionName = '3.1.3'
+    versionCode = 57
+    versionName = '3.1.4'
     kotlinyanVersion = '0.3.0'
     ankoVersion = '0.10.5'
     materialPrefLibVersion = '2.2.3'
