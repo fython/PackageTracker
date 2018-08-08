@@ -30,7 +30,8 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:importantForAccessibility="no"
-            android:scaleType="center"/>
+            android:scaleType="center"
+            android:tint="?android:attr/textColorPrimary"/>
 
         <Button
             android:id="@+id/icon_choose_button"

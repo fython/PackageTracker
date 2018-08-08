@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.annotation.RequiresApi
 import android.support.design.widget.Snackbar
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.ActionBar
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.AppCompatEditText
@@ -30,6 +31,7 @@ import info.papdt.express.helper.api.Kuaidi100PackageApi
 import info.papdt.express.helper.api.RxPackageApi
 import info.papdt.express.helper.dao.PackageDatabase
 import info.papdt.express.helper.model.Kuaidi100Package
+import info.papdt.express.helper.support.ResourcesUtils
 import info.papdt.express.helper.support.Settings
 import info.papdt.express.helper.ui.adapter.SearchResultAdapter
 import info.papdt.express.helper.ui.common.AbsActivity
@@ -52,12 +54,23 @@ class SearchActivity : AbsActivity(), AddDialogFragment.IAddDialogObserver {
 
 	private val mDatabase: PackageDatabase by lazy { PackageDatabase.getInstance(applicationContext) }
 
+	@SuppressLint("NewApi")
 	public override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 
-		if (settings.getBoolean(Settings.KEY_NAVIGATION_TINT, true)
-				&& Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !isNightMode) {
-			window.navigationBarColor = resources.color[R.color.lollipop_status_bar_grey]
+		if (settings.getBoolean(Settings.KEY_NAVIGATION_TINT, true)) {
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !isNightMode) {
+				window.navigationBarColor = resources.color[R.color.lollipop_status_bar_grey]
+			}
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+				if (!isNightMode) {
+					window.navigationBarColor = Color.WHITE
+					window.navigationBarDividerColor = Color.argb(30, 0, 0, 0)
+				} else {
+					window.navigationBarColor = ResourcesUtils.getColorIntFromAttr(theme, android.R.attr.windowBackground)
+					window.navigationBarDividerColor = Color.argb(60, 255, 255, 255)
+				}
+			}
 		}
 
 		setContentView(R.layout.activity_search)
@@ -74,10 +87,16 @@ class SearchActivity : AbsActivity(), AddDialogFragment.IAddDialogObserver {
 						Handler().postDelayed({
 							ifSupportSDK (Build.VERSION_CODES.LOLLIPOP) {
 								overridePendingTransition(R.anim.do_not_move, R.anim.do_not_move)
-								window.decorView.systemUiVisibility = if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M || isNightMode)
-									View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-								else
-									View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+								var flag = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+								if (!isNightMode) {
+									if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+										flag = flag or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+									}
+									if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1 && settings.getBoolean(Settings.KEY_NAVIGATION_TINT, true) && !isNightMode) {
+										flag = flag or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+									}
+								}
+								window.decorView.systemUiVisibility = flag
 								window.statusBarColor = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
 									Color.TRANSPARENT else resources.color[R.color.lollipop_status_bar_grey]
 							}

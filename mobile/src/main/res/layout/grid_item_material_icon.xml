@@ -15,6 +15,7 @@
         android:scaleType="center"
         android:labelFor="@id/text_view"
         android:importantForAccessibility="no"
+        android:tint="?android:attr/textColorPrimary"
         tools:src="@drawable/ic_add_black_24dp"/>
 
     <TextView
