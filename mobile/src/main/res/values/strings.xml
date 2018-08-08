@@ -225,7 +225,7 @@
 	<string name="list_package_contact_name">Deliver man</string>
 	<string name="list_package_contact_button_desc">Call</string>
 
-	<string name="dialog_edit_name_title">Edit name</string>
+	<string name="dialog_edit_name_title">Edit package</string>
 	<string name="toast_edit_name_is_empty">The package name can\'t be empty.</string>
 
 	<string name="dialog_share_title">Share my package</string>
@@ -233,6 +233,10 @@
 
 	<string name="dialog_delete_title">Delete</string>
 	<string name="dialog_delete_message">You will not continue track this package.</string>
+
+	<string name="edit_icon_title">Edit icon</string>
+	<string name="edit_icon_choose">Choose…</string>
+	<string name="activity_icon_choose">Choose icon…</string>
 
 	<!-- Search -->
 	<string name="activity_search">Search</string>

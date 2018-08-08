@@ -1,5 +1,7 @@
 package info.papdt.express.helper.model
 
+import android.os.Parcel
+import android.os.Parcelable
 import com.google.gson.Gson
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
@@ -9,7 +11,7 @@ import java.util.regex.Pattern
 
 import info.papdt.express.helper.api.Kuaidi100PackageApi
 
-class Kuaidi100Package {
+class Kuaidi100Package() : Parcelable {
 
     /** Query data  */
     @Expose @SerializedName("message") var message: String? = null
@@ -29,6 +31,7 @@ class Kuaidi100Package {
     @Expose var unreadNew = false
     @Expose var name: String? = null
     @Expose var companyChineseName: String? = null
+    @Expose var iconCode: String? = null
 
     val id: Long
         get() {
@@ -41,6 +44,23 @@ class Kuaidi100Package {
             }
             return l
         }
+
+    constructor(parcel: Parcel) : this() {
+        message = parcel.readString()
+        number = parcel.readString()
+        companyType = parcel.readString()
+        isCheck = parcel.readString()
+        updateTime = parcel.readString()
+        status = parcel.readString()
+        condition = parcel.readString()
+        codeNumber = parcel.readString()
+        state = parcel.readString()
+        shouldPush = parcel.readByte() != 0.toByte()
+        unreadNew = parcel.readByte() != 0.toByte()
+        name = parcel.readString()
+        companyChineseName = parcel.readString()
+        iconCode = parcel.readString()
+    }
 
     fun getState(): Int {
         return if (state != null) Integer.parseInt(state) else STATUS_FAILED
@@ -185,6 +205,37 @@ class Kuaidi100Package {
                 return Kuaidi100Package()
             }
         }
+
+        @JvmField val CREATOR = object : Parcelable.Creator<Kuaidi100Package> {
+            override fun createFromParcel(parcel: Parcel): Kuaidi100Package {
+                return Kuaidi100Package(parcel)
+            }
+
+            override fun newArray(size: Int): Array<Kuaidi100Package?> {
+                return arrayOfNulls(size)
+            }
+        }
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(message)
+        parcel.writeString(number)
+        parcel.writeString(companyType)
+        parcel.writeString(isCheck)
+        parcel.writeString(updateTime)
+        parcel.writeString(status)
+        parcel.writeString(condition)
+        parcel.writeString(codeNumber)
+        parcel.writeString(state)
+        parcel.writeByte(if (shouldPush) 1 else 0)
+        parcel.writeByte(if (unreadNew) 1 else 0)
+        parcel.writeString(name)
+        parcel.writeString(companyChineseName)
+        parcel.writeString(iconCode)
+    }
+
+    override fun describeContents(): Int {
+        return 0
     }
 
 }

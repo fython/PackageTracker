@@ -10,6 +10,7 @@ import android.support.multidex.MultiDexApplication
 import android.support.v7.app.AppCompatDelegate
 
 import com.tencent.bugly.crashreport.CrashReport
+import info.papdt.express.helper.model.MaterialIcon
 
 import info.papdt.express.helper.services.ClipboardDetectService
 import info.papdt.express.helper.support.Settings
@@ -37,6 +38,8 @@ class Application : MultiDexApplication() {
 		if (mSettings.isClipboardDetectServiceEnabled()) {
 			startService(Intent(applicationContext, ClipboardDetectService::class.java))
 		}
+
+		MaterialIcon.init(this)
 
 		// Init CrashReport
 		val strategy = CrashReport.UserStrategy(applicationContext)

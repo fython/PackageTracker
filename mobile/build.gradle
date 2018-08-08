@@ -82,7 +82,7 @@ dependencies {
     implementation 'com.github.nekocode.rxlifecycle:rxlifecycle:1.1'
 
     // Utils
-    api 'com.tencent.bugly:crashreport:2.4.0'
+    api 'com.tencent.bugly:crashreport:2.6.6.1'
     api 'moe.feng:AlipayZeroSdk:1.1'
 
     // Firebase SDK

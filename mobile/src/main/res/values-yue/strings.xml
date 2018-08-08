@@ -181,7 +181,7 @@
 	<string name="list_package_contact_name">快遞員</string>
 	<string name="list_package_contact_button_desc">Call佢</string>
 
-	<string name="dialog_edit_name_title">編輯名稱</string>
+	<string name="dialog_edit_name_title">編輯包裹</string>
 	<string name="toast_edit_name_is_empty">包裹名稱唔可以係空嘅。</string>
 
 	<string name="dialog_share_title">分享我嘅包裹</string>
@@ -272,5 +272,8 @@
     <string name="label_process_text_receiver">查尋包裹</string>
     <string name="toast_process_text_failed">無法從選定嘅文本入面搵到運單號碼。</string>
 	<string name="pref_enable_https_force_reason">喺 Android 9.0 開始明文連接係唔畀使用嘅。如果你想唔用 HTTPS 連接你嘅伺服器，你可以編譯自己嘅水錶助手。知多啲：https://tinyurl.com/pietls</string>
+	<string name="edit_icon_title">編輯圖案</string>
+	<string name="edit_icon_choose">揀個…</string>
+	<string name="activity_icon_choose">揀個圖案…</string>
 
 </resources>

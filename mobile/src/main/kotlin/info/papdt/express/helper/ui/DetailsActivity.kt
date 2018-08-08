@@ -15,10 +15,8 @@ import android.support.design.widget.Snackbar
 import android.support.v4.graphics.drawable.DrawableCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.AppCompatEditText
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -35,9 +33,9 @@ import info.papdt.express.helper.model.BaseMessage
 import info.papdt.express.helper.model.Kuaidi100Package
 import info.papdt.express.helper.support.CheatSheet
 import info.papdt.express.helper.support.ClipboardUtils
-import info.papdt.express.helper.support.ScreenUtils
 import info.papdt.express.helper.support.Settings
 import info.papdt.express.helper.ui.common.AbsActivity
+import info.papdt.express.helper.ui.fragment.dialog.EditPackageDialog
 import info.papdt.express.helper.ui.items.DetailsStatusItemBinder
 import info.papdt.express.helper.ui.items.DetailsTwoLineItem
 import info.papdt.express.helper.ui.items.DetailsTwoLineItemBinder
@@ -49,7 +47,6 @@ import me.drakeet.multitype.Items
 import me.drakeet.multitype.MultiTypeAdapter
 import moe.feng.kotlinyan.common.*
 import moe.feng.kotlinyan.common.lazyFindNonNullView
-import kotlin.concurrent.thread
 
 @SuppressLint("RestrictedApi")
 class DetailsActivity : AbsActivity() {
@@ -58,11 +55,6 @@ class DetailsActivity : AbsActivity() {
 	private val mRecyclerView: RecyclerView by lazyFindNonNullView(R.id.recycler_view)
 	private val mFAB: FloatingActionButton by lazyFindNonNullView(R.id.fab)
 	private val mBackground: ImageView by lazyFindNonNullView(R.id.parallax_background)
-	private val mNameEdit: AppCompatEditText by lazy {
-		AppCompatEditText(this@DetailsActivity).apply {
-			setSingleLine(true)
-		}
-	}
 
 	private val mAdapter: MultiTypeAdapter by lazy {
 		MultiTypeAdapter().apply {
@@ -73,33 +65,6 @@ class DetailsActivity : AbsActivity() {
 	}
 	private val mStatusBinder: DetailsStatusItemBinder by lazy { DetailsStatusItemBinder() }
 
-	private val mEditDialog: AlertDialog by lazy {
-		buildV7AlertDialog {
-			val DP8 = ScreenUtils.dpToPx(context, 8f).toInt()
-			titleRes = R.string.dialog_edit_name_title
-			setView(mNameEdit, DP8, DP8, DP8, DP8)
-			okButton { _, _ ->
-				if (!TextUtils.isEmpty(mNameEdit.text.toString())) {
-					data!!.name = mNameEdit.text.toString().trim { it <= ' ' }
-					setUpData()
-
-					val intent = Intent()
-					intent["id"] = data!!.number
-					setResult(RESULT_RENAMED, intent)
-
-					thread {
-						val db = PackageDatabase.getInstance(applicationContext)
-						db[db.indexOf(data!!.number!!)] = data!!
-						db.save()
-					}
-				} else {
-					Snackbar.make(`$`(R.id.coordinator_layout)!!, R.string.toast_edit_name_is_empty, Snackbar.LENGTH_SHORT)
-							.show()
-				}
-			}
-			cancelButton()
-		}
-	}
 	private val mDeleteDialog: AlertDialog by lazy {
 		buildV7AlertDialog {
 			titleRes = R.string.dialog_delete_title
@@ -149,7 +114,7 @@ class DetailsActivity : AbsActivity() {
 		CheatSheet.setup(mFAB)
 	}
 
-	private fun setUpData() {
+	internal fun setUpData() {
 		mRecyclerView.adapter = mAdapter
 		ListBuildTask().execute()
 
@@ -266,9 +231,7 @@ class DetailsActivity : AbsActivity() {
 	}
 
 	fun showNameEditDialog() {
-		mNameEdit.setText(data!!.name)
-		mNameEdit.setSelection(data!!.name!!.length)
-		mEditDialog.show()
+		EditPackageDialog.newInstance(data!!).show(supportFragmentManager, "edit")
 	}
 
 	private fun showDeleteDialog() {
