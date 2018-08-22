@@ -23,13 +23,10 @@ import info.papdt.express.helper.support.HttpUtils
 object Kuaidi100PackageApi {
 
 	/** API Url  */
-	private val API_HOST = "http://www.kuaidi100.com"
-	private val QUERY_URL = "$API_HOST/query?type=%1\$s&postid=%2\$s"
-	private val COMPANY_DETECT_URL = API_HOST + "/autonumber/autoComNum?text=%s"
-	/**
-	 * @return company list query url
-	 */
-	val companyListUrl = API_HOST + "/js/share/company.js"
+	private const val API_HOST = "https://www.kuaidi100.com"
+	private const val QUERY_URL = "$API_HOST/query?type=%1\$s&postid=%2\$s"
+	private const val COMPANY_DETECT_URL = "$API_HOST/autonumber/autoComNum?text=%s"
+	private const val COMPANY_LIST_URL = "$API_HOST/js/share/company.js"
 
 	private val TAG = Kuaidi100PackageApi::class.java.simpleName
 
@@ -80,7 +77,7 @@ object Kuaidi100PackageApi {
 	@JvmStatic val companyList: ArrayList<CompanyInfo.Company>?
 			// return data may not be json
 		get() {
-			val message = HttpUtils.getString(companyListUrl, false)
+			val message = HttpUtils.getString(COMPANY_LIST_URL, false)
 			if (message.code == BaseMessage.CODE_OKAY) {
 				var strJson = message.data!!.replace("var jsoncom=", "")
 				strJson = strJson.replace("};", "}")

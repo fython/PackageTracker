@@ -1,5 +1,6 @@
 package info.papdt.express.helper.ui.fragment.home
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.os.Bundle
 import android.os.Handler
@@ -14,6 +15,7 @@ import com.scwang.smartrefresh.header.DeliveryHeader
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 
 import com.scwang.smartrefresh.layout.api.RefreshLayout
+import com.scwang.smartrefresh.layout.constant.RefreshState
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
 import info.papdt.express.helper.R
 import info.papdt.express.helper.dao.PackageDatabase
@@ -38,8 +40,8 @@ abstract class BaseFragment : AbsFragment, OnRefreshListener {
 		private set
 	private var hasPlayedAnimation = false
 
-	internal var eggCount = 0
-	internal var bigEggCount = 0
+	private var eggCount = 0
+	private var bigEggCount = 0
 
 	var isDemoRefresh = false
 
@@ -139,11 +141,14 @@ abstract class BaseFragment : AbsFragment, OnRefreshListener {
 		}
 	}
 
-	private val mHandler = object : Handler() {
+	private val mHandler = @SuppressLint("HandlerLeak")
+	object : Handler() {
 		override fun handleMessage(msg: Message) {
 			when (msg.what) {
 				FLAG_REFRESH_LIST -> {
-					mRefreshLayout.autoRefresh()
+					if (mRefreshLayout.state != RefreshState.Refreshing) {
+						mRefreshLayout.autoRefresh()
+					}
 					Observable.just(false).map(database!!::pullDataFromNetwork)
 							.subscribeOn(Schedulers.io())
 							.observeOn(AndroidSchedulers.mainThread())
@@ -164,6 +169,7 @@ abstract class BaseFragment : AbsFragment, OnRefreshListener {
 
 	companion object {
 
+		@SuppressLint("StaticFieldLeak")
 		private var sInstance: Context? = null
 		private const val FLAG_REFRESH_LIST = 0
 		private const val FLAG_UPDATE_ADAPTER_ONLY = 1

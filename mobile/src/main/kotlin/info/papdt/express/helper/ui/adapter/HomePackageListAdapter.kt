@@ -1,5 +1,6 @@
 package info.papdt.express.helper.ui.adapter
 
+import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
@@ -17,6 +18,7 @@ import de.hdodenhof.circleimageview.CircleImageView
 import info.papdt.express.helper.R
 import info.papdt.express.helper.dao.PackageDatabase
 import info.papdt.express.helper.model.Kuaidi100Package
+import info.papdt.express.helper.model.MaterialIcon
 import info.papdt.express.helper.support.ColorGenerator
 import info.papdt.express.helper.support.Spanny
 import info.papdt.express.helper.support.isFontProviderEnabled
@@ -67,11 +69,20 @@ class HomePackageListAdapter(private var db: PackageDatabase?, private val type:
 		holder.titleText.paint.isFakeBoldText = p.unreadNew || !isFontProviderEnabled
 
 		/** Set CircleImageView  */
+		if (p.iconCode?.isNotEmpty() == true) {
+			holder.bigCharView.typeface = MaterialIcon.iconTypeface
+			holder.bigCharView.text = p.iconCode
+		} else {
+			holder.bigCharView.typeface = Typeface.DEFAULT
+			if (p.name?.isNotEmpty() == true) {
+				holder.bigCharView.text = p.name!!.substring(0, 1).toUpperCase()
+			} else if (p.companyChineseName?.isNotEmpty() == true) {
+				holder.bigCharView.text = p.companyChineseName!!.substring(0, 1).toUpperCase()
+			}
+		}
 		if (p.name?.isNotEmpty() == true) {
-			holder.bigCharView.text = p.name!!.substring(0, 1).toUpperCase()
 			holder.logoView.setImageDrawable(ColorDrawable(ColorGenerator.MATERIAL.getColor(p.name!!)))
 		} else if (p.companyChineseName?.isNotEmpty() == true) {
-			holder.bigCharView.text = p.companyChineseName!!.substring(0, 1).toUpperCase()
 			holder.logoView.setImageDrawable(ColorDrawable(ColorGenerator.MATERIAL.getColor(p.companyChineseName!!)))
 		}
 

@@ -29,7 +29,7 @@ class PackageDatabase private constructor(private val mContext: Context) {
 	lateinit var deliveringData: ArrayList<Kuaidi100Package>
 		private set
 	@Expose
-	var dataVersion: String? = "2.5.0"
+	var dataVersion: String? = "2.6.0"
 		private set
 
 	private var lastRemovedData: Kuaidi100Package? = null
@@ -61,7 +61,7 @@ class PackageDatabase private constructor(private val mContext: Context) {
 	val backupData: String
 		get() {
 			if (dataVersion == null) {
-				dataVersion = "2.5.0"
+				dataVersion = "2.6.0"
 			}
 			return GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(this)
 		}

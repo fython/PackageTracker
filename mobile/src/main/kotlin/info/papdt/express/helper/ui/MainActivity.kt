@@ -4,11 +4,13 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.graphics.Rect
 import android.os.Build
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
+import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
 import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
@@ -30,10 +32,7 @@ import info.papdt.express.helper.R
 
 import info.papdt.express.helper.dao.PackageDatabase
 import info.papdt.express.helper.model.Kuaidi100Package
-import info.papdt.express.helper.support.PushUtils
-import info.papdt.express.helper.support.ScreenUtils
-import info.papdt.express.helper.support.Settings
-import info.papdt.express.helper.support.SettingsInstance
+import info.papdt.express.helper.support.*
 import info.papdt.express.helper.ui.common.AbsActivity
 import info.papdt.express.helper.ui.fragment.home.FragmentAll
 import info.papdt.express.helper.ui.launcher.AppWidgetProvider
@@ -48,6 +47,7 @@ class MainActivity : AbsActivity() {
 	private val tabLayout: TabLayout by lazyFindNonNullView(R.id.tab_layout)
 	private val viewPager: ViewPager by lazyFindNonNullView(R.id.view_pager)
 	private val toolbarBox: View by lazyFindNonNullView(R.id.toolbar_box)
+	private val fab: FloatingActionButton by lazyFindNonNullView(R.id.fab)
 
 	private val fragments by lazy { arrayOf(
 			FragmentAll.newInstance(mDatabase, FragmentAll.TYPE_DELIVERING),
@@ -60,13 +60,26 @@ class MainActivity : AbsActivity() {
 	private val mDatabase: PackageDatabase by lazy { PackageDatabase.getInstance(applicationContext) }
 	private var mContextMenuPackage: Kuaidi100Package? = null
 
+	@SuppressLint("NewApi")
 	override fun onCreate(savedInstanceState: Bundle?) {
 		Log.i(TAG, "MainActivity launch")
 		super.onCreate(savedInstanceState)
 
-		if (settings.getBoolean(Settings.KEY_NAVIGATION_TINT, true)
-				&& Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !isNightMode) {
-			window.navigationBarColor = ContextCompat.getColor(this, R.color.colorPrimaryDark)
+		if (settings.getBoolean(Settings.KEY_NAVIGATION_TINT, true)) {
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !isNightMode) {
+				window.navigationBarColor = ContextCompat.getColor(this, R.color.colorPrimaryDark)
+			}
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+				if (!isNightMode) {
+					window.navigationBarColor = Color.WHITE
+					window.navigationBarDividerColor = Color.argb(30, 0, 0, 0)
+					window.decorView.systemUiVisibility =
+							window.decorView.systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+				} else {
+					window.navigationBarColor = ResourcesUtils.getColorIntFromAttr(theme, android.R.attr.windowBackground)
+					window.navigationBarDividerColor = Color.argb(60, 255, 255, 255)
+				}
+			}
 		}
 
 		/** Dirty fix for N  */
@@ -91,6 +104,7 @@ class MainActivity : AbsActivity() {
 		})
 		viewPager.adapter = TabsAdapter(supportFragmentManager)
 		viewPager.offscreenPageLimit = 3
+		fab.setOnClickListener { startSearch() }
 
 		// Do action
 		when (intent.action) {

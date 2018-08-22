@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+			 android:layout_width="match_parent"
+			 android:layout_height="match_parent"
+			 android:id="@+id/root_layout"
+			 android:background="@color/light_theme_background_translucent">
+
+	<LinearLayout android:orientation="vertical"
+	              android:layout_width="match_parent"
+	              android:layout_height="match_parent">
+
+		<moe.feng.material.statusbar.AppBarLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			app:colorNormal="@android:color/transparent"
+			app:colorDark="@android:color/transparent"
+			app:enableMode="Lollipop">
+
+			<android.support.v7.widget.CardView
+					android:id="@+id/toolbar_box"
+					android:layout_width="match_parent"
+					android:layout_height="wrap_content"
+					android:layout_marginTop="8dp"
+					android:layout_marginBottom="8dp"
+					android:layout_marginStart="8dp"
+					android:layout_marginEnd="8dp"
+					app:cardBackgroundColor="@color/toolbar_box_background">
+
+				<android.support.v7.widget.Toolbar
+						android:layout_width="match_parent"
+						android:layout_height="48dp"
+						android:id="@+id/toolbar"
+						app:theme="@style/Toolbar.Main"
+						app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+					<ImageButton
+							android:id="@+id/action_back"
+							android:layout_width="wrap_content"
+							android:layout_height="match_parent"
+							android:layout_marginEnd="24dp"
+							android:src="@drawable/ic_arrow_back_black_24dp"
+							android:background="?attr/selectableItemBackgroundBorderless"
+							android:tint="@color/black_in_light"/>
+
+					<EditText
+							android:layout_width="match_parent"
+							android:layout_height="match_parent"
+							android:id="@+id/search_edit"
+							android:hint="@string/activity_icon_choose"
+							android:gravity="center_vertical"
+							android:background="@null"
+							android:singleLine="true"
+							android:textSize="16sp"
+							android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
+
+				</android.support.v7.widget.Toolbar>
+
+			</android.support.v7.widget.CardView>
+
+		</moe.feng.material.statusbar.AppBarLayout>
+
+		<FrameLayout
+			android:layout_width="match_parent"
+			android:layout_height="match_parent">
+
+			<android.support.v7.widget.RecyclerView
+				android:layout_width="match_parent"
+				android:layout_height="match_parent"
+				android:id="@+id/recycler_view"
+				android:paddingTop="8dp"
+				android:paddingBottom="8dp"
+				android:clipToPadding="false"
+				app:fastScrollEnabled="true"
+				app:fastScrollHorizontalThumbDrawable="@drawable/fastscroll_thumb_drawable"
+				app:fastScrollHorizontalTrackDrawable="@drawable/fastscroll_line_drawable"
+				app:fastScrollVerticalThumbDrawable="@drawable/fastscroll_thumb_drawable"
+				app:fastScrollVerticalTrackDrawable="@drawable/fastscroll_line_drawable" />
+
+			<LinearLayout
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:orientation="vertical"
+				android:layout_gravity="center"
+				android:gravity="center"
+				android:visibility="gone"
+				android:id="@+id/empty_view">
+
+				<ImageView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:src="@drawable/ic_highlight_remove_black_36dp"/>
+
+				<Space android:layout_width="match_parent" android:layout_height="16dp"/>
+
+				<android.support.v7.widget.AppCompatTextView
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/search_no_result"
+					android:textAppearance="@style/TextAppearance.AppCompat.Title"/>
+
+			</LinearLayout>
+
+		</FrameLayout>
+
+	</LinearLayout>
+
+</FrameLayout>

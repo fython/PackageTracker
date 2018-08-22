@@ -82,7 +82,7 @@
 	<string name="app_version_format">%1$s (%2$d)</string>
 	<string name="author_sina_title">新浪微博</string>
 	<string name="author_sina_desc">\@FungGo</string>
-	<string name="author_sina_url">http://weibo.com/fython</string>
+	<string name="author_sina_url">https://weibo.com/fython</string>
 	<string name="github_repo_title">Github 源代碼</string>
 	<string name="github_repo_url">https://github.com/fython/PackageTracker</string>
 	<string name="alipay_support_title">通過支付寶捐贈</string>
@@ -93,7 +93,7 @@
 	<string name="open_source_license_summary">GPL v3</string>
 	<string name="icon_designer_title">徽標 &amp; 海報設計師</string>
 	<string name="icon_designer_summary">\@翟宅宅Jack</string>
-	<string name="icon_designer_url">http://weibo.com/u/1934471601</string>
+	<string name="icon_designer_url">https://weibo.com/u/1934471601</string>
 	<string name="google_plus_title">Google+ 社群</string>
 
 	<string name="category_ui_common">通用</string>
@@ -115,7 +115,7 @@
 	<string name="category_contributors_desc">冇佢地嘅努力就冇更好嘅體驗</string>
 	<string name="contributors_coderfox">小傅Fox</string>
 	<string name="contributors_coderfox_desc">自動拉取速遞公司列表; 允許強制添加包裹; 改進翻譯</string>
-	<string name="contributors_coderfox_weibo_url">http://weibo.com/coderfox</string>
+	<string name="contributors_coderfox_weibo_url">https://weibo.com/coderfox</string>
 
 	<string-array name="notification_interval">
 		<item>10 分鐘</item>
@@ -181,7 +181,7 @@
 	<string name="list_package_contact_name">快遞員</string>
 	<string name="list_package_contact_button_desc">Call佢</string>
 
-	<string name="dialog_edit_name_title">編輯名稱</string>
+	<string name="dialog_edit_name_title">編輯包裹</string>
 	<string name="toast_edit_name_is_empty">包裹名稱唔可以係空嘅。</string>
 
 	<string name="dialog_share_title">分享我嘅包裹</string>
@@ -271,5 +271,9 @@
 
     <string name="label_process_text_receiver">查尋包裹</string>
     <string name="toast_process_text_failed">無法從選定嘅文本入面搵到運單號碼。</string>
+	<string name="pref_enable_https_force_reason">喺 Android 9.0 開始明文連接係唔畀使用嘅。如果你想唔用 HTTPS 連接你嘅伺服器，你可以編譯自己嘅水錶助手。知多啲：https://tinyurl.com/pietls</string>
+	<string name="edit_icon_title">編輯圖案</string>
+	<string name="edit_icon_choose">揀個…</string>
+	<string name="activity_icon_choose">揀個圖案…</string>
 
 </resources>

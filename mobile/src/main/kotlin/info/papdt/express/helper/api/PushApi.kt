@@ -117,7 +117,7 @@ object PushApi {
 	@JvmOverloads fun requestPush(token: String = defaultToken): Observable<ResponseMessage> {
 		return Observable.just("")
 				.map {
-					if (apiHost.isEmpty()) return@map ResponseMessage()
+					if (SettingsInstance.pushApiHost.isNullOrEmpty()) return@map ResponseMessage()
 					val request = Request.Builder()
 							.url("$apiHost/subscribe/request_push?token=$token")
 							.build()

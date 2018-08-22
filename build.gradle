@@ -1,24 +1,24 @@
 ext {
-    supportLibraryVersion = '27.1.1'
+    supportLibraryVersion = '28.0.0-beta01'
     minSdkVersion = 21
-    targetSdkVersion = 27
-    buildToolsVersion = "27.0.3"
-    versionCode = 55
-    versionName = '3.1.2'
+    targetSdkVersion = 28
+    buildToolsVersion = "28.0.1"
+    versionCode = 57
+    versionName = '3.1.4'
     kotlinyanVersion = '0.3.0'
-    ankoVersion = '0.10.3'
+    ankoVersion = '0.10.5'
     materialPrefLibVersion = '2.2.3'
 }
 
 buildscript {
-    ext.kotlin_version = '1.2.41'
+    ext.kotlin_version = '1.2.60'
     repositories {
         jcenter()
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.2'
-        classpath 'com.google.gms:google-services:4.0.0'
+        classpath 'com.android.tools.build:gradle:3.1.4'
+        classpath 'com.google.gms:google-services:4.0.1'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }

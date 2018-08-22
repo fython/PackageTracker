@@ -16,7 +16,7 @@ class AnimatedRecyclerView : RecyclerView {
 
 	constructor(context: Context, attrs: AttributeSet?, defStyle: Int) : super(context, attrs, defStyle)
 
-	override fun setLayoutManager(layoutManager: RecyclerView.LayoutManager) {
+	override fun setLayoutManager(layoutManager: RecyclerView.LayoutManager?) {
 		if (layoutManager is LinearLayoutManager) {
 			super.setLayoutManager(layoutManager)
 		} else {

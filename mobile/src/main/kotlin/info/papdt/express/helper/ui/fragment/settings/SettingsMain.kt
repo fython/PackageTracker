@@ -118,6 +118,10 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 		mPrefApiHost.text = SettingsInstance.pushApiHost
 		mPrefApiPort.text = SettingsInstance.pushApiPort.toString()
 		mPrefHttps.isChecked = SettingsInstance.enableHttps
+		ifSupportSDK(Build.VERSION_CODES.P) {
+			mPrefHttps.summary = getString(R.string.pref_enable_https_force_reason)
+			mPrefHttps.isEnabled = false
+		}
 
 		mPrefFromClipboard.isChecked = settings.isClipboardDetectServiceEnabled()
 
@@ -401,7 +405,7 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener, Pr
 
 	override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
 		R.id.action_donate -> {
-			listView.smoothScrollToPosition(listView.adapter.itemCount - 1)
+			listView.smoothScrollToPosition(listView.adapter!!.itemCount - 1)
 			true
 		}
 		R.id.action_play_store -> {

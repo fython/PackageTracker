@@ -15,10 +15,8 @@ import android.support.design.widget.Snackbar
 import android.support.v4.graphics.drawable.DrawableCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.AppCompatEditText
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-import android.text.TextUtils
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -35,9 +33,10 @@ import info.papdt.express.helper.model.BaseMessage
 import info.papdt.express.helper.model.Kuaidi100Package
 import info.papdt.express.helper.support.CheatSheet
 import info.papdt.express.helper.support.ClipboardUtils
-import info.papdt.express.helper.support.ScreenUtils
+import info.papdt.express.helper.support.ResourcesUtils
 import info.papdt.express.helper.support.Settings
 import info.papdt.express.helper.ui.common.AbsActivity
+import info.papdt.express.helper.ui.fragment.dialog.EditPackageDialog
 import info.papdt.express.helper.ui.items.DetailsStatusItemBinder
 import info.papdt.express.helper.ui.items.DetailsTwoLineItem
 import info.papdt.express.helper.ui.items.DetailsTwoLineItemBinder
@@ -49,7 +48,6 @@ import me.drakeet.multitype.Items
 import me.drakeet.multitype.MultiTypeAdapter
 import moe.feng.kotlinyan.common.*
 import moe.feng.kotlinyan.common.lazyFindNonNullView
-import kotlin.concurrent.thread
 
 @SuppressLint("RestrictedApi")
 class DetailsActivity : AbsActivity() {
@@ -58,11 +56,6 @@ class DetailsActivity : AbsActivity() {
 	private val mRecyclerView: RecyclerView by lazyFindNonNullView(R.id.recycler_view)
 	private val mFAB: FloatingActionButton by lazyFindNonNullView(R.id.fab)
 	private val mBackground: ImageView by lazyFindNonNullView(R.id.parallax_background)
-	private val mNameEdit: AppCompatEditText by lazy {
-		AppCompatEditText(this@DetailsActivity).apply {
-			setSingleLine(true)
-		}
-	}
 
 	private val mAdapter: MultiTypeAdapter by lazy {
 		MultiTypeAdapter().apply {
@@ -73,33 +66,6 @@ class DetailsActivity : AbsActivity() {
 	}
 	private val mStatusBinder: DetailsStatusItemBinder by lazy { DetailsStatusItemBinder() }
 
-	private val mEditDialog: AlertDialog by lazy {
-		buildV7AlertDialog {
-			val DP8 = ScreenUtils.dpToPx(context, 8f).toInt()
-			titleRes = R.string.dialog_edit_name_title
-			setView(mNameEdit, DP8, DP8, DP8, DP8)
-			okButton { _, _ ->
-				if (!TextUtils.isEmpty(mNameEdit.text.toString())) {
-					data!!.name = mNameEdit.text.toString().trim { it <= ' ' }
-					setUpData()
-
-					val intent = Intent()
-					intent["id"] = data!!.number
-					setResult(RESULT_RENAMED, intent)
-
-					thread {
-						val db = PackageDatabase.getInstance(applicationContext)
-						db[db.indexOf(data!!.number!!)] = data!!
-						db.save()
-					}
-				} else {
-					Snackbar.make(`$`(R.id.coordinator_layout)!!, R.string.toast_edit_name_is_empty, Snackbar.LENGTH_SHORT)
-							.show()
-				}
-			}
-			cancelButton()
-		}
-	}
 	private val mDeleteDialog: AlertDialog by lazy {
 		buildV7AlertDialog {
 			titleRes = R.string.dialog_delete_title
@@ -127,7 +93,11 @@ class DetailsActivity : AbsActivity() {
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-			window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+			var flag = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1 && settings.getBoolean(Settings.KEY_NAVIGATION_TINT, true) && !isNightMode) {
+				flag = flag or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+			}
+			window.decorView.systemUiVisibility = flag
 			window.statusBarColor = Color.TRANSPARENT
 		}
 		super.onCreate(savedInstanceState)
@@ -149,7 +119,8 @@ class DetailsActivity : AbsActivity() {
 		CheatSheet.setup(mFAB)
 	}
 
-	private fun setUpData() {
+	@SuppressLint("NewApi")
+	internal fun setUpData() {
 		mRecyclerView.adapter = mAdapter
 		ListBuildTask().execute()
 
@@ -182,9 +153,19 @@ class DetailsActivity : AbsActivity() {
 		mToolbarLayout.setContentScrimColor(color)
 		mToolbarLayout.setStatusBarScrimColor(colorDark)
 		DrawableCompat.setTint(drawable, color)
-		if (settings.getBoolean(Settings.KEY_NAVIGATION_TINT, true)
-				&& Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !isNightMode) {
-			window.navigationBarColor = colorDark
+		if (settings.getBoolean(Settings.KEY_NAVIGATION_TINT, true)) {
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !isNightMode) {
+				window.navigationBarColor = colorDark
+			}
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+				if (!isNightMode) {
+					window.navigationBarColor = Color.WHITE
+					window.navigationBarDividerColor = Color.argb(30, 0, 0, 0)
+				} else {
+					window.navigationBarColor = ResourcesUtils.getColorIntFromAttr(theme, android.R.attr.windowBackground)
+					window.navigationBarDividerColor = Color.argb(60, 255, 255, 255)
+				}
+			}
 		}
 	}
 
@@ -266,9 +247,7 @@ class DetailsActivity : AbsActivity() {
 	}
 
 	fun showNameEditDialog() {
-		mNameEdit.setText(data!!.name)
-		mNameEdit.setSelection(data!!.name!!.length)
-		mEditDialog.show()
+		EditPackageDialog.newInstance(data!!).show(supportFragmentManager, "edit")
 	}
 
 	private fun showDeleteDialog() {
