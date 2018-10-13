@@ -56,7 +56,7 @@ class DetailsTwoLineItemBinder : ItemViewBinder<DetailsTwoLineItem, DetailsTwoLi
                     summary.text = String.format(STRING_NUMBER_FORMAT, data!!.content, data!!.optional)
                 } else {
                     val length = data!!.content!!.length
-                    var str = data!!.content!!.substring(0, 4)
+                    var str = if (length >= 4) data!!.content!!.substring(0, 4) else data!!.content!!
                     for (i in 4 until length) str += "*"
                     summary.text = String.format(STRING_NUMBER_FORMAT, str, data!!.optional)
                     button.setImageResource(R.drawable.ic_visibility_black_24dp)
@@ -68,7 +68,7 @@ class DetailsTwoLineItemBinder : ItemViewBinder<DetailsTwoLineItem, DetailsTwoLi
                 button.setOnClickListener {
                     if (button.tag != null && button.tag as Boolean) {
                         val length = data!!.content!!.length
-                        var str = data!!.content!!.substring(0, 4)
+                        var str = if (length >= 4) data!!.content!!.substring(0, 4) else data!!.content!!
                         for (i in 4 until length) str += "*"
                         summary.text = String.format(STRING_NUMBER_FORMAT, str, data!!.optional)
                         button.setImageResource(R.drawable.ic_visibility_black_24dp)
