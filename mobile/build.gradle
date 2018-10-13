@@ -58,10 +58,10 @@ dependencies {
     // Network & Data
     implementation 'com.squareup.okhttp3:okhttp:3.11.0'
     implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.9.1'
-    implementation 'com.google.code.gson:gson:2.8.4'
+    implementation 'com.google.code.gson:gson:2.8.5'
 
     // Common UI Library
-    implementation 'me.drakeet.multitype:multitype:3.4.0'
+    implementation 'me.drakeet.multitype:multitype:3.4.4'
     implementation "moe.shizuku.preference:preference:$materialPrefLibVersion"
     implementation "moe.shizuku.preference:preference-simplemenu:$materialPrefLibVersion"
     implementation "moe.shizuku.preference:preference-dialog-android:$materialPrefLibVersion"
@@ -77,8 +77,8 @@ dependencies {
     implementation 'me.dm7.barcodescanner:zxing:1.9.8'
 
     // Reactive X
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.0'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.0.2'
+    implementation 'io.reactivex.rxjava2:rxjava:2.2.2'
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
     implementation 'com.github.nekocode.rxlifecycle:rxlifecycle:1.1'
 
     // Utils
@@ -86,8 +86,8 @@ dependencies {
     api 'moe.feng:AlipayZeroSdk:1.1'
 
     // Firebase SDK
-    implementation "com.google.firebase:firebase-core:16.0.1"
-    implementation "com.google.firebase:firebase-messaging:17.1.0"
+    implementation "com.google.firebase:firebase-core:16.0.4"
+    implementation "com.google.firebase:firebase-messaging:17.3.3"
 }
 
 apply plugin: 'com.google.gms.google-services'

@@ -42,10 +42,14 @@ class ChooseIconActivity : AbsActivity() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
                 if (!isNightMode) {
                     window.navigationBarColor = Color.WHITE
-                    window.navigationBarDividerColor = Color.argb(30, 0, 0, 0)
+                    ifSupportSDK (Build.VERSION_CODES.P) {
+                        window.navigationBarDividerColor = Color.argb(30, 0, 0, 0)
+                    }
                 } else {
                     window.navigationBarColor = ResourcesUtils.getColorIntFromAttr(theme, android.R.attr.windowBackground)
-                    window.navigationBarDividerColor = Color.argb(60, 255, 255, 255)
+                    ifSupportSDK (Build.VERSION_CODES.P) {
+                        window.navigationBarDividerColor = Color.argb(60, 255, 255, 255)
+                    }
                 }
             }
         }

@@ -39,10 +39,14 @@ class SplashActivity : AbsActivity() {
 				window.navigationBarColor = STATUS_BAR_COLOR
 			} else if (!isNightMode) {
 				window.navigationBarColor = Color.WHITE
-				window.navigationBarDividerColor = Color.argb(30, 0, 0, 0)
+				ifSupportSDK (Build.VERSION_CODES.P) {
+					window.navigationBarDividerColor = Color.argb(30, 0, 0, 0)
+				}
 			} else {
 				window.navigationBarColor = ResourcesUtils.getColorIntFromAttr(theme, android.R.attr.windowBackground)
-				window.navigationBarDividerColor = Color.argb(60, 255, 255, 255)
+				ifSupportSDK (Build.VERSION_CODES.P) {
+					window.navigationBarDividerColor = Color.argb(60, 255, 255, 255)
+				}
 			}
 		}
 
