@@ -13,6 +13,7 @@ import android.view.View
 import android.widget.Spinner
 import info.papdt.express.helper.R
 import info.papdt.express.helper.dao.PackageDatabase
+import info.papdt.express.helper.ui.adapter.HomeToolbarSpinnerAdapter
 import info.papdt.express.helper.ui.adapter.NewHomePackageListAdapter
 import info.papdt.express.helper.ui.common.AbsActivity
 
@@ -42,6 +43,8 @@ class HomeActivity : AbsActivity() {
 
         listView.adapter = listAdapter
         listAdapter.setPackages(packageDatabase.data)
+
+        spinner.adapter = HomeToolbarSpinnerAdapter(this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

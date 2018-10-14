@@ -10,6 +10,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:entries="@array/package_status_filter_entries"
-        android:layout_marginStart="8dp"/>
+        android:layout_marginStart="8dp"
+        android:background="@drawable/spinner_background_material"/>
 
 </FrameLayout>

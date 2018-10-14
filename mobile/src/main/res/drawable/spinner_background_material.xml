@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:paddingMode="stack"
+    android:paddingStart="0dp"
+    android:paddingEnd="36dp"
+    android:paddingLeft="0dp"
+    android:paddingRight="0dp">
+
+    <item
+        android:drawable="@drawable/ic_expand_more_black_24dp"
+        android:gravity="end|center_vertical"
+        android:right="12dp"/>
+
+</layer-list>

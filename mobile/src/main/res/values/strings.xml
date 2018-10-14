@@ -317,5 +317,6 @@
     <string name="diff_time_some_months_ago">%d month(s) ago</string>
     <string name="diff_time_in_this_year">Within one year</string>
     <string name="diff_time_some_years_ago">%d year(s) ago</string>
+    <string name="action_filter">Sort by</string>
 
 </resources>
