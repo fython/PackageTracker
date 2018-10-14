@@ -45,7 +45,10 @@
         android:orientation="horizontal"
         android:layout_gravity="bottom"
         android:background="@color/pink_500"
-        android:elevation="6dp">
+        android:elevation="6dp"
+        android:clickable="true"
+        android:focusable="true"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
         <TextView
             android:id="@+id/add_button"
@@ -70,6 +73,16 @@
             android:layout_weight="1"
             android:orientation="horizontal"
             android:gravity="end">
+
+            <ImageButton
+                android:id="@+id/scan_button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_barcode_scan_black_24dp"
+                android:tint="@android:color/white"/>
 
             <ImageButton
                 android:id="@+id/more_button"

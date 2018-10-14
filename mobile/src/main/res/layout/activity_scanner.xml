@@ -18,25 +18,12 @@
 		android:layout_height="match_parent"
 		android:id="@+id/scanner_view"/>
 
-	<LinearLayout
+	<android.support.v7.widget.Toolbar
 		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:orientation="vertical"
-		android:background="@color/dark_theme_translucent_app_bar">
-
-		<moe.feng.material.statusbar.StatusBarHeaderView
-			android:layout_width="match_parent"
-		    android:layout_height="wrap_content"
-		    app:enableMode="Lollipop"
-		    app:colorNormal="@android:color/transparent"
-		    app:colorDark="@android:color/transparent"/>
-
-		<android.support.v7.widget.Toolbar
-			android:layout_width="match_parent"
-			android:layout_height="?attr/actionBarSize"
-			android:id="@+id/toolbar"
-			android:theme="@style/Toolbar.Dark"/>
-
-	</LinearLayout>
+		android:layout_height="?attr/actionBarSize"
+		android:id="@+id/toolbar"
+		android:layout_gravity="bottom"
+		android:background="@color/pink_500"
+		android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
 </FrameLayout>

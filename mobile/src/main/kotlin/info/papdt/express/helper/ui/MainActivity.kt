@@ -278,7 +278,7 @@ class MainActivity : AbsActivity() {
 			}
 		}
 		if (requestCode == ScannerActivity.REQUEST_CODE_SCAN) {
-			if (resultCode == ScannerActivity.RESULT_GET_RESULT) {
+			if (resultCode == RESULT_OK) {
 				startSearch(data!![ScannerActivity.EXTRA_RESULT]?.asString())
 			}
 		}

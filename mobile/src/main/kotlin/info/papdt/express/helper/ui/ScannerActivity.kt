@@ -11,7 +11,6 @@ import android.provider.Settings
 import android.support.design.widget.Snackbar
 import android.support.v4.content.ContextCompat
 import android.view.View
-import android.view.WindowManager
 
 import com.google.zxing.Result
 
@@ -29,7 +28,6 @@ class ScannerActivity : AbsActivity(), ZXingScannerView.ResultHandler, Permissio
 		super.onCreate(savedInstanceState)
 		ifSupportSDK (Build.VERSION_CODES.LOLLIPOP) {
 			window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-			window.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION)
 			window.statusBarColor = Color.TRANSPARENT
 		}
 		setContentView(R.layout.activity_scanner)
@@ -85,14 +83,13 @@ class ScannerActivity : AbsActivity(), ZXingScannerView.ResultHandler, Permissio
 	override fun handleResult(result: Result) {
 		val intent = Intent()
 		intent[EXTRA_RESULT] = result.text
-		setResult(RESULT_GET_RESULT, intent)
+		setResult(RESULT_OK, intent)
 		finish()
 	}
 
 	companion object {
 
 		const val REQUEST_CODE_SCAN = 30001
-		const val RESULT_GET_RESULT = 3000
 		const val EXTRA_RESULT = "extra_result"
 
 		private const val REQUEST_PERMISSION = 20001

@@ -107,7 +107,7 @@
         <activity
             android:name=".ui.ScannerActivity"
             android:label="@string/activity_scanner"
-            android:theme="@style/AppTheme.Dark">
+            android:theme="@style/AppTheme.Home">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>

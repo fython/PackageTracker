@@ -2,11 +2,13 @@ package info.papdt.express.helper.ui
 
 import android.animation.Animator
 import android.animation.ObjectAnimator
+import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.design.widget.CoordinatorLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
+import android.support.v7.widget.TooltipCompat
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -16,6 +18,7 @@ import info.papdt.express.helper.dao.PackageDatabase
 import info.papdt.express.helper.ui.adapter.HomeToolbarSpinnerAdapter
 import info.papdt.express.helper.ui.adapter.NewHomePackageListAdapter
 import info.papdt.express.helper.ui.common.AbsActivity
+import moe.feng.kotlinyan.common.get
 
 class HomeActivity : AbsActivity() {
 
@@ -24,6 +27,8 @@ class HomeActivity : AbsActivity() {
     private val listView by lazy<RecyclerView> { findViewById(android.R.id.list) }
     private val spinner by lazy<Spinner> { mToolbar!!.findViewById(R.id.spinner) }
     private val addButton by lazy<View> { findViewById(R.id.add_button) }
+    private val scanButton by lazy<View> { findViewById(R.id.scan_button) }
+    private val moreButton by lazy<View> { findViewById(R.id.more_button) }
 
     private val listAdapter by lazy {
         NewHomePackageListAdapter()
@@ -45,6 +50,11 @@ class HomeActivity : AbsActivity() {
         listAdapter.setPackages(packageDatabase.data)
 
         spinner.adapter = HomeToolbarSpinnerAdapter(this)
+
+        addButton.setOnClickListener {  }
+
+        TooltipCompat.setTooltipText(scanButton, getString(R.string.activity_scanner))
+        scanButton.setOnClickListener { openScanner() }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -58,6 +68,22 @@ class HomeActivity : AbsActivity() {
             true
         }
         else -> super.onOptionsItemSelected(item)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        when (requestCode) {
+            ScannerActivity.REQUEST_CODE_SCAN -> {
+                if (RESULT_OK == resultCode) {
+                    val result = data!![ScannerActivity.EXTRA_RESULT]?.asString()
+                }
+            }
+        }
+    }
+
+    private fun openScanner() {
+        val intent = Intent(this, ScannerActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+        startActivityForResult(intent, ScannerActivity.REQUEST_CODE_SCAN)
     }
 
     private inner class HomeListScrollListener : RecyclerView.OnScrollListener() {
