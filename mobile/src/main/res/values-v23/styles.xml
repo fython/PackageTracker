@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme.Home" parent="AppTheme">
+        <item name="colorPrimary">@color/grey_100</item>
+        <item name="colorPrimaryDark">@color/grey_300</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowBackground">@color/grey_100</item>
+        <item name="android:navigationBarColor">@color/pink_700</item>
+    </style>
+
+</resources>

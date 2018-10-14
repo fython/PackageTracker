@@ -1,6 +1,7 @@
 package info.papdt.express.helper.ui
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.ActivityManager
 import android.app.ProgressDialog
 import android.content.Intent
@@ -320,7 +321,7 @@ class DetailsActivity : AbsActivity() {
 		private const val EXTRA_PACKAGE_JSON = "extra_package_json"
 		private const val EXTRA_STATE = "extra_state"
 
-		fun launch(activity: AppCompatActivity, p: Kuaidi100Package) {
+		fun launch(activity: Activity, p: Kuaidi100Package) {
 			val intent = Intent(activity, DetailsActivity::class.java)
 			intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
 			intent[EXTRA_PACKAGE_JSON] = p.toJsonString()

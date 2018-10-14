@@ -44,6 +44,12 @@
 	<string name="toast_item_removed_action">Undo</string>
 	<string name="toast_all_read">%d items has been marked read.</string>
 
+	<string-array name="package_status_filter_entries">
+		<item>@string/navigation_item_on_the_way</item>
+		<item>@string/navigation_item_delivered</item>
+		<item>@string/navigation_item_all</item>
+	</string-array>
+
 	<!-- Add -->
 	<string name="activity_add">Add package</string>
 	<string name="text_field_number">Package number</string>
@@ -300,5 +306,16 @@
     <string name="label_process_text_receiver">Search Package</string>
     <string name="toast_process_text_failed">Failed to recognize package number from selected text.</string>
 	<string name="pref_enable_https_force_reason">Cleartext connections is disallowed since Android 9.0+. If you want to connect your server without HTTPS, you can compile your own PackageTracker. Learn more: https://tinyurl.com/pietls</string>
+
+    <string name="diff_time_pending">Pending</string>
+    <string name="diff_time_today">Today</string>
+    <string name="diff_time_yesterday">Yesterday</string>
+    <string name="diff_time_two_days_ago">Two days ago</string>
+    <string name="diff_time_three_days_ago">Three days ago</string>
+    <string name="diff_time_in_this_week">Within one week</string>
+    <string name="diff_time_in_this_month">Within one month</string>
+    <string name="diff_time_some_months_ago">%d month(s) ago</string>
+    <string name="diff_time_in_this_year">Within one year</string>
+    <string name="diff_time_some_years_ago">%d year(s) ago</string>
 
 </resources>

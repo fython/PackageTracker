@@ -101,12 +101,6 @@ class HomePackageListAdapter(private var db: PackageDatabase?, private val type:
 		else -> db!![db!!.size() - pos - 1]
 	}
 
-
-	fun setDatabase(db: PackageDatabase) {
-		this.db = db
-		notifyDataSetChanged()
-	}
-
 	override fun getItemCount(): Int = when (type) {
 		TYPE_DELIVERED -> db?.deliveredData?.size
 		TYPE_DELIVERING -> db?.deliveringData?.size

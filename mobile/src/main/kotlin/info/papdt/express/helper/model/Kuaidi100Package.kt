@@ -1,15 +1,18 @@
 package info.papdt.express.helper.model
 
+import android.annotation.SuppressLint
 import android.os.Parcel
 import android.os.Parcelable
 import com.google.gson.Gson
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-import java.util.ArrayList
 import java.util.regex.Pattern
 
 import info.papdt.express.helper.api.Kuaidi100PackageApi
+import info.papdt.express.helper.support.DateHelper
+import java.text.SimpleDateFormat
+import java.util.*
 
 class Kuaidi100Package() : Parcelable {
 
@@ -63,11 +66,21 @@ class Kuaidi100Package() : Parcelable {
     }
 
     fun getState(): Int {
-        return if (state != null) Integer.parseInt(state) else STATUS_FAILED
+        return if (state != null) state!!.toInt() else STATUS_FAILED
     }
 
     fun setState(status: Int) {
         this.state = status.toString()
+    }
+
+    fun getFirstStatusTime(): Calendar {
+        if (data?.isNotEmpty() == true) {
+            val dates = data!!.map {
+                DateHelper.dateToCalendar(DEFAULT_STATUS_TIME_FORMAT.parse(it.ftime!!))
+            }
+            return dates.sorted().first()
+        }
+        return Calendar.getInstance().apply { add(Calendar.YEAR, 1) }
     }
 
     fun applyNewData(newData: Kuaidi100Package?) {
@@ -188,6 +201,9 @@ class Kuaidi100Package() : Parcelable {
         const val STATUS_RETURNED = 4
         const val STATUS_RETURNING = 6
         const val STATUS_OTHER = 1
+
+        @SuppressLint("SimpleDateFormat")
+        private val DEFAULT_STATUS_TIME_FORMAT = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
 
         @JvmStatic fun buildFromJson(json: String): Kuaidi100Package {
             try {

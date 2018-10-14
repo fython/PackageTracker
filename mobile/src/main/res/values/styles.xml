@@ -28,16 +28,24 @@
 	<style name="Toolbar.Main" parent="ThemeOverlay.AppCompat.ActionBar">
 	</style>
 
-	<style name="AppTheme.Translucent" parent="AppTheme">
-		<item name="android:windowIsTranslucent">true</item>
-		<item name="android:windowBackground">@android:color/transparent</item>
-		<item name="android:windowEnterAnimation">@null</item>
-	</style>
+    <style name="AppTheme.Translucent" parent="AppTheme">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowEnterAnimation">@null</item>
+    </style>
 
 	<style name="AppTheme.Grey" parent="AppTheme">
 		<item name="colorPrimary">@color/grey_theme_app_bar</item>
 		<item name="colorPrimaryDark">@color/grey_theme_status_bar</item>
 	</style>
+
+	<style name="AppTheme.Home" parent="AppTheme">
+        <item name="colorPrimary">@color/grey_100</item>
+        <item name="colorPrimaryDark">@color/grey_500</item>
+        <item name="android:windowBackground">@color/grey_100</item>
+        <item name="android:navigationBarColor">@color/pink_700</item>
+    </style>
 
 	<!-- Widget -->
 	<style name="Widget.ButtonBar" parent="">

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 
 import info.papdt.express.helper.support.SettingsInstance
+import info.papdt.express.helper.ui.HomeActivity
 import info.papdt.express.helper.ui.MainActivity
 import info.papdt.express.helper.ui.SplashActivity
 
@@ -20,7 +21,9 @@ class EntryActivity : Activity() {
 			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 			startActivity(intent)
 		} else {
-			MainActivity.launch(this)
+			// MainActivity.launch(this)
+			startActivity(Intent(this, HomeActivity::class.java)
+                    .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
 		}
 
 		finish()
