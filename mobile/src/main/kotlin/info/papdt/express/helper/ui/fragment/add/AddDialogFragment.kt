@@ -67,7 +67,7 @@ class AddDialogFragment: DialogFragment() {
 		step2 = view.findViewById(R.id.stepper_find_package)
 		currentCompanyText = view.findViewById(R.id.tv_current_company)
 		step1NextButton = view.findViewById(R.id.choose_company_next_btn)
-		loadingLayout = view.findViewById(R.id.loading_layout)
+		loadingLayout = view.findViewById(R.id.detecting_layout)
 		detectErrorView = view.findViewById(R.id.error_text)
 		detectTryAgainButton = view.findViewById(R.id.stepper_try_again)
 

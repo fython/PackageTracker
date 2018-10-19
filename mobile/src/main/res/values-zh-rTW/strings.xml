@@ -246,7 +246,7 @@
 	<string name="auto_detect_noti_action_add">新增</string>
 
 	<string name="label_clipboard_service">剪貼板自動偵測</string>
-	<string name="stepper_detect_company_title">檢測速遞公司</string>
+	<string name="stepper_detect_company_title">輸入運單號碼</string>
 	<string name="action_view_on_play_store">在 Play 市集中檢視</string>
 	<string name="pref_show_tips_again">重新顯示介面提醒</string>
 	<string name="stepper_add_button">添加</string>

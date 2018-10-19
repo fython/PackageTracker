@@ -9,6 +9,8 @@
     tools:context=".ui.HomeActivity"
     tools:menu="@menu/menu_new_home">
 
+    <!-- Content list with filters, search -->
+
     <android.support.design.widget.AppBarLayout
         android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
@@ -38,6 +40,23 @@
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
 
+    <!-- Add package views -->
+
+    <FrameLayout
+        android:id="@+id/bottom_sheet_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/black"
+        android:alpha="0.5"
+        android:clickable="true"
+        android:focusable="true"
+        android:visibility="gone"
+        android:translationZ="7dp"/>
+
+    <include layout="@layout/bottom_sheet_add_package"/>
+
+    <!-- Bottom App Bar -->
+
     <LinearLayout
         android:id="@+id/bottom_bar"
         android:layout_width="match_parent"
@@ -45,7 +64,7 @@
         android:orientation="horizontal"
         android:layout_gravity="bottom"
         android:background="@color/pink_500"
-        android:elevation="6dp"
+        android:elevation="10dp"
         android:clickable="true"
         android:focusable="true"
         android:theme="@style/ThemeOverlay.AppCompat.Dark">

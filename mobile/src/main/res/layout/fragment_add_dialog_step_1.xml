@@ -7,12 +7,18 @@
 		android:orientation="vertical">
 
 	<LinearLayout
+		android:id="@+id/select_layout"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical">
+
+		<LinearLayout
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_marginTop="8dp"
 			android:orientation="horizontal">
 
-		<ImageView
+			<ImageView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:src="@drawable/ic_local_shipping_black_24dp"
@@ -21,33 +27,98 @@
 				android:layout_marginEnd="8dp"
 				android:importantForAccessibility="no"/>
 
-		<TextView
+			<TextView
 				android:id="@+id/tv_current_company"
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"/>
 
-	</LinearLayout>
+		</LinearLayout>
 
-	<LinearLayout
+		<LinearLayout
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:layout_marginTop="8dp"
 			android:orientation="horizontal">
 
-		<Button
+			<Button
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:id="@+id/choose_company_next_btn"
 				android:text="@string/stepper_next_button"
 				android:textColor="@android:color/white"
-				android:backgroundTint="@color/colorAccent"/>
+                android:backgroundTint="@color/accent_button_tint_state_list"/>
 
-		<Button
+			<Button
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:id="@+id/choose_company_change_btn"
 				android:text="@string/stepper_choose_button"
 				style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/back_button_step_1"
+                android:text="@string/stepper_back_button"
+                style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
+
+		</LinearLayout>
+
+	</LinearLayout>
+
+	<LinearLayout
+		android:id="@+id/detecting_layout"
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:gravity="center_vertical"
+		android:orientation="horizontal">
+
+		<ProgressBar
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			style="?android:attr/progressBarStyle"/>
+
+		<TextView
+			android:layout_marginStart="16dp"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/stepper_detect_company_text"/>
+
+	</LinearLayout>
+
+	<LinearLayout
+		android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:id="@+id/error_text"
+		android:orientation="vertical">
+
+		<TextView
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/message_no_internet_connection"/>
+
+		<LinearLayout
+			android:layout_width="match_parent"
+			android:layout_height="wrap_content"
+			android:layout_marginTop="8dp"
+			android:orientation="horizontal">
+
+			<Button
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/stepper_try_again"
+				android:text="@string/stepper_try_again_button"
+				android:textColor="@android:color/white"
+				android:backgroundTint="@color/colorAccent"/>
+
+			<Button
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:id="@+id/back_button_step_1_2"
+				android:text="@string/stepper_back_button"
+				style="@style/Widget.AppCompat.Button.Borderless.Colored"/>
+
+		</LinearLayout>
 
 	</LinearLayout>
 

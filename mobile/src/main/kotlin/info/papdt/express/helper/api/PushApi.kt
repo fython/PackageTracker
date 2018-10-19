@@ -43,19 +43,26 @@ object PushApi {
 		return null
 	}
 
-	@JvmOverloads fun register(token: String = defaultToken): Observable<ResponseMessage>
-			= Observable.just(token).map { targetToken ->
-				if (apiHost.isEmpty()) return@map ResponseMessage()
-				val request = Request.Builder()
-						.postForm(mapOf("token" to targetToken))
-						.url("$apiHost/subscribe/register")
-						.build()
-				return@map requestJsonObject<ResponseMessage>(request) ?: ResponseMessage()
-			}
-			.subscribeOn(Schedulers.io())
-			.observeOn(AndroidSchedulers.mainThread())
+	@JvmOverloads fun register(token: String = defaultToken): Observable<ResponseMessage> {
+        if (SettingsInstance.pushApiHost == null) {
+            return Observable.just(ResponseMessage())
+        }
+        return Observable.just(token).map { targetToken ->
+            if (apiHost.isEmpty()) return@map ResponseMessage()
+            val request = Request.Builder()
+                    .postForm(mapOf("token" to targetToken))
+                    .url("$apiHost/subscribe/register")
+                    .build()
+            return@map requestJsonObject<ResponseMessage>(request) ?: ResponseMessage()
+        }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+    }
 
 	@JvmOverloads fun sync(list: Collection<String>, token: String = defaultToken): Observable<ResponseMessage> {
+        if (SettingsInstance.pushApiHost == null) {
+            return Observable.just(ResponseMessage())
+        }
 		return Observable.just(list)
 				.map { syncList ->
 					if (apiHost.isEmpty()) return@map ResponseMessage()
@@ -72,6 +79,9 @@ object PushApi {
 	}
 
 	@JvmOverloads fun add(number: String, company: String? = null, token: String = defaultToken): Observable<ResponseMessage> {
+        if (SettingsInstance.pushApiHost == null) {
+            return Observable.just(ResponseMessage())
+        }
 		return Observable.just("")
 				.map {
 					if (apiHost.isEmpty()) return@map ResponseMessage()
@@ -88,6 +98,9 @@ object PushApi {
 	}
 
 	@JvmOverloads fun remove(number: String, token: String = defaultToken): Observable<ResponseMessage> {
+        if (SettingsInstance.pushApiHost == null) {
+            return Observable.just(ResponseMessage())
+        }
 		return Observable.just(number)
 				.map { id ->
 					if (apiHost.isEmpty()) return@map ResponseMessage()
@@ -102,6 +115,9 @@ object PushApi {
 	}
 
 	@JvmOverloads fun list(token: String = defaultToken): Observable<Array<String>?> {
+        if (SettingsInstance.pushApiHost == null) {
+            return Observable.just(emptyArray())
+        }
 		return Observable.just("")
 				.map {
 					if (apiHost.isEmpty()) return@map emptyArray<String>()
@@ -115,6 +131,9 @@ object PushApi {
 	}
 
 	@JvmOverloads fun requestPush(token: String = defaultToken): Observable<ResponseMessage> {
+		if (SettingsInstance.pushApiHost == null) {
+            return Observable.just(ResponseMessage())
+        }
 		return Observable.just("")
 				.map {
 					if (SettingsInstance.pushApiHost.isNullOrEmpty()) return@map ResponseMessage()

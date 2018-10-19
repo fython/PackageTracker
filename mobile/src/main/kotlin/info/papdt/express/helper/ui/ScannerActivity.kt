@@ -63,7 +63,7 @@ class ScannerActivity : AbsActivity(), ZXingScannerView.ResultHandler, Permissio
 		handleOnRequestPermissionsResult(requestCode, permissions, grantResults) {
 			if (Manifest.permission.CAMERA == it) {
 				Snackbar.make(mScannerView, R.string.toast_permission_denied, Snackbar.LENGTH_INDEFINITE)
-						.setAction(R.string.toast_permission_denied_action) { jumpToSettings() }
+						.setAction(R.string.toast_permission_denied_action) { _ -> jumpToSettings() }
 						.show()
 			}
 		}
