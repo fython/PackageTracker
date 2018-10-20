@@ -13,17 +13,20 @@ import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.TooltipCompat
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.*
 import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
 import cn.nekocode.rxlifecycle.RxLifecycle
+import info.papdt.express.helper.ACTION_REQUEST_DELETE_PACK
 import info.papdt.express.helper.R
 import info.papdt.express.helper.REQUEST_CODE_CHOOSE_COMPANY
 import info.papdt.express.helper.RESULT_EXTRA_COMPANY_CODE
 import info.papdt.express.helper.api.Kuaidi100PackageApi
 import info.papdt.express.helper.api.RxPackageApi
 import info.papdt.express.helper.dao.PackageDatabase
+import info.papdt.express.helper.event.EventCallbacks
 import info.papdt.express.helper.model.BaseMessage
 import info.papdt.express.helper.model.Kuaidi100Package
 import info.papdt.express.helper.receiver.ConnectivityReceiver
@@ -41,6 +44,8 @@ import moe.feng.kotlinyan.common.*
 class HomeActivity : AbsActivity() {
 
     companion object {
+
+        private const val TAG = "HomeActivity"
 
         const val STATE_ADD_PACKAGE_VIEWS = "state_add_package_views"
         const val STATE_ADD_PACKAGE_NUMBER = "$STATE_ADD_PACKAGE_VIEWS.number"
@@ -91,6 +96,21 @@ class HomeActivity : AbsActivity() {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         addPackageViewHolder.onSaveInstanceState(outState)
+    }
+
+    override fun onStart() {
+        super.onStart()
+        registerLocalBroadcastReceiver(EventCallbacks.deletePackage {
+            Log.i(TAG, "Requesting delete package: name=${it.name}")
+            packageDatabase.remove(it)
+            val index = listAdapter.items.indexOf(it)
+            listAdapter.setPackages(packageDatabase.data, notify = false)
+            if (index != -1) {
+                listAdapter.notifyItemRemoved(index)
+            } else {
+                listAdapter.notifyDataSetChanged()
+            }
+        }, action = ACTION_REQUEST_DELETE_PACK)
     }
 
     override fun setUpViews() {
@@ -151,9 +171,8 @@ class HomeActivity : AbsActivity() {
             }
             REQUEST_CODE_CHOOSE_COMPANY -> {
                 if (RESULT_OK == resultCode) {
-                    intent!![RESULT_EXTRA_COMPANY_CODE]
-                            ?.asString()
-                            ?.let(addPackageViewHolder::setCompany)
+                    val companyCode = intent!![RESULT_EXTRA_COMPANY_CODE]!!.asString()
+                    addPackageViewHolder.setCompany(companyCode)
                 }
             }
         }
@@ -512,7 +531,9 @@ class HomeActivity : AbsActivity() {
         internal fun setCompany(company: String) {
             this.companyCode = company
             currentCompanyText.text = if (company.isNotBlank())
-                Kuaidi100PackageApi.CompanyInfo.getNameByCode(company) else resources.string[R.string.stepper_company_cannot_detect]
+                Kuaidi100PackageApi.CompanyInfo.getNameByCode(company)
+            else
+                resources.string[R.string.stepper_company_cannot_detect]
             step1NextButton.isEnabled = company.isNotBlank()
             step1.setErrorText(if (company.isBlank()) R.string.stepper_company_cannot_detect else 0)
         }

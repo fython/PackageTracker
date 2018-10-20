@@ -268,7 +268,7 @@ class MainActivity : AbsActivity() {
 					notifyDataChanged(-1)
 					val fragId = viewPager.currentItem
 					Snackbar.make(
-							`$`(R.id.coordinator_layout)!!,
+							findViewById(R.id.coordinator_layout)!!,
 							String.format(getString(R.string.toast_item_removed), data!!["title"]?.asString()),
 							Snackbar.LENGTH_LONG
 					)
@@ -343,7 +343,7 @@ class MainActivity : AbsActivity() {
 					fragments.indices.filter { it != msg.arg1 }.forEach { fragments[it].notifyDataSetChanged() }
 				}
 				MSG_NOTIFY_ITEM_REMOVE -> Snackbar.make(
-						`$`(R.id.coordinator_layout)!!,
+						findViewById(R.id.coordinator_layout)!!,
 						String.format(getString(R.string.toast_item_removed), msg.data.getString("title")),
 						Snackbar.LENGTH_LONG
 				)

@@ -1,6 +1,5 @@
 package info.papdt.express.helper.ui.adapter
 
-import android.util.Log
 import info.papdt.express.helper.model.Kuaidi100Package
 import info.papdt.express.helper.support.DateHelper
 import info.papdt.express.helper.ui.items.DateSubheadViewBinder
@@ -14,7 +13,7 @@ class NewHomePackageListAdapter : MultiTypeAdapter() {
         register(Kuaidi100Package::class.java, PackageItemViewBinder)
     }
 
-    fun setPackages(packages: List<Kuaidi100Package>) {
+    fun setPackages(packages: List<Kuaidi100Package>, notify: Boolean = true) {
         val newList = mutableListOf<Any>()
 
         val groups = packages.sortedByDescending { it.getFirstStatusTime() }
@@ -29,7 +28,10 @@ class NewHomePackageListAdapter : MultiTypeAdapter() {
         }
 
         items = newList
-        notifyDataSetChanged()
+
+        if (notify) {
+            notifyDataSetChanged()
+        }
     }
 
 }

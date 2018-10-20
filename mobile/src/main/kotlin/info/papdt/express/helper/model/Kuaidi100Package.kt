@@ -117,6 +117,13 @@ class Kuaidi100Package() : Parcelable {
         return Gson().toJson(this)
     }
 
+    override fun equals(other: Any?): Boolean {
+        if (other == null || other !is Kuaidi100Package) {
+            return false
+        }
+        return (this.codeNumber ?: this.number) == (other.codeNumber ?: other.number)
+    }
+
     class Status {
 
         @Expose var time: String? = null

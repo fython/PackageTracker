@@ -70,7 +70,7 @@ class ImportExportActivity : AbsActivity() {
 
 		findViewById<View>(R.id.action_export_list).setOnClickListener {
 			if (database.size() == 0) {
-				Snackbar.make(`$`(R.id.container)!!, R.string.toast_list_empty, Snackbar.LENGTH_SHORT)
+				Snackbar.make(findViewById(R.id.container)!!, R.string.toast_list_empty, Snackbar.LENGTH_SHORT)
 						.show()
 			} else {
 				BackupApi.share().subscribe { text ->
@@ -103,7 +103,7 @@ class ImportExportActivity : AbsActivity() {
 						progressDialog?.dismiss()
 						if (isSucceed) {
 							Snackbar.make(
-									`$`(R.id.container)!!, R.string.toast_backup_succeed, Snackbar.LENGTH_LONG
+									findViewById(R.id.container)!!, R.string.toast_backup_succeed, Snackbar.LENGTH_LONG
 							).setAction(R.string.toast_backup_send_action) {
 								ShareCompat.IntentBuilder.from(this@ImportExportActivity)
 										.addStream(data.data)
@@ -112,7 +112,7 @@ class ImportExportActivity : AbsActivity() {
 							}.show()
 						} else {
 							Snackbar.make(
-									`$`(R.id.container)!!, R.string.toast_backup_failed, Snackbar.LENGTH_LONG
+									findViewById(R.id.container)!!, R.string.toast_backup_failed, Snackbar.LENGTH_LONG
 							).show()
 						}
 					}
@@ -130,7 +130,7 @@ class ImportExportActivity : AbsActivity() {
 						progressDialog?.dismiss()
 						if (!isSucceed) {
 							Snackbar.make(
-									`$`(R.id.container)!!, R.string.toast_restore_failed, Snackbar.LENGTH_LONG
+									findViewById(R.id.container)!!, R.string.toast_restore_failed, Snackbar.LENGTH_LONG
 							).show()
 						} else {
 							buildAlertDialog {

@@ -30,12 +30,10 @@ import info.papdt.express.helper.RESULT_DELETED
 import info.papdt.express.helper.RESULT_RENAMED
 import info.papdt.express.helper.api.PackageApi
 import info.papdt.express.helper.dao.PackageDatabase
+import info.papdt.express.helper.event.EventIntents
 import info.papdt.express.helper.model.BaseMessage
 import info.papdt.express.helper.model.Kuaidi100Package
-import info.papdt.express.helper.support.CheatSheet
-import info.papdt.express.helper.support.ClipboardUtils
-import info.papdt.express.helper.support.ResourcesUtils
-import info.papdt.express.helper.support.Settings
+import info.papdt.express.helper.support.*
 import info.papdt.express.helper.ui.common.AbsActivity
 import info.papdt.express.helper.ui.fragment.dialog.EditPackageDialog
 import info.papdt.express.helper.ui.items.DetailsStatusItemBinder
@@ -72,11 +70,7 @@ class DetailsActivity : AbsActivity() {
 			titleRes = R.string.dialog_delete_title
 			messageRes = R.string.dialog_delete_message
 			okButton { _, _ ->
-				PackageDatabase.getInstance(applicationContext).remove(data!!)
-				val intent = Intent()
-				intent["title"] = data!!.name
-				setResult(RESULT_DELETED, intent)
-				finish()
+				localBroadcastManager.sendBroadcast(EventIntents.requestDeletePackage(data!!))
 			}
 			cancelButton()
 		}
@@ -193,7 +187,7 @@ class DetailsActivity : AbsActivity() {
 		when (id) {
 			R.id.action_copy_code -> {
 				ClipboardUtils.putString(applicationContext, data!!.number)
-				Snackbar.make(`$`(R.id.coordinator_layout)!!, R.string.toast_copied_code, Snackbar.LENGTH_LONG)
+				Snackbar.make(findViewById(R.id.coordinator_layout)!!, R.string.toast_copied_code, Snackbar.LENGTH_LONG)
 						.show()
 				return true
 			}
@@ -280,17 +274,6 @@ class DetailsActivity : AbsActivity() {
 			if (data == null) {
 				data = Kuaidi100Package.buildFromJson(intent.getStringExtra(EXTRA_PACKAGE_JSON))
 			}
-
-			val db = PackageDatabase.getInstance(applicationContext)
-			if (data!!.unreadNew) {
-				data!!.unreadNew = false
-
-				val intent = Intent()
-				intent.putExtra("id", data!!.number)
-				setResult(RESULT_RENAMED, intent)
-			}
-			db[db.indexOf(data!!.number!!)] = data!!
-			db.save()
 
 			return buildItems()
 		}

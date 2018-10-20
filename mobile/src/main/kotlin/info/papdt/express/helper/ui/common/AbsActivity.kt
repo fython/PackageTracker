@@ -1,5 +1,7 @@
 package info.papdt.express.helper.ui.common
 
+import android.content.BroadcastReceiver
+import android.content.IntentFilter
 import android.content.res.Configuration
 import android.os.Bundle
 import android.support.annotation.LayoutRes
@@ -12,6 +14,7 @@ import android.view.View
 import info.papdt.express.helper.R
 import info.papdt.express.helper.support.Settings
 import info.papdt.express.helper.support.isFontProviderEnabled
+import info.papdt.express.helper.support.localBroadcastManager
 import moe.shizuku.fontprovider.FontProviderClient
 
 abstract class AbsActivity : AppCompatActivity() {
@@ -19,6 +22,8 @@ abstract class AbsActivity : AppCompatActivity() {
 	@JvmField protected var mToolbar: Toolbar? = null
 	@JvmField protected var mActionBar: ActionBar? = null
 	protected val settings: Settings by lazy { Settings.getInstance(applicationContext) }
+
+    private val localBroadcastReceivers: MutableList<BroadcastReceiver> = mutableListOf()
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -53,16 +58,40 @@ abstract class AbsActivity : AppCompatActivity() {
 
 	protected abstract fun setUpViews()
 
-	protected fun <T : View> `$`(viewId: Int): T? {
-		return findViewById<View>(viewId) as T
-	}
-
-	override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
 		if (item.itemId == android.R.id.home) {
 			this.onBackPressed()
 			return true
 		}
 		return super.onOptionsItemSelected(item)
 	}
+
+    override fun onStop() {
+        super.onStop()
+        unregisterAllLocalBroadcastReceiver()
+    }
+
+    fun registerLocalBroadcastReceiver(broadcastReceiver: BroadcastReceiver,
+                                       actionFilter: IntentFilter? = null,
+                                       action: String? = null) {
+        if (actionFilter == null && action == null) {
+            throw IllegalArgumentException("Please set a action in actionFilter/action arguments.")
+        }
+        localBroadcastReceivers += broadcastReceiver
+        localBroadcastManager.registerReceiver(
+                broadcastReceiver, actionFilter ?: IntentFilter(action))
+    }
+
+    fun unregisterLocalBroadcastReceiver(broadcastReceiver: BroadcastReceiver) {
+        localBroadcastReceivers -= broadcastReceiver
+        localBroadcastManager.unregisterReceiver(broadcastReceiver)
+    }
+
+    fun unregisterAllLocalBroadcastReceiver() {
+        for (item in localBroadcastReceivers) {
+            localBroadcastManager.unregisterReceiver(item)
+        }
+        localBroadcastReceivers.clear()
+    }
 
 }

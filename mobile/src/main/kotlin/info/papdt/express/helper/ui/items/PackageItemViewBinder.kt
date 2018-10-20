@@ -1,6 +1,7 @@
 package info.papdt.express.helper.ui.items
 
 import android.app.Activity
+import android.content.Intent
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import android.support.v4.content.ContextCompat
@@ -11,13 +12,17 @@ import android.view.*
 import android.widget.TextView
 import de.hdodenhof.circleimageview.CircleImageView
 import info.papdt.express.helper.R
+import info.papdt.express.helper.dao.PackageDatabase
+import info.papdt.express.helper.event.EventIntents
 import info.papdt.express.helper.model.Kuaidi100Package
 import info.papdt.express.helper.model.MaterialIcon
 import info.papdt.express.helper.support.ColorGenerator
 import info.papdt.express.helper.support.Spanny
 import info.papdt.express.helper.support.isFontProviderEnabled
+import info.papdt.express.helper.support.localBroadcastManager
 import info.papdt.express.helper.ui.DetailsActivity
 import me.drakeet.multitype.ItemViewBinder
+import moe.feng.kotlinyan.common.set
 
 object PackageItemViewBinder
     : ItemViewBinder<Kuaidi100Package, PackageItemViewBinder.ViewHolder>() {
@@ -88,7 +93,7 @@ object PackageItemViewBinder
     }
 
     class ViewHolder(itemView: View)
-        : RecyclerView.ViewHolder(itemView), View.OnCreateContextMenuListener {
+        : RecyclerView.ViewHolder(itemView), View.OnCreateContextMenuListener, MenuItem.OnMenuItemClickListener {
 
         internal val logoView: CircleImageView = itemView.findViewById(R.id.iv_logo)
         internal val titleText: AppCompatTextView = itemView.findViewById(R.id.tv_title)
@@ -103,20 +108,58 @@ object PackageItemViewBinder
         init {
             containerView.setOnCreateContextMenuListener(this)
             containerView.setOnClickListener {
+                itemData!!
                 DetailsActivity.launch(it.context as Activity, itemData!!)
             }
         }
 
         override fun onCreateContextMenu(menu: ContextMenu,
                                          v: View, info: ContextMenu.ContextMenuInfo?) {
-            // (parentActivity as? MainActivity)?.onContextMenuCreate(itemData!!)
             menu.setHeaderTitle(itemData!!.name)
+            val menuItems = mutableListOf<MenuItem>()
             if (!itemData!!.unreadNew) {
-                menu.add(Menu.NONE, R.id.action_set_unread, 0, R.string.action_set_unread)
+                menuItems += menu.add(Menu.NONE, R.id.action_set_unread, 0, R.string.action_set_unread)
             }
-            menu.add(Menu.NONE, R.id.action_share, 0, R.string.action_share)
-            menu.add(Menu.NONE, R.id.action_delete, 0, R.string.action_remove)
+            menuItems += menu.add(Menu.NONE, R.id.action_share, 0, R.string.action_share)
+            menuItems += menu.add(Menu.NONE, R.id.action_delete, 0, R.string.action_remove)
+            menuItems.forEach { it.setOnMenuItemClickListener(this) }
         }
+
+        override fun onMenuItemClick(item: MenuItem): Boolean = when (item.itemId) {
+            R.id.action_set_unread -> {
+                val database = PackageDatabase.getInstance(itemView.context)
+                itemData!!.unreadNew = true
+                val position = database.indexOf(itemData!!)
+                if (position != -1) {
+                    database[position] = itemData!!
+                    adapter.notifyItemChanged(position)
+                }
+                true
+            }
+            R.id.action_share -> {
+                val text = itemView.context.getString(R.string.share_info_format,
+                        itemData!!.name,
+                        itemData!!.number,
+                        itemData!!.companyChineseName,
+                        if (itemData!!.data!!.size > 0) itemData!!.data!![0].context else "Unknown",
+                        if (itemData!!.data!!.size > 0) itemData!!.data!![0].time else ""
+                )
+
+                val intent = Intent(Intent.ACTION_SEND)
+                intent.type = "text/plain"
+                intent[Intent.EXTRA_TEXT] = text
+                itemView.context.startActivity(Intent.createChooser(
+                        intent, itemView.context.getString(R.string.dialog_share_title)))
+                true
+            }
+            R.id.action_delete -> {
+                itemView.context.localBroadcastManager
+                        .sendBroadcast(EventIntents.requestDeletePackage(itemData!!))
+                true
+            }
+            else -> false
+        }
+
     }
 
 }
