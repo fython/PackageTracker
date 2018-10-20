@@ -32,17 +32,29 @@
 
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@android:id/list"
+    <com.scwang.smartrefresh.layout.SmartRefreshLayout
+        android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="?android:attr/actionBarSize"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <com.scwang.smartrefresh.header.DeliveryHeader
+            android:id="@+id/refresh_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@android:id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="?android:attr/actionBarSize"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
+
+    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
     <!-- Add package views -->
 
-    <FrameLayout
+    <io.alterac.blurkit.FixedBlurLayout
         android:id="@+id/bottom_sheet_background"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -51,67 +63,83 @@
         android:clickable="true"
         android:focusable="true"
         android:visibility="gone"
-        android:translationZ="7dp"/>
+        android:layout_marginTop="-7dp"
+        android:elevation="7dp"
+        app:blk_blurRadius="12"
+        app:blk_downscaleFactor="0.2"
+        app:blk_fps="0"/>
 
     <include layout="@layout/bottom_sheet_add_package"/>
 
     <!-- Bottom App Bar -->
 
     <LinearLayout
-        android:id="@+id/bottom_bar"
         android:layout_width="match_parent"
-        android:layout_height="?android:attr/actionBarSize"
-        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
         android:layout_gravity="bottom"
-        android:background="@color/pink_500"
-        android:elevation="10dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark">
+        android:elevation="10dp">
 
-        <TextView
-            android:id="@+id/add_button"
+        <View
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="?android:attr/selectableItemBackgroundBorderless"
-            android:drawableStart="@drawable/ic_add_black_24dp"
-            android:drawablePadding="8dp"
-            android:drawableTint="@android:color/white"
-            android:text="@string/activity_add"
-            android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button"
-            android:textColor="@android:color/white"
-            android:gravity="center"/>
+            android:layout_height="4dp"
+            android:background="@drawable/bottom_app_bar_shadow"/>
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
+            android:id="@+id/bottom_bar"
+            android:layout_width="match_parent"
+            android:layout_height="?android:attr/actionBarSize"
+            android:background="@color/pink_500"
             android:orientation="horizontal"
-            android:gravity="end">
+            android:clickable="true"
+            android:focusable="true"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
-            <ImageButton
-                android:id="@+id/scan_button"
+            <TextView
+                android:id="@+id/add_button"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:clickable="true"
+                android:focusable="true"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_barcode_scan_black_24dp"
-                android:tint="@android:color/white"/>
+                android:drawableStart="@drawable/ic_add_black_24dp"
+                android:drawablePadding="8dp"
+                android:drawableTint="@android:color/white"
+                android:text="@string/activity_add"
+                android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button"
+                android:textColor="@android:color/white"
+                android:gravity="center"/>
 
-            <ImageButton
-                android:id="@+id/more_button"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
-                android:background="?android:attr/selectableItemBackgroundBorderless"
-                android:src="@drawable/ic_more_vert_black_24dp"
-                android:tint="@android:color/white"/>
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:gravity="end">
+
+                <ImageButton
+                    android:id="@+id/scan_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_barcode_scan_black_24dp"
+                    android:tint="@android:color/white"/>
+
+                <ImageButton
+                    android:id="@+id/more_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:background="?android:attr/selectableItemBackgroundBorderless"
+                    android:src="@drawable/ic_more_vert_black_24dp"
+                    android:tint="@android:color/white"/>
+
+            </LinearLayout>
 
         </LinearLayout>
 

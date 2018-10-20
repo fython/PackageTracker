@@ -19,6 +19,10 @@ import android.widget.Button
 import android.widget.Spinner
 import android.widget.TextView
 import cn.nekocode.rxlifecycle.RxLifecycle
+import com.scwang.smartrefresh.layout.SmartRefreshLayout
+import com.scwang.smartrefresh.layout.api.RefreshLayout
+import com.scwang.smartrefresh.layout.constant.RefreshState
+import com.scwang.smartrefresh.layout.listener.OnRefreshListener
 import info.papdt.express.helper.ACTION_REQUEST_DELETE_PACK
 import info.papdt.express.helper.R
 import info.papdt.express.helper.REQUEST_CODE_CHOOSE_COMPANY
@@ -35,13 +39,16 @@ import info.papdt.express.helper.support.SettingsInstance
 import info.papdt.express.helper.ui.adapter.HomeToolbarSpinnerAdapter
 import info.papdt.express.helper.ui.adapter.NewHomePackageListAdapter
 import info.papdt.express.helper.ui.common.AbsActivity
+import io.alterac.blurkit.BlurLayout
+import io.alterac.blurkit.FixedBlurLayout
 import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import moe.feng.common.stepperview.VerticalStepperItemView
 import moe.feng.kotlinyan.common.*
 
-class HomeActivity : AbsActivity() {
+class HomeActivity : AbsActivity(), OnRefreshListener {
 
     companion object {
 
@@ -57,13 +64,14 @@ class HomeActivity : AbsActivity() {
 
     private val coordinatorLayout by lazy<CoordinatorLayout> { findViewById(R.id.coordinator_layout) }
     private val appBarLayout by lazy<AppBarLayout> { findViewById(R.id.app_bar_layout) }
+    private val refreshLayout by lazy<SmartRefreshLayout> { findViewById(R.id.refresh_layout) }
     private val listView by lazy<RecyclerView> { findViewById(android.R.id.list) }
     private val spinner by lazy<Spinner> { mToolbar!!.findViewById(R.id.spinner) }
     private val addButton by lazy<View> { findViewById(R.id.add_button) }
     private val scanButton by lazy<View> { findViewById(R.id.scan_button) }
     private val moreButton by lazy<View> { findViewById(R.id.more_button) }
     private val bottomSheet by lazy<View> { findViewById(R.id.bottom_sheet_add_package) }
-    private val bottomSheetBackground by lazy<View> { findViewById(R.id.bottom_sheet_background) }
+    private val bottomSheetBackground by lazy<FixedBlurLayout> { findViewById(R.id.bottom_sheet_background) }
 
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
     private lateinit var addPackageViewHolder: AddPackageViewHolder
@@ -111,6 +119,12 @@ class HomeActivity : AbsActivity() {
                 listAdapter.notifyDataSetChanged()
             }
         }, action = ACTION_REQUEST_DELETE_PACK)
+        bottomSheetBackground.startBlur()
+    }
+
+    override fun onStop() {
+        super.onStop()
+        bottomSheetBackground.pauseBlur()
     }
 
     override fun setUpViews() {
@@ -118,6 +132,8 @@ class HomeActivity : AbsActivity() {
 
         listView.adapter = listAdapter
         listAdapter.setPackages(packageDatabase.data)
+
+        refreshLayout.setOnRefreshListener(this)
 
         spinner.adapter = HomeToolbarSpinnerAdapter(this)
 
@@ -204,14 +220,37 @@ class HomeActivity : AbsActivity() {
         }
     }
 
+    override fun onRefresh(refreshLayout: RefreshLayout) {
+        if (refreshLayout.state != RefreshState.Refreshing) {
+            refreshLayout.autoRefresh()
+        }
+        Single.fromCallable {
+            packageDatabase.pullDataFromNetwork(false)
+        }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .compose(RxLifecycle.bind(this).withSingle())
+                .doOnDispose {
+                    refreshLayout.finishRefresh()
+                }
+                .subscribe { _, _ ->
+                    listAdapter.setPackages(packageDatabase.data)
+                    refreshLayout.finishRefresh()
+                }
+    }
+
     private inner class AddPackageBottomSheetCallback : BottomSheetBehavior.BottomSheetCallback() {
 
         override fun onSlide(v: View, slideOffset: Float) {
-            bottomSheetBackground.alpha = if (slideOffset.isNaN()) {
-                0.5f
-            } else {
-                Math.min(0.5f, Math.max(0.5f + slideOffset, 0f))
+            bottomSheetBackground.post {
+                val progress = if (slideOffset.isNaN()) {
+                    1f
+                } else {
+                    1f + Math.max(slideOffset, -1f)
+                }
+                bottomSheetBackground.alpha = progress
             }
+            bottomSheetBackground.postInvalidate()
         }
 
         override fun onStateChanged(v: View, newState: Int) {
@@ -251,6 +290,8 @@ class HomeActivity : AbsActivity() {
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             val layoutManager = recyclerView.layoutManager!! as LinearLayoutManager
             val shouldLift = layoutManager.findFirstCompletelyVisibleItemPosition() != 0
+
+            bottomSheetBackground.postInvalidate()
 
             if (animatorDirection != shouldLift) {
                 if (elevationAnimator?.isRunning == true) {

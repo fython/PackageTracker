@@ -15,6 +15,7 @@ import info.papdt.express.helper.model.MaterialIcon
 import info.papdt.express.helper.services.ClipboardDetectService
 import info.papdt.express.helper.support.Settings
 import info.papdt.express.helper.support.SettingsInstance
+import io.alterac.blurkit.BlurKit
 import moe.feng.kotlinyan.common.getSharedPreferencesProvider 
 import moe.feng.kotlinyan.common.ifSupportSDK
 import moe.feng.kotlinyan.common.notificationManager
@@ -39,7 +40,9 @@ class Application : MultiDexApplication() {
 			startService(Intent(applicationContext, ClipboardDetectService::class.java))
 		}
 
+		// Init Widget components
 		MaterialIcon.init(this)
+		BlurKit.init(this)
 
 		// Init CrashReport
 		val strategy = CrashReport.UserStrategy(applicationContext)

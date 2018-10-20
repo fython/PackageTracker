@@ -75,6 +75,7 @@ dependencies {
     implementation 'moe.feng:MaterialStepperView:0.2.4.2'
     implementation 'com.getkeepsafe.taptargetview:taptargetview:1.11.0'
     implementation 'me.dm7.barcodescanner:zxing:1.9.8'
+    implementation 'io.alterac.blurkit:blurkit:1.0.0'
 
     // Reactive X
     implementation 'io.reactivex.rxjava2:rxjava:2.2.2'
