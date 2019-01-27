@@ -1,1 +1,3 @@
-include ':mobile', ':wear', ':StatusBarCompat'
+include ':mobile'
+// include ':wear'
+include ':StatusBarCompat'

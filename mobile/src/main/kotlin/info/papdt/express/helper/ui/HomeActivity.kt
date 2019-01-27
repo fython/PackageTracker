@@ -2,6 +2,7 @@ package info.papdt.express.helper.ui
 
 import android.animation.Animator
 import android.animation.ObjectAnimator
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.AppBarLayout
@@ -16,6 +17,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import android.widget.Button
+import android.widget.PopupMenu
 import android.widget.Spinner
 import android.widget.TextView
 import cn.nekocode.rxlifecycle.RxLifecycle
@@ -23,14 +25,10 @@ import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.constant.RefreshState
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
-import info.papdt.express.helper.ACTION_REQUEST_DELETE_PACK
-import info.papdt.express.helper.R
-import info.papdt.express.helper.REQUEST_CODE_CHOOSE_COMPANY
-import info.papdt.express.helper.RESULT_EXTRA_COMPANY_CODE
+import info.papdt.express.helper.*
 import info.papdt.express.helper.api.Kuaidi100PackageApi
 import info.papdt.express.helper.api.RxPackageApi
 import info.papdt.express.helper.dao.PackageDatabase
-import info.papdt.express.helper.event.EventCallbacks
 import info.papdt.express.helper.model.BaseMessage
 import info.papdt.express.helper.model.Kuaidi100Package
 import info.papdt.express.helper.receiver.ConnectivityReceiver
@@ -39,7 +37,6 @@ import info.papdt.express.helper.support.SettingsInstance
 import info.papdt.express.helper.ui.adapter.HomeToolbarSpinnerAdapter
 import info.papdt.express.helper.ui.adapter.NewHomePackageListAdapter
 import info.papdt.express.helper.ui.common.AbsActivity
-import io.alterac.blurkit.BlurLayout
 import io.alterac.blurkit.FixedBlurLayout
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -47,6 +44,9 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import moe.feng.common.stepperview.VerticalStepperItemView
 import moe.feng.kotlinyan.common.*
+
+import info.papdt.express.helper.R
+import info.papdt.express.helper.event.EventCallbacks
 
 class HomeActivity : AbsActivity(), OnRefreshListener {
 
@@ -73,6 +73,13 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
     private val bottomSheet by lazy<View> { findViewById(R.id.bottom_sheet_add_package) }
     private val bottomSheetBackground by lazy<FixedBlurLayout> { findViewById(R.id.bottom_sheet_background) }
 
+    private val moreMenu: PopupMenu by lazy {
+        PopupMenu(this, moreButton).also {
+            it.inflate(R.menu.bottom_menu_new_home)
+            it.setOnMenuItemClickListener(this::onOptionsItemSelected)
+        }
+    }
+
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
     private lateinit var addPackageViewHolder: AddPackageViewHolder
 
@@ -94,6 +101,10 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
                 bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
                 bottomSheet.makeVisible()
             }
+            moreButton.setOnClickListener {
+                moreMenu.show()
+            }
+            moreButton.setOnTouchListener(moreMenu.dragToOpenListener)
         } else {
 
         }
@@ -127,6 +138,7 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
         bottomSheetBackground.pauseBlur()
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun setUpViews() {
         listView.addOnScrollListener(homeListScrollListener)
 
@@ -169,6 +181,29 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
 
             true
         }
+        R.id.action_refresh -> {
+            refreshLayout.autoRefresh()
+            true
+        }
+        R.id.action_settings -> {
+            SettingsActivity.launch(this, SettingsActivity.FLAG_MAIN)
+            true
+        }
+        R.id.action_sort_by_create_time -> {
+            item.isChecked = true
+            listAdapter.sortType = NewHomePackageListAdapter.SORT_BY_CREATE_TIME
+            true
+        }
+        R.id.action_sort_by_name -> {
+            item.isChecked = true
+            listAdapter.sortType = NewHomePackageListAdapter.SORT_BY_NAME
+            true
+        }
+        R.id.action_sort_by_update_time -> {
+            item.isChecked = true
+            listAdapter.sortType = NewHomePackageListAdapter.SORT_BY_UPDATE_TIME
+            true
+        }
         else -> super.onOptionsItemSelected(item)
     }
 
@@ -189,6 +224,28 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
                 if (RESULT_OK == resultCode) {
                     val companyCode = intent!![RESULT_EXTRA_COMPANY_CODE]!!.asString()
                     addPackageViewHolder.setCompany(companyCode)
+                }
+            }
+            REQUEST_DETAILS -> {
+                when (resultCode) {
+                    RESULT_RENAMED -> {
+                        listAdapter.refreshPackage(
+                                PackageDatabase.getInstance(this),
+                                data!!.getStringExtra("id")
+                        )
+                    }
+                    RESULT_DELETED -> {
+                        val deleting = data!!.getParcelableExtra<Kuaidi100Package>("data")
+                        Log.i(TAG, "Requesting delete package: name=${deleting.name}")
+                        packageDatabase.remove(deleting)
+                        val index = listAdapter.items.indexOf(deleting)
+                        listAdapter.setPackages(packageDatabase.data, notify = false)
+                        if (index != -1) {
+                            listAdapter.notifyItemRemoved(index)
+                        } else {
+                            listAdapter.notifyDataSetChanged()
+                        }
+                    }
                 }
             }
         }
@@ -444,11 +501,11 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
                         }
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .doOnSubscribe { _ ->
+                        .doOnSubscribe {
                             detectErrorView.makeGone()
                             detectingLayout.makeVisible()
                         }
-                        .subscribe { _ ->
+                        .subscribe {
                             onPackageAdd(result!!)
                             bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
 

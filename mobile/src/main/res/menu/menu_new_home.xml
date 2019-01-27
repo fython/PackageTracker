@@ -12,6 +12,31 @@
         android:title="@string/action_filter"
         android:icon="@drawable/ic_filter_list_black_24dp"
         app:showAsAction="always"
-        tools:ignore="AlwaysShowAction" />
+        tools:ignore="AlwaysShowAction">
+
+        <menu>
+
+            <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/action_sort_by_update_time"
+                    android:title="@string/sort_by_update_time"
+                    android:checked="true"/>
+
+                <item
+                    android:id="@+id/action_sort_by_name"
+                    android:title="@string/sort_by_name"
+                    android:checked="false"/>
+
+                <item
+                    android:id="@+id/action_sort_by_create_time"
+                    android:title="@string/sort_by_create_time"
+                    android:checked="false"/>
+
+            </group>
+
+        </menu>
+
+    </item>
 
 </menu>

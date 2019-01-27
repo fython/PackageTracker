@@ -108,7 +108,15 @@ object PackageItemViewBinder
         init {
             containerView.setOnCreateContextMenuListener(this)
             containerView.setOnClickListener {
-                itemData!!
+                if (itemData!!.unreadNew) {
+                    itemData!!.unreadNew = false
+                    val database = PackageDatabase.getInstance(itemView.context)
+                    val position = database.indexOf(itemData!!)
+                    if (position != -1) {
+                        database[position] = itemData!!
+                        adapter.notifyItemChanged(adapterPosition)
+                    }
+                }
                 DetailsActivity.launch(it.context as Activity, itemData!!)
             }
         }
@@ -132,7 +140,7 @@ object PackageItemViewBinder
                 val position = database.indexOf(itemData!!)
                 if (position != -1) {
                     database[position] = itemData!!
-                    adapter.notifyItemChanged(position)
+                    adapter.notifyItemChanged(adapterPosition)
                 }
                 true
             }

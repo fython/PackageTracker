@@ -318,5 +318,8 @@
     <string name="diff_time_in_this_year">Within one year</string>
     <string name="diff_time_some_years_ago">%d year(s) ago</string>
     <string name="action_filter">Sort by</string>
+	<string name="sort_by_update_time">By update time</string>
+    <string name="sort_by_name">By name</string>
+    <string name="sort_by_create_time">By create time</string>
 
 </resources>

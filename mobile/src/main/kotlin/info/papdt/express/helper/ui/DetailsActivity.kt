@@ -15,7 +15,6 @@ import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
 import android.support.v4.graphics.drawable.DrawableCompat
 import android.support.v7.app.AlertDialog
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.Menu
@@ -30,7 +29,6 @@ import info.papdt.express.helper.RESULT_DELETED
 import info.papdt.express.helper.RESULT_RENAMED
 import info.papdt.express.helper.api.PackageApi
 import info.papdt.express.helper.dao.PackageDatabase
-import info.papdt.express.helper.event.EventIntents
 import info.papdt.express.helper.model.BaseMessage
 import info.papdt.express.helper.model.Kuaidi100Package
 import info.papdt.express.helper.support.*
@@ -70,7 +68,10 @@ class DetailsActivity : AbsActivity() {
 			titleRes = R.string.dialog_delete_title
 			messageRes = R.string.dialog_delete_message
 			okButton { _, _ ->
-				localBroadcastManager.sendBroadcast(EventIntents.requestDeletePackage(data!!))
+                val intent = Intent()
+                intent.putExtra("data", data!!)
+                setResult(RESULT_DELETED, intent)
+				finish()
 			}
 			cancelButton()
 		}

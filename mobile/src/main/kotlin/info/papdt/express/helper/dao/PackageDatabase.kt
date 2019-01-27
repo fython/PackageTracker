@@ -170,6 +170,10 @@ class PackageDatabase private constructor(private val mContext: Context) {
 		return data[index]
 	}
 
+	fun getByNumber(number: String): Kuaidi100Package? {
+		return data.find { it.number == number }
+	}
+
 	fun getPackageIdList(): List<String> = data.map { "${it.number}+${it.companyType}" }
 
 	fun pullDataFromNetwork(shouldRefreshDelivered: Boolean) {

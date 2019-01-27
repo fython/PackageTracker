@@ -54,7 +54,7 @@ class EditPackageDialog : DialogFragment() {
             updateIconView()
         }
         mNameEdit.setText(data.name!!)
-        mNameEdit.setSelection(data.name!!.length - 1)
+        mNameEdit.setSelection(data.name!!.length)
         updateIconView()
         return buildV7AlertDialog {
             titleRes = R.string.dialog_edit_name_title

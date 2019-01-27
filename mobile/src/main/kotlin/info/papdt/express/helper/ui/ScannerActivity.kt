@@ -38,7 +38,12 @@ class ScannerActivity : AbsActivity(), ZXingScannerView.ResultHandler, Permissio
 				titleRes = R.string.dialog_explanation_permission_title
 				messageRes = R.string.dialog_explanation_permission_message
 				positiveButton(R.string.dialog_explanation_permission_pos_btn)  { _, _ -> jumpToSettings() }
-				cancelButton()
+				cancelButton { _, _ ->
+					finish()
+				}
+				setOnCancelListener {
+					finish()
+				}
 			}.show()
 		}
 	}
