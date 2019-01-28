@@ -1,5 +1,7 @@
 package info.papdt.express.helper.dao
 
+import android.annotation.SuppressLint
+import android.app.Application
 import android.content.Context
 import android.util.Log
 
@@ -194,9 +196,20 @@ class PackageDatabase private constructor(private val mContext: Context) {
 		refreshList()
 	}
 
-	companion object {
+    fun readAll(): Int {
+        var count = 0
+        data.filter { it.unreadNew }.forEach {
+            count++
+            it.unreadNew = false
+        }
+        return count
+    }
 
-		@Volatile private var sInstance: PackageDatabase? = null
+    companion object {
+
+		@SuppressLint("StaticFieldLeak")
+        @Volatile
+        private var sInstance: PackageDatabase? = null
 
 		private const val FILE_NAME = "packages.json"
 
@@ -206,7 +219,9 @@ class PackageDatabase private constructor(private val mContext: Context) {
 			if (sInstance == null) {
 				synchronized(PackageDatabase::class.java) {
 					if (sInstance == null) {
-						sInstance = PackageDatabase(context)
+						sInstance = PackageDatabase(
+                                if (context is Application) context else context.applicationContext
+                        )
 					}
 				}
 			}

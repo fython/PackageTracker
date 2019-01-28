@@ -5,7 +5,8 @@
 
         <Preference
             android:key="ui"
-            android:title="@string/category_user_interface">
+            android:title="@string/category_user_interface"
+            android:icon="@drawable/ic_palette_text_primary_color_24dp">
             <intent
                 android:targetPackage="info.papdt.express.helper"
                 android:targetClass="info.papdt.express.helper.ui.SettingsActivity"
@@ -14,7 +15,8 @@
 
         <Preference
             android:key="push"
-            android:title="@string/category_push">
+            android:title="@string/category_push"
+            android:icon="@drawable/ic_notifications_none_text_primary_color_24dp">
             <intent
                 android:targetPackage="info.papdt.express.helper"
                 android:targetClass="info.papdt.express.helper.ui.SettingsActivity"
@@ -23,7 +25,8 @@
 
         <Preference
             android:key="api"
-            android:title="@string/category_api">
+            android:title="@string/category_api"
+            android:icon="@drawable/ic_power_text_primary_color_24dp">
             <intent
                 android:targetPackage="info.papdt.express.helper"
                 android:targetClass="info.papdt.express.helper.ui.SettingsActivity"
@@ -32,7 +35,8 @@
 
         <Preference
             android:key="assistant"
-            android:title="@string/category_assistant">
+            android:title="@string/category_assistant"
+            android:icon="@drawable/ic_assistant_text_primary_color_24dp">
             <intent
                 android:targetPackage="info.papdt.express.helper"
                 android:targetClass="info.papdt.express.helper.ui.SettingsActivity"
@@ -41,7 +45,8 @@
 
         <Preference
             android:key="import_export"
-            android:title="@string/action_import_export">
+            android:title="@string/action_import_export"
+            android:icon="@drawable/ic_import_export_text_primary_color_24dp">
             <intent
                 android:targetPackage="info.papdt.express.helper"
                 android:targetClass="info.papdt.express.helper.ui.ImportExportActivity"

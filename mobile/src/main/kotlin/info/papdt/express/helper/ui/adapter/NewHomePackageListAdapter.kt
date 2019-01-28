@@ -132,7 +132,25 @@ class NewHomePackageListAdapter : MultiTypeAdapter() {
         override fun getNewListSize(): Int = newList.size
 
         override fun areContentsTheSame(oldIndex: Int, newIndex: Int): Boolean {
-            return areItemsTheSame(oldIndex, newIndex)
+            var res = areItemsTheSame(oldIndex, newIndex)
+            if (!res) {
+                if (oldList[oldIndex] is Kuaidi100Package
+                        && newList[newIndex] is Kuaidi100Package) {
+                    val oldPack = oldList[oldIndex] as Kuaidi100Package
+                    val newPack = newList[oldIndex] as Kuaidi100Package
+                    if (oldPack.number == newPack.number) {
+                        when {
+                            oldPack.status != newPack.status ->
+                                res = false
+                            oldPack.getFirstStatusTime() != newPack.getFirstStatusTime() ->
+                                res = false
+                            oldPack.unreadNew xor newPack.unreadNew ->
+                                res = false
+                        }
+                    }
+                }
+            }
+            return res
         }
 
     }

@@ -65,18 +65,6 @@
         </activity>
 
         <activity
-            android:name=".ui.MainActivity"
-            android:theme="@style/AppTheme"
-            android:windowSoftInputMode="stateAlwaysHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="info.papdt.express.helper.ACTION_SEARCH" />
-            </intent-filter>
-        </activity>
-
-        <activity
             android:name=".ui.CompanyChooserActivity"
             android:configChanges="screenSize|smallestScreenSize|screenLayout|orientation"
             android:label="@string/activity_choose_company"
@@ -89,7 +77,7 @@
         <activity
             android:name=".ui.DetailsActivity"
             android:label="@string/activity_details"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme.Home">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>

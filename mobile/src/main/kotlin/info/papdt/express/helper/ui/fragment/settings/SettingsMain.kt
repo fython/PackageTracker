@@ -97,10 +97,6 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener {
 	}
 
 	override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
-		R.id.action_donate -> {
-			listView.smoothScrollToPosition(listView.adapter!!.itemCount - 1)
-			true
-		}
 		R.id.action_play_store -> {
 			val intent = Intent(Intent.ACTION_VIEW)
 			intent.data = Uri.parse("market://details?id=${activity!!.packageName}")

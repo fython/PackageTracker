@@ -6,14 +6,11 @@ import android.app.ActivityManager
 import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Color
-import android.graphics.PorterDuff
 import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.CollapsingToolbarLayout
-import android.support.design.widget.FloatingActionButton
 import android.support.design.widget.Snackbar
-import android.support.v4.graphics.drawable.DrawableCompat
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
@@ -46,12 +43,10 @@ import me.drakeet.multitype.MultiTypeAdapter
 import moe.feng.kotlinyan.common.*
 import moe.feng.kotlinyan.common.lazyFindNonNullView
 
-@SuppressLint("RestrictedApi")
 class DetailsActivity : AbsActivity() {
 
 	private val mToolbarLayout: CollapsingToolbarLayout by lazyFindNonNullView(R.id.collapsing_layout)
 	private val mRecyclerView: RecyclerView by lazyFindNonNullView(R.id.recycler_view)
-	private val mFAB: FloatingActionButton by lazyFindNonNullView(R.id.fab)
 	private val mBackground: ImageView by lazyFindNonNullView(R.id.parallax_background)
 
 	private val mAdapter: MultiTypeAdapter by lazy {
@@ -89,20 +84,16 @@ class DetailsActivity : AbsActivity() {
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-			var flag = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1 && settings.getBoolean(Settings.KEY_NAVIGATION_TINT, true) && !isNightMode) {
-				flag = flag or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
-			}
-			window.decorView.systemUiVisibility = flag
+			window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
 			window.statusBarColor = Color.TRANSPARENT
 		}
+
 		super.onCreate(savedInstanceState)
 
 		state = intent.getIntExtra(EXTRA_STATE, Kuaidi100Package.STATUS_FAILED)
 
 		setContentView(R.layout.activity_details)
-
-		mActionBar!!.setDisplayHomeAsUpEnabled(true)
 
 		setUpData()
 	}
@@ -110,22 +101,12 @@ class DetailsActivity : AbsActivity() {
 	override fun setUpViews() {
 		mRecyclerView.setHasFixedSize(false)
 		mRecyclerView.layoutManager = LinearLayoutManager(this)
-
-		mFAB.setOnClickListener { showNameEditDialog() }
-		CheatSheet.setup(mFAB)
 	}
 
 	@SuppressLint("NewApi")
 	internal fun setUpData() {
 		mRecyclerView.adapter = mAdapter
 		ListBuildTask().execute()
-
-		var drawable = mFAB.drawable
-		if (mFAB.drawable == null) {
-			drawable = DrawableCompat.wrap(resources.getDrawable(R.drawable.ic_create_black_24dp))
-			DrawableCompat.setTintMode(drawable, PorterDuff.Mode.SRC_IN)
-			mFAB.setImageDrawable(drawable)
-		}
 
 		val color: Int
 		val colorDark: Int
@@ -148,25 +129,6 @@ class DetailsActivity : AbsActivity() {
 		}
 		mToolbarLayout.setContentScrimColor(color)
 		mToolbarLayout.setStatusBarScrimColor(colorDark)
-		DrawableCompat.setTint(drawable, color)
-		if (settings.getBoolean(Settings.KEY_NAVIGATION_TINT, true)) {
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !isNightMode) {
-				window.navigationBarColor = colorDark
-			}
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-				if (!isNightMode) {
-					window.navigationBarColor = Color.WHITE
-					ifSupportSDK (Build.VERSION_CODES.P) {
-						window.navigationBarDividerColor = Color.argb(30, 0, 0, 0)
-					}
-				} else {
-					window.navigationBarColor = ResourcesUtils.getColorIntFromAttr(theme, android.R.attr.windowBackground)
-					ifSupportSDK (Build.VERSION_CODES.P) {
-						window.navigationBarDividerColor = Color.argb(60, 255, 255, 255)
-					}
-				}
-			}
-		}
 	}
 
 	private fun buildItems(): Items {
@@ -184,8 +146,11 @@ class DetailsActivity : AbsActivity() {
 	}
 
 	override fun onOptionsItemSelected(item: MenuItem): Boolean {
-		val id = item.itemId
-		when (id) {
+		when (item.itemId) {
+            R.id.action_edit -> {
+                showNameEditDialog()
+                return true
+            }
 			R.id.action_copy_code -> {
 				ClipboardUtils.putString(applicationContext, data!!.number)
 				Snackbar.make(findViewById(R.id.coordinator_layout)!!, R.string.toast_copied_code, Snackbar.LENGTH_LONG)

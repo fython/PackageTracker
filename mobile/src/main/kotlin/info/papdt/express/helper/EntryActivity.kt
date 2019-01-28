@@ -6,7 +6,6 @@ import android.os.Bundle
 
 import info.papdt.express.helper.support.SettingsInstance
 import info.papdt.express.helper.ui.HomeActivity
-import info.papdt.express.helper.ui.MainActivity
 import info.papdt.express.helper.ui.SplashActivity
 
 class EntryActivity : Activity() {

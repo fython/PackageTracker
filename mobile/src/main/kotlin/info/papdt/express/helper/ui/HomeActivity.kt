@@ -5,10 +5,7 @@ import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.AppBarLayout
-import android.support.design.widget.BottomSheetBehavior
-import android.support.design.widget.CoordinatorLayout
-import android.support.design.widget.TextInputEditText
+import android.support.design.widget.*
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.TooltipCompat
@@ -47,6 +44,10 @@ import moe.feng.kotlinyan.common.*
 
 import info.papdt.express.helper.R
 import info.papdt.express.helper.event.EventCallbacks
+import kotlinx.coroutines.experimental.Deferred
+import kotlinx.coroutines.experimental.android.UI
+import kotlinx.coroutines.experimental.async
+import org.jetbrains.anko.coroutines.experimental.bg
 
 class HomeActivity : AbsActivity(), OnRefreshListener {
 
@@ -75,7 +76,7 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
 
     private val moreMenu: PopupMenu by lazy {
         PopupMenu(this, moreButton).also {
-            it.inflate(R.menu.bottom_menu_new_home)
+            it.inflate(R.menu.bottom_menu_home)
             it.setOnMenuItemClickListener(this::onOptionsItemSelected)
         }
     }
@@ -101,10 +102,6 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
                 bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
                 bottomSheet.makeVisible()
             }
-            moreButton.setOnClickListener {
-                moreMenu.show()
-            }
-            moreButton.setOnTouchListener(moreMenu.dragToOpenListener)
         } else {
 
         }
@@ -157,6 +154,11 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
         TooltipCompat.setTooltipText(scanButton, getString(R.string.activity_scanner))
         scanButton.setOnClickListener { openScanner() }
 
+        moreButton.setOnClickListener {
+            moreMenu.show()
+        }
+        moreButton.setOnTouchListener(moreMenu.dragToOpenListener)
+
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
         bottomSheetBehavior.setBottomSheetCallback(AddPackageBottomSheetCallback())
 
@@ -172,11 +174,28 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.menu_new_home, menu)
+        menuInflater.inflate(R.menu.top_menu_home, menu)
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
+        R.id.action_read_all -> {
+            async(UI) {
+                val data: Deferred<Int> = bg {
+                    val count = packageDatabase.readAll()
+                    packageDatabase.save()
+                    count
+                }
+
+                listAdapter.setPackages(packageDatabase.data)
+                Snackbar.make(
+                        coordinatorLayout,
+                        getString(R.string.toast_all_read, data.await()),
+                        Snackbar.LENGTH_LONG
+                ).show()
+            }
+            true
+        }
         R.id.action_search -> {
 
             true

@@ -54,7 +54,8 @@ class SplashActivity : AbsActivity() {
 		setContentView(R.layout.activity_splash_screen)
 
 		Handler().postDelayed({
-			MainActivity.launch(this@SplashActivity)
+			// TODO New Home
+			// MainActivity.launch(this@SplashActivity)
 			finish()
 		}, 3000)
 	}

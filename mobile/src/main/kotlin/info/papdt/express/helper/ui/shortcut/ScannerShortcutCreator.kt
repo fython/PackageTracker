@@ -5,7 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 
 import info.papdt.express.helper.R
-import info.papdt.express.helper.ui.MainActivity
+import info.papdt.express.helper.ui.HomeActivity
 import info.papdt.express.helper.ui.ScannerActivity
 
 class ScannerShortcutCreator : Activity() {
@@ -19,7 +19,8 @@ class ScannerShortcutCreator : Activity() {
 			intent.putExtra(Intent.EXTRA_SHORTCUT_NAME, getString(R.string.activity_scanner))
 			intent.putExtra(Intent.EXTRA_SHORTCUT_ICON_RESOURCE, icon)
 
-			val launchIntent = Intent(applicationContext, MainActivity::class.java)
+			// TODO New Home
+			val launchIntent = Intent(applicationContext, HomeActivity::class.java)
 			launchIntent.action = ScannerActivity.ACTION_SCAN_TO_ADD
 			launchIntent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK
 

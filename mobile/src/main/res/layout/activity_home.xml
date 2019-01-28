@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.HomeActivity"
-    tools:menu="@menu/menu_new_home">
+    tools:menu="@menu/top_menu_home">
 
     <!-- Content list with filters, search -->
 
@@ -36,7 +36,7 @@
         android:id="@+id/refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        app:layout_behavior=".view.ScrollingViewWithBottomBarBehavior">
 
         <com.scwang.smartrefresh.header.DeliveryHeader
             android:id="@+id/refresh_header"
@@ -47,7 +47,6 @@
             android:id="@android:id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginBottom="?android:attr/actionBarSize"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager"/>
 
     </com.scwang.smartrefresh.layout.SmartRefreshLayout>
@@ -74,6 +73,7 @@
     <!-- Bottom App Bar -->
 
     <LinearLayout
+        android:id="@+id/bottom_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -86,7 +86,6 @@
             android:background="@drawable/bottom_app_bar_shadow"/>
 
         <LinearLayout
-            android:id="@+id/bottom_bar"
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
             android:background="@color/pink_500"
