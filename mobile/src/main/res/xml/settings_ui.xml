@@ -3,10 +3,6 @@
 
     <PreferenceCategory android:title="@string/category_user_interface">
 
-        <SwitchPreference android:key="navigation_tint"
-            android:title="@string/pref_navigation_tint"
-            android:summary="@string/pref_navigation_tint_summary"/>
-
         <SimpleMenuPreference android:key="night_mode"
             android:title="@string/pref_night_mode"
             android:summary="%s"
@@ -18,7 +14,8 @@
             android:title="@string/item_dark_launcher_icon"
             android:summary="@string/item_dark_launcher_summary"
             android:enabled="@bool/is_adaptive_icon_supported"
-            android:defaultValue="false"/>
+            android:defaultValue="false"
+            android:visibility="gone"/>
 
         <Preference android:key="show_tips_again"
             android:title="@string/pref_show_tips_again"/>

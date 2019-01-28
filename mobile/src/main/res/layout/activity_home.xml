@@ -88,7 +88,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="?android:attr/actionBarSize"
-            android:background="@color/pink_500"
+            android:background="?attr/bottomBarColor"
             android:orientation="horizontal"
             android:clickable="true"
             android:focusable="true"

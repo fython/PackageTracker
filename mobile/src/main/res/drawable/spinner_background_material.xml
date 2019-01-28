@@ -7,7 +7,7 @@
     android:paddingRight="0dp">
 
     <item
-        android:drawable="@drawable/ic_expand_more_black_24dp"
+        android:drawable="@drawable/ic_expand_more_text_primary_color_24dp"
         android:gravity="end|center_vertical"
         android:right="12dp"/>
 

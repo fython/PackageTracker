@@ -23,7 +23,7 @@
 		android:layout_height="?attr/actionBarSize"
 		android:id="@+id/toolbar"
 		android:layout_gravity="bottom"
-		android:background="@color/pink_500"
+		android:background="?attr/bottomBarColor"
 		android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
 </FrameLayout>

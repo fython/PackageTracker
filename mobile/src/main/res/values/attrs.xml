@@ -8,4 +8,6 @@
 		<attr name="rightEnabled" format="boolean"/>
 	</declare-styleable>
 
+	<attr name="bottomBarColor" format="reference"/>
+
 </resources>
