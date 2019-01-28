@@ -7,6 +7,7 @@ import info.papdt.express.helper.support.DateHelper
 import info.papdt.express.helper.ui.items.DateSubheadViewBinder
 import info.papdt.express.helper.ui.items.PackageItemViewBinder
 import me.drakeet.multitype.MultiTypeAdapter
+import java.text.Collator
 
 class NewHomePackageListAdapter : MultiTypeAdapter() {
 
@@ -16,10 +17,22 @@ class NewHomePackageListAdapter : MultiTypeAdapter() {
         const val SORT_BY_NAME = 1
         const val SORT_BY_CREATE_TIME = 2
 
+        const val FILTER_ON_THE_WAY = 0
+        const val FILTER_DELIVERED = 1
+        const val FILTER_ALL = 2
+
     }
 
     private var rawData: List<Kuaidi100Package>? = null
     var sortType: Int = SORT_BY_UPDATE_TIME
+        set(value) {
+            if (field == value) {
+                return
+            }
+            field = value
+            updateItems()
+        }
+    var filter: Int = FILTER_ON_THE_WAY
         set(value) {
             if (field == value) {
                 return
@@ -40,7 +53,20 @@ class NewHomePackageListAdapter : MultiTypeAdapter() {
     }
 
     private fun updateItems(notify: Boolean = true) {
-        rawData?.let { data ->
+        rawData?.filter { item ->
+            val state = item.getState()
+            when (filter) {
+                FILTER_ON_THE_WAY ->
+                    state == Kuaidi100Package.STATUS_ON_THE_WAY ||
+                            state == Kuaidi100Package.STATUS_NORMAL ||
+                            state == Kuaidi100Package.STATUS_RETURNING
+                FILTER_DELIVERED ->
+                    state == Kuaidi100Package.STATUS_DELIVERED ||
+                            state == Kuaidi100Package.STATUS_RETURNED
+                FILTER_ALL -> true
+                else -> throw IllegalArgumentException("Unsupported filter = $filter")
+            }
+        }?.let { data ->
             when (sortType) {
                 SORT_BY_UPDATE_TIME -> {
                     val newList = mutableListOf<Any>()
@@ -80,7 +106,10 @@ class NewHomePackageListAdapter : MultiTypeAdapter() {
                 }
                 SORT_BY_NAME -> {
                     val newList = mutableListOf<Any>()
-                    newList.addAll(data.sortedBy { it.name })
+
+                    newList.addAll(data.sortedWith(Comparator { o1, o2 ->
+                        Collator.getInstance().compare(o1.name, o2.name)
+                    }))
 
                     if (notify) {
                         setupItemsWithDiffUtils(newList)

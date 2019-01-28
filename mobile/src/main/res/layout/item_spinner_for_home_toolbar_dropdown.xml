@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@android:id/text1"
-    style="?android:attr/spinnerItemStyle"
+    style="?android:attr/spinnerDropDownItemStyle"
     android:singleLine="true"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="?android:attr/listPreferredItemHeightSmall"
+    android:ellipsize="marquee"
     android:textAppearance="@style/TextAppearance.AppCompat.Widget.Button"
     android:textSize="16sp"
-    android:paddingStart="8dp"
-    android:paddingEnd="44dp"
-    android:drawablePadding="12dp"
-    android:ellipsize="marquee"/>
+    android:paddingStart="16dp"
+    android:paddingEnd="0dp"
+    tools:text="On the way"/>

@@ -142,6 +142,20 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
         refreshLayout.setOnRefreshListener(this)
 
         spinner.adapter = HomeToolbarSpinnerAdapter(this)
+        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?,
+                                        position: Int,
+                                        id: Long) {
+                listAdapter.filter = position
+            }
+
+        }
+        spinner.setSelection(listAdapter.filter)
 
         addButton.setOnClickListener {
             if (refreshLayout.state == RefreshState.Refreshing) {
