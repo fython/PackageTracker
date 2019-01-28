@@ -165,6 +165,10 @@
 	<string name="item_dark_launcher_icon">暗色啟動器圖標</string>
 	<string name="item_dark_launcher_summary">呢個特性僅喺 Android 8.0 同更新版本支援。</string>
 
+	<string name="category_assistant">幫手</string>
+	<string name="text_selection_search_action_title">在文本選定工具條上的搜尋動作</string>
+	<string name="text_selection_search_action_summary">當你在其它應用程式上選定數字文本時，工具條會提供一個 “搜尋包裹” 的動作。</string>
+
 	<!-- Details -->
 	<string name="activity_details">詳情</string>
 	<string name="action_set_unread">標為未讀</string>
@@ -275,5 +279,20 @@
 	<string name="edit_icon_title">編輯圖案</string>
 	<string name="edit_icon_choose">選定…</string>
 	<string name="activity_icon_choose">選定圖案…</string>
+
+	<string name="diff_time_pending">在路上</string>
+	<string name="diff_time_today">今日</string>
+	<string name="diff_time_yesterday">昨日</string>
+	<string name="diff_time_two_days_ago">兩天前</string>
+	<string name="diff_time_three_days_ago">三天前</string>
+	<string name="diff_time_in_this_week">一週內</string>
+	<string name="diff_time_in_this_month">一個月內</string>
+	<string name="diff_time_some_months_ago">%d 月前</string>
+	<string name="diff_time_in_this_year">一年內</string>
+	<string name="diff_time_some_years_ago">%d 年前</string>
+	<string name="action_filter">排序方式</string>
+	<string name="sort_by_update_time">更新時間</string>
+	<string name="sort_by_name">名稱</string>
+	<string name="sort_by_create_time">創建時間</string>
 
 </resources>

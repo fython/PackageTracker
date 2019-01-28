@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Intent
-import android.graphics.Color
-import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.Snackbar
 import android.support.v4.app.ShareCompat
@@ -15,8 +13,6 @@ import java.text.SimpleDateFormat
 
 import info.papdt.express.helper.R
 import info.papdt.express.helper.dao.PackageDatabase
-import info.papdt.express.helper.support.ResourcesUtils
-import info.papdt.express.helper.support.Settings
 import info.papdt.express.helper.ui.common.AbsActivity
 
 import moe.feng.kotlinyan.common.*
@@ -29,30 +25,9 @@ class ImportExportActivity : AbsActivity() {
 
 	private var progressDialog: ProgressDialog? = null
 
-	@SuppressLint("NewApi")
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
 		setContentView(R.layout.activity_import_export)
-
-		if (settings.getBoolean(Settings.KEY_NAVIGATION_TINT, true)) {
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-				if (!isNightMode) {
-					window.navigationBarColor = Color.WHITE
-					ifSupportSDK (Build.VERSION_CODES.P) {
-						window.navigationBarDividerColor = Color.argb(30, 0, 0, 0)
-					}
-					window.decorView.systemUiVisibility =
-							window.decorView.systemUiVisibility or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
-				} else {
-					window.navigationBarColor = ResourcesUtils.getColorIntFromAttr(theme, android.R.attr.windowBackground)
-					ifSupportSDK (Build.VERSION_CODES.P) {
-						window.navigationBarDividerColor = Color.argb(60, 255, 255, 255)
-					}
-				}
-			}
-		}
-
-		mActionBar!!.setDisplayHomeAsUpEnabled(true)
 	}
 
 	override fun setUpViews() {

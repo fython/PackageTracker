@@ -35,9 +35,9 @@
         <item name="android:windowEnterAnimation">@null</item>
     </style>
 
-	<style name="AppTheme.Grey" parent="AppTheme">
+	<style name="AppTheme.Grey" parent="AppTheme.Home">
 		<item name="colorPrimary">@color/grey_theme_app_bar</item>
-		<item name="colorPrimaryDark">@color/grey_theme_status_bar</item>
+		<item name="android:navigationBarColor">@color/grey_theme_status_bar</item>
 	</style>
 
 	<style name="AppTheme.Home" parent="AppTheme">

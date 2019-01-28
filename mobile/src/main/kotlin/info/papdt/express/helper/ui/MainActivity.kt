@@ -203,7 +203,7 @@ class MainActivity : AbsActivity() {
 	override fun onOptionsItemSelected(item: MenuItem): Boolean {
 		when (item.itemId) {
 			R.id.action_settings -> {
-				SettingsActivity.launch(this, SettingsActivity.FLAG_MAIN)
+				SettingsActivity.launch(this)
 				return true
 			}
 			R.id.action_read_all -> {

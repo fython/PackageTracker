@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:networkSecurityConfig="@xml/network_sec_config"
-        tools:ignore="GoogleAppIndexingWarning">
+        tools:ignore="GoogleAppIndexingWarning,UnusedAttribute">
 
         <activity
             android:name=".EntryActivity"
@@ -98,9 +98,27 @@
         <activity
             android:name=".ui.SettingsActivity"
             android:label="@string/activity_settings"
-            android:theme="@style/AppTheme">
+            android:theme="@style/AppTheme.Home">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+            <intent-filter>
+                <action android:name="info.papdt.express.helper.action.SETTINGS_UI"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="info.papdt.express.helper.action.SETTINGS_PUSH"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="info.papdt.express.helper.action.SETTINGS_API"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="info.papdt.express.helper.action.SETTINGS_ASSISTANT"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="info.papdt.express.helper.action.SETTINGS_CONTRIBUTORS"/>
+            </intent-filter>
+            <intent-filter>
+                <action android:name="info.papdt.express.helper.action.SETTINGS_LICENSES"/>
             </intent-filter>
         </activity>
 
@@ -175,7 +193,9 @@
 
         <receiver android:name="info.papdt.express.helper.receiver.ConnectivityReceiver">
             <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action
+                    android:name="android.net.conn.CONNECTIVITY_CHANGE"
+                    tools:ignore="BatteryLife" />
             </intent-filter>
         </receiver>
 

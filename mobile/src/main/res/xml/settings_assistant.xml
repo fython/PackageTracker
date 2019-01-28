@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/category_auto_detect_services">
+
+        <SwitchPreference android:key="from_clipboard"
+            android:title="@string/item_detect_clipboard"
+            android:summary="@string/item_detect_clipboard_desc"
+            android:enabled="@bool/is_clipboard_service_supported"/>
+
+        <SwitchPreference android:key="selection_action"
+            android:title="@string/text_selection_search_action_title"
+            android:summary="@string/text_selection_search_action_summary"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

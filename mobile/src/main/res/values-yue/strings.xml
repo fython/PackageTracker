@@ -190,6 +190,10 @@
 	<string name="dialog_delete_title">刪除</string>
 	<string name="dialog_delete_message">你唔會再跟蹤呢個包嘅物流訊息。</string>
 
+	<string name="category_assistant">幫手</string>
+	<string name="text_selection_search_action_title">喺文本選定工具條上面嘅搵包操作</string>
+	<string name="text_selection_search_action_summary">當你喺其它應用程式上選定數字文本嘅時候，工具條會提供一個 “搜尋包裹” 動作。</string>
+
 	<!-- Search -->
 	<string name="activity_search">搜尋</string>
 	<string name="action_clear">清空</string>
@@ -275,5 +279,20 @@
 	<string name="edit_icon_title">編輯圖案</string>
 	<string name="edit_icon_choose">揀個…</string>
 	<string name="activity_icon_choose">揀個圖案…</string>
+
+	<string name="diff_time_pending">在路上</string>
+	<string name="diff_time_today">今日</string>
+	<string name="diff_time_yesterday">昨日</string>
+	<string name="diff_time_two_days_ago">兩日前</string>
+	<string name="diff_time_three_days_ago">三日前</string>
+	<string name="diff_time_in_this_week">呢個星期</string>
+	<string name="diff_time_in_this_month">呢個月</string>
+	<string name="diff_time_some_months_ago">%d 月前</string>
+	<string name="diff_time_in_this_year">今年</string>
+	<string name="diff_time_some_years_ago">%d 年前</string>
+	<string name="action_filter">排序方式</string>
+	<string name="sort_by_update_time">更新時間</string>
+	<string name="sort_by_name">名稱</string>
+	<string name="sort_by_create_time">創建時間</string>
 
 </resources>

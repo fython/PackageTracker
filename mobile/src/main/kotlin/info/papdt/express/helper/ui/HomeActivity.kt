@@ -186,7 +186,7 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
             true
         }
         R.id.action_settings -> {
-            SettingsActivity.launch(this, SettingsActivity.FLAG_MAIN)
+            SettingsActivity.launch(this)
             true
         }
         R.id.action_sort_by_create_time -> {

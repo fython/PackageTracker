@@ -49,7 +49,7 @@ class ScannerActivity : AbsActivity(), ZXingScannerView.ResultHandler, Permissio
 	}
 
 	override fun setUpViews() {
-		mActionBar?.setDisplayHomeAsUpEnabled(true)
+
 	}
 
 	override fun onResume() {

@@ -215,6 +215,10 @@
 	<string name="item_dark_launcher_icon">Dark launcher icon</string>
 	<string name="item_dark_launcher_summary">This feature is only supported on Android 8.0+</string>
 
+    <string name="category_assistant">Assistant</string>
+    <string name="text_selection_search_action_title">Search action on text selection toolbar</string>
+    <string name="text_selection_search_action_summary">When you select digital text in other applications, the toolbar provides a "search package" operation.</string>
+
 	<!-- Details -->
 	<string name="activity_details">Details</string>
 	<string name="action_set_unread">Set unread</string>

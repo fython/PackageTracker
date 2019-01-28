@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/category_api">
+
+        <SimpleMenuPreference android:key="api_type"
+            android:title="@string/item_package_api_type"
+            android:summary="%s"
+            android:entries="@array/item_package_api_types"
+            android:entryValues="@array/item_package_api_types_values"
+            android:defaultValue="0"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

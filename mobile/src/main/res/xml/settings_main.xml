@@ -1,98 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-	<PreferenceCategory android:title="@string/category_user_interface">
+	<PreferenceCategory android:title="@string/activity_settings">
 
-		<SwitchPreference android:key="navigation_tint"
-		                  android:title="@string/pref_navigation_tint"
-		                  android:summary="@string/pref_navigation_tint_summary"/>
+        <Preference
+            android:key="ui"
+            android:title="@string/category_user_interface">
+            <intent
+                android:targetPackage="info.papdt.express.helper"
+                android:targetClass="info.papdt.express.helper.ui.SettingsActivity"
+                android:action="info.papdt.express.helper.action.SETTINGS_UI" />
+        </Preference>
 
-		<SimpleMenuPreference android:key="night_mode"
-		                      android:title="@string/pref_night_mode"
-		                      android:summary="%s"
-		                      android:entries="@array/night_mode_choices"
-		                      android:entryValues="@array/night_mode_choices_item"
-		                      android:defaultValue="0"/>
+        <Preference
+            android:key="push"
+            android:title="@string/category_push">
+            <intent
+                android:targetPackage="info.papdt.express.helper"
+                android:targetClass="info.papdt.express.helper.ui.SettingsActivity"
+                android:action="info.papdt.express.helper.action.SETTINGS_PUSH" />
+        </Preference>
 
-		<SwitchPreference android:key="dark_launcher_icon"
-						  android:title="@string/item_dark_launcher_icon"
-						  android:summary="@string/item_dark_launcher_summary"
-						  android:enabled="@bool/is_adaptive_icon_supported"
-						  android:defaultValue="false"/>
+        <Preference
+            android:key="api"
+            android:title="@string/category_api">
+            <intent
+                android:targetPackage="info.papdt.express.helper"
+                android:targetClass="info.papdt.express.helper.ui.SettingsActivity"
+                android:action="info.papdt.express.helper.action.SETTINGS_API" />
+        </Preference>
 
-		<Preference android:key="show_tips_again"
-		            android:title="@string/pref_show_tips_again"/>
+        <Preference
+            android:key="assistant"
+            android:title="@string/category_assistant">
+            <intent
+                android:targetPackage="info.papdt.express.helper"
+                android:targetClass="info.papdt.express.helper.ui.SettingsActivity"
+                android:action="info.papdt.express.helper.action.SETTINGS_ASSISTANT" />
+        </Preference>
 
-	</PreferenceCategory>
-
-	<PreferenceCategory android:title="@string/category_notification">
-
-		<SwitchPreference android:key="dont_disturb"
-		                  android:title="@string/item_notification_do_not_disturb"
-		                  android:summary="@string/item_notification_do_not_disturb_desc"/>
-
-		<SimpleMenuPreference android:key="interval"
-		                      android:title="@string/item_notification_interval"
-		                      android:summary="%s"
-		                      android:entries="@array/notification_interval"
-		                      android:entryValues="@array/notification_interval_item"
-		                      android:defaultValue="1"/>
-
-	</PreferenceCategory>
-
-    <PreferenceCategory android:title="@string/category_api">
-
-        <SimpleMenuPreference android:key="api_type"
-            android:title="@string/item_package_api_type"
-            android:summary="%s"
-            android:entries="@array/item_package_api_types"
-            android:entryValues="@array/item_package_api_types_values"
-            android:defaultValue="0"/>
+        <Preference
+            android:key="import_export"
+            android:title="@string/action_import_export">
+            <intent
+                android:targetPackage="info.papdt.express.helper"
+                android:targetClass="info.papdt.express.helper.ui.ImportExportActivity"
+                android:action="android.intent.action.MAIN" />
+        </Preference>
 
     </PreferenceCategory>
-
-	<PreferenceCategory android:title="@string/category_push">
-
-		<SwitchPreference android:key="enable_push"
-		                  android:title="@string/pref_enable_push"
-		                  android:summary="@string/pref_enable_push_summary"/>
-
-		<Preference android:key="firebase_instance_id"
-		            android:title="@string/pref_firebase_instance_id"
-		            android:summary="@string/pref_firebase_instance_id_summary"/>
-
-		<SwitchPreference android:key="enable_https"
-		                  android:title="@string/pref_enable_https"/>
-
-		<EditTextPreference android:key="api_host"
-		                    android:title="@string/pref_api_host"
-		                    android:summary="%s"
-		                    android:singleLine="true"
-		                    android:inputType="textUri"/>
-
-		<EditTextPreference android:key="api_port"
-		                    android:title="@string/pref_api_port"
-		                    android:summary="%s"
-		                    android:maxLength="5"
-		                    android:singleLine="true"
-		                    android:inputType="numberDecimal"/>
-
-		<Preference android:key="push_sync" android:title="@string/pref_push_sync"/>
-
-		<Preference android:key="request_push" android:title="@string/pref_request_push"/>
-
-		<Preference android:key="push_intro" android:title="@string/pref_whats_this"/>
-
-	</PreferenceCategory>
-
-	<PreferenceCategory android:title="@string/category_auto_detect_services">
-
-		<SwitchPreference android:key="from_clipboard"
-		                  android:title="@string/item_detect_clipboard"
-		                  android:summary="@string/item_detect_clipboard_desc"
-                          android:enabled="@bool/is_clipboard_service_supported"/>
-
-	</PreferenceCategory>
 
 	<PreferenceCategory android:title="@string/category_about">
 
@@ -102,8 +58,26 @@
 		<Preference android:key="sina" android:title="@string/author_sina_title" android:summary="@string/author_sina_desc"/>
 		<Preference android:key="designer" android:title="@string/icon_designer_title" android:summary="@string/icon_designer_summary"/>
 		<Preference android:key="googleplus" android:title="@string/google_plus_title" android:summary="@string/google_plus_url"/>
-		<Preference android:key="license" android:title="@string/open_source_license" android:summary="@string/open_source_license_summary"/>
-		<Preference android:key="contributors" android:title="@string/category_contributors" android:summary="@string/category_contributors_desc"/>
+
+		<Preference
+            android:key="license"
+            android:title="@string/open_source_license"
+            android:summary="@string/open_source_license_summary">
+            <intent
+                android:targetPackage="info.papdt.express.helper"
+                android:targetClass="info.papdt.express.helper.ui.SettingsActivity"
+                android:action="info.papdt.express.helper.action.SETTINGS_LICENSES" />
+        </Preference>
+
+		<Preference
+            android:key="contributors"
+            android:title="@string/category_contributors"
+            android:summary="@string/category_contributors_desc">
+            <intent
+                android:targetPackage="info.papdt.express.helper"
+                android:targetClass="info.papdt.express.helper.ui.SettingsActivity"
+                android:action="info.papdt.express.helper.action.SETTINGS_CONTRIBUTORS" />
+        </Preference>
 
 	</PreferenceCategory>
 
