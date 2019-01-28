@@ -323,5 +323,6 @@
 	<string name="sort_by_update_time">By update time</string>
     <string name="sort_by_name">By name</string>
     <string name="sort_by_create_time">By create time</string>
+    <string name="toast_please_wait_for_finishing_refreshing">Please wait for finishing refreshing…</string>
 
 </resources>

@@ -292,5 +292,6 @@
 	<string name="sort_by_update_time">更新時間</string>
 	<string name="sort_by_name">名稱</string>
 	<string name="sort_by_create_time">創建時間</string>
+	<string name="toast_please_wait_for_finishing_refreshing">請等候重新整理完成…</string>
 
 </resources>

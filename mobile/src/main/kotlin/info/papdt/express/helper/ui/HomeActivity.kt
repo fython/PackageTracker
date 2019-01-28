@@ -13,10 +13,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.*
-import android.widget.Button
-import android.widget.PopupMenu
-import android.widget.Spinner
-import android.widget.TextView
+import android.widget.*
 import cn.nekocode.rxlifecycle.RxLifecycle
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.scwang.smartrefresh.layout.api.RefreshLayout
@@ -147,8 +144,13 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
         spinner.adapter = HomeToolbarSpinnerAdapter(this)
 
         addButton.setOnClickListener {
-            bottomSheetBackground.makeVisible()
-            bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+            if (refreshLayout.state == RefreshState.Refreshing) {
+                Toast.makeText(this, R.string.toast_please_wait_for_finishing_refreshing,
+                        Toast.LENGTH_SHORT).show()
+            } else {
+                bottomSheetBackground.makeVisible()
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+            }
         }
 
         TooltipCompat.setTooltipText(scanButton, getString(R.string.activity_scanner))
