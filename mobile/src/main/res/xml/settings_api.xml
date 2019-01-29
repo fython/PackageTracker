@@ -10,6 +10,11 @@
             android:entryValues="@array/item_package_api_types_values"
             android:defaultValue="0"/>
 
+        <CheckBoxPreference
+            android:key="force_update_all_packages"
+            android:title="@string/pref_force_update_all_packages"
+            android:summary="@string/pref_force_update_all_packages_summary"/>
+
     </PreferenceCategory>
 
 </PreferenceScreen>

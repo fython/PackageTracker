@@ -1,6 +1,6 @@
 package info.papdt.express.helper.ui.items
 
-import android.support.annotation.StringDef
+import androidx.annotation.StringDef
 
 class DetailsTwoLineItem {
 

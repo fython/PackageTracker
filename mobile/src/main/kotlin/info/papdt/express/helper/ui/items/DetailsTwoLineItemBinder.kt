@@ -1,10 +1,10 @@
 package info.papdt.express.helper.ui.items
 
 import android.app.Activity
-import android.support.design.widget.Snackbar
-import android.support.v7.widget.AppCompatImageButton
-import android.support.v7.widget.AppCompatTextView
-import android.support.v7.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
+import androidx.appcompat.widget.AppCompatImageButton
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

@@ -40,13 +40,13 @@
 				android:layout_marginBottom="16dp"
 				android:layout_marginEnd="16dp">
 
-				<android.support.v7.widget.AppCompatTextView
+				<androidx.appcompat.widget.AppCompatTextView
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:text="@string/action_backup_all_data"
 					android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
 
-				<android.support.v7.widget.AppCompatTextView
+				<androidx.appcompat.widget.AppCompatTextView
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_marginTop="8dp"
@@ -84,13 +84,13 @@
 				android:layout_marginBottom="16dp"
 				android:layout_marginEnd="16dp">
 
-				<android.support.v7.widget.AppCompatTextView
+				<androidx.appcompat.widget.AppCompatTextView
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:text="@string/action_export_list"
 					android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
 
-				<android.support.v7.widget.AppCompatTextView
+				<androidx.appcompat.widget.AppCompatTextView
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_marginTop="8dp"
@@ -128,13 +128,13 @@
 				android:layout_marginBottom="16dp"
 				android:layout_marginEnd="16dp">
 
-				<android.support.v7.widget.AppCompatTextView
+				<androidx.appcompat.widget.AppCompatTextView
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:text="@string/action_restore_all_data"
 					android:textAppearance="@style/TextAppearance.AppCompat.Body2"/>
 
-				<android.support.v7.widget.AppCompatTextView
+				<androidx.appcompat.widget.AppCompatTextView
 					android:layout_width="wrap_content"
 					android:layout_height="wrap_content"
 					android:layout_marginTop="8dp"
@@ -147,7 +147,7 @@
 
 	</LinearLayout>
 
-	<android.support.v7.widget.Toolbar
+	<androidx.appcompat.widget.Toolbar
 		android:layout_width="match_parent"
 		android:layout_height="?attr/actionBarSize"
 		android:id="@+id/toolbar"

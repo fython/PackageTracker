@@ -6,8 +6,8 @@ import android.app.NotificationManager
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
-import android.support.multidex.MultiDexApplication
-import android.support.v7.app.AppCompatDelegate
+import androidx.multidex.MultiDexApplication
+import androidx.appcompat.app.AppCompatDelegate
 
 import com.tencent.bugly.crashreport.CrashReport
 import info.papdt.express.helper.model.MaterialIcon

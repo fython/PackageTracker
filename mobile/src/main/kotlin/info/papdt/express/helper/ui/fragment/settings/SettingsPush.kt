@@ -5,7 +5,7 @@ import android.content.ComponentName
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.support.design.widget.Snackbar
+import com.google.android.material.snackbar.Snackbar
 import android.widget.TextView
 import com.google.firebase.iid.FirebaseInstanceId
 import info.papdt.express.helper.BuildConfig

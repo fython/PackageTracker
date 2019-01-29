@@ -2,7 +2,7 @@ package info.papdt.express.helper.support
 
 import android.content.Context
 import android.os.Build
-import android.support.annotation.IntDef
+import androidx.annotation.IntDef
 import info.papdt.express.helper.ui.adapter.NewHomePackageListAdapter
 import moe.feng.kotlinyan.common.SharedPreferencesProvider
 import kotlin.properties.Delegates
@@ -34,6 +34,8 @@ class PTSettings(context: Context): SharedPreferencesProvider(context, "settings
     var lastFilter by intValue(defValue = NewHomePackageListAdapter.FILTER_ON_THE_WAY)
 
     var lastSortBy by intValue(defValue = NewHomePackageListAdapter.SORT_BY_UPDATE_TIME)
+
+    var forceUpdateAllPackages by booleanValue(defValue = false)
 
 }
 

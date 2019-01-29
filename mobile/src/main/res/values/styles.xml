@@ -28,6 +28,9 @@
 	<style name="Toolbar.Main" parent="ThemeOverlay.AppCompat.ActionBar">
 	</style>
 
+    <style name="Toolbar.Popup" parent="ThemeOverlay.AppCompat.Light">
+    </style>
+
     <style name="AppTheme.Translucent" parent="AppTheme">
         <item name="android:windowIsTranslucent">true</item>
         <item name="android:statusBarColor">@android:color/transparent</item>

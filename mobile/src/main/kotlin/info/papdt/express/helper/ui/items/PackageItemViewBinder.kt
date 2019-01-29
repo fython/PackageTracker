@@ -4,9 +4,9 @@ import android.app.Activity
 import android.content.Intent
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.AppCompatTextView
-import android.support.v7.widget.RecyclerView
+import androidx.core.content.ContextCompat
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.recyclerview.widget.RecyclerView
 import android.text.style.ForegroundColorSpan
 import android.view.*
 import android.widget.TextView

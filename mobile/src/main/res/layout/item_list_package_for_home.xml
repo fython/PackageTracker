@@ -45,7 +45,7 @@
 			android:layout_marginTop="12dp"
 			android:layout_marginBottom="12dp">
 
-			<android.support.v7.widget.AppCompatTextView
+			<androidx.appcompat.widget.AppCompatTextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:id="@+id/tv_title"
@@ -54,7 +54,7 @@
 				android:alpha="0.87"
 				tools:text="Title"/>
 
-			<android.support.v7.widget.AppCompatTextView
+			<androidx.appcompat.widget.AppCompatTextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:id="@+id/tv_other"
@@ -63,7 +63,7 @@
 				android:textAppearance="@style/TextAppearance.AppCompat.Small"
 				tools:text="Your package has been delivered to Humen Store, Dongguan. The delivery man is Wang Xiaomin (Tel: 13800138000)."/>
 
-			<android.support.v7.widget.AppCompatTextView
+			<androidx.appcompat.widget.AppCompatTextView
 				android:layout_width="wrap_content"
 				android:layout_height="wrap_content"
 				android:id="@+id/tv_time"

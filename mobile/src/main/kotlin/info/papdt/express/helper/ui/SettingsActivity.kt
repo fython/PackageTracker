@@ -3,8 +3,8 @@ package info.papdt.express.helper.ui
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.app.Fragment
+import com.google.android.material.snackbar.Snackbar
+import androidx.fragment.app.Fragment
 
 import info.papdt.express.helper.R
 import info.papdt.express.helper.ui.common.AbsActivity

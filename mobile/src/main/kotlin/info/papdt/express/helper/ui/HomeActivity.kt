@@ -5,16 +5,20 @@ import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.*
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.TooltipCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.appcompat.widget.TooltipCompat
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import android.widget.*
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 import cn.nekocode.rxlifecycle.RxLifecycle
+import com.google.android.material.appbar.AppBarLayout
+import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputEditText
 import com.scwang.smartrefresh.layout.SmartRefreshLayout
 import com.scwang.smartrefresh.layout.api.RefreshLayout
 import com.scwang.smartrefresh.layout.constant.RefreshState
@@ -41,10 +45,6 @@ import moe.feng.kotlinyan.common.*
 
 import info.papdt.express.helper.R
 import info.papdt.express.helper.event.EventCallbacks
-import kotlinx.coroutines.experimental.Deferred
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
-import org.jetbrains.anko.coroutines.experimental.bg
 
 class HomeActivity : AbsActivity(), OnRefreshListener {
 
@@ -247,8 +247,8 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         R.id.action_read_all -> {
-            async(UI) {
-                val data: Deferred<Int> = bg {
+           ui {
+                val data = asyncIO {
                     val count = packageDatabase.readAll()
                     packageDatabase.save()
                     count
@@ -371,7 +371,7 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
             refreshLayout.autoRefresh()
         }
         Single.fromCallable {
-            packageDatabase.pullDataFromNetwork(false)
+            packageDatabase.pullDataFromNetwork(SettingsInstance.forceUpdateAllPackages)
         }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

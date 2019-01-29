@@ -8,7 +8,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.IBinder
-import android.support.v4.app.NotificationCompat
+import androidx.core.app.NotificationCompat
 import android.util.Log
 import info.papdt.express.helper.CHANNEL_ID_PACKAGE_STATUS
 
@@ -20,6 +20,7 @@ import info.papdt.express.helper.dao.PackageDatabase
 import info.papdt.express.helper.model.Kuaidi100Package
 import info.papdt.express.helper.support.PushUtils
 import info.papdt.express.helper.support.Settings
+import info.papdt.express.helper.support.SettingsInstance
 import info.papdt.express.helper.ui.DetailsActivity
 import info.papdt.express.helper.ui.launcher.AppWidgetProvider
 import moe.feng.kotlinyan.common.*
@@ -44,7 +45,7 @@ class ReminderService : IntentService(TAG) {
 
 		val db = PackageDatabase.getInstance(applicationContext)
 
-		db.pullDataFromNetwork(false)
+		db.pullDataFromNetwork(SettingsInstance.forceUpdateAllPackages)
 		db.save()
 
 		AppWidgetProvider.updateManually(application)

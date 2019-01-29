@@ -39,14 +39,14 @@
 		android:orientation="vertical"
 		android:gravity="center_vertical">
 
-		<android.support.v7.widget.AppCompatTextView
+		<androidx.appcompat.widget.AppCompatTextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:id="@+id/tv_title"
 			android:textAppearance="@style/TextAppearance.AppCompat.Body2"
 			tools:text="Title"/>
 
-		<android.support.v7.widget.AppCompatTextView
+		<androidx.appcompat.widget.AppCompatTextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:id="@+id/tv_other"

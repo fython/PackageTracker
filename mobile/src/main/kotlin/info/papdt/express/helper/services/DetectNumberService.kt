@@ -5,8 +5,8 @@ import android.app.Notification
 import android.app.PendingIntent
 import android.content.*
 import android.os.Build
-import android.support.v4.app.NotificationCompat
-import android.support.v4.content.ContextCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.content.ContextCompat
 import android.text.TextUtils
 import android.util.Log
 import android.view.accessibility.AccessibilityEvent

@@ -1,6 +1,6 @@
 package info.papdt.express.helper.ui.adapter
 
-import android.support.v7.util.DiffUtil
+import androidx.recyclerview.widget.DiffUtil
 import info.papdt.express.helper.dao.PackageDatabase
 import info.papdt.express.helper.model.Kuaidi100Package
 import info.papdt.express.helper.support.DateHelper

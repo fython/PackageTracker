@@ -220,6 +220,9 @@
     <string name="pref_enable_blur_on_add_dialog_background">Enable blur on Add Package Dialog background</string>
     <string name="pref_enable_blur_on_add_dialog_background_summary">If blur effect runs slowly on your phone, please turn off this option.</string>
 
+    <string name="pref_force_update_all_packages">Force update all packages</string>
+    <string name="pref_force_update_all_packages_summary">(Recommend not use) Update all packages including delivered packages. It may costs more time while refreshing and some delivered packages status may be lost.</string>
+
 	<!-- Details -->
 	<string name="activity_details">Details</string>
 	<string name="action_set_unread">Set unread</string>

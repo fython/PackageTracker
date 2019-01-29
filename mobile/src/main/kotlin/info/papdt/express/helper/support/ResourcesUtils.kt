@@ -1,9 +1,9 @@
 package info.papdt.express.helper.support
 
-import android.support.annotation.AttrRes
+import androidx.annotation.AttrRes
 import android.content.res.ColorStateList
 import android.content.res.Resources
-import android.support.annotation.ColorInt
+import androidx.annotation.ColorInt
 import android.util.TypedValue
 
 object ResourcesUtils {

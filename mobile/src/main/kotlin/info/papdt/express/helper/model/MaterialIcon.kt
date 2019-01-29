@@ -7,9 +7,7 @@ import android.graphics.Paint
 import android.graphics.Typeface
 import android.text.TextPaint
 import android.text.TextUtils
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.Deferred
-import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.*
 
 class MaterialIcon(val code: String) {
 
@@ -27,7 +25,7 @@ class MaterialIcon(val code: String) {
     }
 
     fun toBitmapAsync(size: Int): Deferred<Bitmap> {
-        return async(CommonPool) { toBitmap(size) }
+        return CoroutineScope(Dispatchers.IO).async { toBitmap(size) }
     }
 
     companion object {

@@ -14,4 +14,7 @@
 	<style name="Toolbar.Main" parent="ThemeOverlay.AppCompat.Dark.ActionBar">
 	</style>
 
+	<style name="Toolbar.Popup" parent="ThemeOverlay.AppCompat.Dark">
+	</style>
+
 </resources>

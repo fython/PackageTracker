@@ -18,7 +18,7 @@
 		android:layout_marginStart="16dp"
 		android:orientation="vertical">
 
-		<android.support.v7.widget.AppCompatTextView
+		<androidx.appcompat.widget.AppCompatTextView
 			android:layout_width="wrap_content"
 			android:layout_height="wrap_content"
 			android:id="@+id/tv_title"
@@ -27,7 +27,7 @@
 
 		<Space android:layout_width="match_parent" android:layout_height="4dp"/>
 
-		<android.support.v7.widget.AppCompatTextView
+		<androidx.appcompat.widget.AppCompatTextView
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:id="@+id/tv_summary"
@@ -37,7 +37,7 @@
 
 	</LinearLayout>
 
-	<android.support.v7.widget.AppCompatImageButton
+	<androidx.appcompat.widget.AppCompatImageButton
 		android:layout_width="36dp"
 		android:layout_height="36dp"
 		android:id="@+id/btn_action"

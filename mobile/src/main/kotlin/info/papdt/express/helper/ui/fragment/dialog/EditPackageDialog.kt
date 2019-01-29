@@ -4,8 +4,7 @@ import android.app.Activity.RESULT_OK
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
-import android.support.design.widget.Snackbar
-import android.support.v4.app.DialogFragment
+import com.google.android.material.snackbar.Snackbar
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.widget.Button
@@ -18,13 +17,12 @@ import info.papdt.express.helper.model.Kuaidi100Package
 import info.papdt.express.helper.model.MaterialIcon
 import info.papdt.express.helper.ui.ChooseIconActivity
 import info.papdt.express.helper.ui.DetailsActivity
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
+import info.papdt.express.helper.ui.common.AbsDialogFragment
 import moe.feng.kotlinyan.common.*
 import org.jetbrains.anko.bundleOf
 import kotlin.concurrent.thread
 
-class EditPackageDialog : DialogFragment() {
+class EditPackageDialog : AbsDialogFragment() {
 
     private lateinit var mNameEdit: EditText
     private lateinit var mIconView: ImageView
@@ -34,7 +32,7 @@ class EditPackageDialog : DialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        data = arguments!!.getParcelable(ARG_DATA)
+        data = arguments!!.getParcelable(ARG_DATA)!!
         currentIconCode = data.iconCode
     }
 
@@ -85,11 +83,11 @@ class EditPackageDialog : DialogFragment() {
     }
 
     private fun updateIconView() {
-        async(UI) {
+        ui {
             mIconView.setImageBitmap(currentIconCode?.let {
                 MaterialIcon(it).toBitmapAsync(
-                        resources.getDimensionPixelSize(R.dimen.icon_size_medium))
-                        .await()
+                        resources.getDimensionPixelSize(R.dimen.icon_size_medium)
+                ).await()
             })
         }
     }

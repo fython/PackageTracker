@@ -1,17 +1,14 @@
 package info.papdt.express.helper.ui.adapter
 
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.RecyclerView
 import info.papdt.express.helper.R
 import info.papdt.express.helper.model.MaterialIcon
-import kotlinx.coroutines.experimental.CommonPool
-import kotlinx.coroutines.experimental.Job
-import kotlinx.coroutines.experimental.android.UI
-import kotlinx.coroutines.experimental.async
+import kotlinx.coroutines.*
 import me.drakeet.multitype.ItemViewBinder
 import me.drakeet.multitype.MultiTypeAdapter
 
@@ -30,8 +27,11 @@ class MaterialIconsGridAdapter : MultiTypeAdapter() {
     fun update(keyword: String? = null) {
         this.keyword = keyword
         searchJob?.cancel()
-        searchJob = async(UI) {
-            val result = async(CommonPool) { MaterialIcon.search(keyword) }.await()
+
+        searchJob = CoroutineScope(Dispatchers.IO).launch(Dispatchers.Main) {
+            val result = withContext(Dispatchers.IO) {
+                MaterialIcon.search(keyword)
+            }
             items = result.map { MaterialIcon(it) }
             notifyDataSetChanged()
         }
@@ -49,7 +49,7 @@ class MaterialIconsGridAdapter : MultiTypeAdapter() {
 
         override fun onBindViewHolder(holder: ViewHolder, item: MaterialIcon) {
             holder.job?.cancel()
-            holder.job = async(UI) {
+            holder.job = CoroutineScope(Dispatchers.Main).launch {
                 holder.iconView.setImageBitmap(item.toBitmapAsync(holder.iconSize).await())
             }
             holder.textView.text = item.code

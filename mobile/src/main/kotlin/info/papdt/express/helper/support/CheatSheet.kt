@@ -2,7 +2,7 @@ package info.papdt.express.helper.support
 
 import android.content.res.Configuration
 import android.graphics.Rect
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import android.text.TextUtils
 import android.view.Gravity
 import android.view.View
@@ -95,9 +95,9 @@ object CheatSheet {
         val isNightMode = currentNightMode == Configuration.UI_MODE_NIGHT_YES
         cheatSheet.view.setBackgroundResource(
                 if (!isNightMode)
-                    android.support.v7.appcompat.R.drawable.tooltip_frame_dark
+                    androidx.appcompat.R.drawable.tooltip_frame_dark
                 else
-                    android.support.v7.appcompat.R.drawable.tooltip_frame_light)
+                    androidx.appcompat.R.drawable.tooltip_frame_light)
         val textView = cheatSheet.view.findViewById<TextView>(android.R.id.message)
         textView.setTextAppearance(context, R.style.TextAppearance_AppCompat_Body1)
         textView.setTextColor(ContextCompat.getColor(context, R.color.white_in_dark))

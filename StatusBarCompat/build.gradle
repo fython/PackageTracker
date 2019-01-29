@@ -3,7 +3,6 @@ apply plugin: 'kotlin-android'
 
 android {
 	compileSdkVersion rootProject.ext.targetSdkVersion
-	buildToolsVersion rootProject.ext.buildToolsVersion
 
 	defaultConfig {
 		minSdkVersion rootProject.ext.minSdkVersion
@@ -20,6 +19,6 @@ android {
 }
 
 dependencies {
-	implementation "com.android.support:appcompat-v7:$supportLibraryVersion"
+	implementation "androidx.appcompat:appcompat:1.0.2"
 	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
 }

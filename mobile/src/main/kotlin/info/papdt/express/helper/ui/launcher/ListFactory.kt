@@ -4,7 +4,7 @@ import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
 import android.graphics.drawable.ColorDrawable
-import android.support.v4.content.ContextCompat
+import androidx.core.content.ContextCompat
 import android.text.style.ForegroundColorSpan
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
