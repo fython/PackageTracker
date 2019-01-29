@@ -96,7 +96,7 @@ class NewHomePackageListAdapter : MultiTypeAdapter() {
                 }
                 SORT_BY_CREATE_TIME -> {
                     val newList = mutableListOf<Any>()
-                    newList.addAll(data)
+                    newList.addAll(data.reversed())
 
                     if (notify) {
                         setupItemsWithDiffUtils(newList)

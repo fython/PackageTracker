@@ -8,7 +8,7 @@
     android:layout_height="wrap_content"
     android:clipToPadding="false"
     android:paddingTop="16dp"
-    android:background="@android:color/white"
+    android:background="?attr/bottomSheetColor"
     android:elevation="8dp"
     android:clickable="true"
     android:focusable="true"

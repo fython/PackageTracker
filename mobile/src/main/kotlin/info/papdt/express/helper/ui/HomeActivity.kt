@@ -60,7 +60,9 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
 
     }
 
-    private val coordinatorLayout by lazy<CoordinatorLayout> { findViewById(R.id.coordinator_layout) }
+    private val coordinatorLayout by lazy<CoordinatorLayout> {
+        findViewById(R.id.coordinator_layout)
+    }
     private val appBarLayout by lazy<AppBarLayout> { findViewById(R.id.app_bar_layout) }
     private val refreshLayout by lazy<SmartRefreshLayout> { findViewById(R.id.refresh_layout) }
     private val listView by lazy<RecyclerView> { findViewById(android.R.id.list) }
@@ -69,7 +71,19 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
     private val scanButton by lazy<View> { findViewById(R.id.scan_button) }
     private val moreButton by lazy<View> { findViewById(R.id.more_button) }
     private val bottomSheet by lazy<View> { findViewById(R.id.bottom_sheet_add_package) }
-    private val bottomSheetBackground by lazy<FixedBlurLayout> { findViewById(R.id.bottom_sheet_background) }
+    private val bottomSheetBackgroundBlur by lazy<FixedBlurLayout> {
+        findViewById(R.id.bottom_sheet_background_blur)
+    }
+    private val bottomSheetBackgroundNormal by lazy<View> {
+        findViewById(R.id.bottom_sheet_background_normal)
+    }
+    private val bottomSheetBackground: View get() {
+        return if (SettingsInstance.enableAddDialogBackgroundBlur) {
+            bottomSheetBackgroundBlur
+        } else {
+            bottomSheetBackgroundNormal
+        }
+    }
 
     private val moreMenu: PopupMenu by lazy {
         PopupMenu(this, moreButton).also {
@@ -99,9 +113,14 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
                 bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
                 bottomSheet.makeVisible()
             }
+
+            listAdapter.filter = SettingsInstance.lastFilter
+            listAdapter.sortType = SettingsInstance.lastSortBy
         } else {
 
         }
+
+        spinner.setSelection(listAdapter.filter)
 
         addPackageViewHolder.onRestoreInstanceState(savedInstanceState)
     }
@@ -124,12 +143,24 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
                 listAdapter.notifyDataSetChanged()
             }
         }, action = ACTION_REQUEST_DELETE_PACK)
-        bottomSheetBackground.startBlur()
+        if (SettingsInstance.enableAddDialogBackgroundBlur) {
+            bottomSheetBackgroundBlur.startBlur()
+        }
     }
 
     override fun onStop() {
         super.onStop()
-        bottomSheetBackground.pauseBlur()
+        if (SettingsInstance.enableAddDialogBackgroundBlur) {
+            bottomSheetBackgroundBlur.pauseBlur()
+        }
+    }
+
+    private fun showBottomSheetBackground() {
+        bottomSheetBackground.makeVisible()
+    }
+
+    private fun hideBottomSheetBackground() {
+        bottomSheetBackground.makeGone()
     }
 
     @SuppressLint("ClickableViewAccessibility")
@@ -152,18 +183,22 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
                                         position: Int,
                                         id: Long) {
                 listAdapter.filter = position
+                SettingsInstance.lastFilter = position
             }
 
         }
-        spinner.setSelection(listAdapter.filter)
 
         addButton.setOnClickListener {
             if (refreshLayout.state == RefreshState.Refreshing) {
                 Toast.makeText(this, R.string.toast_please_wait_for_finishing_refreshing,
                         Toast.LENGTH_SHORT).show()
             } else {
-                bottomSheetBackground.makeVisible()
-                bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+                if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_HIDDEN) {
+                    showBottomSheetBackground()
+                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_EXPANDED
+                } else {
+                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+                }
             }
         }
 
@@ -178,20 +213,36 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
         bottomSheetBehavior = BottomSheetBehavior.from(bottomSheet)
         bottomSheetBehavior.setBottomSheetCallback(AddPackageBottomSheetCallback())
 
+        addPackageViewHolder = AddPackageViewHolder(bottomSheet)
+    }
+
+    override fun onResume() {
+        super.onResume()
+
         bottomSheetBackground.setOnTouchListener { _, event ->
             if (event.actionMasked == KeyEvent.ACTION_DOWN) {
                 bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
                 return@setOnTouchListener true
             }
-             false
+            return@setOnTouchListener false
         }
-
-        addPackageViewHolder = AddPackageViewHolder(bottomSheet)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.top_menu_home, menu)
         return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+        when (SettingsInstance.lastSortBy) {
+            NewHomePackageListAdapter.SORT_BY_UPDATE_TIME ->
+                menu.findItem(R.id.action_sort_by_update_time).isChecked = true
+            NewHomePackageListAdapter.SORT_BY_NAME ->
+                menu.findItem(R.id.action_sort_by_name).isChecked = true
+            NewHomePackageListAdapter.SORT_BY_CREATE_TIME ->
+                menu.findItem(R.id.action_sort_by_create_time).isChecked = true
+        }
+        return super.onPrepareOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
@@ -227,16 +278,19 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
         R.id.action_sort_by_create_time -> {
             item.isChecked = true
             listAdapter.sortType = NewHomePackageListAdapter.SORT_BY_CREATE_TIME
+            SettingsInstance.lastSortBy = listAdapter.sortType
             true
         }
         R.id.action_sort_by_name -> {
             item.isChecked = true
             listAdapter.sortType = NewHomePackageListAdapter.SORT_BY_NAME
+            SettingsInstance.lastSortBy = listAdapter.sortType
             true
         }
         R.id.action_sort_by_update_time -> {
             item.isChecked = true
             listAdapter.sortType = NewHomePackageListAdapter.SORT_BY_UPDATE_TIME
+            SettingsInstance.lastSortBy = listAdapter.sortType
             true
         }
         else -> super.onOptionsItemSelected(item)
@@ -334,13 +388,16 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
     private inner class AddPackageBottomSheetCallback : BottomSheetBehavior.BottomSheetCallback() {
 
         override fun onSlide(v: View, slideOffset: Float) {
-            bottomSheetBackground.post {
-                val progress = if (slideOffset.isNaN()) {
-                    1f
-                } else {
-                    1f + Math.max(slideOffset, -1f)
+            val progress = if (slideOffset.isNaN())
+                1f else 1f + Math.max(slideOffset, -1f)
+            if (SettingsInstance.enableAddDialogBackgroundBlur) {
+                bottomSheetBackgroundBlur.post {
+                    bottomSheetBackgroundBlur.alpha = progress
                 }
-                bottomSheetBackground.alpha = progress
+            } else {
+                bottomSheetBackgroundNormal.post {
+                    bottomSheetBackgroundNormal.alpha = progress * 0.35f
+                }
             }
             bottomSheetBackground.postInvalidate()
         }
@@ -383,7 +440,9 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
             val layoutManager = recyclerView.layoutManager!! as LinearLayoutManager
             val shouldLift = layoutManager.findFirstCompletelyVisibleItemPosition() != 0
 
-            bottomSheetBackground.postInvalidate()
+            if (SettingsInstance.enableAddDialogBackgroundBlur) {
+                bottomSheetBackgroundBlur.postInvalidate()
+            }
 
             if (animatorDirection != shouldLift) {
                 if (elevationAnimator?.isRunning == true) {
@@ -392,7 +451,7 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
             }
             animatorDirection = shouldLift
             if (elevationAnimator?.isRunning != true
-                    && appBarLayout.elevation != statedElevation[shouldLift]!!) {
+                    && appBarLayout.elevation != statedElevation[shouldLift]) {
                 elevationAnimator = ObjectAnimator.ofFloat(
                         appBarLayout,
                         "elevation",

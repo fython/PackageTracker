@@ -8,6 +8,7 @@
 		<item name="android:windowBackground">@color/grey_850</item>
 		<item name="android:navigationBarColor">@color/blue_grey_700</item>
 		<item name="bottomBarColor">@color/blue_grey_500</item>
+		<item name="bottomSheetColor">@color/grey_800</item>
 	</style>
 
 	<style name="Toolbar.Main" parent="ThemeOverlay.AppCompat.Dark.ActionBar">

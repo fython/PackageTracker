@@ -217,6 +217,9 @@
     <string name="text_selection_search_action_title">Search action on text selection toolbar</string>
     <string name="text_selection_search_action_summary">When you select digital text in other applications, the toolbar provides a "search package" operation.</string>
 
+    <string name="pref_enable_blur_on_add_dialog_background">Enable blur on Add Package Dialog background</string>
+    <string name="pref_enable_blur_on_add_dialog_background_summary">If blur effect runs slowly on your phone, please turn off this option.</string>
+
 	<!-- Details -->
 	<string name="activity_details">Details</string>
 	<string name="action_set_unread">Set unread</string>

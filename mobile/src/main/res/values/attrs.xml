@@ -9,5 +9,6 @@
 	</declare-styleable>
 
 	<attr name="bottomBarColor" format="reference"/>
+	<attr name="bottomSheetColor" format="reference"/>
 
 </resources>

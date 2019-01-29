@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <string name="item_detect_clipboard_desc">從 Android 7.0 開始，剪貼板偵測服務唔會再支援。</string>
-
-</resources>

@@ -167,6 +167,9 @@
 	<string name="text_selection_search_action_title">在文本选择工具栏上的搜索操作</string>
 	<string name="text_selection_search_action_summary">当你在其它应用程序上选择数字文本时，工具栏会提供一个 “搜索包裹” 的操作。</string>
 
+	<string name="pref_enable_blur_on_add_dialog_background">为添加包裹对话框背景启用模糊</string>
+	<string name="pref_enable_blur_on_add_dialog_background_summary">如果模糊效果在你的手机上运行缓慢，请关闭这个选项。</string>
+
 	<!-- Details -->
 	<string name="activity_details">详情</string>
 	<string name="action_set_unread">标为未读</string>

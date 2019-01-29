@@ -192,6 +192,9 @@
 	<string name="text_selection_search_action_title">喺文本選定工具條上面嘅搵包操作</string>
 	<string name="text_selection_search_action_summary">當你喺其它應用程式上選定數字文本嘅時候，工具條會提供一個 “搜尋包裹” 動作。</string>
 
+	<string name="pref_enable_blur_on_add_dialog_background">為添加包裹對話框背景啟用模糊</string>
+	<string name="pref_enable_blur_on_add_dialog_background_summary">如果模糊效果喺你部電話道跑得慢，請關左呢個選項。</string>
+
 	<!-- Search -->
 	<string name="activity_search">搜尋</string>
 	<string name="action_clear">清空</string>

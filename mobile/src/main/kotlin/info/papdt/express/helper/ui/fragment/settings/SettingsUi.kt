@@ -12,9 +12,14 @@ import moe.shizuku.preference.SwitchPreference
 class SettingsUi : AbsPrefFragment(), Preference.OnPreferenceChangeListener, Preference.OnPreferenceClickListener {
 
     // User interface preference
-    private val mPrefNightMode: ListPreference by PreferenceProperty("night_mode")
-    private val mPrefShowTipsAgain: Preference by PreferenceProperty("show_tips_again")
-    private val mPrefDarkIcon: SwitchPreference? by NullablePreferenceProperty("dark_launcher_icon")
+    private val mPrefNightMode: ListPreference
+            by PreferenceProperty("night_mode")
+    private val mPrefShowTipsAgain: Preference
+            by PreferenceProperty("show_tips_again")
+    private val mPrefDarkIcon: SwitchPreference?
+            by NullablePreferenceProperty("dark_launcher_icon")
+    private val mPrefBlurOnAddDialogBg: SwitchPreference
+            by PreferenceProperty("enable_blur_on_add_dialog_background")
 
     override fun onCreatePreferences(savedInstanceState: Bundle?, rootKey: String?) {
         addPreferencesFromResource(R.xml.settings_ui)
@@ -25,11 +30,13 @@ class SettingsUi : AbsPrefFragment(), Preference.OnPreferenceChangeListener, Pre
         }
 
         mPrefDarkIcon?.isChecked = LauncherIconUtils.isDarkLauncherIcon(activity!!)
+        mPrefBlurOnAddDialogBg.isChecked = SettingsInstance.enableAddDialogBackgroundBlur
 
         // UI
         mPrefNightMode.onPreferenceChangeListener = this
         mPrefShowTipsAgain.onPreferenceClickListener = this
         mPrefDarkIcon?.onPreferenceChangeListener = this
+        mPrefBlurOnAddDialogBg.onPreferenceChangeListener = this
     }
 
     override fun onPreferenceClick(pref: Preference): Boolean {
@@ -56,6 +63,10 @@ class SettingsUi : AbsPrefFragment(), Preference.OnPreferenceChangeListener, Pre
             mPrefDarkIcon -> {
                 val value = newValue as Boolean
                 LauncherIconUtils.setDarkLauncherIcon(activity!!, value)
+                true
+            }
+            mPrefBlurOnAddDialogBg -> {
+                SettingsInstance.enableAddDialogBackgroundBlur = newValue as Boolean
                 true
             }
             else -> false

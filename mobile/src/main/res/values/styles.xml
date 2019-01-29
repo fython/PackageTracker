@@ -47,6 +47,7 @@
         <item name="android:windowBackground">@color/grey_100</item>
         <item name="android:navigationBarColor">@color/pink_700</item>
         <item name="bottomBarColor">@color/pink_500</item>
+        <item name="bottomSheetColor">@android:color/white</item>
     </style>
 
 	<!-- Widget -->

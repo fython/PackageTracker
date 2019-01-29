@@ -96,7 +96,7 @@ constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 			mPaint.color = iconColor
 			mIconBounds!!.top = mBounds!!.centerY() - iconSize / 2 + pointOffsetY
 			mIconBounds!!.bottom = mBounds!!.centerY() + iconSize / 2 + pointOffsetY
-			canvas.drawBitmap(centerIconBitmap, null, mIconBounds, mPaint)
+			canvas.drawBitmap(centerIconBitmap!!, null, mIconBounds!!, mPaint)
 		}
 	}
 
