@@ -14,6 +14,7 @@ import android.view.accessibility.AccessibilityNodeInfo
 import info.papdt.express.helper.CHANNEL_ID_PACKAGE_STATUS
 import info.papdt.express.helper.R
 import info.papdt.express.helper.dao.PackageDatabase
+import info.papdt.express.helper.ui.HomeActivity
 import moe.feng.kotlinyan.common.*
 
 import java.util.ArrayList
@@ -281,9 +282,7 @@ class DetectNumberService : AccessibilityService() {
 	}
 
 	private fun sendNotification(appName: String, company: String?, number: String, name: String?, headsUp: Boolean) {
-		// TODO New Home
-		val addIntent = Intent()
-		// val addIntent = MainActivity.getSearchIntent(applicationContext, number)
+		val addIntent = HomeActivity.getSearchIntent(applicationContext, number)
 		val notiTitle = if (name != null)
 			getString(R.string.auto_detect_noti_title_with_name, name)
 		else

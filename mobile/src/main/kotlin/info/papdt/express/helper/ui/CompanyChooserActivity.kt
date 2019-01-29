@@ -23,7 +23,7 @@ import java.util.ArrayList
 import info.papdt.express.helper.R
 import info.papdt.express.helper.RESULT_EXTRA_COMPANY_CODE
 import info.papdt.express.helper.api.Kuaidi100PackageApi
-import info.papdt.express.helper.api.RxPackageApi
+import info.papdt.express.helper.api.KtPackageApi
 import info.papdt.express.helper.support.ResourcesUtils
 import info.papdt.express.helper.support.Settings
 import info.papdt.express.helper.ui.adapter.CompanyListAdapter
@@ -45,10 +45,8 @@ class CompanyChooserActivity : AbsActivity() {
 			addTextChangedListener(object : TextWatcher {
 				override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {}
 				override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
-					RxPackageApi.filterCompany(
-							charSequence.toString(),
-							parentActivity = this@CompanyChooserActivity
-					).subscribe { data ->
+					ui {
+						val data = KtPackageApi.filterCompany(charSequence.toString())
 						if (data.size == 0) {
 							mEmptyView.makeVisible()
 							mList.makeGone()

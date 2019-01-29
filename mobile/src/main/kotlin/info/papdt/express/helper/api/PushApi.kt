@@ -7,9 +7,10 @@ import info.papdt.express.helper.model.ResponseMessage
 import info.papdt.express.helper.support.SettingsInstance
 import info.papdt.express.helper.support.postForm
 import info.papdt.express.helper.support.postJson
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import okhttp3.*
 
 import java.io.IOException
@@ -43,107 +44,98 @@ object PushApi {
 		return null
 	}
 
-	@JvmOverloads fun register(token: String = defaultToken): Observable<ResponseMessage> {
+	@JvmOverloads
+	suspend fun register(
+			token: String = defaultToken
+	): ResponseMessage = withContext(Dispatchers.IO) {
         if (SettingsInstance.pushApiHost == null) {
-            return Observable.just(ResponseMessage())
+            return@withContext ResponseMessage()
         }
-        return Observable.just(token).map { targetToken ->
-            if (apiHost.isEmpty()) return@map ResponseMessage()
-            val request = Request.Builder()
-                    .postForm(mapOf("token" to targetToken))
-                    .url("$apiHost/subscribe/register")
-                    .build()
-            return@map requestJsonObject<ResponseMessage>(request) ?: ResponseMessage()
-        }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+		if (apiHost.isEmpty()) return@withContext ResponseMessage()
+		val request = Request.Builder()
+				.postForm(mapOf("token" to token))
+				.url("$apiHost/subscribe/register")
+				.build()
+		return@withContext requestJsonObject<ResponseMessage>(request) ?: ResponseMessage()
     }
 
-	@JvmOverloads fun sync(list: Collection<String>, token: String = defaultToken): Observable<ResponseMessage> {
+	@JvmOverloads
+	suspend fun sync(
+			list: Collection<String>,
+			token: String = defaultToken
+	): ResponseMessage = withContext(Dispatchers.IO) {
         if (SettingsInstance.pushApiHost == null) {
-            return Observable.just(ResponseMessage())
+            return@withContext ResponseMessage()
         }
-		return Observable.just(list)
-				.map { syncList ->
-					if (apiHost.isEmpty()) return@map ResponseMessage()
-					val strings = syncList.map { "\"$it\"" }
-					val dataString = if (strings.isEmpty()) "" else strings.reduce { acc, s -> "$acc,$s" }
-					val request = Request.Builder()
-							.postJson("[$dataString]")
-							.url("$apiHost/subscribe/sync?token=$token")
-							.build()
-					return@map requestJsonObject<ResponseMessage>(request) ?: ResponseMessage()
-				}
-				.subscribeOn(Schedulers.io())
-				.observeOn(AndroidSchedulers.mainThread())
+		if (apiHost.isEmpty()) return@withContext ResponseMessage()
+		val strings = list.map { "\"$it\"" }
+		val dataString = if (strings.isEmpty()) "" else strings.reduce { acc, s -> "$acc,$s" }
+		val request = Request.Builder()
+				.postJson("[$dataString]")
+				.url("$apiHost/subscribe/sync?token=$token")
+				.build()
+		return@withContext requestJsonObject<ResponseMessage>(request) ?: ResponseMessage()
 	}
 
-	@JvmOverloads fun add(number: String, company: String? = null, token: String = defaultToken): Observable<ResponseMessage> {
+	@JvmOverloads
+	suspend fun add(
+			number: String,
+			company: String? = null,
+			token: String = defaultToken
+	): ResponseMessage = withContext(Dispatchers.IO) {
         if (SettingsInstance.pushApiHost == null) {
-            return Observable.just(ResponseMessage())
+            return@withContext ResponseMessage()
         }
-		return Observable.just("")
-				.map {
-					if (apiHost.isEmpty()) return@map ResponseMessage()
-					val request = Request.Builder()
-							.postForm(mutableMapOf("token" to token, "id" to number).apply {
-								company?.let { this["com"] = it }
-							})
-							.url("$apiHost/subscribe/add")
-							.build()
-					return@map requestJsonObject<ResponseMessage>(request) ?: ResponseMessage()
-				}
-				.subscribeOn(Schedulers.io())
-				.observeOn(AndroidSchedulers.mainThread())
+		if (apiHost.isEmpty()) return@withContext ResponseMessage()
+		val request = Request.Builder()
+				.postForm(mutableMapOf("token" to token, "id" to number).apply {
+					company?.let { this["com"] = it }
+				})
+				.url("$apiHost/subscribe/add")
+				.build()
+		return@withContext requestJsonObject<ResponseMessage>(request) ?: ResponseMessage()
 	}
 
-	@JvmOverloads fun remove(number: String, token: String = defaultToken): Observable<ResponseMessage> {
+	@JvmOverloads
+	suspend fun remove(
+			number: String,
+			token: String = defaultToken
+	): ResponseMessage = withContext(Dispatchers.IO) {
         if (SettingsInstance.pushApiHost == null) {
-            return Observable.just(ResponseMessage())
+            return@withContext ResponseMessage()
         }
-		return Observable.just(number)
-				.map { id ->
-					if (apiHost.isEmpty()) return@map ResponseMessage()
-					val request = Request.Builder()
-							.postForm(mapOf("token" to token, "id" to id))
-							.url("$apiHost/subscribe/remove")
-							.build()
-					return@map requestJsonObject<ResponseMessage>(request) ?: ResponseMessage()
-				}
-				.subscribeOn(Schedulers.io())
-				.observeOn(AndroidSchedulers.mainThread())
+		if (apiHost.isEmpty()) return@withContext ResponseMessage()
+		val request = Request.Builder()
+				.postForm(mapOf("token" to token, "id" to number))
+				.url("$apiHost/subscribe/remove")
+				.build()
+		return@withContext requestJsonObject<ResponseMessage>(request) ?: ResponseMessage()
 	}
 
-	@JvmOverloads fun list(token: String = defaultToken): Observable<Array<String>?> {
+	@JvmOverloads
+    suspend fun list(token: String = defaultToken): Array<String> = withContext(Dispatchers.IO) {
         if (SettingsInstance.pushApiHost == null) {
-            return Observable.just(emptyArray())
+            return@withContext emptyArray<String>()
         }
-		return Observable.just("")
-				.map {
-					if (apiHost.isEmpty()) return@map emptyArray<String>()
-					val request = Request.Builder()
-							.url("$apiHost/subscribe/list?token=$token")
-							.build()
-					return@map requestJsonObject<Array<String>>(request)
-				}
-				.subscribeOn(Schedulers.io())
-				.observeOn(AndroidSchedulers.mainThread())
+        if (apiHost.isEmpty()) return@withContext emptyArray<String>()
+        val request = Request.Builder()
+                .url("$apiHost/subscribe/list?token=$token")
+                .build()
+        return@withContext requestJsonObject<Array<String>>(request) ?: emptyArray()
 	}
 
-	@JvmOverloads fun requestPush(token: String = defaultToken): Observable<ResponseMessage> {
+	@JvmOverloads
+    suspend fun requestPush(
+            token: String = defaultToken
+    ): ResponseMessage = withContext(Dispatchers.IO) {
 		if (SettingsInstance.pushApiHost == null) {
-            return Observable.just(ResponseMessage())
+            return@withContext ResponseMessage()
         }
-		return Observable.just("")
-				.map {
-					if (SettingsInstance.pushApiHost.isNullOrEmpty()) return@map ResponseMessage()
-					val request = Request.Builder()
-							.url("$apiHost/subscribe/request_push?token=$token")
-							.build()
-					return@map requestJsonObject<ResponseMessage>(request) ?: ResponseMessage()
-				}
-				.subscribeOn(Schedulers.io())
-				.observeOn(AndroidSchedulers.mainThread())
+        if (SettingsInstance.pushApiHost.isNullOrEmpty()) return@withContext ResponseMessage()
+        val request = Request.Builder()
+                .url("$apiHost/subscribe/request_push?token=$token")
+                .build()
+        return@withContext requestJsonObject<ResponseMessage>(request) ?: ResponseMessage()
 	}
 
 }

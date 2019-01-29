@@ -3,6 +3,7 @@ package info.papdt.express.helper.ui
 import android.animation.Animator
 import android.animation.ObjectAnimator
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,7 +15,6 @@ import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import cn.nekocode.rxlifecycle.RxLifecycle
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.snackbar.Snackbar
@@ -25,7 +25,7 @@ import com.scwang.smartrefresh.layout.constant.RefreshState
 import com.scwang.smartrefresh.layout.listener.OnRefreshListener
 import info.papdt.express.helper.*
 import info.papdt.express.helper.api.Kuaidi100PackageApi
-import info.papdt.express.helper.api.RxPackageApi
+import info.papdt.express.helper.api.KtPackageApi
 import info.papdt.express.helper.dao.PackageDatabase
 import info.papdt.express.helper.model.BaseMessage
 import info.papdt.express.helper.model.Kuaidi100Package
@@ -36,15 +36,12 @@ import info.papdt.express.helper.ui.adapter.HomeToolbarSpinnerAdapter
 import info.papdt.express.helper.ui.adapter.NewHomePackageListAdapter
 import info.papdt.express.helper.ui.common.AbsActivity
 import io.alterac.blurkit.FixedBlurLayout
-import io.reactivex.Observable
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import moe.feng.common.stepperview.VerticalStepperItemView
 import moe.feng.kotlinyan.common.*
 
 import info.papdt.express.helper.R
 import info.papdt.express.helper.event.EventCallbacks
+import java.lang.Exception
 
 class HomeActivity : AbsActivity(), OnRefreshListener {
 
@@ -57,6 +54,22 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
         const val STATE_ADD_PACKAGE_COMPANY = "$STATE_ADD_PACKAGE_VIEWS.company"
         const val STATE_ADD_PACKAGE_COMPANY_STATE = "$STATE_ADD_PACKAGE_VIEWS.company_state"
         const val STATE_ADD_PACKAGE_NAME = "$STATE_ADD_PACKAGE_VIEWS.name"
+
+        fun search(context: Context, number: String) {
+            val intent = Intent(context, HomeActivity::class.java)
+            intent.action = ACTION_SEARCH
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.putExtra(EXTRA_DATA, number)
+            context.startActivity(intent)
+        }
+
+        fun getSearchIntent(context: Context, number: String): Intent {
+            val intent = Intent(context, HomeActivity::class.java)
+            intent.action = ACTION_SEARCH
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.putExtra(EXTRA_DATA, number)
+            return intent
+        }
 
     }
 
@@ -107,6 +120,10 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
+        when (intent?.action) {
+
+        }
+
         if (savedInstanceState == null) {
             bottomSheet.makeGone()
             window.decorView.post {
@@ -116,8 +133,6 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
 
             listAdapter.filter = SettingsInstance.lastFilter
             listAdapter.sortType = SettingsInstance.lastSortBy
-        } else {
-
         }
 
         spinner.setSelection(listAdapter.filter)
@@ -370,19 +385,14 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
         if (refreshLayout.state != RefreshState.Refreshing) {
             refreshLayout.autoRefresh()
         }
-        Single.fromCallable {
-            packageDatabase.pullDataFromNetwork(SettingsInstance.forceUpdateAllPackages)
+        ui {
+            val task = asyncIO {
+                packageDatabase.pullDataFromNetwork(SettingsInstance.forceUpdateAllPackages)
+                packageDatabase.data
+            }
+            listAdapter.setPackages(task.await())
+            refreshLayout.finishRefresh()
         }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .compose(RxLifecycle.bind(this).withSingle())
-                .doOnDispose {
-                    refreshLayout.finishRefresh()
-                }
-                .subscribe { _, _ ->
-                    listAdapter.setPackages(packageDatabase.data)
-                    refreshLayout.finishRefresh()
-                }
     }
 
     private inner class AddPackageBottomSheetCallback : BottomSheetBehavior.BottomSheetCallback() {
@@ -586,32 +596,27 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
                 result?.name = if (nameEdit.text!!.isNotBlank())
                     nameEdit.text.toString() else String.format(getString(R.string.package_name_unnamed),
                         if (number.length >= 4) number.substring(0, 4) else number)
-                Observable.just(result!!)
-                        .compose(RxLifecycle.bind(activity).withObservable())
-                        .map { newData ->
-                            val db = PackageDatabase.getInstance(activity)
-                            db.add(newData)
-                            db.save()
-                        }
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .doOnSubscribe {
-                            detectErrorView.makeGone()
-                            detectingLayout.makeVisible()
-                        }
-                        .subscribe {
-                            onPackageAdd(result!!)
-                            bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+                ui {
+                    detectErrorView.makeGone()
+                    detectingLayout.makeVisible()
 
-                            setNumber("")
-                            companyCode = ""
-                            nameEdit.text = null
-                            currentStep = 0
-                            step0.state = VerticalStepperItemView.STATE_SELECTED
-                            step1.state = VerticalStepperItemView.STATE_NORMAL
-                            step2.state = VerticalStepperItemView.STATE_NORMAL
-                            doStep()
-                        }
+                    asyncIO {
+                        packageDatabase.add(result!!)
+                        packageDatabase.save()
+                    }.await()
+
+                    onPackageAdd(result!!)
+                    bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+
+                    setNumber("")
+                    companyCode = ""
+                    nameEdit.text = null
+                    currentStep = 0
+                    step0.state = VerticalStepperItemView.STATE_SELECTED
+                    step1.state = VerticalStepperItemView.STATE_NORMAL
+                    step2.state = VerticalStepperItemView.STATE_NORMAL
+                    doStep()
+                }
             }
 
             doStep()
@@ -635,37 +640,39 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
                     } else {
                         // Request a detection
                         if (ConnectivityReceiver.readNetworkState(activity)) {
-                            RxPackageApi.detectCompany(number, activity)
-                                    .doOnSubscribe {
-                                        detectErrorView.makeGone()
-                                        detectTryAgainButton.makeGone()
-                                        detectingLayout.makeVisible()
-                                        selectLayout.makeGone()
-                                    }
-                                    .subscribe({
-                                        step1.setErrorText(0)
-                                        when (SettingsInstance.packageApiTypeInt) {
-                                            PackageApiType.BAIDU -> {
-                                                currentStep = 2
-                                                step0.state = VerticalStepperItemView.STATE_DONE
-                                                step1.nextStep()
-                                                doStep()
-                                            }
-                                            else -> {
-                                                detectErrorView.makeGone()
-                                                detectTryAgainButton.makeGone()
-                                                detectingLayout.makeGone()
-                                                selectLayout.makeVisible()
-                                            }
+                            ui {
+                                detectErrorView.makeGone()
+                                detectTryAgainButton.makeGone()
+                                detectingLayout.makeVisible()
+                                selectLayout.makeGone()
+
+                                try {
+                                    val company = KtPackageApi.detectCompany(number)
+
+                                    step1.setErrorText(0)
+                                    when (SettingsInstance.packageApiTypeInt) {
+                                        PackageApiType.BAIDU -> {
+                                            currentStep = 2
+                                            step0.state = VerticalStepperItemView.STATE_DONE
+                                            step1.nextStep()
+                                            doStep()
                                         }
-                                        it?.let(this::setCompany)
-                                    }, { err ->
-                                        err.printStackTrace()
-                                        detectErrorView.makeVisible()
-                                        detectTryAgainButton.makeVisible()
-                                        detectingLayout.makeGone()
-                                        selectLayout.makeGone()
-                                    })
+                                        else -> {
+                                            detectErrorView.makeGone()
+                                            detectTryAgainButton.makeGone()
+                                            detectingLayout.makeGone()
+                                            selectLayout.makeVisible()
+                                        }
+                                    }
+                                    setCompany(company)
+                                } catch (e: Exception) {
+                                    e.printStackTrace()
+                                    detectErrorView.makeVisible()
+                                    detectTryAgainButton.makeVisible()
+                                    detectingLayout.makeGone()
+                                    selectLayout.makeGone()
+                                }
+                            }
                         } else {
                             step1.setErrorText(R.string.message_no_internet_connection)
                             detectErrorView.makeVisible()
@@ -677,31 +684,32 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
                 }
                 2 -> {
                     if (ConnectivityReceiver.readNetworkState(activity)) {
-                        RxPackageApi.getPackage(number, companyCode, activity)
-                                .doOnSubscribe {
-                                    addLoadingView.makeVisible()
-                                    addErrorView.makeGone()
-                                    addFinishLayout.makeGone()
-                                    step2.setErrorText(0)
-                                }
-                                .subscribe {
-                                    if (it.code == BaseMessage.CODE_OKAY && it.data?.getState() != Kuaidi100Package.STATUS_FAILED) {
-                                        addErrorView.makeGone()
-                                        addLoadingView.makeGone()
-                                        addFinishLayout.makeVisible()
-                                        result = it.data
-                                        view.findViewById<TextView>(R.id.add_message_text).text =
-                                                resources.string[R.string.message_successful_format]
-                                                        .format(number, currentCompanyText.text)
-                                    } else {
-                                        addErrorView.makeVisible()
-                                        addLoadingView.makeGone()
-                                        addFinishLayout.makeGone()
-                                        addErrorMsg.setText(R.string.message_no_found)
-                                        addErrorDesc.setText(R.string.description_no_found)
-                                        step2.setErrorText(R.string.message_no_found)
-                                    }
-                                }
+                        ui {
+                            addLoadingView.makeVisible()
+                            addErrorView.makeGone()
+                            addFinishLayout.makeGone()
+                            step2.setErrorText(0)
+
+                            val newResult = KtPackageApi.getPackage(number, companyCode)
+
+                            if (newResult.code == BaseMessage.CODE_OKAY &&
+                                    newResult.data?.getState() != Kuaidi100Package.STATUS_FAILED) {
+                                addErrorView.makeGone()
+                                addLoadingView.makeGone()
+                                addFinishLayout.makeVisible()
+                                result = newResult.data
+                                view.findViewById<TextView>(R.id.add_message_text).text =
+                                        resources.string[R.string.message_successful_format]
+                                                .format(number, currentCompanyText.text)
+                            } else {
+                                addErrorView.makeVisible()
+                                addLoadingView.makeGone()
+                                addFinishLayout.makeGone()
+                                addErrorMsg.setText(R.string.message_no_found)
+                                addErrorDesc.setText(R.string.description_no_found)
+                                step2.setErrorText(R.string.message_no_found)
+                            }
+                        }
                     } else {
                         addLoadingView.makeGone()
                         addErrorView.makeVisible()

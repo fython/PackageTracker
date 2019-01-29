@@ -82,7 +82,10 @@ class SettingsPush : AbsPrefFragment(), Preference.OnPreferenceChangeListener, P
     override fun onStop() {
         super.onStop()
         if (needRegister) {
-            PushApi.register().flatMap { PushApi.sync(database.getPackageIdList()) }.subscribe()
+            ui {
+                PushApi.register()
+                PushApi.sync(database.getPackageIdList())
+            }
         }
     }
 
@@ -121,11 +124,16 @@ class SettingsPush : AbsPrefFragment(), Preference.OnPreferenceChangeListener, P
                     okButton()
                     negativeButton(R.string.pref_copy_button) { _, _ ->
                         ClipboardUtils.putString(activity, FirebaseInstanceId.getInstance().token)
-                        makeSnackbar(resources.string[R.string.toast_copied_successfully], Snackbar.LENGTH_LONG)?.show()
+                        makeSnackbar(resources.string[R.string.toast_copied_successfully],
+                                Snackbar.LENGTH_LONG)?.show()
                     }
                     neutralButton(R.string.pref_register_button) { _, _ ->
-                        PushApi.register(FirebaseInstanceId.getInstance().token!!).subscribe {
-                            makeSnackbar(if (it.code >= 0) "Succeed" else "Failed", Snackbar.LENGTH_LONG)?.show()
+                        ui {
+                            val res = PushApi.register(FirebaseInstanceId.getInstance().token!!)
+                            makeSnackbar(
+                                    if (res.code >= 0) "Succeed" else "Failed",
+                                    Snackbar.LENGTH_LONG
+                            )?.show()
                         }
                     }
                 }.create().apply {
@@ -137,25 +145,40 @@ class SettingsPush : AbsPrefFragment(), Preference.OnPreferenceChangeListener, P
             }
             mPrefSync -> {
                 if (needRegister) {
-                    PushApi.register().flatMap {
-                        PushApi.sync(database.getPackageIdList())
-                    }.subscribe {
-                        makeSnackbar(if (it.code >= 0) "Succeed" else "Failed", Snackbar.LENGTH_LONG)?.show()
+                    ui {
+                        PushApi.register()
+                        val result = PushApi.sync(database.getPackageIdList())
+                        makeSnackbar(
+                                if (result.code >= 0) "Succeed" else "Failed",
+                                Snackbar.LENGTH_LONG
+                        )?.show()
                     }
                     needRegister = false
-                } else PushApi.sync(database.getPackageIdList())
-                        .subscribe {
-                            makeSnackbar(if (it.code >= 0) "Succeed" else "Failed", Snackbar.LENGTH_LONG)?.show()
-                        }
+                } else {
+                    ui {
+                        val result = PushApi.sync(database.getPackageIdList())
+                        makeSnackbar(
+                                if (result.code >= 0) "Succeed" else "Failed",
+                                Snackbar.LENGTH_LONG
+                        )?.show()
+                    }
+                }
                 true
             }
             mPrefReqPush -> {
                 if (needRegister) {
-                    PushApi.register().flatMap { PushApi.requestPush() }.subscribe {
-                        makeSnackbar(it.message, Snackbar.LENGTH_LONG)?.show()
+                    ui {
+                        PushApi.register()
+                        val result = PushApi.requestPush()
+                        makeSnackbar(result.message, Snackbar.LENGTH_LONG)?.show()
                     }
                     needRegister = false
-                } else PushApi.requestPush().subscribe { makeSnackbar(it.message, Snackbar.LENGTH_LONG)?.show() }
+                } else {
+                    ui {
+                        val result = PushApi.requestPush()
+                        makeSnackbar(result.message, Snackbar.LENGTH_LONG)?.show()
+                    }
+                }
                 true
             }
             mPrefWhatsThis -> {

@@ -20,6 +20,7 @@ import android.widget.ImageView
 import info.papdt.express.helper.R
 import info.papdt.express.helper.support.ScreenUtils
 import info.papdt.express.helper.support.Settings
+import info.papdt.express.helper.ui.HomeActivity
 import moe.feng.kotlinyan.common.*
 import java.util.ArrayList
 
@@ -85,9 +86,10 @@ class ClipboardDetectService : Service(), ClipboardManager.OnPrimaryClipChangedL
 	private fun initPopupView() {
 		mIconView = mLayout.findViewById(R.id.icon_view)
 		mLayout.setOnClickListener { view ->
-			// TODO New Home
-			// MainActivity.search(view.context, mLastNumber)
-			mHandler.sendEmptyMessage(0)
+			mLastNumber?.let {
+				HomeActivity.search(view.context, it)
+				mHandler.sendEmptyMessage(0)
+			}
 		}
 		mLayout.setOnTouchListener(object : View.OnTouchListener {
 			private var lastY: Float = 0.toFloat()

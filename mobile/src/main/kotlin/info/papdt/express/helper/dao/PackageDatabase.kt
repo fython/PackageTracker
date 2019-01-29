@@ -18,6 +18,9 @@ import info.papdt.express.helper.model.BaseMessage
 import info.papdt.express.helper.model.Kuaidi100Package
 import info.papdt.express.helper.support.FileUtils
 import info.papdt.express.helper.support.SettingsInstance
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class PackageDatabase private constructor(private val mContext: Context) {
 
@@ -56,7 +59,7 @@ class PackageDatabase private constructor(private val mContext: Context) {
 
 	fun restoreData(json: String) {
 		this.data = Gson().fromJson(json, PackageDatabase::class.java).data
-		PushApi.sync(getPackageIdList()).subscribe()
+		CoroutineScope(Dispatchers.IO).launch { PushApi.sync(getPackageIdList()) }
 		refreshList()
 	}
 
@@ -95,14 +98,14 @@ class PackageDatabase private constructor(private val mContext: Context) {
     @Synchronized
 	fun add(pack: Kuaidi100Package) {
 		data.add(pack)
-		PushApi.add(pack.number!!, pack.companyType).subscribe()
+		CoroutineScope(Dispatchers.IO).launch { PushApi.add(pack.number!!, pack.companyType) }
 		refreshList()
 	}
 
     @Synchronized
 	fun add(index: Int, pack: Kuaidi100Package) {
 		data.add(index, pack)
-		PushApi.add(pack.number!!, pack.companyType).subscribe()
+		CoroutineScope(Dispatchers.IO).launch { PushApi.add(pack.number!!, pack.companyType) }
 		refreshList()
 	}
 
@@ -116,7 +119,7 @@ class PackageDatabase private constructor(private val mContext: Context) {
 	fun remove(index: Int) {
 		val removedItem = data.removeAt(index)
 
-		PushApi.remove(removedItem.number!!).subscribe()
+		CoroutineScope(Dispatchers.IO).launch { PushApi.remove(removedItem.number!!) }
 
 		lastRemovedData = removedItem
 		lastRemovedPosition = index
@@ -179,7 +182,9 @@ class PackageDatabase private constructor(private val mContext: Context) {
 	fun getPackageIdList(): List<String> = data.map { "${it.number}+${it.companyType}" }
 
 	fun pullDataFromNetwork(shouldRefreshDelivered: Boolean) {
-		if (SettingsInstance.enablePush) PushApi.sync(getPackageIdList()).subscribe()
+		if (SettingsInstance.enablePush) {
+			CoroutineScope(Dispatchers.IO).launch { PushApi.sync(getPackageIdList()) }
+		}
 		for (i in 0 until size()) {
 			val pack = this[i]
 			if (!shouldRefreshDelivered && pack.getState() == Kuaidi100Package.STATUS_DELIVERED) {

@@ -38,7 +38,7 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     // wearApp project(':wear')
 
-    implementation 'androidx.multidex:multidex:2.0.0'
+    implementation 'androidx.multidex:multidex:2.0.1'
 
     // Kotlin & Kotlinyan
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
@@ -76,11 +76,6 @@ dependencies {
     implementation 'com.getkeepsafe.taptargetview:taptargetview:1.11.0'
     implementation 'me.dm7.barcodescanner:zxing:1.9.8'
     implementation 'io.alterac.blurkit:blurkit:1.0.0'
-
-    // Reactive X
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.4'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.0'
-    implementation 'com.github.nekocode.rxlifecycle:rxlifecycle:1.1'
 
     // Utils
     api 'com.tencent.bugly:crashreport:2.6.6.1'

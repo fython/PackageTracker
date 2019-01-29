@@ -15,9 +15,9 @@ import java.util.ArrayList
 import info.papdt.express.helper.model.BaseMessage
 import info.papdt.express.helper.model.Kuaidi100Package
 import info.papdt.express.helper.support.HttpUtils
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 /**
  * @author Fung Go (fython@163.com)
@@ -38,7 +38,8 @@ object Kuaidi100PackageApi {
 	 * @param number Kuaidi100Package number
 	 * @return query url
 	 */
-	@JvmStatic fun getQueryUrl(com: String?, number: String): String {
+	@JvmStatic
+	fun getQueryUrl(com: String?, number: String): String {
 		val url = String.format(QUERY_URL, com, number)
 		Log.i(TAG, "query url: " + url)
 		return url
@@ -48,7 +49,8 @@ object Kuaidi100PackageApi {
 	 * @param number The number of package which you want to get its company
 	 * @return company code query url
 	 */
-	@JvmStatic fun getCompantDetectUrl(number: String): String {
+	@JvmStatic
+    fun getCompantDetectUrl(number: String): String {
 		return String.format(COMPANY_DETECT_URL, number)
 	}
 
@@ -56,7 +58,8 @@ object Kuaidi100PackageApi {
 	 * @param number The number of package which you want to get its company
 	 * @return company code
 	 */
-	@JvmStatic fun detectCompanyByNumber(number: String): String? {
+	@JvmStatic
+    fun detectCompanyByNumber(number: String): String? {
 		val message = HttpUtils.getString(getCompantDetectUrl(number), false)
 		return if (message.code == BaseMessage.CODE_OKAY) {
 			try {
@@ -77,7 +80,8 @@ object Kuaidi100PackageApi {
 		}
 	}
 
-	@JvmStatic val companyList: ArrayList<CompanyInfo.Company>?
+	@JvmStatic
+    val companyList: ArrayList<CompanyInfo.Company>?
 			// return data may not be json
 		get() {
 			val message = HttpUtils.getString(COMPANY_LIST_URL, false)
@@ -114,7 +118,8 @@ object Kuaidi100PackageApi {
 	 * @param number The number of package which you want to query
 	 * @return Kuaidi100Package and status code
 	 */
-	@JvmStatic fun getPackageByNumber(number: String): BaseMessage<out Kuaidi100Package?> {
+	@JvmStatic
+    fun getPackageByNumber(number: String): BaseMessage<out Kuaidi100Package?> {
 		val comcode = detectCompanyByNumber(number)
 		return getPackage(comcode, number)
 	}
@@ -124,7 +129,8 @@ object Kuaidi100PackageApi {
 	 * @param number The number of package
 	 * @return Kuaidi100Package and status code
 	 */
-	@JvmStatic fun getPackage(comcode: String?, number: String): BaseMessage<out Kuaidi100Package?> {
+	@JvmStatic
+    fun getPackage(comcode: String?, number: String): BaseMessage<out Kuaidi100Package?> {
 		val message = HttpUtils.getString(getQueryUrl(comcode, number), false)
 		return if (message.code == BaseMessage.CODE_OKAY) {
 			try {
@@ -148,7 +154,8 @@ object Kuaidi100PackageApi {
 	}
 
 	/** Filter companies by keyword  */
-	@JvmStatic fun searchCompany(keyword: String?): ArrayList<CompanyInfo.Company>? {
+	@JvmStatic
+    fun searchCompany(keyword: String?): ArrayList<CompanyInfo.Company>? {
 		val keywordPy = ZHConverter.convert(keyword, ZHConverter.SIMPLIFIED)
 		val src = ArrayList<CompanyInfo.Company>()
 		if (keywordPy != null && keywordPy.trim { it <= ' ' }.isNotEmpty()) {
@@ -861,18 +868,16 @@ object Kuaidi100PackageApi {
 			info!!.add(Company("欧亚专线", "euasia", "", ""))
 			info!!.add(Company("远成快运", "ycgky", "", ""))
 
-			Single.fromCallable { companyList }
-					.subscribeOn(Schedulers.io())
-					.observeOn(AndroidSchedulers.mainThread())
-					.subscribe { res, err ->
-						err?.printStackTrace()
-						res?.let {
-							info = res
-							initNamesAndPinyin()
-						}
-					}
-
 			initNamesAndPinyin()
+
+            // TODO Change a normal way to update company
+            CoroutineScope(Dispatchers.IO).launch {
+                val result = companyList
+                if (result != null) {
+                    info = result
+                    initNamesAndPinyin()
+                }
+            }
 		}
 
 		fun initNamesAndPinyin() {

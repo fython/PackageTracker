@@ -1,6 +1,5 @@
 package info.papdt.express.helper.ui
 
-import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Intent
@@ -48,11 +47,12 @@ class ImportExportActivity : AbsActivity() {
 				Snackbar.make(findViewById(R.id.container)!!, R.string.toast_list_empty, Snackbar.LENGTH_SHORT)
 						.show()
 			} else {
-				BackupApi.share().subscribe { text ->
+				ui {
 					val intent = Intent(Intent.ACTION_SEND)
 					intent.type = "text/plain"
-					intent.putExtra(Intent.EXTRA_TEXT, text)
-					startActivity(Intent.createChooser(intent, getString(R.string.dialog_share_title)))
+					intent.putExtra(Intent.EXTRA_TEXT, BackupApi.share())
+					startActivity(Intent.createChooser(
+							intent, getString(R.string.dialog_share_title)))
 				}
 			}
 		}
@@ -66,64 +66,64 @@ class ImportExportActivity : AbsActivity() {
 
 	public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
 		if (requestCode == REQUEST_WRITE_BACKUP_FILE && resultCode == Activity.RESULT_OK && data != null) {
-			BackupApi.backup(data.data)
-					.doOnSubscribe {
-						progressDialog = ProgressDialog(this@ImportExportActivity).apply {
-							setMessage(getString(R.string.dialog_backup_title))
-							setCancelable(false)
-						}
-						progressDialog?.show()
-					}
-					.subscribe { isSucceed ->
-						progressDialog?.dismiss()
-						if (isSucceed) {
-							Snackbar.make(
-									findViewById(R.id.container)!!, R.string.toast_backup_succeed, Snackbar.LENGTH_LONG
-							).setAction(R.string.toast_backup_send_action) {
-								ShareCompat.IntentBuilder.from(this@ImportExportActivity)
-										.addStream(data.data)
-										.setType("text/*")
-										.startChooser()
-							}.show()
-						} else {
-							Snackbar.make(
-									findViewById(R.id.container)!!, R.string.toast_backup_failed, Snackbar.LENGTH_LONG
-							).show()
-						}
-					}
+			ui {
+				progressDialog = ProgressDialog(this@ImportExportActivity).apply {
+					setMessage(getString(R.string.dialog_backup_title))
+					setCancelable(false)
+				}
+				progressDialog?.show()
+				if (BackupApi.backup(data.data!!)) {
+					Snackbar.make(
+							findViewById(R.id.container)!!,
+							R.string.toast_backup_succeed,
+							Snackbar.LENGTH_LONG
+					).setAction(R.string.toast_backup_send_action) {
+						ShareCompat.IntentBuilder.from(this@ImportExportActivity)
+								.addStream(data.data)
+								.setType("text/*")
+								.startChooser()
+					}.show()
+				} else {
+					Snackbar.make(
+							findViewById(R.id.container)!!,
+							R.string.toast_backup_failed,
+							Snackbar.LENGTH_LONG
+					).show()
+				}
+				progressDialog?.dismiss()
+			}
 		}
 		if (requestCode == REQUEST_OPEN_FILE_RESTORE && resultCode == Activity.RESULT_OK && data != null) {
-			BackupApi.restore(data.data)
-					.doOnSubscribe {
-						progressDialog = ProgressDialog(this@ImportExportActivity).apply {
-							setMessage(getString(R.string.dialog_restoring_title))
-							setCancelable(false)
-						}
-						progressDialog?.show()
-					}
-					.subscribe { isSucceed ->
-						progressDialog?.dismiss()
-						if (!isSucceed) {
-							Snackbar.make(
-									findViewById(R.id.container)!!, R.string.toast_restore_failed, Snackbar.LENGTH_LONG
-							).show()
-						} else {
-							buildAlertDialog {
-								titleRes = R.string.dialog_restored_title
-								messageRes = R.string.dialog_restored_message
-								isCancelable = false
-								positiveButton(R.string.dialog_restored_restart_button) { _, _ ->
-									val intent = packageManager
-											.getLaunchIntentForPackage(packageName)
-									val componentName = intent.component
-									val i = Intent.makeRestartActivityTask(componentName)
-									startActivity(i)
+			ui {
+				progressDialog = ProgressDialog(this@ImportExportActivity).apply {
+					setMessage(getString(R.string.dialog_restoring_title))
+					setCancelable(false)
+				}
+				progressDialog?.show()
+				if (BackupApi.restore(data.data!!)) {
+					buildAlertDialog {
+						titleRes = R.string.dialog_restored_title
+						messageRes = R.string.dialog_restored_message
+						isCancelable = false
+						positiveButton(R.string.dialog_restored_restart_button) { _, _ ->
+							val intent = packageManager
+									.getLaunchIntentForPackage(packageName)
+							val componentName = intent!!.component
+							val i = Intent.makeRestartActivityTask(componentName)
+							startActivity(i)
 
-									System.exit(0)
-								}
-							}.show()
+							System.exit(0)
 						}
-					}
+					}.show()
+				} else {
+					Snackbar.make(
+							findViewById(R.id.container)!!,
+							R.string.toast_restore_failed,
+							Snackbar.LENGTH_LONG
+					).show()
+				}
+				progressDialog?.dismiss()
+			}
 		}
 	}
 

@@ -18,7 +18,6 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
-import cn.nekocode.rxlifecycle.RxLifecycle
 
 import info.papdt.express.helper.R
 import info.papdt.express.helper.REQUEST_DETAILS
@@ -35,9 +34,6 @@ import info.papdt.express.helper.ui.items.DetailsStatusItemBinder
 import info.papdt.express.helper.ui.items.DetailsTwoLineItem
 import info.papdt.express.helper.ui.items.DetailsTwoLineItemBinder
 import info.papdt.express.helper.ui.items.SubheaderItemBinder
-import io.reactivex.Observable
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import me.drakeet.multitype.Items
 import me.drakeet.multitype.MultiTypeAdapter
 import moe.feng.kotlinyan.common.*
@@ -83,11 +79,9 @@ class DetailsActivity : AbsActivity() {
 	}
 
 	override fun onCreate(savedInstanceState: Bundle?) {
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-			window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
-                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-			window.statusBarColor = Color.TRANSPARENT
-		}
+		window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+				View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+		window.statusBarColor = Color.TRANSPARENT
 
 		super.onCreate(savedInstanceState)
 
@@ -179,32 +173,28 @@ class DetailsActivity : AbsActivity() {
 				return true
 			}
 			R.id.action_refresh -> {
-				Observable.just("")
-						.compose(RxLifecycle.bind(this).withObservable())
-						.map {
-							val newPack = PackageApi.getPackage(data!!.number!!, data!!.companyType)
-							if (newPack.code != BaseMessage.CODE_OKAY || newPack.data?.data == null) {
-								false
-							} else {
-								data!!.applyNewData(newPack.data)
-								val db = PackageDatabase.getInstance(applicationContext)
-								db[db.indexOf(data!!.number!!)] = data!!
-								db.save()
-								true
-							}
+				ui {
+					progressDialog.show()
+					val result = asyncIO {
+						val newPack = PackageApi.getPackage(data!!.number!!, data!!.companyType)
+						if (newPack.code != BaseMessage.CODE_OKAY || newPack.data?.data == null) {
+							false
+						} else {
+							data!!.applyNewData(newPack.data)
+							val db = PackageDatabase.getInstance(applicationContext)
+							db[db.indexOf(data!!.number!!)] = data!!
+							db.save()
+							true
 						}
-						.subscribeOn(Schedulers.io())
-						.observeOn(AndroidSchedulers.mainThread())
-						.doOnSubscribe { progressDialog.show() }
-						.subscribe { isSucceed ->
-							progressDialog.dismiss()
-							if (isSucceed) {
-								val intent = Intent()
-								intent["id"] = data!!.number
-								setResult(RESULT_RENAMED, intent)
-								setUpData()
-							}
-						}
+					}.await()
+					progressDialog.dismiss()
+					if (result) {
+						val intent = Intent()
+						intent["id"] = data!!.number
+						setResult(RESULT_RENAMED, intent)
+						setUpData()
+					}
+				}
 				return true
 			}
 			else -> return super.onOptionsItemSelected(item)

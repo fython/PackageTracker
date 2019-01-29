@@ -10,12 +10,17 @@ import androidx.core.content.ContextCompat
 import info.papdt.express.helper.R
 import info.papdt.express.helper.support.Settings
 import info.papdt.express.helper.ui.SettingsActivity
+import kotlinx.coroutines.*
 import moe.shizuku.preference.Preference
 import moe.shizuku.preference.PreferenceFragment
+import kotlin.coroutines.CoroutineContext
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
-abstract class AbsPrefFragment : PreferenceFragment() {
+abstract class AbsPrefFragment : PreferenceFragment(), CoroutineScope {
+
+	private lateinit var job: Job
+	override val coroutineContext: CoroutineContext get() = Dispatchers.Main + job
 
 	lateinit var settings: Settings
 
@@ -24,7 +29,13 @@ abstract class AbsPrefFragment : PreferenceFragment() {
 	override fun onCreate(savedInstanceState: Bundle?) {
 		settings = Settings.getInstance(activity!!.applicationContext)
 		super.onCreate(savedInstanceState)
+        job = Job()
 	}
+
+    override fun onDestroy() {
+        super.onDestroy()
+        job.cancel()
+    }
 
 	fun makeSnackbar(message: String, duration: Int): Snackbar? {
 		return parentActivity?.makeSnackbar(message, duration)
@@ -48,6 +59,28 @@ abstract class AbsPrefFragment : PreferenceFragment() {
 		builder.setToolbarColor(ContextCompat.getColor(activity!!, R.color.pink_500))
 		builder.build().launchUrl(activity, Uri.parse(url))
 	}
+
+    fun ui(block: suspend CoroutineScope.() -> Unit) {
+        launch(coroutineContext, block = {
+            try {
+                block()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                throw e
+            }
+        })
+    }
+
+    fun <T> asyncIO(block: suspend CoroutineScope.() -> T): Deferred<T> {
+        return async(Dispatchers.IO, block = {
+            try {
+                block()
+            } catch (e: Exception) {
+                e.printStackTrace()
+                throw e
+            }
+        })
+    }
 
 	class PreferenceProperty<out T: Preference>(private val key: String): ReadOnlyProperty<PreferenceFragment, T> {
 

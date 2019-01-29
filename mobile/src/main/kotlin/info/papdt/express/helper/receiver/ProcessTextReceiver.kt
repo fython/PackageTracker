@@ -5,10 +5,10 @@ import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import androidx.annotation.RequiresApi
-import android.text.TextUtils
 import android.widget.Toast
 import info.papdt.express.helper.R
 import info.papdt.express.helper.services.ClipboardDetectService
+import info.papdt.express.helper.ui.HomeActivity
 import moe.feng.kotlinyan.common.get
 
 /**
@@ -26,11 +26,11 @@ class ProcessTextReceiver : Activity() {
 
         val lastNumber = receivedText?.let(ClipboardDetectService.Companion::getPackageNumber)
 
-        if (TextUtils.isEmpty(lastNumber)) {
-            Toast.makeText(this, R.string.toast_process_text_failed, Toast.LENGTH_LONG).show()
+        if (lastNumber.isNullOrBlank()) {
+            Toast.makeText(this,
+                    R.string.toast_process_text_failed, Toast.LENGTH_LONG).show()
         } else {
-            // TODO New Home
-            // MainActivity.search(this, lastNumber)
+            HomeActivity.search(this, lastNumber)
         }
 
         finish()
