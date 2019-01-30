@@ -342,7 +342,7 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
             }
             REQUEST_CODE_CHOOSE_COMPANY -> {
                 if (RESULT_OK == resultCode) {
-                    val companyCode = intent!![RESULT_EXTRA_COMPANY_CODE]!!.asString()
+                    val companyCode = data!![RESULT_EXTRA_COMPANY_CODE]!!.asString()
                     addPackageViewHolder.setCompany(companyCode)
                 }
             }

@@ -32,7 +32,12 @@
 			android:id="@+id/recycler_view"
 			android:paddingTop="8dp"
 			android:paddingBottom="8dp"
-			android:clipToPadding="false"/>
+			android:clipToPadding="false"
+			app:fastScrollEnabled="true"
+			app:fastScrollHorizontalThumbDrawable="@drawable/fastscroll_thumb_drawable"
+			app:fastScrollHorizontalTrackDrawable="@drawable/fastscroll_line_drawable"
+			app:fastScrollVerticalThumbDrawable="@drawable/fastscroll_thumb_drawable"
+			app:fastScrollVerticalTrackDrawable="@drawable/fastscroll_line_drawable"/>
 
 		<LinearLayout
 			android:layout_width="wrap_content"
