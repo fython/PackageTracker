@@ -9,6 +9,7 @@ import androidx.appcompat.widget.AppCompatTextView
 import androidx.recyclerview.widget.RecyclerView
 import android.text.style.ForegroundColorSpan
 import android.view.*
+import android.widget.ImageView
 import android.widget.TextView
 import de.hdodenhof.circleimageview.CircleImageView
 import info.papdt.express.helper.R
@@ -90,6 +91,17 @@ object PackageItemViewBinder
             holder.logoView.setImageDrawable(
                     ColorDrawable(ColorGenerator.MATERIAL.getColor(item.companyChineseName!!)))
         }
+
+        holder.statusIcon.setImageResource(when (item.getState()) {
+            Kuaidi100Package.STATUS_FAILED -> R.drawable.ic_error_outline_black_24dp
+            Kuaidi100Package.STATUS_DELIVERED -> R.drawable.ic_done_black_24dp
+            Kuaidi100Package.STATUS_RETURNED -> R.drawable.ic_done_black_24dp
+            Kuaidi100Package.STATUS_NORMAL -> R.drawable.ic_local_shipping_black_24dp
+            Kuaidi100Package.STATUS_ON_THE_WAY -> R.drawable.ic_local_shipping_black_24dp
+            Kuaidi100Package.STATUS_RETURNING -> R.drawable.ic_local_shipping_black_24dp
+            Kuaidi100Package.STATUS_OTHER -> R.drawable.ic_help_outline_black_24dp
+            else -> R.drawable.ic_help_outline_black_24dp
+        })
     }
 
     class ViewHolder(itemView: View)
@@ -100,6 +112,7 @@ object PackageItemViewBinder
         internal val descText: AppCompatTextView = itemView.findViewById(R.id.tv_other)
         internal val timeText: AppCompatTextView = itemView.findViewById(R.id.tv_time)
         internal val bigCharView: TextView = itemView.findViewById(R.id.tv_first_char)
+        internal val statusIcon: ImageView = itemView.findViewById(R.id.status_icon)
 
         val containerView: View = itemView.findViewById(R.id.item_container)
 

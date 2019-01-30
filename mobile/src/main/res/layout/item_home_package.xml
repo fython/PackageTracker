@@ -16,16 +16,16 @@
 
         <FrameLayout
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp">
+            android:layout_height="wrap_content">
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:layout_width="64dp"
                 android:layout_height="64dp"
                 android:layout_gravity="center"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
                 android:id="@+id/iv_logo"
                 tools:src="@color/pink_700"/>
 
@@ -37,6 +37,22 @@
                 android:textSize="32sp"
                 android:textColor="@android:color/white"
                 tools:text="A"/>
+
+            <ImageView
+                android:id="@+id/status_icon"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:padding="4dp"
+                android:layout_gravity="bottom|end"
+                android:importantForAccessibility="no"
+                android:background="@drawable/package_status_icon_circle_drawable"
+                android:outlineProvider="background"
+                android:tint="?android:attr/colorAccent"
+                android:tintMode="src_in"
+                android:elevation="4dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="16dp"
+                tools:src="@drawable/ic_local_shipping_black_24dp"/>
 
         </FrameLayout>
 

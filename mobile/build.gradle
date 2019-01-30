@@ -73,7 +73,6 @@ dependencies {
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-14'
     implementation 'moe.feng:MaterialStepperView:0.2.4.2'
-    implementation 'com.getkeepsafe.taptargetview:taptargetview:1.11.0'
     implementation 'me.dm7.barcodescanner:zxing:1.9.8'
     implementation 'io.alterac.blurkit:blurkit:1.0.0'
 
