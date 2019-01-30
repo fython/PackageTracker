@@ -2,7 +2,6 @@ package info.papdt.express.helper.ui.fragment.settings
 
 import android.os.Bundle
 import info.papdt.express.helper.R
-import info.papdt.express.helper.support.LauncherIconUtils
 import info.papdt.express.helper.support.Settings
 import info.papdt.express.helper.support.SettingsInstance
 import moe.shizuku.preference.ListPreference
@@ -14,10 +13,8 @@ class SettingsUi : AbsPrefFragment(), Preference.OnPreferenceChangeListener, Pre
     // User interface preference
     private val mPrefNightMode: ListPreference
             by PreferenceProperty("night_mode")
-    private val mPrefShowTipsAgain: Preference
-            by PreferenceProperty("show_tips_again")
-    private val mPrefDarkIcon: SwitchPreference?
-            by NullablePreferenceProperty("dark_launcher_icon")
+    private val mPrefShowTipsAgain: Preference?
+            by NullablePreferenceProperty("show_tips_again")
     private val mPrefBlurOnAddDialogBg: SwitchPreference
             by PreferenceProperty("enable_blur_on_add_dialog_background")
 
@@ -29,13 +26,11 @@ class SettingsUi : AbsPrefFragment(), Preference.OnPreferenceChangeListener, Pre
             mPrefNightMode.setValueIndex(target)
         }
 
-        mPrefDarkIcon?.isChecked = LauncherIconUtils.isDarkLauncherIcon(activity!!)
         mPrefBlurOnAddDialogBg.isChecked = SettingsInstance.enableAddDialogBackgroundBlur
 
         // UI
         mPrefNightMode.onPreferenceChangeListener = this
-        mPrefShowTipsAgain.onPreferenceClickListener = this
-        mPrefDarkIcon?.onPreferenceChangeListener = this
+        mPrefShowTipsAgain?.onPreferenceClickListener = this
         mPrefBlurOnAddDialogBg.onPreferenceChangeListener = this
     }
 
@@ -58,11 +53,6 @@ class SettingsUi : AbsPrefFragment(), Preference.OnPreferenceChangeListener, Pre
                 val value = Integer.parseInt(newValue as String)
                 settings.putInt(Settings.KEY_NIGHT_MODE, value)
                 makeRestartTips()
-                true
-            }
-            mPrefDarkIcon -> {
-                val value = newValue as Boolean
-                LauncherIconUtils.setDarkLauncherIcon(activity!!, value)
                 true
             }
             mPrefBlurOnAddDialogBg -> {

@@ -14,15 +14,8 @@
             android:title="@string/pref_enable_blur_on_add_dialog_background"
             android:summary="@string/pref_enable_blur_on_add_dialog_background_summary"/>
 
-        <SwitchPreference android:key="dark_launcher_icon"
-            android:title="@string/item_dark_launcher_icon"
-            android:summary="@string/item_dark_launcher_summary"
-            android:enabled="@bool/is_adaptive_icon_supported"
-            android:defaultValue="false"
-            android:visibility="gone"/>
-
-        <Preference android:key="show_tips_again"
-            android:title="@string/pref_show_tips_again"/>
+        <!-- Preference android:key="show_tips_again"
+            android:title="@string/pref_show_tips_again"/> -->
 
     </PreferenceCategory>
 
