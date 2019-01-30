@@ -42,7 +42,6 @@
         android:layout_height="match_parent"
         android:background="@drawable/details_list_background"
         android:clipToPadding="false"
-        android:elevation="4dp"
         android:paddingTop="16dp"
         android:paddingBottom="16dp"
         app:layout_behavior=".view.ScrollingViewWithBottomBarBehavior" />
