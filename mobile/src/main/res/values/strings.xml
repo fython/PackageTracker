@@ -88,6 +88,8 @@
 	<string name="dialog_explanation_permission_pos_btn">Go to Settings</string>
 	<string name="toast_permission_denied">Permission denied. Cannot start scanner.</string>
 	<string name="toast_permission_denied_action">Settings</string>
+	<string name="action_choose_from_gallery">Choose from gallery</string>
+    <string name="toast_cannot_find_any_barcode">Cannot find any barcode.</string>
 
 	<!-- Widget ButtonBar -->
 	<string name="buttonbar_default_left">PREVIOUS</string>

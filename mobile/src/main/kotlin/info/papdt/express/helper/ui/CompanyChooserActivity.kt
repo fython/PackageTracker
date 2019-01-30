@@ -69,39 +69,36 @@ class CompanyChooserActivity : AbsActivity() {
 
 	@SuppressLint("NewApi")
 	override fun onCreate(savedInstanceState: Bundle?) {
-		ifSupportSDK (Build.VERSION_CODES.LOLLIPOP) {
-			var flag = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !isNightMode) {
-				flag = flag or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-			}
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1 && settings.getBoolean(Settings.KEY_NAVIGATION_TINT, true) && !isNightMode) {
-				flag = flag or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
-			}
-			window.decorView.systemUiVisibility = flag
-			window.statusBarColor = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-				Color.TRANSPARENT else resources.color[R.color.lollipop_status_bar_grey]
-		}
+        var flag = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && !isNightMode) {
+            flag = flag or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1 && !isNightMode) {
+            flag = flag or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+        }
+        window.decorView.systemUiVisibility = flag
+        window.statusBarColor = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            Color.TRANSPARENT else resources.color[R.color.lollipop_status_bar_grey]
 
 		super.onCreate(savedInstanceState)
 
-		if (settings.getBoolean(Settings.KEY_NAVIGATION_TINT, true)) {
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !isNightMode) {
-				window.navigationBarColor = resources.color[R.color.lollipop_status_bar_grey]
-			}
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-				if (!isNightMode) {
-					window.navigationBarColor = Color.WHITE
-					ifSupportSDK (Build.VERSION_CODES.P) {
-						window.navigationBarDividerColor = Color.argb(30, 0, 0, 0)
-					}
-				} else {
-					window.navigationBarColor = ResourcesUtils.getColorIntFromAttr(theme, android.R.attr.windowBackground)
-					ifSupportSDK (Build.VERSION_CODES.P) {
-						window.navigationBarDividerColor = Color.argb(60, 255, 255, 255)
-					}
-				}
-			}
-		}
+        if (!isNightMode) {
+            window.navigationBarColor = resources.color[R.color.lollipop_status_bar_grey]
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            if (!isNightMode) {
+                window.navigationBarColor = Color.WHITE
+                ifSupportSDK (Build.VERSION_CODES.P) {
+                    window.navigationBarDividerColor = Color.argb(30, 0, 0, 0)
+                }
+            } else {
+                window.navigationBarColor = ResourcesUtils.getColorIntFromAttr(
+                        theme, android.R.attr.windowBackground)
+                ifSupportSDK (Build.VERSION_CODES.P) {
+                    window.navigationBarDividerColor = Color.argb(60, 255, 255, 255)
+                }
+            }
+        }
 
 		data = Kuaidi100PackageApi.CompanyInfo.info
 

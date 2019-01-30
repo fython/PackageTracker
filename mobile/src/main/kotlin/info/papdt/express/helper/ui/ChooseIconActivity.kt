@@ -11,7 +11,6 @@ import androidx.annotation.RequiresApi
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.text.Editable
 import android.text.TextWatcher
@@ -35,28 +34,27 @@ class ChooseIconActivity : AbsActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (settings.getBoolean(Settings.KEY_NAVIGATION_TINT, true)) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP && !isNightMode) {
-                window.navigationBarColor = resources.color[R.color.lollipop_status_bar_grey]
-            }
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
-                if (!isNightMode) {
-                    window.navigationBarColor = Color.WHITE
-                    ifSupportSDK (Build.VERSION_CODES.P) {
-                        window.navigationBarDividerColor = Color.argb(30, 0, 0, 0)
-                    }
-                } else {
-                    window.navigationBarColor = ResourcesUtils.getColorIntFromAttr(theme, android.R.attr.windowBackground)
-                    ifSupportSDK (Build.VERSION_CODES.P) {
-                        window.navigationBarDividerColor = Color.argb(60, 255, 255, 255)
-                    }
+        if (!isNightMode) {
+            window.navigationBarColor = resources.color[R.color.lollipop_status_bar_grey]
+        }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1) {
+            if (!isNightMode) {
+                window.navigationBarColor = Color.WHITE
+                ifSupportSDK (Build.VERSION_CODES.P) {
+                    window.navigationBarDividerColor = Color.argb(30, 0, 0, 0)
+                }
+            } else {
+                window.navigationBarColor = ResourcesUtils.getColorIntFromAttr(
+                        theme, android.R.attr.windowBackground)
+                ifSupportSDK (Build.VERSION_CODES.P) {
+                    window.navigationBarDividerColor = Color.argb(60, 255, 255, 255)
                 }
             }
         }
 
         setContentView(R.layout.activity_icon_choose)
 
-        if (savedInstanceState == null && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+        if (savedInstanceState == null) {
             rootLayout.makeInvisible()
 
             val viewTreeObserver = rootLayout.viewTreeObserver
@@ -64,21 +62,24 @@ class ChooseIconActivity : AbsActivity() {
                 viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
                     override fun onGlobalLayout() {
                         Handler().postDelayed({
-                            ifSupportSDK (Build.VERSION_CODES.LOLLIPOP) {
-                                overridePendingTransition(R.anim.do_not_move, R.anim.do_not_move)
-                                var flag = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                                if (!isNightMode) {
-                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                                        flag = flag or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-                                    }
-                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1 && settings.getBoolean(Settings.KEY_NAVIGATION_TINT, true) && !isNightMode) {
-                                        flag = flag or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
-                                    }
+                            overridePendingTransition(R.anim.do_not_move, R.anim.do_not_move)
+                            var flag = View.SYSTEM_UI_FLAG_LAYOUT_STABLE or
+                                    View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            if (!isNightMode) {
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                    flag = flag or View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
                                 }
-                                window.decorView.systemUiVisibility = flag
-                                window.statusBarColor = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
-                                    Color.TRANSPARENT else resources.color[R.color.lollipop_status_bar_grey]
+                                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O_MR1
+                                        && !isNightMode) {
+                                    flag = flag or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+                                }
                             }
+                            window.decorView.systemUiVisibility = flag
+                            window.statusBarColor =
+                                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+                                        Color.TRANSPARENT
+                                    else
+                                        resources.color[R.color.lollipop_status_bar_grey]
                             circularRevealActivity()
                         }, 100)
                         rootLayout.viewTreeObserver.removeOnGlobalLayoutListener(this)
@@ -106,7 +107,8 @@ class ChooseIconActivity : AbsActivity() {
 
         /** Set up company list  */
         mList.setHasFixedSize(true)
-        mList.layoutManager = GridLayoutManager(this, 4, GridLayoutManager.VERTICAL, false)
+        mList.layoutManager = GridLayoutManager(
+                this, 4, RecyclerView.VERTICAL, false)
 
         mAdapter.callback = {
             setResult(RESULT_OK, Intent().apply { putExtra(EXTRA_RESULT_ICON_CODE, it) })
@@ -129,7 +131,8 @@ class ChooseIconActivity : AbsActivity() {
         val finalRadius = Math.max(rootLayout.width, rootLayout.height).toFloat()
 
         // create the animator for this view (the start radius is zero)
-        val circularReveal = ViewAnimationUtils.createCircularReveal(rootLayout, cx, cy, 0f, finalRadius)
+        val circularReveal = ViewAnimationUtils.createCircularReveal(
+                rootLayout, cx, cy, 0f, finalRadius)
         circularReveal.duration = 300
         circularReveal.addListener(object : Animator.AnimatorListener {
             override fun onAnimationRepeat(p0: Animator?) {}
@@ -148,7 +151,8 @@ class ChooseIconActivity : AbsActivity() {
         val cy = (rootLayout.height / 2)
 
         val finalRadius = Math.max(rootLayout.width, rootLayout.height).toFloat()
-        val circularReveal = ViewAnimationUtils.createCircularReveal(rootLayout, cx, cy, finalRadius, 0f)
+        val circularReveal = ViewAnimationUtils.createCircularReveal(
+                rootLayout, cx, cy, finalRadius, 0f)
 
         circularReveal.addListener(object : Animator.AnimatorListener {
             override fun onAnimationStart(animator: Animator) {}

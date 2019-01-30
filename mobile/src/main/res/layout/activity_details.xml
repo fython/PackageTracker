@@ -1,72 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                 xmlns:tools="http://schemas.android.com/tools"
-                                                 android:layout_width="match_parent"
-                                                 android:layout_height="match_parent"
-                                                 android:id="@+id/coordinator_layout">
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/coordinator_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
-	<com.google.android.material.appbar.AppBarLayout
-		android:layout_height="@dimen/parallax_app_bar_size"
-		android:layout_width="match_parent"
-		android:id="@+id/app_bar_layout"
-		android:fitsSystemWindows="true"
-		android:theme="@style/Toolbar.Dark">
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/parallax_app_bar_size"
+        android:fitsSystemWindows="true"
+        android:theme="@style/Toolbar.Dark">
 
-		<com.google.android.material.appbar.CollapsingToolbarLayout
-			android:layout_height="match_parent"
-			android:layout_width="match_parent"
-			android:fitsSystemWindows="true"
-			android:id="@+id/collapsing_layout"
-			app:layout_scrollFlags="exitUntilCollapsed|scroll"
-			app:contentScrim="?attr/colorPrimary">
+        <com.google.android.material.appbar.CollapsingToolbarLayout
+            android:id="@+id/collapsing_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
+            app:layout_scrollFlags="exitUntilCollapsed|scroll">
 
-			<ImageView
-				android:layout_width="match_parent"
-				android:layout_height="match_parent"
-				android:scaleType="centerCrop"
-				android:fitsSystemWindows="true"
-				android:id="@+id/parallax_background"
-				tools:src="@drawable/banner_background_on_the_way"
-				app:layout_collapseMode="parallax"
-				android:importantForAccessibility="no"/>
-
-            <View
+            <ImageView
+                android:id="@+id/parallax_background"
                 android:layout_width="match_parent"
-                android:layout_height="16dp"
-                app:layout_collapseMode="pin"/>
+                android:layout_height="match_parent"
+                android:fitsSystemWindows="true"
+                android:importantForAccessibility="no"
+                android:scaleType="centerCrop"
+                app:layout_collapseMode="parallax"
+                tools:src="@drawable/banner_background_on_the_way" />
 
-		</com.google.android.material.appbar.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
 
-	</com.google.android.material.appbar.AppBarLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
-	<androidx.recyclerview.widget.RecyclerView
-		android:layout_width="match_parent"
-		android:layout_height="match_parent"
-		android:id="@+id/recycler_view"
-        android:layout_marginTop="-6dp"
-		android:paddingTop="16dp"
-		android:paddingBottom="16dp"
-		android:clipToPadding="false"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="@drawable/details_list_background"
+        android:clipToPadding="false"
         android:elevation="4dp"
-		app:layout_behavior=".view.ScrollingViewWithBottomBarBehavior"/>
+        android:paddingTop="16dp"
+        android:paddingBottom="16dp"
+        app:layout_behavior=".view.ScrollingViewWithBottomBarBehavior" />
 
     <LinearLayout
         android:id="@+id/bottom_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_gravity="bottom"
         android:background="?attr/bottomBarColor"
-        android:elevation="8dp">
+        android:elevation="8dp"
+        android:orientation="horizontal">
 
         <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:id="@+id/toolbar"
-            app:theme="@style/ThemeOverlay.AppCompat.Dark"
-            app:popupTheme="@style/Toolbar.Popup"/>
+            app:popupTheme="@style/Toolbar.Popup"
+            app:theme="@style/ThemeOverlay.AppCompat.Dark" />
 
     </LinearLayout>
 

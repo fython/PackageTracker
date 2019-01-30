@@ -90,13 +90,14 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
     private val bottomSheetBackgroundNormal by lazy<View> {
         findViewById(R.id.bottom_sheet_background_normal)
     }
-    private val bottomSheetBackground: View get() {
-        return if (SettingsInstance.enableAddDialogBackgroundBlur) {
-            bottomSheetBackgroundBlur
-        } else {
-            bottomSheetBackgroundNormal
+    private val bottomSheetBackground: View
+        get() {
+            return if (SettingsInstance.enableAddDialogBackgroundBlur) {
+                bottomSheetBackgroundBlur
+            } else {
+                bottomSheetBackgroundNormal
+            }
         }
-    }
 
     private val moreMenu: PopupMenu by lazy {
         PopupMenu(this, moreButton).also {
@@ -120,10 +121,6 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_home)
 
-        when (intent?.action) {
-
-        }
-
         if (savedInstanceState == null) {
             bottomSheet.makeGone()
             window.decorView.post {
@@ -138,6 +135,19 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
         spinner.setSelection(listAdapter.filter)
 
         addPackageViewHolder.onRestoreInstanceState(savedInstanceState)
+
+        when (intent?.action) {
+            ACTION_SEARCH -> {
+                val number = intent[EXTRA_DATA]?.asString()
+                if (number != null) {
+                    addPackageViewHolder.setNumber(number)
+                    addButton.performClick()
+                }
+            }
+            ScannerActivity.ACTION_SCAN_TO_ADD -> {
+                scanButton.performClick()
+            }
+        }
     }
 
     override fun onSaveInstanceState(outState: Bundle) {
@@ -262,7 +272,10 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean = when (item.itemId) {
         R.id.action_read_all -> {
-           ui {
+            if (bottomSheetBehavior.state != BottomSheetBehavior.STATE_HIDDEN) {
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+            }
+            ui {
                 val data = asyncIO {
                     val count = packageDatabase.readAll()
                     packageDatabase.save()
@@ -283,6 +296,9 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
             true
         }
         R.id.action_refresh -> {
+            if (bottomSheetBehavior.state != BottomSheetBehavior.STATE_HIDDEN) {
+                bottomSheetBehavior.state = BottomSheetBehavior.STATE_HIDDEN
+            }
             refreshLayout.autoRefresh()
             true
         }

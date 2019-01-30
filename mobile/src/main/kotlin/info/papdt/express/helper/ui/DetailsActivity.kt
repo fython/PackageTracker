@@ -18,6 +18,7 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
+import androidx.coordinatorlayout.widget.CoordinatorLayout
 
 import info.papdt.express.helper.R
 import info.papdt.express.helper.REQUEST_DETAILS
@@ -44,6 +45,7 @@ class DetailsActivity : AbsActivity() {
 	private val mToolbarLayout: CollapsingToolbarLayout by lazyFindNonNullView(R.id.collapsing_layout)
 	private val mRecyclerView: RecyclerView by lazyFindNonNullView(R.id.recycler_view)
 	private val mBackground: ImageView by lazyFindNonNullView(R.id.parallax_background)
+	private val mCoordinatorLayout: CoordinatorLayout by lazyFindNonNullView(R.id.coordinator_layout)
 
 	private val mAdapter: MultiTypeAdapter by lazy {
 		MultiTypeAdapter().apply {
@@ -123,6 +125,7 @@ class DetailsActivity : AbsActivity() {
 		}
 		mToolbarLayout.setContentScrimColor(color)
 		mToolbarLayout.setStatusBarScrimColor(colorDark)
+		mCoordinatorLayout.setBackgroundColor(colorDark)
 	}
 
 	private fun buildItems(): Items {
