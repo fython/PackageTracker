@@ -7,7 +7,6 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.AsyncTask
-import android.os.Build
 import android.os.Bundle
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.snackbar.Snackbar
@@ -18,7 +17,9 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import androidx.coordinatorlayout.widget.CoordinatorLayout
+import com.google.android.material.appbar.AppBarLayout
 
 import info.papdt.express.helper.R
 import info.papdt.express.helper.REQUEST_DETAILS
@@ -35,17 +36,23 @@ import info.papdt.express.helper.ui.items.DetailsStatusItemBinder
 import info.papdt.express.helper.ui.items.DetailsTwoLineItem
 import info.papdt.express.helper.ui.items.DetailsTwoLineItemBinder
 import info.papdt.express.helper.ui.items.SubheaderItemBinder
+import info.papdt.express.helper.view.SwipeBackCoordinatorLayout
 import me.drakeet.multitype.Items
 import me.drakeet.multitype.MultiTypeAdapter
 import moe.feng.kotlinyan.common.*
 import moe.feng.kotlinyan.common.lazyFindNonNullView
+import org.jetbrains.anko.withAlpha
+import kotlin.math.max
+import kotlin.math.min
 
 class DetailsActivity : AbsActivity() {
 
+    private val mAppBarLayout: AppBarLayout by lazyFindNonNullView(R.id.app_bar_layout)
 	private val mToolbarLayout: CollapsingToolbarLayout by lazyFindNonNullView(R.id.collapsing_layout)
 	private val mRecyclerView: RecyclerView by lazyFindNonNullView(R.id.recycler_view)
 	private val mBackground: ImageView by lazyFindNonNullView(R.id.parallax_background)
-	private val mCoordinatorLayout: CoordinatorLayout by lazyFindNonNullView(R.id.coordinator_layout)
+    private val mSwipeBackCoordinatorLayout: SwipeBackCoordinatorLayout by lazyFindNonNullView(R.id.swipe_back_coordinator_layout)
+    private val mRootLayout: LinearLayout by lazyFindNonNullView(R.id.root_layout)
 
 	private val mAdapter: MultiTypeAdapter by lazy {
 		MultiTypeAdapter().apply {
@@ -97,6 +104,32 @@ class DetailsActivity : AbsActivity() {
 	override fun setUpViews() {
 		mRecyclerView.setHasFixedSize(false)
 		mRecyclerView.layoutManager = LinearLayoutManager(this)
+
+        val rootViewBgColor = ResourcesUtils.getColorIntFromAttr(
+                theme, R.attr.rootViewBackgroundColor)
+
+        mSwipeBackCoordinatorLayout.setOnSwipeListener(object : SwipeBackCoordinatorLayout.OnSwipeListener {
+            override fun canSwipeBack(dir: Int): Boolean {
+                val behavior = (mAppBarLayout.layoutParams as CoordinatorLayout.LayoutParams).behavior
+                return if (behavior is AppBarLayout.Behavior)
+                    behavior.topAndBottomOffset == 0 else false
+            }
+
+            override fun onSwipeProcess(percent: Float) {
+                mRootLayout.setBackgroundColor(
+                        rootViewBgColor.withAlpha(
+                                (SwipeBackCoordinatorLayout.getBackgroundAlpha(percent) * 255)
+                                        .toInt()
+                        )
+                )
+                mAppBarLayout.alpha = 1f - percent
+                mRecyclerView.translationY = -min(max(0f, percent), 0.4f) * mAppBarLayout.height * 0.2f
+            }
+
+            override fun onSwipeFinish(dir: Int) {
+                finish()
+            }
+        })
 	}
 
 	@SuppressLint("NewApi")
@@ -125,7 +158,6 @@ class DetailsActivity : AbsActivity() {
 		}
 		mToolbarLayout.setContentScrimColor(color)
 		mToolbarLayout.setStatusBarScrimColor(colorDark)
-		mCoordinatorLayout.setBackgroundColor(colorDark)
 	}
 
 	private fun buildItems(): Items {
@@ -250,10 +282,8 @@ class DetailsActivity : AbsActivity() {
 				Kuaidi100Package.STATUS_FAILED -> resources.color[R.color.blue_grey_500]
 				else -> resources.color[R.color.blue_500]
 			}
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-				val taskDesc = ActivityManager.TaskDescription(data!!.name, null, color)
-				setTaskDescription(taskDesc)
-			}
+            val taskDesc = ActivityManager.TaskDescription(data!!.name, null, color)
+            setTaskDescription(taskDesc)
 		}
 
 	}

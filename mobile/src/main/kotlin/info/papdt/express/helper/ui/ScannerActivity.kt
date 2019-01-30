@@ -22,10 +22,11 @@ import android.widget.Toast
 import com.google.zxing.*
 import com.google.zxing.common.HybridBinarizer
 import info.papdt.express.helper.R
+import info.papdt.express.helper.view.SwipeBackCoordinatorLayout
+import info.papdt.express.helper.view.SwipeBackCoordinatorLayout.Companion.DOWN_DIR
 import java.io.IOException
 import java.lang.Exception
 import java.util.*
-
 
 class ScannerActivity : AbsActivity(), ZXingScannerView.ResultHandler, PermissionActivity {
 
@@ -41,8 +42,10 @@ class ScannerActivity : AbsActivity(), ZXingScannerView.ResultHandler, Permissio
 
 	}
 
-	private val mScannerView: ZXingScannerView by lazyFindNonNullView(R.id.scanner_view)
-	private val errorView: View by lazyFindNonNullView(R.id.iv_error)
+	private val scannerView: ZXingScannerView
+            by lazyFindNonNullView(R.id.scanner_view)
+    private val coordinatorLayout: SwipeBackCoordinatorLayout
+            by lazyFindNonNullView(R.id.swipe_back_coordinator_layout)
 
 	private lateinit var multiFormatReader: MultiFormatReader
 
@@ -54,12 +57,11 @@ class ScannerActivity : AbsActivity(), ZXingScannerView.ResultHandler, Permissio
 		setContentView(R.layout.activity_scanner)
 
 		val hints = EnumMap<DecodeHintType, Any>(DecodeHintType::class.java)
-		hints[DecodeHintType.POSSIBLE_FORMATS] = mScannerView.formats
+		hints[DecodeHintType.POSSIBLE_FORMATS] = scannerView.formats
 		multiFormatReader = MultiFormatReader()
 		multiFormatReader.setHints(hints)
 
 		runWithPermission(Manifest.permission.CAMERA) { startScan() } ?: run {
-			errorView.makeVisible()
 			buildAlertDialog {
 				titleRes = R.string.dialog_explanation_permission_title
 				messageRes = R.string.dialog_explanation_permission_message
@@ -75,7 +77,19 @@ class ScannerActivity : AbsActivity(), ZXingScannerView.ResultHandler, Permissio
 	}
 
 	override fun setUpViews() {
+        coordinatorLayout.setOnSwipeListener(object : SwipeBackCoordinatorLayout.OnSwipeListener {
+            override fun canSwipeBack(dir: Int): Boolean {
+                return dir == DOWN_DIR
+            }
 
+            override fun onSwipeProcess(percent: Float) {
+                scannerView.alpha = 1f - percent
+            }
+
+            override fun onSwipeFinish(dir: Int) {
+                finish()
+            }
+        })
 	}
 
 	override fun onResume() {
@@ -88,7 +102,7 @@ class ScannerActivity : AbsActivity(), ZXingScannerView.ResultHandler, Permissio
 
 	override fun onPause() {
 		super.onPause()
-		mScannerView.stopCamera()
+		scannerView.stopCamera()
 	}
 
 	override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -113,7 +127,7 @@ class ScannerActivity : AbsActivity(), ZXingScannerView.ResultHandler, Permissio
 		handleOnRequestPermissionsResult(requestCode, permissions, grantResults) {
 			if (Manifest.permission.CAMERA == it) {
 				Snackbar.make(
-						mScannerView,
+						scannerView,
 						R.string.toast_permission_denied,
 						Snackbar.LENGTH_SHORT
 				).setAction(R.string.toast_permission_denied_action) { jumpToSettings() }.show()
@@ -168,9 +182,8 @@ class ScannerActivity : AbsActivity(), ZXingScannerView.ResultHandler, Permissio
 	}
 
 	private fun startScan() {
-		errorView.makeInvisible()
-		mScannerView.setResultHandler(this)
-		mScannerView.startCamera()
+		scannerView.setResultHandler(this)
+		scannerView.startCamera()
 	}
 
 	private fun jumpToSettings() {

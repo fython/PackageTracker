@@ -10,5 +10,6 @@
 
 	<attr name="bottomBarColor" format="reference"/>
 	<attr name="bottomSheetColor" format="reference"/>
+	<attr name="rootViewBackgroundColor" format="reference"/>
 
 </resources>

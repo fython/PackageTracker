@@ -3,18 +3,24 @@ package info.papdt.express.helper.ui
 import android.app.Activity
 import android.app.ProgressDialog
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import androidx.core.app.ShareCompat
 import android.view.View
+import androidx.core.widget.NestedScrollView
 
 import java.text.SimpleDateFormat
 
 import info.papdt.express.helper.R
 import info.papdt.express.helper.dao.PackageDatabase
+import info.papdt.express.helper.support.ResourcesUtils
 import info.papdt.express.helper.ui.common.AbsActivity
+import info.papdt.express.helper.view.SwipeBackCoordinatorLayout
+import info.papdt.express.helper.view.SwipeBackCoordinatorLayout.Companion.DOWN_DIR
 
 import moe.feng.kotlinyan.common.*
+import org.jetbrains.anko.withAlpha
 import java.util.*
 
 class ImportExportActivity : AbsActivity() {
@@ -23,6 +29,9 @@ class ImportExportActivity : AbsActivity() {
 	private val BackupApi by lazy { info.papdt.express.helper.api.BackupApi(this@ImportExportActivity) }
 
 	private var progressDialog: ProgressDialog? = null
+
+    private val listView: NestedScrollView by lazyFindNonNullView(android.R.id.list)
+    private val rootLayout: View by lazyFindNonNullView(R.id.root_layout)
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -62,6 +71,29 @@ class ImportExportActivity : AbsActivity() {
 			intent.type = "*/*"
 			startActivityForResult(intent, REQUEST_OPEN_FILE_RESTORE)
 		}
+
+        val rootViewBgColor = ResourcesUtils.getColorIntFromAttr(
+                theme, R.attr.rootViewBackgroundColor)
+        findViewById<SwipeBackCoordinatorLayout>(R.id.swipe_back_coordinator_layout)
+                .setOnSwipeListener(object : SwipeBackCoordinatorLayout.OnSwipeListener {
+                    override fun canSwipeBack(dir: Int): Boolean {
+                        return SwipeBackCoordinatorLayout.canSwipeBack(listView, DOWN_DIR)
+                    }
+
+                    override fun onSwipeProcess(percent: Float) {
+                        rootLayout.setBackgroundColor(
+                                rootViewBgColor.withAlpha(
+                                        (SwipeBackCoordinatorLayout.getBackgroundAlpha(percent) * 255)
+                                                .toInt()
+                                )
+                        )
+                    }
+
+                    override fun onSwipeFinish(dir: Int) {
+                        window.statusBarColor = Color.TRANSPARENT
+                        finish()
+                    }
+                })
 	}
 
 	public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

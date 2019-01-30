@@ -77,7 +77,7 @@
         <activity
             android:name=".ui.DetailsActivity"
             android:label="@string/activity_details"
-            android:theme="@style/AppTheme.Home">
+            android:theme="@style/AppTheme.WithSwipeBack">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
@@ -86,7 +86,7 @@
         <activity
             android:name=".ui.SettingsActivity"
             android:label="@string/activity_settings"
-            android:theme="@style/AppTheme.Home">
+            android:theme="@style/AppTheme.WithSwipeBack">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
@@ -113,7 +113,7 @@
         <activity
             android:name=".ui.ScannerActivity"
             android:label="@string/activity_scanner"
-            android:theme="@style/AppTheme.Home">
+            android:theme="@style/AppTheme.WithSwipeBack">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>
@@ -122,7 +122,7 @@
         <activity
             android:name=".ui.ImportExportActivity"
             android:label="@string/activity_import_export"
-            android:theme="@style/AppTheme.Grey">
+            android:theme="@style/AppTheme.Grey.WithSwipeBack">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
             </intent-filter>

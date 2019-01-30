@@ -173,6 +173,9 @@
 	<string name="pref_force_update_all_packages">強制更新所有包裹</string>
 	<string name="pref_force_update_all_packages_summary">（不推薦）更新包含已送達的所有包裹，這會在重新整理時耗費更多的時間，而且一些已送達的包裹狀態可能會丟失。</string>
 
+	<string name="telegram_title">獲知最新消息 &amp; 加入討論群組</string>
+	<string name="telegram_summary">點擊這裡來打開 Telegram@gwo_apps</string>
+
 	<!-- Details -->
 	<string name="activity_details">詳情</string>
 	<string name="action_set_unread">標為未讀</string>

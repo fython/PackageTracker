@@ -8,8 +8,8 @@ import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.TooltipCompat
 import info.papdt.express.helper.R
-import info.papdt.express.helper.support.CheatSheet
 import info.papdt.express.helper.support.ClipboardUtils
 import info.papdt.express.helper.ui.DetailsActivity
 import me.drakeet.multitype.ItemViewBinder
@@ -62,7 +62,7 @@ class DetailsTwoLineItemBinder : ItemViewBinder<DetailsTwoLineItem, DetailsTwoLi
                     button.setImageResource(R.drawable.ic_visibility_black_24dp)
                     button.contentDescription = itemView.resources
                             .getString(R.string.list_package_show_toggle_desc)
-                    CheatSheet.setup(button)
+                    TooltipCompat.setTooltipText(button, button.contentDescription)
                 }
                 button.visibility = View.VISIBLE
                 button.setOnClickListener {

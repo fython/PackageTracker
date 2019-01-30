@@ -22,7 +22,7 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener {
 	private val mPrefSina: Preference by PreferenceProperty("sina")
 	private val mPrefGithub: Preference by PreferenceProperty("github")
 	private var mPrefAlipay: Preference? = null
-	private val mPrefGooglePlus: Preference by PreferenceProperty("googleplus")
+	private val mPrefTelegram: Preference by PreferenceProperty("telegram")
 	private val mPrefIconDesigner: Preference by PreferenceProperty("designer")
 
 	override fun onCreate(savedInstanceState: Bundle?) {
@@ -53,7 +53,7 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener {
 		mPrefSina.onPreferenceClickListener = this
 		mPrefAlipay?.onPreferenceClickListener = this
 		mPrefIconDesigner.onPreferenceClickListener = this
-		mPrefGooglePlus.onPreferenceClickListener = this
+		mPrefTelegram.onPreferenceClickListener = this
 	}
 
 	override fun onPreferenceClick(pref: Preference): Boolean {
@@ -82,8 +82,8 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener {
 				openWebsite(getString(R.string.icon_designer_url))
 				true
 			}
-			mPrefGooglePlus -> {
-				openWebsite(getString(R.string.google_plus_url))
+			mPrefTelegram -> {
+				openWebsite("https://t.me/gwo_apps")
 				true
 			}
 			else -> false
