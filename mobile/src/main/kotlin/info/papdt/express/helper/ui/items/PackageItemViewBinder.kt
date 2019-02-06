@@ -2,6 +2,7 @@ package info.papdt.express.helper.ui.items
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.Typeface
 import android.graphics.drawable.ColorDrawable
 import androidx.core.content.ContextCompat
@@ -17,13 +18,13 @@ import info.papdt.express.helper.dao.PackageDatabase
 import info.papdt.express.helper.event.EventIntents
 import info.papdt.express.helper.model.Kuaidi100Package
 import info.papdt.express.helper.model.MaterialIcon
-import info.papdt.express.helper.support.ColorGenerator
 import info.papdt.express.helper.support.Spanny
 import info.papdt.express.helper.support.isFontProviderEnabled
 import info.papdt.express.helper.support.localBroadcastManager
 import info.papdt.express.helper.ui.DetailsActivity
 import me.drakeet.multitype.ItemViewBinder
 import moe.feng.kotlinyan.common.set
+import java.text.DateFormat
 
 object PackageItemViewBinder
     : ItemViewBinder<Kuaidi100Package, PackageItemViewBinder.ViewHolder>() {
@@ -48,6 +49,8 @@ object PackageItemViewBinder
     }
 
     override fun onBindViewHolder(holder: ViewHolder, item: Kuaidi100Package) {
+        val context = holder.itemView.context
+
         holder.itemData = item
 
         if (item.name?.isNotEmpty() == true) {
@@ -60,7 +63,9 @@ object PackageItemViewBinder
             val spanny = Spanny(STATUS_STRING_ARRAY!![item.getState()], ForegroundColorSpan(statusTitleColor))
                     .append(" - " + status.context, ForegroundColorSpan(statusSubtextColor))
             holder.descText.text = spanny
-            holder.timeText.text = status.ftime
+            holder.timeText.text = status.getTimeDate()?.let {
+                DateFormat.getDateTimeInstance().format(it)
+            } ?: status.ftime
             holder.timeText.visibility = View.VISIBLE
         } else {
             /** Set placeholder when cannot get data  */
@@ -73,23 +78,26 @@ object PackageItemViewBinder
         holder.titleText.paint.isFakeBoldText = item.unreadNew || !isFontProviderEnabled
 
         /** Set CircleImageView  */
-        if (item.iconCode?.isNotEmpty() == true) {
-            holder.bigCharView.typeface = MaterialIcon.iconTypeface
-            holder.bigCharView.text = item.iconCode
-        } else {
-            holder.bigCharView.typeface = Typeface.DEFAULT
-            if (item.name?.isNotEmpty() == true) {
-                holder.bigCharView.text = item.name!!.substring(0, 1).toUpperCase()
-            } else if (item.companyChineseName?.isNotEmpty() == true) {
-                holder.bigCharView.text = item.companyChineseName!!.substring(0, 1).toUpperCase()
+        holder.bigCharView.apply {
+            if (item.iconCode?.isNotEmpty() == true) {
+                typeface = MaterialIcon.iconTypeface
+                paint.isFakeBoldText = false
+                text = item.iconCode
+            } else {
+                typeface = Typeface.DEFAULT
+                paint.isFakeBoldText = true
+                if (item.name?.isNotEmpty() == true) {
+                    text = item.name!!.substring(0, 1).toUpperCase()
+                } else if (item.companyChineseName?.isNotEmpty() == true) {
+                    text = item.companyChineseName!!.substring(0, 1).toUpperCase()
+                }
             }
         }
-        if (item.name?.isNotEmpty() == true) {
-            holder.logoView.setImageDrawable(
-                    ColorDrawable(ColorGenerator.MATERIAL.getColor(item.name!!)))
-        } else if (item.companyChineseName?.isNotEmpty() == true) {
-            holder.logoView.setImageDrawable(
-                    ColorDrawable(ColorGenerator.MATERIAL.getColor(item.companyChineseName!!)))
+
+        item.getPaletteFromId().let {
+            holder.logoView.setImageDrawable(ColorDrawable(it.getPackageIconBackground(context)))
+            holder.bigCharView.setTextColor(it.getPackageIconForeground(context))
+            holder.statusIcon.imageTintList = ColorStateList.valueOf(it.getStatusIconTint(context))
         }
 
         holder.statusIcon.setImageResource(when (item.getState()) {

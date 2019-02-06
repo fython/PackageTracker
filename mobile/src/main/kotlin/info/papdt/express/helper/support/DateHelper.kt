@@ -30,7 +30,7 @@ object DateHelper {
             diffDays <= 30 -> 30
             diffDays <= 30 * 6 -> (diffDays / 30) * 30
             diffDays <= 365 -> 365
-            else -> (diffDays / 365) * 365
+            else -> (diffDays.toFloat() / 365f).toLong() * 365 + 1
         }
     }
 

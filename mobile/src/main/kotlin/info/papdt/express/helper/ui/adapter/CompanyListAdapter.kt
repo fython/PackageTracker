@@ -13,7 +13,6 @@ import java.util.ArrayList
 import de.hdodenhof.circleimageview.CircleImageView
 import info.papdt.express.helper.R
 import info.papdt.express.helper.api.Kuaidi100PackageApi
-import info.papdt.express.helper.support.ColorGenerator
 import info.papdt.express.helper.ui.common.SimpleRecyclerViewAdapter
 
 class CompanyListAdapter(
@@ -32,14 +31,20 @@ class CompanyListAdapter(
 
     override fun onBindViewHolder(holder: SimpleRecyclerViewAdapter.ClickableViewHolder, pos: Int) {
         super.onBindViewHolder(holder, pos)
+        val item = getItem(pos)
         if (holder is ItemHolder) {
-            holder.titleText.text = getItem(pos).name
-            holder.otherText.text = if (getItem(pos).phone != null) getItem(pos).phone else getItem(pos).website
+            holder.titleText.text = item.name
+            holder.otherText.text = if (item.phone != null) item.phone else item.website
             holder.otherText.visibility = if (holder.otherText.text != null) View.VISIBLE else View.INVISIBLE
 
             /** Set up the logo  */
-            holder.logoView.setImageDrawable(ColorDrawable(ColorGenerator.MATERIAL.getColor(getItem(pos).name)))
-            holder.firstCharText.text = getItem(pos).name.substring(0, 1)
+            holder.firstCharText.text = item.name.substring(0, 1)
+            item.getPalette().let {
+                holder.logoView.setImageDrawable(
+                        ColorDrawable(it.getPackageIconBackground(context!!)))
+                holder.firstCharText.setTextColor(
+                        it.getPackageIconForeground(context!!))
+            }
         }
     }
 

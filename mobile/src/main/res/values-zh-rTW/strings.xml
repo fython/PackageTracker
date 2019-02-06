@@ -303,4 +303,12 @@
 	<string name="sort_by_create_time">創建時間</string>
 	<string name="toast_please_wait_for_finishing_refreshing">請等候重新整理完成…</string>
 
+	<!-- New Search dialog -->
+	<string name="search_dialog_title">設定過濾條件</string>
+	<string name="search_by_keyword_title">根據關鍵字搜尋</string>
+	<string name="search_by_keyword_hint">包裹名稱或號碼</string>
+	<string name="search_by_company_title">根據指定公司搜尋</string>
+	<string name="unset">未設定</string>
+	<string name="search_by_type_title">根據指定類型搜尋</string>
+
 </resources>

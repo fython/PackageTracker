@@ -14,7 +14,9 @@ import java.util.ArrayList
 
 import info.papdt.express.helper.model.BaseMessage
 import info.papdt.express.helper.model.Kuaidi100Package
+import info.papdt.express.helper.model.MaterialPalette
 import info.papdt.express.helper.support.HttpUtils
+import info.papdt.express.helper.support.MaterialColorGenerator
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -213,7 +215,16 @@ object Kuaidi100PackageApi {
 		lateinit var names: Array<String>
 		lateinit var pinyin: Array<String>
 
-		class Company(var name: String, var code: String, var phone: String?, var website: String?)
+		class Company(var name: String,
+					  var code: String,
+					  var phone: String?,
+					  var website: String?) {
+
+			fun getPalette(): MaterialPalette {
+				return MaterialColorGenerator.getPalette(name)
+			}
+
+		}
 
 		fun findCompanyByCode(code: String?): Int {
 			return if (code == null) -1 else (info!!.indices.firstOrNull { info!![it].code == code } ?: -1)

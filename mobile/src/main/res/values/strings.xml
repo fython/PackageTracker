@@ -336,4 +336,12 @@
     <string name="sort_by_create_time">By create time</string>
     <string name="toast_please_wait_for_finishing_refreshing">Please wait for finishing refreshing…</string>
 
+	<!-- New Search dialog -->
+	<string name="search_dialog_title">Set filter</string>
+	<string name="search_by_keyword_title">Search by keyword</string>
+	<string name="search_by_keyword_hint">Package name/number</string>
+	<string name="search_by_company_title">Search by specific company</string>
+	<string name="unset">Unset</string>
+	<string name="search_by_type_title">Search by specific type</string>
+
 </resources>

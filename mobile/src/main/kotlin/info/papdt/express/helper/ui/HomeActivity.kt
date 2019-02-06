@@ -14,6 +14,7 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.*
 import android.widget.*
+import androidx.asynclayoutinflater.view.AsyncLayoutInflater
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
@@ -54,6 +55,12 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
         const val STATE_ADD_PACKAGE_COMPANY = "$STATE_ADD_PACKAGE_VIEWS.company"
         const val STATE_ADD_PACKAGE_COMPANY_STATE = "$STATE_ADD_PACKAGE_VIEWS.company_state"
         const val STATE_ADD_PACKAGE_NAME = "$STATE_ADD_PACKAGE_VIEWS.name"
+
+        const val STATE_FILTER_KEYWORD = "$TAG.filter_keyword"
+        const val STATE_FILTER_COMPANY = "$TAG.filter_company"
+        const val STATE_TEMP_FILTER_COMPANY = "$TAG.temp_filter_company"
+
+        const val REQUEST_FILTER_COMPANY = 20001
 
         fun search(context: Context, number: String) {
             val intent = Intent(context, HomeActivity::class.java)
@@ -109,11 +116,11 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
     private lateinit var addPackageViewHolder: AddPackageViewHolder
 
-    private val listAdapter by lazy {
-        NewHomePackageListAdapter()
-    }
-
+    private val listAdapter by lazy { NewHomePackageListAdapter() }
     private val homeListScrollListener = HomeListScrollListener()
+
+    private var filterCompanyChoiceText: TextView? = null
+    private var tempFilterCompany: String? = null
 
     private val packageDatabase by lazy { PackageDatabase.getInstance(this) }
 
@@ -130,6 +137,9 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
 
             listAdapter.filter = SettingsInstance.lastFilter
             listAdapter.sortType = SettingsInstance.lastSortBy
+        } else {
+            listAdapter.filterKeyword = savedInstanceState[STATE_FILTER_KEYWORD] as? String
+            listAdapter.filterCompany = savedInstanceState[STATE_FILTER_COMPANY] as? String
         }
 
         spinner.setSelection(listAdapter.filter)
@@ -153,6 +163,9 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         addPackageViewHolder.onSaveInstanceState(outState)
+
+        outState.putString(STATE_FILTER_KEYWORD, listAdapter.filterKeyword)
+        outState.putString(STATE_FILTER_COMPANY, listAdapter.filterCompany)
     }
 
     override fun onStart() {
@@ -253,6 +266,48 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
         }
     }
 
+    private fun showSearchDialog() {
+        val inflater = AsyncLayoutInflater(this)
+        inflater.inflate(R.layout.dialog_home_search, null) { view, _, _ ->
+            val keywordEdit = view.findViewById<EditText>(R.id.keyword_edit)
+            filterCompanyChoiceText = view.findViewById(R.id.company_choice_text)
+            tempFilterCompany = listAdapter.filterCompany
+
+            view.findViewById<Button>(R.id.company_choose_btn).setOnClickListener {
+                val intent = Intent(this@HomeActivity, CompanyChooserActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
+                startActivityForResult(intent, REQUEST_FILTER_COMPANY)
+            }
+
+            updateFilterCompanyChoiceText()
+
+            buildAlertDialog {
+                titleRes = R.string.search_dialog_title
+                setView(view)
+                okButton { _, _ ->
+                    listAdapter.filterKeyword = if (keywordEdit.text?.toString().isNullOrBlank())
+                        null else keywordEdit.text?.toString()
+                    listAdapter.filterCompany = tempFilterCompany
+                    invalidateOptionsMenu()
+                }
+                setOnCancelListener {
+                    filterCompanyChoiceText = null
+                }
+                setOnDismissListener {
+                    filterCompanyChoiceText = null
+                }
+                cancelButton()
+            }.show()
+        }
+    }
+
+    private fun updateFilterCompanyChoiceText() {
+        filterCompanyChoiceText?.text = if (tempFilterCompany == null)
+            getString(R.string.unset)
+        else
+            Kuaidi100PackageApi.CompanyInfo.getNameByCode(tempFilterCompany)
+    }
+
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.top_menu_home, menu)
         return super.onCreateOptionsMenu(menu)
@@ -267,6 +322,14 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
             NewHomePackageListAdapter.SORT_BY_CREATE_TIME ->
                 menu.findItem(R.id.action_sort_by_create_time).isChecked = true
         }
+
+        val hasFilter = listAdapter.filterCompany != null || listAdapter.filterKeyword != null
+        val searchItem = menu.findItem(R.id.action_search)
+        searchItem.setIcon(if (hasFilter)
+            R.drawable.ic_reset_searched_text_primary_color_24dp
+        else
+            R.drawable.ic_search_text_primary_color_24dp)
+
         return super.onPrepareOptionsMenu(menu)
     }
 
@@ -292,7 +355,13 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
             true
         }
         R.id.action_search -> {
-
+            if (listAdapter.filterCompany != null || listAdapter.filterKeyword != null) {
+                listAdapter.filterCompany = null
+                listAdapter.filterKeyword = null
+                invalidateOptionsMenu()
+            } else {
+                showSearchDialog()
+            }
             true
         }
         R.id.action_refresh -> {
@@ -368,6 +437,12 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
                     }
                 }
             }
+            REQUEST_FILTER_COMPANY -> {
+                if (RESULT_OK == resultCode) {
+                    tempFilterCompany = data?.get(RESULT_EXTRA_COMPANY_CODE)?.asString()
+                    updateFilterCompanyChoiceText()
+                }
+            }
         }
     }
 
@@ -428,6 +503,7 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
             bottomSheetBackground.postInvalidate()
         }
 
+        @SuppressLint("SwitchIntDef")
         override fun onStateChanged(v: View, newState: Int) {
             when (newState) {
                 BottomSheetBehavior.STATE_HIDDEN -> {
@@ -481,8 +557,8 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
                 elevationAnimator = ObjectAnimator.ofFloat(
                         appBarLayout,
                         "elevation",
-                        statedElevation[!shouldLift]!!,
-                        statedElevation[shouldLift]!!
+                        statedElevation[!shouldLift] as Float,
+                        statedElevation[shouldLift] as Float
                 )
                 elevationAnimator!!.duration = duration
                 elevationAnimator!!.start()

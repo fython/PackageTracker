@@ -40,6 +40,22 @@ class NewHomePackageListAdapter : MultiTypeAdapter() {
             field = value
             updateItems()
         }
+    var filterKeyword: String? = null
+        set(value) {
+            if (field == value) {
+                return
+            }
+            field = value
+            updateItems()
+        }
+    var filterCompany: String? = null
+        set(value) {
+            if (field == value) {
+                return
+            }
+            field = value
+            updateItems()
+        }
 
     init {
         register(Long::class.javaObjectType, DateSubheadViewBinder)
@@ -56,16 +72,33 @@ class NewHomePackageListAdapter : MultiTypeAdapter() {
         rawData?.filter { item ->
             val state = item.getState()
             when (filter) {
-                FILTER_ON_THE_WAY ->
-                    state == Kuaidi100Package.STATUS_ON_THE_WAY ||
-                            state == Kuaidi100Package.STATUS_NORMAL ||
-                            state == Kuaidi100Package.STATUS_RETURNING
-                FILTER_DELIVERED ->
-                    state == Kuaidi100Package.STATUS_DELIVERED ||
-                            state == Kuaidi100Package.STATUS_RETURNED
-                FILTER_ALL -> true
+                FILTER_ON_THE_WAY -> if (
+                        state != Kuaidi100Package.STATUS_ON_THE_WAY &&
+                        state != Kuaidi100Package.STATUS_NORMAL &&
+                        state != Kuaidi100Package.STATUS_RETURNING
+                ) {
+                    return@filter false
+                }
+                FILTER_DELIVERED -> if (
+                        state != Kuaidi100Package.STATUS_DELIVERED &&
+                        state != Kuaidi100Package.STATUS_RETURNED
+                ) {
+                    return@filter false
+                }
+                FILTER_ALL -> {}
                 else -> throw IllegalArgumentException("Unsupported filter = $filter")
             }
+            filterKeyword?.let {
+                if (it !in item.name!! && it !in item.number!!) {
+                    return@filter false
+                }
+            }
+            filterCompany?.let {
+                if (it != item.companyType) {
+                    return@filter false
+                }
+            }
+            return@filter true
         }?.let { data ->
             when (sortType) {
                 SORT_BY_UPDATE_TIME -> {

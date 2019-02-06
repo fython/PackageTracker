@@ -13,7 +13,11 @@ import moe.feng.kotlinyan.common.get
 
 class SettingsLicense : AbsFragment(), SwipeBackCoordinatorLayout.OnSwipeListener {
 
-	private val ASSERT_URL = "file:///android_asset/licenses.html"
+    companion object {
+
+        private const val ASSERT_URL = "file:///android_asset/licenses.html"
+
+    }
 
 	private lateinit var listContainer: NestedScrollView
 

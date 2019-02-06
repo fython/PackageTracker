@@ -48,4 +48,8 @@
 
 	<color name="colorAccentDark">@color/pink_900</color>
 
+	<string name="packageIconBackgroundColorKey">100</string>
+	<string name="packageIconForegroundColorKey">800</string>
+	<string name="packageStatusIconColorKey">800</string>
+
 </resources>

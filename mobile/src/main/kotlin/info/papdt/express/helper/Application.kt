@@ -13,6 +13,7 @@ import com.tencent.bugly.crashreport.CrashReport
 import info.papdt.express.helper.model.MaterialIcon
 
 import info.papdt.express.helper.services.ClipboardDetectService
+import info.papdt.express.helper.support.MaterialColorGenerator
 import info.papdt.express.helper.support.Settings
 import info.papdt.express.helper.support.SettingsInstance
 import io.alterac.blurkit.BlurKit
@@ -42,6 +43,7 @@ class Application : MultiDexApplication() {
 
 		// Init Widget components
 		MaterialIcon.init(this)
+		MaterialColorGenerator.init(this)
 		BlurKit.init(this)
 
 		// Init CrashReport

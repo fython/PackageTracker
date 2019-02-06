@@ -11,7 +11,6 @@ import android.widget.RemoteViewsService
 
 import info.papdt.express.helper.R
 import info.papdt.express.helper.dao.PackageDatabase
-import info.papdt.express.helper.support.ColorGenerator
 import info.papdt.express.helper.support.ScreenUtils
 import info.papdt.express.helper.support.Spanny
 
@@ -64,8 +63,10 @@ class ListFactory(private val mContext: Context, intent: Intent) : RemoteViewsSe
 
 		/** Set CircleImageView  */
 		views.setTextViewText(R.id.tv_first_char, p.name!!.substring(0, 1))
-		val b = ScreenUtils.drawableToBitmap(ColorDrawable(ColorGenerator.MATERIAL.getColor(p.name!!)))
+		val packagePalette = p.getPaletteFromId()
+		val b = ScreenUtils.drawableToBitmap(ColorDrawable(packagePalette["100"]))
 		views.setImageViewBitmap(R.id.iv_logo, b)
+        views.setTextColor(R.id.tv_first_char, packagePalette["800"])
 
 		/** Add paddingTop/Bottom to the first or last item  */
 		if (i == 0) {

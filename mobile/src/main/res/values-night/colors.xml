@@ -44,4 +44,8 @@
 
 	<color name="colorAccentDark">@color/indigo_A100</color>
 
+	<string name="packageIconBackgroundColorKey">300</string>
+	<string name="packageIconForegroundColorKey">900</string>
+	<string name="packageStatusIconColorKey">200</string>
+
 </resources>

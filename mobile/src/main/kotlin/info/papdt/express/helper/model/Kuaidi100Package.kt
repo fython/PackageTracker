@@ -11,6 +11,7 @@ import java.util.regex.Pattern
 
 import info.papdt.express.helper.api.Kuaidi100PackageApi
 import info.papdt.express.helper.support.DateHelper
+import info.papdt.express.helper.support.MaterialColorGenerator
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -124,6 +125,10 @@ class Kuaidi100Package() : Parcelable {
         return (this.codeNumber ?: this.number) == (other.codeNumber ?: other.number)
     }
 
+    fun getPaletteFromId(): MaterialPalette {
+        return MaterialColorGenerator.getPalette(id)
+    }
+
     class Status {
 
         @Expose var time: String? = null
@@ -172,7 +177,17 @@ class Kuaidi100Package() : Parcelable {
             return _phone ?: Status.findContact(context).apply { _phone = this }
         }
 
+        fun getTimeDate(): Date? {
+            try {
+                return ftimeDateFormat.parse(ftime)
+            } catch (e: Exception) {
+                return null
+            }
+        }
+
         companion object {
+
+            private val ftimeDateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
 
             fun findContact(s: String?): String? {
                 var number: String? = checkNum(s)
