@@ -65,22 +65,23 @@ class ClipboardDetectService : Service(), ClipboardManager.OnPrimaryClipChangedL
 	}
 
 	override fun onPrimaryClipChanged() {
-		mLastNumber = getPackageNumber(clipboardManager.primaryClip.toString())
-		if (TextUtils.isEmpty(mLastNumber)) return
-		try {
-			windowManager.addView(mLayout, mLayoutParams)
-			mIconView.scaleX = 0.5f
-			mIconView.scaleY = 0.5f
-			mIconView.animate()
-					.scaleX(1f)
-					.scaleY(1f)
-					.setListener(null)
-					.setDuration(500).setInterpolator(BounceInterpolator()).start()
-			mHandler.sendEmptyMessageDelayed(0, 4500)
-		} catch (e: Exception) {
-			e.printStackTrace()
+		clipboardManager.primaryClip?.let {
+			mLastNumber = getPackageNumber(it.toString())
+			if (TextUtils.isEmpty(mLastNumber)) return
+			try {
+				windowManager.addView(mLayout, mLayoutParams)
+				mIconView.scaleX = 0.5f
+				mIconView.scaleY = 0.5f
+				mIconView.animate()
+						.scaleX(1f)
+						.scaleY(1f)
+						.setListener(null)
+						.setDuration(500).setInterpolator(BounceInterpolator()).start()
+				mHandler.sendEmptyMessageDelayed(0, 4500)
+			} catch (e: Exception) {
+				e.printStackTrace()
+			}
 		}
-
 	}
 
 	private fun initPopupView() {

@@ -48,4 +48,6 @@
 	<string name="packageIconForegroundColorKey">900</string>
 	<string name="packageStatusIconColorKey">200</string>
 
+	<color name="flat_card_border_color">@color/grey_700</color>
+
 </resources>

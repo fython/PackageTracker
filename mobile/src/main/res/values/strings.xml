@@ -7,13 +7,6 @@
 	<string name="label_shortcut_scan">Scan barcode</string>
 
 	<!-- Home design -->
-	<string name="tap_target_tips_1_title">New Home Design!</string>
-	<string name="tap_target_tips_1_desc">We redesigned the interface in Package Tracker 3.0. Now you got a search box and you can add/find a package from here.</string>
-	<string name="tap_target_tips_2_title">Scan barcode</string>
-	<string name="tap_target_tips_2_desc">Read package number quickly from camera.</string>
-	<string name="tap_target_tips_3_title">Get latest status</string>
-	<string name="tap_target_tips_3_desc">You can swipe down to refresh status. Set up auto refresh or use more power-saving FCM-based push service in background.</string>
-
 	<string name="navigation_item_all">All</string>
 	<string name="navigation_item_delivered">Delivered</string>
 	<string name="navigation_item_on_the_way">On the way</string>
@@ -343,5 +336,7 @@
 	<string name="search_by_company_title">Search by specific company</string>
 	<string name="unset">Unset</string>
 	<string name="search_by_type_title">Search by specific type</string>
+
+	<string name="home_list_no_result_text">No result according to current filter conditions.\nPlease try to change/clear filter.</string>
 
 </resources>

@@ -60,10 +60,4 @@ class HomeToolbarSpinnerAdapter(
         }
     }
 
-    override fun getDropDownView(position: Int, convertView: View?, parent: ViewGroup): View {
-        return super.getDropDownView(position, convertView, parent).also {
-            val textView = it.findViewById<TextView>(android.R.id.text1)
-        }
-    }
-
 }

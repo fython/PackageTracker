@@ -29,9 +29,9 @@ class CompanyListAdapter(
         return ItemHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_list_company, parent, false))
     }
 
-    override fun onBindViewHolder(holder: SimpleRecyclerViewAdapter.ClickableViewHolder, pos: Int) {
-        super.onBindViewHolder(holder, pos)
-        val item = getItem(pos)
+    override fun onBindViewHolder(holder: SimpleRecyclerViewAdapter.ClickableViewHolder, position: Int) {
+        super.onBindViewHolder(holder, position)
+        val item = getItem(position)
         if (holder is ItemHolder) {
             holder.titleText.text = item.name
             holder.otherText.text = if (item.phone != null) item.phone else item.website

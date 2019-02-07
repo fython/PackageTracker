@@ -51,5 +51,7 @@
 	<string name="packageIconBackgroundColorKey">100</string>
 	<string name="packageIconForegroundColorKey">800</string>
 	<string name="packageStatusIconColorKey">800</string>
+	
+	<color name="flat_card_border_color">@color/grey_500</color>
 
 </resources>

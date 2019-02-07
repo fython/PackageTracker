@@ -2,9 +2,13 @@ package info.papdt.express.helper.ui.adapter
 
 import androidx.recyclerview.widget.DiffUtil
 import info.papdt.express.helper.dao.PackageDatabase
+import info.papdt.express.helper.model.HomeListEmptyViewModel
+import info.papdt.express.helper.model.HomeListNoResultViewModel
 import info.papdt.express.helper.model.Kuaidi100Package
 import info.papdt.express.helper.support.DateHelper
 import info.papdt.express.helper.ui.items.DateSubheadViewBinder
+import info.papdt.express.helper.ui.items.HomeListEmptyViewBinder
+import info.papdt.express.helper.ui.items.HomeListNoResultViewBinder
 import info.papdt.express.helper.ui.items.PackageItemViewBinder
 import me.drakeet.multitype.MultiTypeAdapter
 import java.text.Collator
@@ -60,6 +64,8 @@ class NewHomePackageListAdapter : MultiTypeAdapter() {
     init {
         register(Long::class.javaObjectType, DateSubheadViewBinder)
         register(Kuaidi100Package::class.java, PackageItemViewBinder)
+        register(HomeListEmptyViewModel::class.java, HomeListEmptyViewBinder)
+        register(HomeListNoResultViewModel::class.java, HomeListNoResultViewBinder)
     }
 
     fun setPackages(packages: List<Kuaidi100Package>, notify: Boolean = true) {
@@ -99,6 +105,26 @@ class NewHomePackageListAdapter : MultiTypeAdapter() {
                 }
             }
             return@filter true
+        }?.let { filteredData ->
+            if (filteredData.isEmpty()) {
+                val newList = mutableListOf<Any>()
+
+                if (filterKeyword == null && filterCompany == null) {
+                    newList += HomeListEmptyViewModel(filter)
+                } else {
+                    newList += HomeListNoResultViewModel()
+                }
+
+                if (notify) {
+                    setupItemsWithDiffUtils(newList)
+                } else {
+                    items = newList
+                }
+
+                return@let null
+            } else {
+                return@let filteredData
+            }
         }?.let { data ->
             when (sortType) {
                 SORT_BY_UPDATE_TIME -> {
@@ -109,11 +135,7 @@ class NewHomePackageListAdapter : MultiTypeAdapter() {
                                 pack.getFirstStatusTime().let { time ->
                                     val diffDays = DateHelper.getDifferenceDaysForGroup(time.time)
                                     // Fix unstable group
-                                    if (diffDays < 0) {
-                                        -1
-                                    } else {
-                                        diffDays
-                                    }
+                                    if (diffDays < 0) -1 else diffDays
                                 }
                             }
                     for ((groupDate, packagesInGroup) in groups) {
