@@ -231,6 +231,7 @@ object Kuaidi100PackageApi {
 		}
 
 		fun getNameByCode(code: String?): String? {
+			if (code == null) return null
 			val index = findCompanyByCode(code)
 			return if (index != -1) info!![index].name else null
 		}

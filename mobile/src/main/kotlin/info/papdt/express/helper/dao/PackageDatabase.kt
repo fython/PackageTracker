@@ -27,15 +27,11 @@ class PackageDatabase private constructor(private val mContext: Context) {
 	@Expose @Volatile
 	lateinit var data: ArrayList<Kuaidi100Package>
 		private set
-	@Volatile
-	lateinit var deliveredData: ArrayList<Kuaidi100Package>
-		private set
-	@Volatile
-	lateinit var deliveringData: ArrayList<Kuaidi100Package>
-		private set
 	@Expose
-	var dataVersion: String? = "2.6.0"
+	var dataVersion: String? = "5.0.0"
 		private set
+	@Expose @Volatile
+	var lastUpdateTime: Long = 0
 
 	private var lastRemovedData: Kuaidi100Package? = null
 	private var lastRemovedPosition = -1
@@ -51,22 +47,20 @@ class PackageDatabase private constructor(private val mContext: Context) {
 		} catch (e: IOException) {
 			e.printStackTrace()
 		}
-        json = json ?: "{\"data\":[]}"
+        json = json ?: "{\"data\":[], \"lastUpdateTime\":0}"
 
 		this.data = Gson().fromJson(json, PackageDatabase::class.java).data
-		refreshList()
 	}
 
 	fun restoreData(json: String) {
 		this.data = Gson().fromJson(json, PackageDatabase::class.java).data
 		CoroutineScope(Dispatchers.IO).launch { PushApi.sync(getPackageIdList()) }
-		refreshList()
 	}
 
 	val backupData: String
 		get() {
 			if (dataVersion == null) {
-				dataVersion = "2.6.0"
+				dataVersion = "5.0.0"
 			}
 			return GsonBuilder().excludeFieldsWithoutExposeAnnotation().create().toJson(this)
 		}
@@ -83,36 +77,20 @@ class PackageDatabase private constructor(private val mContext: Context) {
 	}
 
     @Synchronized
-	fun refreshList() {
-		deliveredData = ArrayList()
-		deliveringData = ArrayList()
-		for (p in data) {
-			if (p.getState() == Kuaidi100Package.STATUS_DELIVERED) {
-				deliveredData.add(p)
-			} else {
-				deliveringData.add(p)
-			}
-		}
-	}
-
-    @Synchronized
 	fun add(pack: Kuaidi100Package) {
 		data.add(pack)
 		CoroutineScope(Dispatchers.IO).launch { PushApi.add(pack.number!!, pack.companyType) }
-		refreshList()
 	}
 
     @Synchronized
 	fun add(index: Int, pack: Kuaidi100Package) {
 		data.add(index, pack)
 		CoroutineScope(Dispatchers.IO).launch { PushApi.add(pack.number!!, pack.companyType) }
-		refreshList()
 	}
 
     @Synchronized
 	operator fun set(index: Int, pack: Kuaidi100Package) {
 		data[index] = pack
-		refreshList()
 	}
 
     @Synchronized
@@ -123,8 +101,6 @@ class PackageDatabase private constructor(private val mContext: Context) {
 
 		lastRemovedData = removedItem
 		lastRemovedPosition = index
-
-		refreshList()
 	}
 
     @Synchronized
@@ -143,7 +119,6 @@ class PackageDatabase private constructor(private val mContext: Context) {
 			}
 
 			data.add(insertedPosition, lastRemovedData!!)
-			refreshList()
 
 			lastRemovedData = null
 			lastRemovedPosition = -1
@@ -164,7 +139,6 @@ class PackageDatabase private constructor(private val mContext: Context) {
 
 	fun clear() {
 		data.clear()
-		refreshList()
 	}
 
 	fun size(): Int {
@@ -198,7 +172,6 @@ class PackageDatabase private constructor(private val mContext: Context) {
 				Log.e(TAG, "Kuaidi100Package " + pack.codeNumber + " couldn\'t get new info.")
 			}
 		}
-		refreshList()
 	}
 
     fun readAll(): Int {

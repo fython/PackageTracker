@@ -173,13 +173,7 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
         registerLocalBroadcastReceiver(EventCallbacks.deletePackage {
             Log.i(TAG, "Requesting delete package: name=${it.name}")
             packageDatabase.remove(it)
-            val index = listAdapter.items.indexOf(it)
-            listAdapter.setPackages(packageDatabase.data, notify = false)
-            if (index != -1) {
-                listAdapter.notifyItemRemoved(index)
-            } else {
-                listAdapter.notifyDataSetChanged()
-            }
+            listAdapter.setPackages(packageDatabase.data)
         }, action = ACTION_REQUEST_DELETE_PACK)
         if (SettingsInstance.enableAddDialogBackgroundBlur) {
             bottomSheetBackgroundBlur.startBlur()
@@ -206,6 +200,7 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
         listView.addOnScrollListener(homeListScrollListener)
 
         listView.adapter = listAdapter
+        listAdapter.lastUpdateTime = packageDatabase.lastUpdateTime
         listAdapter.setPackages(packageDatabase.data)
 
         refreshLayout.setOnRefreshListener(this)
@@ -482,6 +477,10 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
                 packageDatabase.data
             }
             listAdapter.setPackages(task.await())
+            System.currentTimeMillis().let {
+                listAdapter.lastUpdateTime = it
+                packageDatabase.lastUpdateTime = it
+            }
             refreshLayout.finishRefresh()
         }
     }

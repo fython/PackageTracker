@@ -11,6 +11,7 @@ import android.widget.RemoteViewsService
 
 import info.papdt.express.helper.R
 import info.papdt.express.helper.dao.PackageDatabase
+import info.papdt.express.helper.model.Kuaidi100Package
 import info.papdt.express.helper.support.ScreenUtils
 import info.papdt.express.helper.support.Spanny
 
@@ -40,14 +41,22 @@ class ListFactory(private val mContext: Context, intent: Intent) : RemoteViewsSe
 
 	}
 
+	private fun getDeliveringData(): List<Kuaidi100Package> {
+		return mDatabase.data.filter {
+			it.getState() == Kuaidi100Package.STATUS_ON_THE_WAY ||
+					it.getState() == Kuaidi100Package.STATUS_RETURNING ||
+					it.getState() == Kuaidi100Package.STATUS_NORMAL
+		}
+	}
+
 	override fun getCount(): Int {
-		return mDatabase.deliveringData.size
+		return getDeliveringData().size
 	}
 
 	override fun getViewAt(i: Int): RemoteViews {
 		val views = RemoteViews(mContext.packageName, R.layout.item_list_package_for_widget)
 
-		val p = mDatabase.deliveringData[i]
+		val p = getDeliveringData()[i]
 
 		views.setTextViewText(R.id.tv_title, p.name)
 

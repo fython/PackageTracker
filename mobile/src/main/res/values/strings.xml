@@ -339,4 +339,9 @@
 
 	<string name="home_list_no_result_text">No result according to current filter conditions.\nPlease try to change/clear filter.</string>
 
+	<string name="last_update_time_text_format">Last updated at %s</string>
+	<string name="last_update_time_text_unknown">Try to pull down to refresh packages. Here will show last updated time.</string>
+	<string name="filter_keyword_text_format">Keywords: %s</string>
+	<string name="filter_company_text_format">Company: %s</string>
+
 </resources>

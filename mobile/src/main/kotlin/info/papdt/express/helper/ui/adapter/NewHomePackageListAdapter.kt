@@ -1,15 +1,14 @@
 package info.papdt.express.helper.ui.adapter
 
 import androidx.recyclerview.widget.DiffUtil
+import info.papdt.express.helper.api.Kuaidi100PackageApi
 import info.papdt.express.helper.dao.PackageDatabase
 import info.papdt.express.helper.model.HomeListEmptyViewModel
+import info.papdt.express.helper.model.HomeListHeaderViewModel
 import info.papdt.express.helper.model.HomeListNoResultViewModel
 import info.papdt.express.helper.model.Kuaidi100Package
 import info.papdt.express.helper.support.DateHelper
-import info.papdt.express.helper.ui.items.DateSubheadViewBinder
-import info.papdt.express.helper.ui.items.HomeListEmptyViewBinder
-import info.papdt.express.helper.ui.items.HomeListNoResultViewBinder
-import info.papdt.express.helper.ui.items.PackageItemViewBinder
+import info.papdt.express.helper.ui.items.*
 import me.drakeet.multitype.MultiTypeAdapter
 import java.text.Collator
 
@@ -60,12 +59,21 @@ class NewHomePackageListAdapter : MultiTypeAdapter() {
             field = value
             updateItems()
         }
+    var lastUpdateTime: Long = 0
+        set(value) {
+            if (field == value) {
+                return
+            }
+            field = value
+            updateItems()
+        }
 
     init {
         register(Long::class.javaObjectType, DateSubheadViewBinder)
         register(Kuaidi100Package::class.java, PackageItemViewBinder)
         register(HomeListEmptyViewModel::class.java, HomeListEmptyViewBinder)
         register(HomeListNoResultViewModel::class.java, HomeListNoResultViewBinder)
+        register(HomeListHeaderViewModel::class.java, HomeListHeaderViewBinder)
     }
 
     fun setPackages(packages: List<Kuaidi100Package>, notify: Boolean = true) {
@@ -126,9 +134,9 @@ class NewHomePackageListAdapter : MultiTypeAdapter() {
                 return@let filteredData
             }
         }?.let { data ->
+            val newList = mutableListOf<Any>()
             when (sortType) {
                 SORT_BY_UPDATE_TIME -> {
-                    val newList = mutableListOf<Any>()
                     val groups = data
                             .sortedByDescending { it.getFirstStatusTime() }
                             .groupBy { pack ->
@@ -142,37 +150,30 @@ class NewHomePackageListAdapter : MultiTypeAdapter() {
                         newList.add(groupDate)
                         newList.addAll(packagesInGroup)
                     }
-
-                    if (notify) {
-                        setupItemsWithDiffUtils(newList)
-                    } else {
-                        items = newList
-                    }
                 }
                 SORT_BY_CREATE_TIME -> {
-                    val newList = mutableListOf<Any>()
                     newList.addAll(data.reversed())
-
-                    if (notify) {
-                        setupItemsWithDiffUtils(newList)
-                    } else {
-                        items = newList
-                    }
                 }
                 SORT_BY_NAME -> {
-                    val newList = mutableListOf<Any>()
-
                     newList.addAll(data.sortedWith(Comparator { o1, o2 ->
                         Collator.getInstance().compare(o1.name, o2.name)
                     }))
-
-                    if (notify) {
-                        setupItemsWithDiffUtils(newList)
-                    } else {
-                        items = newList
-                    }
                 }
                 else -> throw IllegalArgumentException("Unsupported sort type = $sortType")
+            }
+
+            newList
+        }?.let { sortedData ->
+            val newData = mutableListOf(HomeListHeaderViewModel(
+                    lastUpdateTime = lastUpdateTime,
+                    filterKeyword = filterKeyword,
+                    filterCompanyName = Kuaidi100PackageApi.CompanyInfo.getNameByCode(filterCompany)
+            )) + sortedData
+
+            if (notify) {
+                setupItemsWithDiffUtils(newData)
+            } else {
+                items = newData
             }
         }
     }

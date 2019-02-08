@@ -182,8 +182,8 @@ object PackageItemViewBinder
                 true
             }
             R.id.action_delete -> {
-                itemView.context.localBroadcastManager
-                        .sendBroadcast(EventIntents.requestDeletePackage(itemData!!))
+                itemData?.let { EventIntents.requestDeletePackage(it) }
+                        ?.let { itemView.context.localBroadcastManager.sendBroadcast(it) }
                 true
             }
             else -> false
