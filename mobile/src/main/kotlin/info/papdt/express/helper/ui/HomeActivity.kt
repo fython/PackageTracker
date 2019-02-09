@@ -234,8 +234,8 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
 
         addButton.setOnClickListener {
             if (refreshLayout.state == RefreshState.Refreshing) {
-                Toast.makeText(this, R.string.toast_please_wait_for_finishing_refreshing,
-                        Toast.LENGTH_SHORT).show()
+                SnackbarUtils.makeInCoordinator(this,
+                        R.string.toast_please_wait_for_finishing_refreshing).show()
             } else {
                 if (bottomSheetBehavior.state == BottomSheetBehavior.STATE_HIDDEN) {
                     showBottomSheetBackground()

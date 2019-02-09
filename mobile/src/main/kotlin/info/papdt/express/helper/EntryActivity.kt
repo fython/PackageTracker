@@ -20,7 +20,6 @@ class EntryActivity : Activity() {
 			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
 			startActivity(intent)
 		} else {
-			// MainActivity.launch(this)
 			startActivity(Intent(this, HomeActivity::class.java)
                     .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
 		}

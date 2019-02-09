@@ -18,10 +18,10 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView
 import moe.feng.kotlinyan.common.*
 import android.graphics.BitmapFactory
 import android.graphics.Bitmap
-import android.widget.Toast
 import com.google.zxing.*
 import com.google.zxing.common.HybridBinarizer
 import info.papdt.express.helper.R
+import info.papdt.express.helper.support.SnackbarUtils
 import info.papdt.express.helper.view.SwipeBackCoordinatorLayout
 import info.papdt.express.helper.view.SwipeBackCoordinatorLayout.Companion.DOWN_DIR
 import java.io.IOException
@@ -160,11 +160,8 @@ class ScannerActivity : AbsActivity(), ZXingScannerView.ResultHandler, Permissio
 						if (result != null) {
 							handleResult(result)
 						} else {
-							Toast.makeText(
-									this@ScannerActivity,
-									R.string.toast_cannot_find_any_barcode,
-									Toast.LENGTH_SHORT
-							).show()
+							SnackbarUtils.makeInCoordinator(this,
+									R.string.toast_cannot_find_any_barcode).show()
 						}
 					}
 				}
