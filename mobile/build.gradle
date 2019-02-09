@@ -1,5 +1,14 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'io.fabric'
+
+repositories {
+    maven { url 'https://maven.fabric.io/public' }
+}
+
+def secretPropertiesFile = rootProject.file('secret.properties')
+def secretProperties = new Properties()
+secretProperties.load(secretPropertiesFile.newInputStream())
 
 android {
     compileSdkVersion rootProject.ext.targetSdkVersion
@@ -12,6 +21,8 @@ android {
         versionName rootProject.ext.versionName
         resConfigs "en", "zh_cn", "zh_tw", "zh_hk", "yue"
         multiDexEnabled true
+
+        manifestPlaceholders = [fabric_api_key: secretProperties.myFabricApiKey]
     }
     buildTypes {
         release {
@@ -69,18 +80,20 @@ dependencies {
 
     // View & Widget
     implementation 'de.hdodenhof:circleimageview:2.2.0'
-    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
-    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-14'
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-andx-3'
+    implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-andx-3'
     implementation 'moe.feng:MaterialStepperView:0.2.4.2'
     implementation 'me.dm7.barcodescanner:zxing:1.9.8'
     implementation 'io.alterac.blurkit:blurkit:1.0.0'
 
     // Utils
-    api 'com.tencent.bugly:crashreport:2.6.6.1'
     api 'moe.feng:AlipayZeroSdk:1.1'
+    implementation('com.crashlytics.sdk.android:crashlytics:2.9.9@aar') {
+        transitive = true
+    }
 
     // Firebase SDK
-    implementation "com.google.firebase:firebase-core:16.0.6"
+    implementation "com.google.firebase:firebase-core:16.0.7"
     implementation "com.google.firebase:firebase-messaging:17.3.4"
 }
 

@@ -6,3 +6,4 @@
 /build
 /captures
 *.apk
+/secret.properties

@@ -20,6 +20,10 @@
         android:networkSecurityConfig="@xml/network_sec_config"
         tools:ignore="GoogleAppIndexingWarning,UnusedAttribute">
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="${fabric_api_key}"/>
+
         <activity
             android:name=".EntryActivity"
             android:icon="@mipmap/ic_launcher"

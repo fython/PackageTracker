@@ -4,12 +4,11 @@ import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Intent
-import android.content.pm.PackageManager
 import android.os.Build
 import androidx.multidex.MultiDexApplication
 import androidx.appcompat.app.AppCompatDelegate
+import com.crashlytics.android.Crashlytics
 
-import com.tencent.bugly.crashreport.CrashReport
 import info.papdt.express.helper.model.MaterialIcon
 
 import info.papdt.express.helper.services.ClipboardDetectService
@@ -17,10 +16,12 @@ import info.papdt.express.helper.support.MaterialColorGenerator
 import info.papdt.express.helper.support.Settings
 import info.papdt.express.helper.support.SettingsInstance
 import io.alterac.blurkit.BlurKit
+import io.fabric.sdk.android.Fabric
 import moe.feng.kotlinyan.common.getSharedPreferencesProvider 
 import moe.feng.kotlinyan.common.ifSupportSDK
 import moe.feng.kotlinyan.common.notificationManager
 import moe.feng.kotlinyan.common.string
+import java.lang.RuntimeException
 
 class Application : MultiDexApplication() {
 
@@ -47,21 +48,7 @@ class Application : MultiDexApplication() {
 		BlurKit.init(this)
 
 		// Init CrashReport
-		val strategy = CrashReport.UserStrategy(applicationContext)
-		strategy.appPackageName = packageName
-
-		var versionName: String? = null
-		var versionCode = 0
-		try {
-			val packageInfo = packageManager.getPackageInfo(packageName, 0)
-			versionName = packageInfo.versionName
-			versionCode = packageInfo.versionCode
-		} catch (e: PackageManager.NameNotFoundException) {
-			e.printStackTrace()
-		}
-
-		strategy.appVersion = "$versionName($versionCode)"
-		CrashReport.initCrashReport(applicationContext, BUGLY_APP_ID, BUGLY_ENABLE_DEBUG, strategy)
+		Fabric.with(this, Crashlytics())
 
 		// Init notification channel
 		ifSupportSDK (Build.VERSION_CODES.O) {
