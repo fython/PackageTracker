@@ -222,7 +222,7 @@ class NewHomePackageListAdapter : MultiTypeAdapter() {
                 if (oldList[oldIndex] is Kuaidi100Package
                         && newList[newIndex] is Kuaidi100Package) {
                     val oldPack = oldList[oldIndex] as Kuaidi100Package
-                    val newPack = newList[oldIndex] as Kuaidi100Package
+                    val newPack = newList[newIndex] as Kuaidi100Package
                     if (oldPack.number == newPack.number) {
                         when {
                             oldPack.status != newPack.status ->
