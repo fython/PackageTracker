@@ -218,7 +218,7 @@ class NewHomePackageListAdapter : MultiTypeAdapter() {
 
         override fun areContentsTheSame(oldIndex: Int, newIndex: Int): Boolean {
             var res = areItemsTheSame(oldIndex, newIndex)
-            if (!res) {
+            if (res) {
                 if (oldList[oldIndex] is Kuaidi100Package
                         && newList[newIndex] is Kuaidi100Package) {
                     val oldPack = oldList[oldIndex] as Kuaidi100Package
@@ -229,7 +229,7 @@ class NewHomePackageListAdapter : MultiTypeAdapter() {
                                 res = false
                             oldPack.getFirstStatusTime() != newPack.getFirstStatusTime() ->
                                 res = false
-                            oldPack.unreadNew xor newPack.unreadNew ->
+                            oldPack.unreadNew != newPack.unreadNew ->
                                 res = false
                         }
                     }

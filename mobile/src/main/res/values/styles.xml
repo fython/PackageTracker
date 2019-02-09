@@ -1,5 +1,10 @@
 <resources>
 
+	<style name="Widget.FengMoe.StatusBarHeaderView" parent="">
+		<item name="colorNormal">@android:color/transparent</item>
+		<item name="enableMode">All</item>
+	</style>
+
 	<style name="EmptyActivity" parent="@android:style/Theme.Translucent">
 		<item name="android:background">#00000000</item>
 		<item name="android:windowEnterAnimation">@null</item>
@@ -11,6 +16,7 @@
 		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
 		<item name="colorAccent">@color/colorAccent</item>
 		<item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+		<item name="snackbarStyle">@style/Widget.MaterialComponents.Snackbar</item>
 	</style>
 
 	<style name="AppTheme.Dark" parent="Theme.AppCompat.NoActionBar">
@@ -18,6 +24,7 @@
 		<item name="colorPrimaryDark">@color/colorPrimaryDark</item>
 		<item name="colorAccent">@color/colorAccent</item>
 		<item name="preferenceTheme">@style/PreferenceThemeOverlay</item>
+		<item name="snackbarStyle">@style/Widget.MaterialComponents.Snackbar</item>
 	</style>
 
 	<style name="Toolbar.Dark" parent="ThemeOverlay.AppCompat.ActionBar">

@@ -6,9 +6,14 @@ import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.os.Build
 import android.util.TypedValue
 
 object ScreenUtils {
+
+    fun isChrome(): Boolean {
+        return Build.BRAND == "chromium" || Build.BRAND == "chrome"
+    }
 
     fun getStatusBarHeight(context: Context): Int {
         var result = 0

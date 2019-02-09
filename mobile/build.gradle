@@ -68,7 +68,6 @@ dependencies {
     implementation 'moe.shizuku.fontprovider:api:10'
 
     // View & Widget
-    implementation project(':StatusBarCompat')
     implementation 'de.hdodenhof:circleimageview:2.2.0'
     implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.1.0-alpha-14'
     implementation 'com.scwang.smartrefresh:SmartRefreshHeader:1.1.0-alpha-14'

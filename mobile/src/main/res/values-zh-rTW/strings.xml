@@ -311,4 +311,11 @@
 	<string name="unset">未設定</string>
 	<string name="search_by_type_title">根據指定類型搜尋</string>
 
+	<string name="home_list_no_result_text">根據當前過濾條件搜尋沒有結果，請嘗試更換或清除過濾條件。</string>
+
+	<string name="last_update_time_text_format">上次重新整理於 %s</string>
+	<string name="last_update_time_text_unknown">嘗試下拉重新整理包裹，這裡將會顯示上次重新整理的時間。</string>
+	<string name="filter_keyword_text_format">關鍵詞：%s</string>
+	<string name="filter_company_text_format">公司：%s</string>
+
 </resources>

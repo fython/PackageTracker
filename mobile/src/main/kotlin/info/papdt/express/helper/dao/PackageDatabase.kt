@@ -176,10 +176,13 @@ class PackageDatabase private constructor(private val mContext: Context) {
 
     fun readAll(): Int {
         var count = 0
-        data.filter { it.unreadNew }.forEach {
-            count++
-            it.unreadNew = false
-        }
+		for (i in 0 until size()) {
+			if (data[i].unreadNew) {
+				count++
+                data[i] = Kuaidi100Package(data[i])
+				data[i].unreadNew = false
+			}
+		}
         return count
     }
 

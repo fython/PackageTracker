@@ -68,7 +68,7 @@ abstract class AbsActivity : AppCompatActivity(), CoroutineScope {
 
 	protected abstract fun setUpViews()
 
-	fun ui(block: suspend CoroutineScope.() -> Unit) {
+	fun ui(block: suspend AbsActivity.() -> Unit) {
 		launch(coroutineContext, block = {
 			try {
 				block()
@@ -79,7 +79,7 @@ abstract class AbsActivity : AppCompatActivity(), CoroutineScope {
 		})
 	}
 
-	fun <T> asyncIO(block: suspend CoroutineScope.() -> T): Deferred<T> {
+	fun <T> asyncIO(block: suspend AbsActivity.() -> T): Deferred<T> {
 		return async(Dispatchers.IO, block = {
 			try {
 				block()

@@ -1,3 +1,2 @@
 include ':mobile'
 // include ':wear'
-include ':StatusBarCompat'

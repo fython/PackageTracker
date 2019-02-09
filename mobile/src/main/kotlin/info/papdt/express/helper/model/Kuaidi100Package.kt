@@ -14,6 +14,7 @@ import info.papdt.express.helper.support.DateHelper
 import info.papdt.express.helper.support.MaterialColorGenerator
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
 class Kuaidi100Package() : Parcelable {
 
@@ -21,7 +22,7 @@ class Kuaidi100Package() : Parcelable {
     @Expose @SerializedName("message") var message: String? = null
     @Expose @SerializedName("nu") var number: String? = null
     @Expose @SerializedName("com") var companyType: String? = null
-    @Expose @SerializedName("companytype") private val companyType1: String? = null
+    @Expose @SerializedName("companytype") private var companyType1: String? = null
     @Expose @SerializedName("ischeck") var isCheck: String? = null
     @Expose @SerializedName("updatetime") var updateTime: String? = null
     @Expose @SerializedName("status") var status: String? = null
@@ -49,10 +50,30 @@ class Kuaidi100Package() : Parcelable {
             return l
         }
 
+    constructor(src: Kuaidi100Package): this() {
+        message = src.message
+        number = src.number
+        companyType = src.companyType
+        companyType1 = src.companyType1
+        isCheck = src.isCheck
+        updateTime = src.updateTime
+        status = src.status
+        condition = src.condition
+        codeNumber = src.codeNumber
+        state = src.state
+        shouldPush = src.shouldPush
+        unreadNew = src.unreadNew
+        name = src.name
+        companyChineseName = src.companyChineseName
+        iconCode = src.iconCode
+        data = src.data
+    }
+
     constructor(parcel: Parcel) : this() {
         message = parcel.readString()
         number = parcel.readString()
         companyType = parcel.readString()
+        companyType1 = parcel.readString()
         isCheck = parcel.readString()
         updateTime = parcel.readString()
         status = parcel.readString()
@@ -64,6 +85,7 @@ class Kuaidi100Package() : Parcelable {
         name = parcel.readString()
         companyChineseName = parcel.readString()
         iconCode = parcel.readString()
+        data = parcel.createTypedArrayList(Status.CREATOR)
     }
 
     fun getState(): Int {
@@ -125,17 +147,29 @@ class Kuaidi100Package() : Parcelable {
         return (this.codeNumber ?: this.number) == (other.codeNumber ?: other.number)
     }
 
+    override fun toString(): String {
+        return "Kuaidi100Package [name=$name, number=$number, company=$companyType]"
+    }
+
     fun getPaletteFromId(): MaterialPalette {
         return MaterialColorGenerator.getPalette(id)
     }
 
-    class Status {
+    class Status() : Parcelable {
 
         @Expose var time: String? = null
         @Expose @SerializedName("location") var _location: String? = null
         @Expose var context: String? = null
         @Expose var ftime: String? = null
         @Expose @SerializedName("phone") var _phone: String? = null
+
+        constructor(parcel: Parcel) : this() {
+            time = parcel.readString()
+            _location = parcel.readString()
+            context = parcel.readString()
+            ftime = parcel.readString()
+            _phone = parcel.readString()
+        }
 
         private fun processOldData() {
             val qszp = "签收照片,"
@@ -185,8 +219,19 @@ class Kuaidi100Package() : Parcelable {
             }
         }
 
+        override fun writeToParcel(dest: Parcel, flags: Int) {
+            dest.writeString(time)
+            dest.writeString(_location)
+            dest.writeString(context)
+            dest.writeString(ftime)
+            dest.writeString(_phone)
+        }
+
+        override fun describeContents(): Int = 0
+
         companion object {
 
+            @SuppressLint("SimpleDateFormat")
             private val ftimeDateFormat = SimpleDateFormat("yyyy-MM-dd hh:mm:ss")
 
             fun findContact(s: String?): String? {
@@ -210,6 +255,18 @@ class Kuaidi100Package() : Parcelable {
                 }
                 return bf.toString()
             }
+
+            @JvmField
+            val CREATOR = object : Parcelable.Creator<Status> {
+                override fun createFromParcel(parcel: Parcel): Status {
+                    return Status(parcel)
+                }
+
+                override fun newArray(size: Int): Array<Status?> {
+                    return arrayOfNulls(size)
+                }
+            }
+
         }
 
     }
@@ -259,6 +316,7 @@ class Kuaidi100Package() : Parcelable {
         parcel.writeString(message)
         parcel.writeString(number)
         parcel.writeString(companyType)
+        parcel.writeString(companyType1)
         parcel.writeString(isCheck)
         parcel.writeString(updateTime)
         parcel.writeString(status)
@@ -270,10 +328,15 @@ class Kuaidi100Package() : Parcelable {
         parcel.writeString(name)
         parcel.writeString(companyChineseName)
         parcel.writeString(iconCode)
+        parcel.writeTypedList(data)
     }
 
     override fun describeContents(): Int {
         return 0
+    }
+
+    override fun hashCode(): Int {
+        return number?.hashCode() ?: 0
     }
 
 }

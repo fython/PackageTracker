@@ -6,7 +6,7 @@
               android:layout_height="match_parent"
 			  android:background="@color/light_theme_background">
 
-	<moe.feng.material.statusbar.AppBarLayout
+	<info.papdt.express.helper.view.AppBarLayout
 		android:layout_width="match_parent"
 	    android:layout_height="wrap_content"
 	    app:colorNormal="@color/light_theme_app_bar"
@@ -20,7 +20,7 @@
 			app:theme="@style/ThemeOverlay.AppCompat.Light"
 			app:popupTheme="@style/ThemeOverlay.AppCompat.Light"/>
 
-	</moe.feng.material.statusbar.AppBarLayout>
+	</info.papdt.express.helper.view.AppBarLayout>
 
 	<FrameLayout
 		android:layout_width="match_parent"

@@ -10,7 +10,7 @@
 	              android:layout_width="match_parent"
 	              android:layout_height="match_parent">
 
-		<moe.feng.material.statusbar.AppBarLayout
+		<info.papdt.express.helper.view.AppBarLayout
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			app:colorNormal="@android:color/transparent"
@@ -58,7 +58,7 @@
 
 			</androidx.cardview.widget.CardView>
 
-		</moe.feng.material.statusbar.AppBarLayout>
+		</info.papdt.express.helper.view.AppBarLayout>
 
 		<FrameLayout
 			android:layout_width="match_parent"

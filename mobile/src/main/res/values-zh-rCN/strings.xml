@@ -311,4 +311,11 @@
 	<string name="unset">未设定</string>
 	<string name="search_by_type_title">根据指定类型搜索</string>
 
+	<string name="home_list_no_result_text">根据当前过滤条件搜索没有结果，请尝试更换或清除过滤条件。</string>
+
+	<string name="last_update_time_text_format">上次更新于 %s</string>
+	<string name="last_update_time_text_unknown">尝试下拉刷新包裹，这里将会显示上次更新的时间。</string>
+	<string name="filter_keyword_text_format">关键词：%s</string>
+	<string name="filter_company_text_format">公司：%s</string>
+
 </resources>

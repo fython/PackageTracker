@@ -42,6 +42,7 @@ import moe.feng.kotlinyan.common.*
 
 import info.papdt.express.helper.R
 import info.papdt.express.helper.event.EventCallbacks
+import info.papdt.express.helper.support.SnackbarUtils
 import java.lang.Exception
 
 class HomeActivity : AbsActivity(), OnRefreshListener {
@@ -140,6 +141,7 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
         } else {
             listAdapter.filterKeyword = savedInstanceState[STATE_FILTER_KEYWORD] as? String
             listAdapter.filterCompany = savedInstanceState[STATE_FILTER_COMPANY] as? String
+            tempFilterCompany = savedInstanceState[STATE_TEMP_FILTER_COMPANY] as? String
         }
 
         spinner.setSelection(listAdapter.filter)
@@ -166,6 +168,7 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
 
         outState.putString(STATE_FILTER_KEYWORD, listAdapter.filterKeyword)
         outState.putString(STATE_FILTER_COMPANY, listAdapter.filterCompany)
+        outState.putString(STATE_TEMP_FILTER_COMPANY, tempFilterCompany)
     }
 
     override fun onStart() {
@@ -174,6 +177,14 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
             Log.i(TAG, "Requesting delete package: name=${it.name}")
             packageDatabase.remove(it)
             listAdapter.setPackages(packageDatabase.data)
+            SnackbarUtils.makeInCoordinator(this,
+                    getString(R.string.toast_item_removed, it.name),
+                    Snackbar.LENGTH_LONG)
+                    .setAction(R.string.toast_item_removed_action) {
+                        packageDatabase.undoLastRemoval()
+                        listAdapter.setPackages(packageDatabase.data)
+                    }
+                    .show()
         }, action = ACTION_REQUEST_DELETE_PACK)
         if (SettingsInstance.enableAddDialogBackgroundBlur) {
             bottomSheetBackgroundBlur.startBlur()
@@ -338,14 +349,12 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
                     val count = packageDatabase.readAll()
                     packageDatabase.save()
                     count
-                }
+                }.await()
 
                 listAdapter.setPackages(packageDatabase.data)
-                Snackbar.make(
-                        coordinatorLayout,
-                        getString(R.string.toast_all_read, data.await()),
-                        Snackbar.LENGTH_LONG
-                ).show()
+                SnackbarUtils.makeInCoordinator(this,
+                        getString(R.string.toast_all_read, data),
+                        Snackbar.LENGTH_LONG).show()
             }
             true
         }

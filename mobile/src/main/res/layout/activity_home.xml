@@ -1,86 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/coordinator_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".ui.HomeActivity"
     tools:menu="@menu/top_menu_home">
 
-    <!-- Content list with filters, search -->
-
-    <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/app_bar_layout"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/coordinator_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-        android:background="?android:colorPrimary">
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <!-- Content list with filters, search -->
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar_layout"
             android:layout_width="match_parent"
-            android:layout_height="?android:attr/actionBarSize"
-            app:contentInsetLeft="0dp"
-            app:contentInsetStart="0dp"
-            app:layout_scrollFlags="scroll|enterAlways">
+            android:layout_height="wrap_content"
+            android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+            android:background="?android:colorPrimary">
 
-            <include layout="@layout/toolbar_content_layout_home"/>
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/actionBarSize"
+                app:contentInsetLeft="0dp"
+                app:contentInsetStart="0dp"
+                app:layout_scrollFlags="scroll|enterAlways">
 
-        </androidx.appcompat.widget.Toolbar>
+                <include layout="@layout/toolbar_content_layout_home"/>
 
-    </com.google.android.material.appbar.AppBarLayout>
+            </androidx.appcompat.widget.Toolbar>
 
-    <com.scwang.smartrefresh.layout.SmartRefreshLayout
-        android:id="@+id/refresh_layout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior=".view.ScrollingViewWithBottomBarBehavior">
+        </com.google.android.material.appbar.AppBarLayout>
 
-        <com.scwang.smartrefresh.header.DeliveryHeader
-            android:id="@+id/refresh_header"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@android:id/list"
+        <com.scwang.smartrefresh.layout.SmartRefreshLayout
+            android:id="@+id/refresh_layout"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+            app:layout_behavior=".view.ScrollingViewWithBottomBarBehavior">
 
-    </com.scwang.smartrefresh.layout.SmartRefreshLayout>
+            <com.scwang.smartrefresh.header.DeliveryHeader
+                android:id="@+id/refresh_header"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
 
-    <!-- Add package views -->
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@android:id/list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
-    <io.alterac.blurkit.FixedBlurLayout
-        android:id="@+id/bottom_sheet_background_blur"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/black"
-        android:alpha="0.5"
-        android:clickable="true"
-        android:focusable="true"
-        android:visibility="gone"
-        android:layout_marginTop="-7dp"
-        android:elevation="7dp"
-        app:blk_blurRadius="12"
-        app:blk_downscaleFactor="0.2"
-        app:blk_fps="0"/>
+        </com.scwang.smartrefresh.layout.SmartRefreshLayout>
 
-    <View
-        android:id="@+id/bottom_sheet_background_normal"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/black"
-        android:alpha="0.35"
-        android:clickable="true"
-        android:focusable="true"
-        android:visibility="gone"
-        android:layout_marginTop="-7dp"
-        android:elevation="7dp"/>
+        <!-- Add package views -->
 
-    <include layout="@layout/bottom_sheet_add_package"/>
+        <io.alterac.blurkit.FixedBlurLayout
+            android:id="@+id/bottom_sheet_background_blur"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/black"
+            android:alpha="0.5"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="gone"
+            android:layout_marginTop="-7dp"
+            android:elevation="7dp"
+            app:blk_blurRadius="12"
+            app:blk_downscaleFactor="0.2"
+            app:blk_fps="0"/>
+
+        <View
+            android:id="@+id/bottom_sheet_background_normal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/black"
+            android:alpha="0.35"
+            android:clickable="true"
+            android:focusable="true"
+            android:visibility="gone"
+            android:layout_marginTop="-7dp"
+            android:elevation="7dp"/>
+
+        <include layout="@layout/bottom_sheet_add_package"/>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
     <!-- Bottom App Bar -->
 
@@ -145,4 +153,4 @@
 
     </LinearLayout>
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>

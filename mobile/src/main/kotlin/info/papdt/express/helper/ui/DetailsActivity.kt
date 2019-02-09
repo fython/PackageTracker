@@ -165,7 +165,7 @@ class DetailsActivity : AbsActivity() {
 		newItems.add(DetailsTwoLineItem(DetailsTwoLineItem.TYPE_NAME, data!!.name!!))
 		newItems.add(DetailsTwoLineItem(DetailsTwoLineItem.TYPE_NUMBER, data!!.number!!, data!!.companyChineseName))
 		newItems.add(getString(R.string.list_status_subheader))
-		newItems.addAll(data!!.data!!)
+		newItems.addAll(data!!.data ?: listOf())
 		return newItems
 	}
 
