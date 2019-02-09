@@ -48,7 +48,6 @@ kotlin {
 
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
-    // wearApp project(':wear')
 
     def room_version = "2.1.0-alpha04"
 

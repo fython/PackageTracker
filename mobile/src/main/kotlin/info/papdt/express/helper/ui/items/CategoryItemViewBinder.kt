@@ -29,7 +29,7 @@ object CategoryItemViewBinder : ItemViewBinder<Category, CategoryItemViewBinder.
             iconTextView.typeface = MaterialIcon.iconTypeface
 
             itemView.setOnClickListener {
-                
+
             }
         }
 
