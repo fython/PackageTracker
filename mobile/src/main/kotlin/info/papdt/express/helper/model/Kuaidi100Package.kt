@@ -36,7 +36,7 @@ class Kuaidi100Package() : Parcelable {
     @Expose var unreadNew = false
     @Expose var name: String? = null
     @Expose var companyChineseName: String? = null
-    @Expose var iconCode: String? = null
+    @Expose var categoryTitle: String? = null
 
     val id: Long
         get() {
@@ -65,7 +65,7 @@ class Kuaidi100Package() : Parcelable {
         unreadNew = src.unreadNew
         name = src.name
         companyChineseName = src.companyChineseName
-        iconCode = src.iconCode
+        categoryTitle = src.categoryTitle
         data = src.data
     }
 
@@ -84,7 +84,7 @@ class Kuaidi100Package() : Parcelable {
         unreadNew = parcel.readByte() != 0.toByte()
         name = parcel.readString()
         companyChineseName = parcel.readString()
-        iconCode = parcel.readString()
+        categoryTitle = parcel.readString()
         data = parcel.createTypedArrayList(Status.CREATOR)
     }
 
@@ -312,31 +312,27 @@ class Kuaidi100Package() : Parcelable {
         }
     }
 
-    override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(message)
-        parcel.writeString(number)
-        parcel.writeString(companyType)
-        parcel.writeString(companyType1)
-        parcel.writeString(isCheck)
-        parcel.writeString(updateTime)
-        parcel.writeString(status)
-        parcel.writeString(condition)
-        parcel.writeString(codeNumber)
-        parcel.writeString(state)
-        parcel.writeByte(if (shouldPush) 1 else 0)
-        parcel.writeByte(if (unreadNew) 1 else 0)
-        parcel.writeString(name)
-        parcel.writeString(companyChineseName)
-        parcel.writeString(iconCode)
-        parcel.writeTypedList(data)
+    override fun writeToParcel(parcel: Parcel, flags: Int) = with(parcel) {
+        writeString(message)
+        writeString(number)
+        writeString(companyType)
+        writeString(companyType1)
+        writeString(isCheck)
+        writeString(updateTime)
+        writeString(status)
+        writeString(condition)
+        writeString(codeNumber)
+        writeString(state)
+        writeByte(if (shouldPush) 1 else 0)
+        writeByte(if (unreadNew) 1 else 0)
+        writeString(name)
+        writeString(companyChineseName)
+        writeString(categoryTitle)
+        writeTypedList(data)
     }
 
-    override fun describeContents(): Int {
-        return 0
-    }
+    override fun describeContents(): Int = 0
 
-    override fun hashCode(): Int {
-        return number?.hashCode() ?: 0
-    }
+    override fun hashCode(): Int = number?.hashCode() ?: 0
 
 }

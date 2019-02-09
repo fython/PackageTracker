@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 apply plugin: 'io.fabric'
 
 repositories {
@@ -49,6 +50,8 @@ dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     // wearApp project(':wear')
 
+    def room_version = "2.1.0-alpha04"
+
     implementation 'androidx.multidex:multidex:2.0.1'
 
     // Kotlin & Kotlinyan
@@ -65,6 +68,9 @@ dependencies {
     implementation "com.google.android.material:material:1.0.0"
     implementation "androidx.legacy:legacy-support-v13:1.0.0"
     implementation "androidx.browser:browser:1.0.0"
+    implementation "androidx.room:room-runtime:$room_version"
+    kapt "androidx.room:room-compiler:$room_version"
+    implementation "androidx.room:room-coroutines:$room_version"
 
     // Network & Data
     implementation 'com.squareup.okhttp3:okhttp:3.12.0'

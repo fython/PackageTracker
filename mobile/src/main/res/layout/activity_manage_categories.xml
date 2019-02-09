@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <info.papdt.express.helper.view.SwipeBackCoordinatorLayout
+        android:id="@+id/swipe_back_coordinator_layout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@android:id/list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="?attr/rootViewBackgroundColor"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+
+    </info.papdt.express.helper.view.SwipeBackCoordinatorLayout>
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/bottomBarColor"
+        android:elevation="@dimen/app_bar_elevation"
+        app:theme="@style/Toolbar.Dark"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+</LinearLayout>

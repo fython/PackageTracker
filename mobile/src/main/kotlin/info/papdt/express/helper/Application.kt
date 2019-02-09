@@ -8,6 +8,7 @@ import android.os.Build
 import androidx.multidex.MultiDexApplication
 import androidx.appcompat.app.AppCompatDelegate
 import com.crashlytics.android.Crashlytics
+import info.papdt.express.helper.dao.SRDatabase
 
 import info.papdt.express.helper.model.MaterialIcon
 
@@ -17,11 +18,7 @@ import info.papdt.express.helper.support.Settings
 import info.papdt.express.helper.support.SettingsInstance
 import io.alterac.blurkit.BlurKit
 import io.fabric.sdk.android.Fabric
-import moe.feng.kotlinyan.common.getSharedPreferencesProvider 
-import moe.feng.kotlinyan.common.ifSupportSDK
-import moe.feng.kotlinyan.common.notificationManager
-import moe.feng.kotlinyan.common.string
-import java.lang.RuntimeException
+import moe.feng.kotlinyan.common.*
 
 class Application : MultiDexApplication() {
 
@@ -63,6 +60,7 @@ class Application : MultiDexApplication() {
 
 		// Init settings
 		SettingsInstance = getSharedPreferencesProvider()
+        SRDatabase.init(this)
 	}
 
 }

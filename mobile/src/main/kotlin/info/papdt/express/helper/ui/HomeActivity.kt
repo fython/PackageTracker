@@ -34,7 +34,7 @@ import info.papdt.express.helper.receiver.ConnectivityReceiver
 import info.papdt.express.helper.support.PackageApiType
 import info.papdt.express.helper.support.SettingsInstance
 import info.papdt.express.helper.ui.adapter.HomeToolbarSpinnerAdapter
-import info.papdt.express.helper.ui.adapter.NewHomePackageListAdapter
+import info.papdt.express.helper.ui.adapter.HomePackageListAdapter
 import info.papdt.express.helper.ui.common.AbsActivity
 import io.alterac.blurkit.FixedBlurLayout
 import moe.feng.common.stepperview.VerticalStepperItemView
@@ -89,6 +89,7 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
     private val listView by lazy<RecyclerView> { findViewById(android.R.id.list) }
     private val spinner by lazy<Spinner> { mToolbar!!.findViewById(R.id.spinner) }
     private val addButton by lazy<View> { findViewById(R.id.add_button) }
+    private val manageCategoriesButton by lazy<View> { findViewById(R.id.manage_category_button) }
     private val scanButton by lazy<View> { findViewById(R.id.scan_button) }
     private val moreButton by lazy<View> { findViewById(R.id.more_button) }
     private val bottomSheet by lazy<View> { findViewById(R.id.bottom_sheet_add_package) }
@@ -117,7 +118,7 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
     private lateinit var bottomSheetBehavior: BottomSheetBehavior<View>
     private lateinit var addPackageViewHolder: AddPackageViewHolder
 
-    private val listAdapter by lazy { NewHomePackageListAdapter() }
+    private val listAdapter by lazy { HomePackageListAdapter() }
     private val homeListScrollListener = HomeListScrollListener()
 
     private var filterCompanyChoiceText: TextView? = null
@@ -246,6 +247,11 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
             }
         }
 
+        TooltipCompat.setTooltipText(manageCategoriesButton, getString(R.string.action_manage_categories))
+        manageCategoriesButton.setOnClickListener {
+            ManageCategoriesActivity.launch(this)
+        }
+
         TooltipCompat.setTooltipText(scanButton, getString(R.string.activity_scanner))
         scanButton.setOnClickListener { openScanner() }
 
@@ -321,11 +327,11 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
 
     override fun onPrepareOptionsMenu(menu: Menu): Boolean {
         when (SettingsInstance.lastSortBy) {
-            NewHomePackageListAdapter.SORT_BY_UPDATE_TIME ->
+            HomePackageListAdapter.SORT_BY_UPDATE_TIME ->
                 menu.findItem(R.id.action_sort_by_update_time).isChecked = true
-            NewHomePackageListAdapter.SORT_BY_NAME ->
+            HomePackageListAdapter.SORT_BY_NAME ->
                 menu.findItem(R.id.action_sort_by_name).isChecked = true
-            NewHomePackageListAdapter.SORT_BY_CREATE_TIME ->
+            HomePackageListAdapter.SORT_BY_CREATE_TIME ->
                 menu.findItem(R.id.action_sort_by_create_time).isChecked = true
         }
 
@@ -381,19 +387,19 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
         }
         R.id.action_sort_by_create_time -> {
             item.isChecked = true
-            listAdapter.sortType = NewHomePackageListAdapter.SORT_BY_CREATE_TIME
+            listAdapter.sortType = HomePackageListAdapter.SORT_BY_CREATE_TIME
             SettingsInstance.lastSortBy = listAdapter.sortType
             true
         }
         R.id.action_sort_by_name -> {
             item.isChecked = true
-            listAdapter.sortType = NewHomePackageListAdapter.SORT_BY_NAME
+            listAdapter.sortType = HomePackageListAdapter.SORT_BY_NAME
             SettingsInstance.lastSortBy = listAdapter.sortType
             true
         }
         R.id.action_sort_by_update_time -> {
             item.isChecked = true
-            listAdapter.sortType = NewHomePackageListAdapter.SORT_BY_UPDATE_TIME
+            listAdapter.sortType = HomePackageListAdapter.SORT_BY_UPDATE_TIME
             SettingsInstance.lastSortBy = listAdapter.sortType
             true
         }

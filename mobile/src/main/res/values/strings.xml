@@ -344,4 +344,9 @@
 	<string name="filter_keyword_text_format">Keywords: %s</string>
 	<string name="filter_company_text_format">Company: %s</string>
 
+	<!-- Manage Categories -->
+	<string name="action_manage_categories">Manage categories</string>
+	<string name="activity_manage_categories">Categories</string>
+	<string name="action_new_category">New category</string>
+
 </resources>

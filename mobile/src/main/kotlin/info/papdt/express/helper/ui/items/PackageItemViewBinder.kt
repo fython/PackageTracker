@@ -15,13 +15,16 @@ import android.widget.TextView
 import de.hdodenhof.circleimageview.CircleImageView
 import info.papdt.express.helper.R
 import info.papdt.express.helper.dao.PackageDatabase
+import info.papdt.express.helper.dao.SRDatabase
 import info.papdt.express.helper.event.EventIntents
+import info.papdt.express.helper.model.Category
 import info.papdt.express.helper.model.Kuaidi100Package
 import info.papdt.express.helper.model.MaterialIcon
 import info.papdt.express.helper.support.Spanny
 import info.papdt.express.helper.support.isFontProviderEnabled
 import info.papdt.express.helper.support.localBroadcastManager
 import info.papdt.express.helper.ui.DetailsActivity
+import kotlinx.coroutines.runBlocking
 import me.drakeet.multitype.ItemViewBinder
 import moe.feng.kotlinyan.common.set
 import java.text.DateFormat
@@ -79,17 +82,22 @@ object PackageItemViewBinder
 
         /** Set CircleImageView  */
         holder.bigCharView.apply {
-            if (item.iconCode?.isNotEmpty() == true) {
-                typeface = MaterialIcon.iconTypeface
-                paint.isFakeBoldText = false
-                text = item.iconCode
-            } else {
-                typeface = Typeface.DEFAULT
-                paint.isFakeBoldText = true
-                if (item.name?.isNotEmpty() == true) {
-                    text = item.name!!.substring(0, 1).toUpperCase()
-                } else if (item.companyChineseName?.isNotEmpty() == true) {
-                    text = item.companyChineseName!!.substring(0, 1).toUpperCase()
+            runBlocking {
+                val category: Category? = item.categoryTitle?.let {
+                    SRDatabase.categoryDao.get(it)
+                }
+                if (category?.iconCode != null) {
+                    typeface = MaterialIcon.iconTypeface
+                    paint.isFakeBoldText = false
+                    text = category.iconCode
+                } else {
+                    typeface = Typeface.DEFAULT
+                    paint.isFakeBoldText = true
+                    if (item.name?.isNotEmpty() == true) {
+                        text = item.name!!.substring(0, 1).toUpperCase()
+                    } else if (item.companyChineseName?.isNotEmpty() == true) {
+                        text = item.companyChineseName!!.substring(0, 1).toUpperCase()
+                    }
                 }
             }
         }

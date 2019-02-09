@@ -12,7 +12,7 @@ import info.papdt.express.helper.ui.items.*
 import me.drakeet.multitype.MultiTypeAdapter
 import java.text.Collator
 
-class NewHomePackageListAdapter : MultiTypeAdapter() {
+class HomePackageListAdapter : MultiTypeAdapter() {
 
     companion object {
 

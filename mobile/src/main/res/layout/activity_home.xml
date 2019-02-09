@@ -134,8 +134,20 @@
                 android:layout_height="match_parent"
                 android:paddingStart="12dp"
                 android:paddingEnd="12dp"
+                android:contentDescription="@string/operation_scan"
                 android:background="?android:attr/selectableItemBackgroundBorderless"
                 android:src="@drawable/ic_barcode_scan_black_24dp"
+                android:tint="@android:color/white"/>
+
+            <ImageButton
+                android:id="@+id/manage_category_button"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingStart="12dp"
+                android:paddingEnd="12dp"
+                android:contentDescription="@string/action_manage_categories"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_style_text_primary_color_24dp"
                 android:tint="@android:color/white"/>
 
             <ImageButton

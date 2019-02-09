@@ -143,6 +143,15 @@
         </activity>
 
         <activity
+            android:name=".ui.ManageCategoriesActivity"
+            android:label="@string/activity_manage_categories"
+            android:theme="@style/AppTheme.WithSwipeBack">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+            </intent-filter>
+        </activity>
+
+        <activity
             android:name=".ui.shortcut.ScannerShortcutCreator"
             android:icon="@mipmap/ic_scanner_launcher"
             android:label="@string/activity_scanner"

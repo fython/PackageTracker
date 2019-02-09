@@ -9,12 +9,10 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageView
 import info.papdt.express.helper.R
 import info.papdt.express.helper.RESULT_RENAMED
 import info.papdt.express.helper.dao.PackageDatabase
 import info.papdt.express.helper.model.Kuaidi100Package
-import info.papdt.express.helper.model.MaterialIcon
 import info.papdt.express.helper.ui.ChooseIconActivity
 import info.papdt.express.helper.ui.DetailsActivity
 import info.papdt.express.helper.ui.common.AbsDialogFragment
@@ -25,21 +23,19 @@ import kotlin.concurrent.thread
 class EditPackageDialog : AbsDialogFragment() {
 
     private lateinit var mNameEdit: EditText
-    private lateinit var mIconView: ImageView
 
     private lateinit var data: Kuaidi100Package
-    private var currentIconCode: String? = null
+    private var currentCategory: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         data = arguments!!.getParcelable(ARG_DATA)!!
-        currentIconCode = data.iconCode
+        currentCategory = data.categoryTitle
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         val view = LayoutInflater.from(requireActivity())
                 .inflate(R.layout.dialog_content_view_edit_package, null)
-        mIconView = view.findViewById(R.id.icon_view)
         mNameEdit = view.findViewById(R.id.name_edit)
         view.findViewById<Button>(R.id.icon_choose_button).setOnClickListener {
             startActivityForResult(
@@ -48,7 +44,7 @@ class EditPackageDialog : AbsDialogFragment() {
             )
         }
         view.findViewById<Button>(R.id.icon_clear_button).setOnClickListener {
-            currentIconCode = null
+            currentCategory = null
             updateIconView()
         }
         mNameEdit.setText(data.name!!)
@@ -60,7 +56,7 @@ class EditPackageDialog : AbsDialogFragment() {
             okButton { _, _ ->
                 if (!TextUtils.isEmpty(mNameEdit.text.toString())) {
                     data.name = mNameEdit.text.toString().trim { it <= ' ' }
-                    data.iconCode = currentIconCode
+                    data.categoryTitle = currentCategory
                     (requireActivity() as DetailsActivity).setUpData()
 
                     val intent = Intent()
@@ -83,19 +79,13 @@ class EditPackageDialog : AbsDialogFragment() {
     }
 
     private fun updateIconView() {
-        ui {
-            mIconView.setImageBitmap(currentIconCode?.let {
-                MaterialIcon(it).toBitmapAsync(
-                        resources.getDimensionPixelSize(R.dimen.icon_size_medium)
-                ).await()
-            })
-        }
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == REQUEST_CODE_CHOOSE_ICON && resultCode == RESULT_OK
                 && data != null) {
-            currentIconCode = data.getStringExtra(ChooseIconActivity.EXTRA_RESULT_ICON_CODE)
+            currentCategory = data.getStringExtra(ChooseIconActivity.EXTRA_RESULT_ICON_CODE)
             updateIconView()
         }
     }
