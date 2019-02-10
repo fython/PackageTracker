@@ -49,11 +49,15 @@ class PackageDatabase private constructor(private val mContext: Context) {
 		}
         json = json ?: "{\"data\":[], \"lastUpdateTime\":0}"
 
-		this.data = Gson().fromJson(json, PackageDatabase::class.java).data
+		val obj = Gson().fromJson(json, PackageDatabase::class.java)
+		this.data = obj.data
+		this.lastUpdateTime = obj.lastUpdateTime
 	}
 
 	fun restoreData(json: String) {
-		this.data = Gson().fromJson(json, PackageDatabase::class.java).data
+		val obj = Gson().fromJson(json, PackageDatabase::class.java)
+		this.data = obj.data
+		this.lastUpdateTime = obj.lastUpdateTime
 		CoroutineScope(Dispatchers.IO).launch { PushApi.sync(getPackageIdList()) }
 	}
 
