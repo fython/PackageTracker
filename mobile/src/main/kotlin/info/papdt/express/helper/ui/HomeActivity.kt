@@ -62,6 +62,7 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
         const val STATE_TEMP_FILTER_COMPANY = "$TAG.temp_filter_company"
 
         const val REQUEST_FILTER_COMPANY = 20001
+        const val REQUEST_CODE_CHANGE = 20002
 
         fun search(context: Context, number: String) {
             val intent = Intent(context, HomeActivity::class.java)
@@ -249,7 +250,7 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
 
         TooltipCompat.setTooltipText(manageCategoriesButton, getString(R.string.action_manage_categories))
         manageCategoriesButton.setOnClickListener {
-            ManageCategoriesActivity.launch(this)
+            ManageCategoriesActivity.launch(this, REQUEST_CODE_CHANGE)
         }
 
         TooltipCompat.setTooltipText(scanButton, getString(R.string.activity_scanner))
@@ -451,6 +452,11 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
                 if (RESULT_OK == resultCode) {
                     tempFilterCompany = data?.get(RESULT_EXTRA_COMPANY_CODE)?.asString()
                     updateFilterCompanyChoiceText()
+                }
+            }
+            REQUEST_CODE_CHANGE -> {
+                if (RESULT_OK == resultCode) {
+                    listAdapter.notifyDataSetChanged()
                 }
             }
         }

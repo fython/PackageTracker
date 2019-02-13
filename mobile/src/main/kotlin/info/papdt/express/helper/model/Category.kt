@@ -9,8 +9,14 @@ import androidx.room.PrimaryKey
 @Entity
 data class Category(
         @PrimaryKey var title: String,
-        @ColumnInfo(name = "icon_name") var iconCode: String? = null
-) : Parcelable {
+        @ColumnInfo(name = "icon_name") var iconCode: String = "archive"
+) : Parcelable, Comparable<Category> {
+
+    constructor(src: Category): this(src.title, src.iconCode)
+
+    override fun compareTo(other: Category): Int {
+        return title.compareTo(other.title)
+    }
 
     companion object {
 
@@ -29,7 +35,7 @@ data class Category(
 
     constructor(parcel: Parcel) : this(
             parcel.readString()!!,
-            parcel.readString()
+            parcel.readString()!!
     )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) = with(parcel) {

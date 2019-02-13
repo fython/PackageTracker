@@ -348,5 +348,36 @@
 	<string name="action_manage_categories">Manage categories</string>
 	<string name="activity_manage_categories">Categories</string>
 	<string name="action_new_category">New category</string>
+	<string name="edit_category_dialog_title_for_create">Create category</string>
+	<string name="edit_category_dialog_title_for_edit">Edit category</string>
+	<string name="edit_category_dialog_category_title">Category title</string>
+	<string name="edit_category_dialog_category_icon">Category icon</string>
+    <string name="category_default_title">Unnamed category</string>
+	<string name="choose">Choose…</string>
+    <string name="delete">Delete</string>
+    <string name="save">Save</string>
+
+	<string name="choose_category_dialog_title">Choose a category</string>
+	<string name="choose_category_dialog_unclassified">Unclassified</string>
+
+    <string name="edit_package_dialog_category">Category</string>
+
+    <string name="delete_category_dialog_title">Delete category</string>
+    <string name="delete_category_dialog_message">Packages belonging to this category will be classified as unclassified.</string>
+
+    <string name="action_reset_category">Reset category</string>
+    <string name="reset_default_category_dialog_title">Reset default category</string>
+    <string name="reset_default_category_dialog_message">Caution: This operation cannot be reverted! It will delete all categories and re-import default categories.</string>
+
+    <string name="default_category_food_snack">Food &amp; Snack</string>
+    <string name="default_category_digital_product">Digital product</string>
+    <string name="default_category_letters">Letters</string>
+    <string name="default_category_daily_necessities">Daily necessities</string>
+    <string name="default_category_art">Art</string>
+    <string name="default_category_books">Books</string>
+    <string name="default_category_home_appliance">Home appliance</string>
+    <string name="default_category_entertainment">Entertainment</string>
+
+    <string name="no_category_text">There are no categories here. Try to add some to classify your packages.</string>
 
 </resources>

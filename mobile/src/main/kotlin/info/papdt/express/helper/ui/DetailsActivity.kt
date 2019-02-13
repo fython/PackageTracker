@@ -31,7 +31,7 @@ import info.papdt.express.helper.model.BaseMessage
 import info.papdt.express.helper.model.Kuaidi100Package
 import info.papdt.express.helper.support.*
 import info.papdt.express.helper.ui.common.AbsActivity
-import info.papdt.express.helper.ui.fragment.dialog.EditPackageDialog
+import info.papdt.express.helper.ui.dialog.EditPackageDialog
 import info.papdt.express.helper.ui.items.DetailsStatusItemBinder
 import info.papdt.express.helper.ui.items.DetailsTwoLineItem
 import info.papdt.express.helper.ui.items.DetailsTwoLineItemBinder

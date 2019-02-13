@@ -1,18 +1,23 @@
-package info.papdt.express.helper.ui.fragment.dialog
+package info.papdt.express.helper.ui.dialog
 
-import android.app.Activity.RESULT_OK
 import android.app.Dialog
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import android.text.TextUtils
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import android.widget.TextView
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import info.papdt.express.helper.R
 import info.papdt.express.helper.RESULT_RENAMED
 import info.papdt.express.helper.dao.PackageDatabase
+import info.papdt.express.helper.dao.SRDatabase
 import info.papdt.express.helper.model.Kuaidi100Package
+import info.papdt.express.helper.model.MaterialIcon
 import info.papdt.express.helper.ui.ChooseIconActivity
 import info.papdt.express.helper.ui.DetailsActivity
 import info.papdt.express.helper.ui.common.AbsDialogFragment
@@ -22,10 +27,17 @@ import kotlin.concurrent.thread
 
 class EditPackageDialog : AbsDialogFragment() {
 
-    private lateinit var mNameEdit: EditText
+    private lateinit var nameEdit: EditText
+    private lateinit var categoryIcon: TextView
+    private lateinit var categoryTitle: TextView
 
     private lateinit var data: Kuaidi100Package
     private var currentCategory: String? = null
+
+    private val chooseCategoryCallback = ChooseCategoryDialog.onChooseCategory {
+        currentCategory = if (it.title.isEmpty()) null else it.title
+        updateCategoryViews()
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,28 +46,12 @@ class EditPackageDialog : AbsDialogFragment() {
     }
 
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
-        val view = LayoutInflater.from(requireActivity())
-                .inflate(R.layout.dialog_content_view_edit_package, null)
-        mNameEdit = view.findViewById(R.id.name_edit)
-        view.findViewById<Button>(R.id.icon_choose_button).setOnClickListener {
-            startActivityForResult(
-                    Intent(requireContext(), ChooseIconActivity::class.java),
-                    REQUEST_CODE_CHOOSE_ICON
-            )
-        }
-        view.findViewById<Button>(R.id.icon_clear_button).setOnClickListener {
-            currentCategory = null
-            updateIconView()
-        }
-        mNameEdit.setText(data.name!!)
-        mNameEdit.setSelection(data.name!!.length)
-        updateIconView()
         return buildV7AlertDialog {
             titleRes = R.string.dialog_edit_name_title
-            setView(view)
+            view = createContentView()
             okButton { _, _ ->
-                if (!TextUtils.isEmpty(mNameEdit.text.toString())) {
-                    data.name = mNameEdit.text.toString().trim { it <= ' ' }
+                if (!TextUtils.isEmpty(nameEdit.text.toString())) {
+                    data.name = nameEdit.text.toString().trim { it <= ' ' }
                     data.categoryTitle = currentCategory
                     (requireActivity() as DetailsActivity).setUpData()
 
@@ -78,16 +74,45 @@ class EditPackageDialog : AbsDialogFragment() {
         }
     }
 
-    private fun updateIconView() {
+    private fun createContentView(): View {
+        val view = LayoutInflater.from(context!!).inflate(R.layout.dialog_edit_package, null)
 
+        nameEdit = view.findViewById(R.id.name_edit)
+        view.findViewById<Button>(R.id.icon_choose_button).setOnClickListener {
+            ChooseCategoryDialog().show(fragmentManager, "choose_category")
+        }
+        nameEdit.setText(data.name!!)
+        nameEdit.setSelection(data.name!!.length)
+
+        categoryIcon = view.findViewById(R.id.category_icon_view)
+        categoryTitle = view.findViewById(R.id.category_title_view)
+
+        categoryIcon.typeface = MaterialIcon.iconTypeface
+
+        updateCategoryViews()
+
+        return view
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_CODE_CHOOSE_ICON && resultCode == RESULT_OK
-                && data != null) {
-            currentCategory = data.getStringExtra(ChooseIconActivity.EXTRA_RESULT_ICON_CODE)
-            updateIconView()
+    private fun updateCategoryViews() = ui {
+        currentCategory?.let {
+            categoryIcon.text = SRDatabase.categoryDao.get(it)?.iconCode ?: ""
+            categoryTitle.text = it
+        } ?: run {
+            categoryIcon.text = ""
+            categoryTitle.setText(R.string.choose_category_dialog_unclassified)
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        LocalBroadcastManager.getInstance(context!!).registerReceiver(
+                chooseCategoryCallback, IntentFilter(ChooseCategoryDialog.ACTION_CHOOSE_CATEGORY))
+    }
+
+    override fun onStop() {
+        super.onStop()
+        LocalBroadcastManager.getInstance(context!!).unregisterReceiver(chooseCategoryCallback)
     }
 
     companion object {
@@ -98,7 +123,7 @@ class EditPackageDialog : AbsDialogFragment() {
 
         @JvmStatic fun newInstance(data: Kuaidi100Package): EditPackageDialog {
             return EditPackageDialog().apply {
-                arguments = bundleOf(ARG_DATA to data)
+                arguments = bundleOf(ARG_DATA to Kuaidi100Package(data))
             }
         }
 
