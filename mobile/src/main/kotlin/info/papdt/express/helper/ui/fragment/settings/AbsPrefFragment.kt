@@ -10,8 +10,6 @@ import androidx.core.content.ContextCompat
 import info.papdt.express.helper.R
 import info.papdt.express.helper.support.Settings
 import info.papdt.express.helper.ui.SettingsActivity
-import info.papdt.express.helper.view.SwipeBackCoordinatorLayout
-import info.papdt.express.helper.view.SwipeBackCoordinatorLayout.Companion.DOWN_DIR
 import kotlinx.coroutines.*
 import moe.shizuku.preference.Preference
 import moe.shizuku.preference.PreferenceFragment
@@ -19,10 +17,7 @@ import kotlin.coroutines.CoroutineContext
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
-abstract class AbsPrefFragment :
-        PreferenceFragment(),
-        CoroutineScope,
-        SwipeBackCoordinatorLayout.OnSwipeListener {
+abstract class AbsPrefFragment : PreferenceFragment(), CoroutineScope {
 
 	private lateinit var job: Job
 	override val coroutineContext: CoroutineContext get() = Dispatchers.Main + job
@@ -40,18 +35,6 @@ abstract class AbsPrefFragment :
     override fun onDestroy() {
         super.onDestroy()
         job.cancel()
-    }
-
-    override fun canSwipeBack(dir: Int): Boolean {
-        return SwipeBackCoordinatorLayout.canSwipeBack(listView, DOWN_DIR)
-    }
-
-    override fun onSwipeProcess(percent: Float) {
-
-    }
-
-    override fun onSwipeFinish(dir: Int) {
-
     }
 
 	fun makeSnackbar(message: String, duration: Int): Snackbar? {

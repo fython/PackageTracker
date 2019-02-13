@@ -7,11 +7,9 @@ import androidx.core.widget.NestedScrollView
 
 import info.papdt.express.helper.R
 import info.papdt.express.helper.ui.common.AbsFragment
-import info.papdt.express.helper.view.SwipeBackCoordinatorLayout
-import info.papdt.express.helper.view.SwipeBackCoordinatorLayout.Companion.DOWN_DIR
 import moe.feng.kotlinyan.common.get
 
-class SettingsLicense : AbsFragment(), SwipeBackCoordinatorLayout.OnSwipeListener {
+class SettingsLicense : AbsFragment() {
 
     companion object {
 
@@ -29,18 +27,6 @@ class SettingsLicense : AbsFragment(), SwipeBackCoordinatorLayout.OnSwipeListene
 		(rootView[R.id.web_view] as WebView).loadUrl(ASSERT_URL)
 
 		listContainer = rootView.findViewById(android.R.id.list)
-	}
-
-	override fun canSwipeBack(dir: Int): Boolean {
-		return SwipeBackCoordinatorLayout.canSwipeBack(listContainer, DOWN_DIR)
-	}
-
-	override fun onSwipeProcess(percent: Float) {
-
-	}
-
-	override fun onSwipeFinish(dir: Int) {
-
 	}
 
 }

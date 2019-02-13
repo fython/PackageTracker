@@ -2,7 +2,6 @@ package info.papdt.express.helper.ui
 
 import android.app.Activity
 import android.content.Intent
-import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -14,16 +13,13 @@ import info.papdt.express.helper.dao.PackageDatabase
 import info.papdt.express.helper.dao.SRDatabase
 import info.papdt.express.helper.event.EventCallbacks
 import info.papdt.express.helper.event.EventIntents
-import info.papdt.express.helper.support.ResourcesUtils
 import info.papdt.express.helper.ui.adapter.CategoriesListAdapter
 import info.papdt.express.helper.ui.common.AbsActivity
 import info.papdt.express.helper.ui.dialog.EditCategoryDialog
 import info.papdt.express.helper.ui.items.CategoryItemViewBinder
-import info.papdt.express.helper.view.SwipeBackCoordinatorLayout
 import moe.feng.kotlinyan.common.*
-import org.jetbrains.anko.withAlpha
 
-class ManageCategoriesActivity : AbsActivity(), SwipeBackCoordinatorLayout.OnSwipeListener {
+class ManageCategoriesActivity : AbsActivity() {
 
     companion object {
 
@@ -36,12 +32,7 @@ class ManageCategoriesActivity : AbsActivity(), SwipeBackCoordinatorLayout.OnSwi
     }
 
     private val listView: RecyclerView by lazyFindNonNullView(android.R.id.list)
-    private val rootLayout: View by lazyFindNonNullView(R.id.root_layout)
     private val emptyView: LinearLayout by lazyFindNonNullView(R.id.empty_view)
-
-    private val rootViewBgColor: Int by lazy {
-        ResourcesUtils.getColorIntFromAttr(theme, R.attr.rootViewBackgroundColor)
-    }
 
     private val adapter: CategoriesListAdapter = CategoriesListAdapter()
 
@@ -51,9 +42,6 @@ class ManageCategoriesActivity : AbsActivity(), SwipeBackCoordinatorLayout.OnSwi
     }
 
     override fun setUpViews() {
-        findViewById<SwipeBackCoordinatorLayout>(R.id.swipe_back_coordinator_layout)
-                .setOnSwipeListener(this)
-
         listView.adapter = adapter
         adapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
             override fun onChanged() {
@@ -170,24 +158,6 @@ class ManageCategoriesActivity : AbsActivity(), SwipeBackCoordinatorLayout.OnSwi
             true
         }
         else -> super.onOptionsItemSelected(item)
-    }
-
-    override fun canSwipeBack(dir: Int): Boolean {
-        return SwipeBackCoordinatorLayout.canSwipeBack(listView, SwipeBackCoordinatorLayout.DOWN_DIR)
-    }
-
-    override fun onSwipeProcess(percent: Float) {
-        rootLayout.setBackgroundColor(
-                rootViewBgColor.withAlpha(
-                        (SwipeBackCoordinatorLayout.getBackgroundAlpha(percent) * 255)
-                                .toInt()
-                )
-        )
-    }
-
-    override fun onSwipeFinish(dir: Int) {
-        window.statusBarColor = Color.TRANSPARENT
-        finish()
     }
 
 }

@@ -22,8 +22,6 @@ import com.google.zxing.*
 import com.google.zxing.common.HybridBinarizer
 import info.papdt.express.helper.R
 import info.papdt.express.helper.support.SnackbarUtils
-import info.papdt.express.helper.view.SwipeBackCoordinatorLayout
-import info.papdt.express.helper.view.SwipeBackCoordinatorLayout.Companion.DOWN_DIR
 import java.io.IOException
 import java.lang.Exception
 import java.util.*
@@ -44,8 +42,6 @@ class ScannerActivity : AbsActivity(), ZXingScannerView.ResultHandler, Permissio
 
 	private val scannerView: ZXingScannerView
             by lazyFindNonNullView(R.id.scanner_view)
-    private val coordinatorLayout: SwipeBackCoordinatorLayout
-            by lazyFindNonNullView(R.id.swipe_back_coordinator_layout)
 
 	private lateinit var multiFormatReader: MultiFormatReader
 
@@ -77,19 +73,7 @@ class ScannerActivity : AbsActivity(), ZXingScannerView.ResultHandler, Permissio
 	}
 
 	override fun setUpViews() {
-        coordinatorLayout.setOnSwipeListener(object : SwipeBackCoordinatorLayout.OnSwipeListener {
-            override fun canSwipeBack(dir: Int): Boolean {
-                return dir == DOWN_DIR
-            }
 
-            override fun onSwipeProcess(percent: Float) {
-                scannerView.alpha = 1f - percent
-            }
-
-            override fun onSwipeFinish(dir: Int) {
-                finish()
-            }
-        })
 	}
 
 	override fun onResume() {

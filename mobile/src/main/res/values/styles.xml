@@ -61,18 +61,6 @@
 		<item name="android:navigationBarColor">@color/grey_theme_status_bar</item>
 	</style>
 
-	<style name="AppTheme.WithSwipeBack" parent="AppTheme.Home">
-		<item name="android:windowBackground">@android:color/transparent</item>
-		<item name="android:colorBackgroundCacheHint">@null</item>
-		<item name="android:windowIsTranslucent">true</item>
-	</style>
-
-	<style name="AppTheme.Grey.WithSwipeBack" parent="AppTheme.Grey">
-		<item name="android:windowBackground">@android:color/transparent</item>
-		<item name="android:colorBackgroundCacheHint">@null</item>
-		<item name="android:windowIsTranslucent">true</item>
-	</style>
-
 	<!-- Widget -->
 	<style name="Widget.ButtonBar" parent="">
 		<item name="leftText">@string/buttonbar_default_left</item>
