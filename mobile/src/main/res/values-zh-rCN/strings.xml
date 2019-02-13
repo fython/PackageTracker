@@ -271,12 +271,6 @@
 	<string name="stepper_find_package_summary">为包裹设置名称</string>
 	<string name="stepper_next_button">下一步</string>
 	<string name="stepper_try_again_button">重试</string>
-	<string name="tap_target_tips_1_desc">我们重新设计了水表助手 3.0，现在你可以在搜索栏中寻找或添加包裹。</string>
-	<string name="tap_target_tips_1_title">新设计！</string>
-	<string name="tap_target_tips_2_desc">从相机快速读取包裹单号</string>
-	<string name="tap_target_tips_2_title">扫描条码</string>
-	<string name="tap_target_tips_3_desc">你可以下拉列表刷新状态。还可以设置后台定时刷新或使用更加省电的基于 FCM 推送服务。</string>
-	<string name="tap_target_tips_3_title">获取最新状态</string>
 	<string name="toast_clipboard_paste">在剪贴板找到文本</string>
 	<string name="toast_clipboard_paste_action">粘贴</string>
 
@@ -317,5 +311,41 @@
 	<string name="last_update_time_text_unknown">尝试下拉刷新包裹，这里将会显示上次更新的时间。</string>
 	<string name="filter_keyword_text_format">关键词：%s</string>
 	<string name="filter_company_text_format">公司：%s</string>
+
+	<!-- Manage Categories -->
+	<string name="action_manage_categories">管理分类</string>
+	<string name="activity_manage_categories">分类</string>
+	<string name="action_new_category">新分类</string>
+	<string name="edit_category_dialog_title_for_create">创建分类</string>
+	<string name="edit_category_dialog_title_for_edit">编辑分类</string>
+	<string name="edit_category_dialog_category_title">分类标题</string>
+	<string name="edit_category_dialog_category_icon">分类图标</string>
+	<string name="category_default_title">未命名分类</string>
+	<string name="choose">选择…</string>
+	<string name="delete">删除</string>
+	<string name="save">保存</string>
+
+	<string name="choose_category_dialog_title">选择一个分类</string>
+	<string name="choose_category_dialog_unclassified">未归类</string>
+
+	<string name="edit_package_dialog_category">分类</string>
+
+	<string name="delete_category_dialog_title">删除分类</string>
+	<string name="delete_category_dialog_message">属于这个分类的包裹都将会被分为未归类。</string>
+
+	<string name="action_reset_category">重置分类</string>
+	<string name="reset_default_category_dialog_title">重置默认分类</string>
+	<string name="reset_default_category_dialog_message">注意：这个操作无法撤回！这会删除所有的分类然后重新导入默认分类。</string>
+
+	<string name="default_category_food_snack">食物 &amp; 零食</string>
+	<string name="default_category_digital_product">数码产品</string>
+	<string name="default_category_letters">信件</string>
+	<string name="default_category_daily_necessities">日用品</string>
+	<string name="default_category_art">艺术品</string>
+	<string name="default_category_books">书籍</string>
+	<string name="default_category_home_appliance">家居电器</string>
+	<string name="default_category_entertainment">娱乐</string>
+
+	<string name="no_category_text">这里没有分类，尝试添加一些来分类你的包裹。</string>
 
 </resources>

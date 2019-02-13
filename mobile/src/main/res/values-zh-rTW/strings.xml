@@ -318,4 +318,40 @@
 	<string name="filter_keyword_text_format">關鍵詞：%s</string>
 	<string name="filter_company_text_format">公司：%s</string>
 
+	<!-- Manage Categories -->
+	<string name="action_manage_categories">管理分類</string>
+	<string name="activity_manage_categories">分類</string>
+	<string name="action_new_category">新分類</string>
+	<string name="edit_category_dialog_title_for_create">創建分類</string>
+	<string name="edit_category_dialog_title_for_edit">修改分類</string>
+	<string name="edit_category_dialog_category_title">分類標題</string>
+	<string name="edit_category_dialog_category_icon">分類圖案</string>
+	<string name="category_default_title">未命名分類</string>
+	<string name="choose">選定…</string>
+	<string name="delete">移除</string>
+	<string name="save">保存</string>
+
+	<string name="choose_category_dialog_title">選定一個分類</string>
+	<string name="choose_category_dialog_unclassified">未歸類</string>
+
+	<string name="edit_package_dialog_category">分類</string>
+
+	<string name="delete_category_dialog_title">移除分類</string>
+	<string name="delete_category_dialog_message">屬於這個分類的包裹都將會被分為未歸類。</string>
+
+	<string name="action_reset_category">重置分類</string>
+	<string name="reset_default_category_dialog_title">重置默認分類</string>
+	<string name="reset_default_category_dialog_message">注意：這個操作無法撤回！這會移除所有的分類然後重新引入默認分類。</string>
+
+	<string name="default_category_food_snack">食物 &amp; 零食</string>
+	<string name="default_category_digital_product">數碼產品</string>
+	<string name="default_category_letters">信件</string>
+	<string name="default_category_daily_necessities">日用品</string>
+	<string name="default_category_art">藝術品</string>
+	<string name="default_category_books">書籍</string>
+	<string name="default_category_home_appliance">家居電器</string>
+	<string name="default_category_entertainment">娛樂</string>
+
+	<string name="no_category_text">這裡沒有分類，嘗試添加一些來分類你的包裹。</string>
+	
 </resources>
