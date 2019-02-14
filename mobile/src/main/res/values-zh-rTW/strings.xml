@@ -271,12 +271,6 @@
 	<string name="stepper_find_package_summary">為包裹設定名稱</string>
 	<string name="stepper_next_button">下一步</string>
 	<string name="stepper_try_again_button">重試</string>
-	<string name="tap_target_tips_1_desc">我們重新設計了水錶助手 3.0，現在你可以使用搜尋條去搜尋或添加包裹。</string>
-	<string name="tap_target_tips_1_title">新設計！</string>
-	<string name="tap_target_tips_2_desc">從相機快速偵測包裹單號</string>
-	<string name="tap_target_tips_2_title">掃描條形碼</string>
-	<string name="tap_target_tips_3_desc">你可以下拉列表刷新狀態。還可以設定背景定時刷新或使用更加節電的基於 FCM 推送服務。</string>
-	<string name="tap_target_tips_3_title">獲取最新狀態</string>
 	<string name="toast_clipboard_paste">在剪貼板找到文本</string>
 	<string name="toast_clipboard_paste_action">粘貼</string>
 
