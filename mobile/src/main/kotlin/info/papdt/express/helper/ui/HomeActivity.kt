@@ -41,8 +41,11 @@ import moe.feng.common.stepperview.VerticalStepperItemView
 import moe.feng.kotlinyan.common.*
 
 import info.papdt.express.helper.R
+import info.papdt.express.helper.dao.SRDatabase
 import info.papdt.express.helper.event.EventCallbacks
+import info.papdt.express.helper.model.MaterialIcon
 import info.papdt.express.helper.support.SnackbarUtils
+import info.papdt.express.helper.ui.dialog.ChooseCategoryDialog
 import java.lang.Exception
 
 class HomeActivity : AbsActivity(), OnRefreshListener {
@@ -59,7 +62,9 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
 
         const val STATE_FILTER_KEYWORD = "$TAG.filter_keyword"
         const val STATE_FILTER_COMPANY = "$TAG.filter_company"
+        const val STATE_FILTER_CATEGORY = "$TAG.filter_category"
         const val STATE_TEMP_FILTER_COMPANY = "$TAG.temp_filter_company"
+        const val STATE_TEMP_FILTER_CATEGORY = "$TAG.temp_filter_category"
 
         const val REQUEST_FILTER_COMPANY = 20001
         const val REQUEST_CODE_CHANGE = 20002
@@ -123,7 +128,10 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
     private val homeListScrollListener = HomeListScrollListener()
 
     private var filterCompanyChoiceText: TextView? = null
+    private var filterCategoryIconView: TextView? = null
+    private var filterCategoryTitleView: TextView? = null
     private var tempFilterCompany: String? = null
+    private var tempFilterCategory: String? = null
 
     private val packageDatabase by lazy { PackageDatabase.getInstance(this) }
 
@@ -143,7 +151,9 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
         } else {
             listAdapter.filterKeyword = savedInstanceState[STATE_FILTER_KEYWORD] as? String
             listAdapter.filterCompany = savedInstanceState[STATE_FILTER_COMPANY] as? String
+            listAdapter.filterCategory = savedInstanceState[STATE_FILTER_CATEGORY] as? String
             tempFilterCompany = savedInstanceState[STATE_TEMP_FILTER_COMPANY] as? String
+            tempFilterCategory = savedInstanceState[STATE_TEMP_FILTER_CATEGORY] as? String
         }
 
         spinner.setSelection(listAdapter.filter)
@@ -170,7 +180,9 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
 
         outState.putString(STATE_FILTER_KEYWORD, listAdapter.filterKeyword)
         outState.putString(STATE_FILTER_COMPANY, listAdapter.filterCompany)
+        outState.putString(STATE_FILTER_CATEGORY, listAdapter.filterCategory)
         outState.putString(STATE_TEMP_FILTER_COMPANY, tempFilterCompany)
+        outState.putString(STATE_TEMP_FILTER_CATEGORY, tempFilterCategory)
     }
 
     override fun onStart() {
@@ -188,6 +200,10 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
                     }
                     .show()
         }, action = ACTION_REQUEST_DELETE_PACK)
+        registerLocalBroadcastReceiver(ChooseCategoryDialog.onChooseCategory {
+            tempFilterCategory = if (it.title.isEmpty()) null else it.title
+            updateSearchDialogViewsValue()
+        }, action = ChooseCategoryDialog.ACTION_CHOOSE_CATEGORY)
         if (SettingsInstance.enableAddDialogBackgroundBlur) {
             bottomSheetBackgroundBlur.startBlur()
         }
@@ -284,15 +300,22 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
         inflater.inflate(R.layout.dialog_home_search, null) { view, _, _ ->
             val keywordEdit = view.findViewById<EditText>(R.id.keyword_edit)
             filterCompanyChoiceText = view.findViewById(R.id.company_choice_text)
+            filterCategoryIconView = view.findViewById<TextView>(R.id.category_icon_view)
+                    .apply { typeface = MaterialIcon.iconTypeface }
+            filterCategoryTitleView = view.findViewById(R.id.category_title_view)
             tempFilterCompany = listAdapter.filterCompany
+            tempFilterCategory = listAdapter.filterCategory
 
             view.findViewById<Button>(R.id.company_choose_btn).setOnClickListener {
-                val intent = Intent(this@HomeActivity, CompanyChooserActivity::class.java)
+                val intent = Intent(this, CompanyChooserActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
                 startActivityForResult(intent, REQUEST_FILTER_COMPANY)
             }
+            view.findViewById<Button>(R.id.category_choose_button).setOnClickListener {
+                ChooseCategoryDialog().show(supportFragmentManager, "choose_category_dialog")
+            }
 
-            updateFilterCompanyChoiceText()
+            updateSearchDialogViewsValue()
 
             buildAlertDialog {
                 titleRes = R.string.search_dialog_title
@@ -301,24 +324,37 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
                     listAdapter.filterKeyword = if (keywordEdit.text?.toString().isNullOrBlank())
                         null else keywordEdit.text?.toString()
                     listAdapter.filterCompany = tempFilterCompany
+                    listAdapter.filterCategory = tempFilterCategory
                     invalidateOptionsMenu()
                 }
                 setOnCancelListener {
-                    filterCompanyChoiceText = null
+                    clearSearchDialogViewRef()
                 }
                 setOnDismissListener {
-                    filterCompanyChoiceText = null
+                    clearSearchDialogViewRef()
                 }
                 cancelButton()
             }.show()
         }
     }
 
-    private fun updateFilterCompanyChoiceText() {
+    private fun updateSearchDialogViewsValue() = ui {
         filterCompanyChoiceText?.text = if (tempFilterCompany == null)
             getString(R.string.unset)
         else
             Kuaidi100PackageApi.CompanyInfo.getNameByCode(tempFilterCompany)
+
+        filterCategoryIconView?.text = tempFilterCategory?.let {
+            SRDatabase.categoryDao.get(it)?.iconCode
+        }
+        filterCategoryTitleView?.text = tempFilterCategory
+                ?: getString(R.string.choose_category_dialog_unclassified)
+    }
+
+    private fun clearSearchDialogViewRef() {
+        filterCompanyChoiceText = null
+        filterCategoryIconView = null
+        filterCategoryTitleView = null
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -336,9 +372,8 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
                 menu.findItem(R.id.action_sort_by_create_time).isChecked = true
         }
 
-        val hasFilter = listAdapter.filterCompany != null || listAdapter.filterKeyword != null
         val searchItem = menu.findItem(R.id.action_search)
-        searchItem.setIcon(if (hasFilter)
+        searchItem.setIcon(if (listAdapter.hasFilter)
             R.drawable.ic_reset_searched_text_primary_color_24dp
         else
             R.drawable.ic_search_text_primary_color_24dp)
@@ -366,9 +401,8 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
             true
         }
         R.id.action_search -> {
-            if (listAdapter.filterCompany != null || listAdapter.filterKeyword != null) {
-                listAdapter.filterCompany = null
-                listAdapter.filterKeyword = null
+            if (listAdapter.hasFilter) {
+                listAdapter.clearFilters()
                 invalidateOptionsMenu()
             } else {
                 showSearchDialog()
@@ -451,7 +485,7 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
             REQUEST_FILTER_COMPANY -> {
                 if (RESULT_OK == resultCode) {
                     tempFilterCompany = data?.get(RESULT_EXTRA_COMPANY_CODE)?.asString()
-                    updateFilterCompanyChoiceText()
+                    updateSearchDialogViewsValue()
                 }
             }
             REQUEST_CODE_CHANGE -> {
@@ -502,6 +536,7 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
                 listAdapter.lastUpdateTime = it
                 packageDatabase.lastUpdateTime = it
             }
+            packageDatabase.save()
             refreshLayout.finishRefresh()
         }
     }

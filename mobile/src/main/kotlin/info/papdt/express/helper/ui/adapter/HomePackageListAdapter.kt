@@ -59,6 +59,14 @@ class HomePackageListAdapter : MultiTypeAdapter() {
             field = value
             updateItems()
         }
+    var filterCategory: String? = null
+        set(value) {
+            if (field == value) {
+                return
+            }
+            field = value
+            updateItems()
+        }
     var lastUpdateTime: Long = 0
         set(value) {
             if (field == value) {
@@ -67,6 +75,8 @@ class HomePackageListAdapter : MultiTypeAdapter() {
             field = value
             updateItems()
         }
+    val hasFilter: Boolean get() =
+        filterCategory != null || filterCompany != null || filterKeyword != null
 
     init {
         register(Long::class.javaObjectType, DateSubheadViewBinder)
@@ -80,6 +90,12 @@ class HomePackageListAdapter : MultiTypeAdapter() {
         rawData = packages
 
         updateItems(notify)
+    }
+
+    fun clearFilters() {
+        filterKeyword = null
+        filterCompany = null
+        filterCategory = null
     }
 
     private fun updateItems(notify: Boolean = true) {
@@ -112,12 +128,17 @@ class HomePackageListAdapter : MultiTypeAdapter() {
                     return@filter false
                 }
             }
+            filterCategory?.let {
+                if (it != item.categoryTitle) {
+                    return@filter false
+                }
+            }
             return@filter true
         }?.let { filteredData ->
             if (filteredData.isEmpty()) {
                 val newList = mutableListOf<Any>()
 
-                if (filterKeyword == null && filterCompany == null) {
+                if (filterKeyword == null && filterCompany == null && filterCategory == null) {
                     newList += HomeListEmptyViewModel(filter)
                 } else {
                     newList += HomeListNoResultViewModel()

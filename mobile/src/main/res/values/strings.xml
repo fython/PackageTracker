@@ -335,7 +335,7 @@
 	<string name="search_by_keyword_hint">Package name/number</string>
 	<string name="search_by_company_title">Search by specific company</string>
 	<string name="unset">Unset</string>
-	<string name="search_by_type_title">Search by specific type</string>
+	<string name="search_by_category_title">Search by specific category</string>
 
 	<string name="home_list_no_result_text">No result according to current filter conditions.\nPlease try to change/clear filter.</string>
 

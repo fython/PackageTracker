@@ -46,14 +46,24 @@
         android:layout_marginBottom="24dp"
         android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/category_icon_view"
-            android:layout_width="24dp"
-            android:layout_height="wrap_content"
-            android:textSize="24dp"
-            android:gravity="center"
-            tools:text="T"
-            tools:ignore="SpUsage" />
+        <FrameLayout
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:background="@drawable/category_icon_circle_background">
+
+            <TextView
+                android:id="@+id/category_icon_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:layout_gravity="center"
+                android:textColor="?android:attr/textColorPrimary"
+                tools:text="T"
+                tools:ignore="SpUsage" />
+
+        </FrameLayout>
         
         <Button
             android:id="@+id/choose_btn"

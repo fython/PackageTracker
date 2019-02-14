@@ -21,6 +21,7 @@ import info.papdt.express.helper.support.SettingsInstance
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import java.lang.Exception
 
 class PackageDatabase private constructor(private val mContext: Context) {
 
@@ -41,17 +42,21 @@ class PackageDatabase private constructor(private val mContext: Context) {
 	}
 
 	fun load() {
-		var json: String? = null
+		var json: String
 		try {
-			json = FileUtils.readFile(mContext, FILE_NAME)
-		} catch (e: IOException) {
-			e.printStackTrace()
-		}
-        json = json ?: "{\"data\":[], \"lastUpdateTime\":0}"
+			try {
+				json = FileUtils.readFile(mContext, FILE_NAME)
+			} catch (e: IOException) {
+				json = "{\"data\":[], \"lastUpdateTime\":0}"
+			}
 
-		val obj = Gson().fromJson(json, PackageDatabase::class.java)
-		this.data = obj.data
-		this.lastUpdateTime = obj.lastUpdateTime
+			val obj = Gson().fromJson(json, PackageDatabase::class.java)
+			this.data = obj.data
+			this.lastUpdateTime = obj.lastUpdateTime
+		} catch (e: Exception) {
+			e.printStackTrace()
+            this.data = ArrayList()
+		}
 	}
 
 	fun restoreData(json: String) {
@@ -70,13 +75,13 @@ class PackageDatabase private constructor(private val mContext: Context) {
 		}
 
 	fun save(): Boolean {
-		return try {
+		try {
 			val gson = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
 			FileUtils.saveFile(mContext, FILE_NAME, gson.toJson(this))
-			true
+			return true
 		} catch (e: IOException) {
 			e.printStackTrace()
-			false
+			return false
 		}
 	}
 

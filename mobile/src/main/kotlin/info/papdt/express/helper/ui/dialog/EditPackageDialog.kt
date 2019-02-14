@@ -49,27 +49,25 @@ class EditPackageDialog : AbsDialogFragment() {
         return buildV7AlertDialog {
             titleRes = R.string.dialog_edit_name_title
             view = createContentView()
-            okButton { _, _ ->
+            okButton { _, _ -> ui {
                 if (!TextUtils.isEmpty(nameEdit.text.toString())) {
                     data.name = nameEdit.text.toString().trim { it <= ' ' }
                     data.categoryTitle = currentCategory
                     (requireActivity() as DetailsActivity).setUpData()
 
+                    val db = PackageDatabase.getInstance(requireContext())
+                    db[db.indexOf(data.number!!)] = data
+                    db.save()
+
                     val intent = Intent()
                     intent["id"] = data.number
                     requireActivity().setResult(RESULT_RENAMED, intent)
-
-                    thread {
-                        val db = PackageDatabase.getInstance(requireContext())
-                        db[db.indexOf(data.number!!)] = data
-                        db.save()
-                    }
                 } else {
                     Snackbar.make(requireActivity().findViewById(R.id.coordinator_layout)!!,
                             R.string.toast_edit_name_is_empty, Snackbar.LENGTH_SHORT)
                             .show()
                 }
-            }
+            } }
             cancelButton()
         }
     }

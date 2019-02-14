@@ -309,7 +309,7 @@
 	<string name="search_by_keyword_hint">包裹名稱或號碼</string>
 	<string name="search_by_company_title">根據指定公司搵</string>
 	<string name="unset">未曾設定</string>
-	<string name="search_by_type_title">根據指定類型搵</string>
+	<string name="search_by_category_title">根據指定類型搵</string>
 
 	<string name="home_list_no_result_text">由而家嘅過濾條件搵冇結果，請試下換或者清左過濾條件。</string>
 
