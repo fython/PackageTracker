@@ -29,8 +29,10 @@ object HomeListHeaderViewBinder
         private val lastUpdateTime: TextView = itemView.findViewById(R.id.last_update_time_text)
         private val filterKeywordText: TextView = itemView.findViewById(R.id.filter_keyword_text)
         private val filterCompanyText: TextView = itemView.findViewById(R.id.filter_company_text)
+        private val filterCategoryText: TextView = itemView.findViewById(R.id.filter_category_text)
         private val filterKeywordLayout: View = itemView.findViewById(R.id.filter_keyword_layout)
         private val filterCompanyLayout: View = itemView.findViewById(R.id.filter_company_layout)
+        private val filterCategoryLayout: View = itemView.findViewById(R.id.filter_category_layout)
 
         override fun onBind(item: HomeListHeaderViewModel) {
             if (item.lastUpdateTime <= 0L) {
@@ -60,6 +62,13 @@ object HomeListHeaderViewBinder
                         R.string.filter_company_text_format,
                         item.filterCompanyName
                 )
+            }
+
+            if (item.filterCategory.isNullOrEmpty()) {
+                filterCategoryLayout.makeGone()
+            } else {
+                filterCategoryLayout.makeVisible()
+                filterCategoryText.text = context.getString(R.string.filter_category_text_format, item.filterCategory)
             }
         }
 

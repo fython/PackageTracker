@@ -91,4 +91,32 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/filter_category_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginStart="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginBottom="8dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:importantForAccessibility="no"
+            android:tint="?android:attr/textColorSecondary"
+            android:tintMode="src_in"
+            android:src="@drawable/ic_style_text_primary_color_16dp"/>
+
+        <TextView
+            android:id="@+id/filter_category_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="22dp"
+            android:textSize="12sp"
+            android:textColor="?android:attr/textColorSecondary"
+            tools:text="@string/filter_category_text_format"/>
+
+    </LinearLayout>
+
 </LinearLayout>

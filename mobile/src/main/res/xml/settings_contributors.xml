@@ -12,8 +12,12 @@
 			android:summary="Improve zh-tw strings"/>
 
 		<Preference android:key="archiemeng"
-			android:title="ArchieMeng"
+			android:title="Archie Meng"
 			android:summary="Fix a lot of bug"/>
+
+		<Preference android:key="zhaijack"
+			android:title="Youlun Zhai"
+			android:summary="Icon &amp; Details Poster designer"/>
 
 	</PreferenceCategory>
 

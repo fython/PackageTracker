@@ -61,7 +61,6 @@
 		<Preference android:key="github" android:title="@string/github_repo_title" android:summary="@string/github_repo_url"/>
 		<Preference android:key="alipay" android:title="@string/alipay_support_title" android:summary="@string/alipay_support_summary"/>
 		<Preference android:key="sina" android:title="@string/author_sina_title" android:summary="@string/author_sina_desc"/>
-		<Preference android:key="designer" android:title="@string/icon_designer_title" android:summary="@string/icon_designer_summary"/>
         <Preference
             android:key="telegram"
             android:title="@string/telegram_title"

@@ -23,7 +23,6 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener {
 	private val mPrefGithub: Preference by PreferenceProperty("github")
 	private var mPrefAlipay: Preference? = null
 	private val mPrefTelegram: Preference by PreferenceProperty("telegram")
-	private val mPrefIconDesigner: Preference by PreferenceProperty("designer")
 
 	override fun onCreate(savedInstanceState: Bundle?) {
 		super.onCreate(savedInstanceState)
@@ -52,7 +51,6 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener {
 		mPrefGithub.onPreferenceClickListener = this
 		mPrefSina.onPreferenceClickListener = this
 		mPrefAlipay?.onPreferenceClickListener = this
-		mPrefIconDesigner.onPreferenceClickListener = this
 		mPrefTelegram.onPreferenceClickListener = this
 	}
 
@@ -76,10 +74,6 @@ class SettingsMain : AbsPrefFragment(), Preference.OnPreferenceClickListener {
 							?.show()
 				}
 				SettingsInstance.clickedDonate = true
-				true
-			}
-			mPrefIconDesigner -> {
-				openWebsite(getString(R.string.icon_designer_url))
 				true
 			}
 			mPrefTelegram -> {

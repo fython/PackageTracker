@@ -109,7 +109,7 @@
 	<string name="category_notification">通知</string>
 	<string name="item_notification_interval">檢查頻率</string>
 
-	<string name="category_contributors">代碼貢獻者</string>
+	<string name="category_contributors">貢獻者</string>
 	<string name="category_contributors_desc">冇佢地嘅努力就冇更好嘅體驗</string>
 	<string name="contributors_coderfox">小傅Fox</string>
 	<string name="contributors_coderfox_desc">自動拉取速遞公司列表; 允許強制添加包裹; 改進翻譯</string>
@@ -317,6 +317,7 @@
 	<string name="last_update_time_text_unknown">試下下拉重新整理包裹，呢度將會顯示上次重新整理嘅時間。</string>
 	<string name="filter_keyword_text_format">關鍵字：%s</string>
 	<string name="filter_company_text_format">公司：%s</string>
+	<string name="filter_category_text_format">類型：%s</string>
 
 	<!-- Manage Categories -->
 	<string name="action_manage_categories">管理分類</string>
@@ -354,5 +355,7 @@
 	<string name="default_category_clothing">衫褲</string>
 
 	<string name="no_category_text">呢度冇分類，試下添加一啲來分類你嘅包裹。</string>
+
+	<string name="action_reset_search">重置搜尋</string>
 
 </resources>

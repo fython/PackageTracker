@@ -96,6 +96,7 @@ dependencies {
     implementation('com.crashlytics.sdk.android:crashlytics:2.9.9@aar') {
         transitive = true
     }
+    api 'com.github.promeg:tinypinyin:2.0.3'
 
     // Firebase SDK
     implementation "com.google.firebase:firebase-core:16.0.7"

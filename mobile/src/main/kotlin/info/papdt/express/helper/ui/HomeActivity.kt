@@ -373,10 +373,13 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
         }
 
         val searchItem = menu.findItem(R.id.action_search)
-        searchItem.setIcon(if (listAdapter.hasFilter)
-            R.drawable.ic_reset_searched_text_primary_color_24dp
-        else
-            R.drawable.ic_search_text_primary_color_24dp)
+        if (listAdapter.hasFilter) {
+            searchItem.setIcon(R.drawable.ic_reset_searched_text_primary_color_24dp)
+            searchItem.setTitle(R.string.action_reset_search)
+        } else {
+            searchItem.setIcon(R.drawable.ic_search_text_primary_color_24dp)
+            searchItem.setTitle(R.string.action_search)
+        }
 
         return super.onPrepareOptionsMenu(menu)
     }

@@ -188,7 +188,8 @@ class HomePackageListAdapter : MultiTypeAdapter() {
             val newData = mutableListOf(HomeListHeaderViewModel(
                     lastUpdateTime = lastUpdateTime,
                     filterKeyword = filterKeyword,
-                    filterCompanyName = Kuaidi100PackageApi.CompanyInfo.getNameByCode(filterCompany)
+                    filterCompanyName = Kuaidi100PackageApi.CompanyInfo.getNameByCode(filterCompany),
+                    filterCategory = filterCategory
             )) + sortedData
 
             if (notify) {

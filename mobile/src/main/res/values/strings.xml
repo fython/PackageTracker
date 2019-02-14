@@ -343,6 +343,7 @@
 	<string name="last_update_time_text_unknown">Try to pull down to refresh packages. Here will show last updated time.</string>
 	<string name="filter_keyword_text_format">Keywords: %s</string>
 	<string name="filter_company_text_format">Company: %s</string>
+	<string name="filter_category_text_format">Category: %s</string>
 
 	<!-- Manage Categories -->
 	<string name="action_manage_categories">Manage categories</string>
@@ -380,5 +381,7 @@
     <string name="default_category_clothing">Clothing</string>
 
     <string name="no_category_text">There are no categories here. Try to add some to classify your packages.</string>
+
+	<string name="action_reset_search">Reset search</string>
 
 </resources>
