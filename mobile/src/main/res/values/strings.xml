@@ -377,6 +377,7 @@
     <string name="default_category_books">Books</string>
     <string name="default_category_home_appliance">Home appliance</string>
     <string name="default_category_entertainment">Entertainment</string>
+    <string name="default_category_clothing">Clothing</string>
 
     <string name="no_category_text">There are no categories here. Try to add some to classify your packages.</string>
 

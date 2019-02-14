@@ -39,12 +39,6 @@
                     app:layout_collapseMode="parallax"
                     tools:src="@drawable/banner_background_on_the_way" />
 
-                <View
-                    android:id="@+id/min_height_view"
-                    android:layout_width="match_parent"
-                    android:layout_height="10dp"
-                    app:layout_collapseMode="pin"/>
-
             </com.google.android.material.appbar.CollapsingToolbarLayout>
 
         </com.google.android.material.appbar.AppBarLayout>
@@ -53,12 +47,9 @@
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@drawable/details_list_background"
             android:clipToPadding="false"
-            android:elevation="4dp"
             android:paddingTop="16dp"
             android:paddingBottom="16dp"
-            android:layout_marginTop="-4dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

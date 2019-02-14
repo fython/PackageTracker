@@ -18,6 +18,9 @@ import info.papdt.express.helper.support.Settings
 import info.papdt.express.helper.support.SettingsInstance
 import io.alterac.blurkit.BlurKit
 import io.fabric.sdk.android.Fabric
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import moe.feng.kotlinyan.common.*
 
 class Application : MultiDexApplication() {
@@ -61,6 +64,13 @@ class Application : MultiDexApplication() {
 		// Init settings
 		SettingsInstance = getSharedPreferencesProvider()
         SRDatabase.init(this)
+		if (SettingsInstance.firstIntroCategory) {
+            SettingsInstance.firstIntroCategory = false
+			CoroutineScope(Dispatchers.IO).launch {
+				SRDatabase.categoryDao.clear()
+				SRDatabase.categoryDao.addDefaultCategories(this@Application)
+			}
+		}
 	}
 
 }

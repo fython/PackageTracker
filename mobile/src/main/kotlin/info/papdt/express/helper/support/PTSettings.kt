@@ -37,6 +37,8 @@ class PTSettings(context: Context): SharedPreferencesProvider(context, "settings
 
     var forceUpdateAllPackages by booleanValue(defValue = false)
 
+	var firstIntroCategory by booleanValue(defValue = true)
+
 }
 
 

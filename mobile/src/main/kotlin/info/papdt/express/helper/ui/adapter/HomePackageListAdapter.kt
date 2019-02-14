@@ -159,9 +159,9 @@ class HomePackageListAdapter : MultiTypeAdapter() {
             when (sortType) {
                 SORT_BY_UPDATE_TIME -> {
                     val groups = data
-                            .sortedByDescending { it.getFirstStatusTime() }
+                            .sortedByDescending { it.getLastStatusTime() }
                             .groupBy { pack ->
-                                pack.getFirstStatusTime().let { time ->
+                                pack.getLastStatusTime().let { time ->
                                     val diffDays = DateHelper.getDifferenceDaysForGroup(time.time)
                                     // Fix unstable group
                                     if (diffDays < 0) -1 else diffDays
@@ -248,7 +248,7 @@ class HomePackageListAdapter : MultiTypeAdapter() {
                         when {
                             oldPack.status != newPack.status ->
                                 res = false
-                            oldPack.getFirstStatusTime() != newPack.getFirstStatusTime() ->
+                            oldPack.getLastStatusTime() != newPack.getLastStatusTime() ->
                                 res = false
                             oldPack.unreadNew != newPack.unreadNew ->
                                 res = false

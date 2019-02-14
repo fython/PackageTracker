@@ -14,6 +14,7 @@ abstract class CategoryDao {
         private val DEFAULT_CATEGORIES_PAIRS = mapOf(
                 R.string.default_category_art to "insert_photo",
                 R.string.default_category_books to "book",
+                R.string.default_category_clothing to "style",
                 R.string.default_category_daily_necessities to "home",
                 R.string.default_category_digital_product to "phonelink",
                 R.string.default_category_entertainment to "games",

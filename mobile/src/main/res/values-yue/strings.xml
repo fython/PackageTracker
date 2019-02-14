@@ -351,6 +351,7 @@
 	<string name="default_category_books">書籍</string>
 	<string name="default_category_home_appliance">家居電器</string>
 	<string name="default_category_entertainment">娛樂</string>
+	<string name="default_category_clothing">衫褲</string>
 
 	<string name="no_category_text">呢度冇分類，試下添加一啲來分類你嘅包裹。</string>
 

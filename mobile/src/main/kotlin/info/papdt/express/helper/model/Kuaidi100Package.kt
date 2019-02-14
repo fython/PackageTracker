@@ -96,12 +96,12 @@ class Kuaidi100Package() : Parcelable {
         this.state = status.toString()
     }
 
-    fun getFirstStatusTime(): Calendar {
+    fun getLastStatusTime(): Calendar {
         if (data?.isNotEmpty() == true) {
             val dates = data!!.map {
                 DateHelper.dateToCalendar(DEFAULT_STATUS_TIME_FORMAT.parse(it.ftime!!))
             }
-            return dates.sorted().first()
+            return dates.sorted().last()
         }
         return Calendar.getInstance().apply { add(Calendar.YEAR, 1) }
     }
@@ -152,7 +152,25 @@ class Kuaidi100Package() : Parcelable {
     }
 
     fun getPaletteFromId(): MaterialPalette {
-        return MaterialColorGenerator.getPalette(id)
+        return getPaletteByFirstChineseChar() ?: MaterialColorGenerator.getPalette(id)
+    }
+
+    fun getPaletteByFirstChineseChar(): MaterialPalette? {
+        when (name?.firstOrNull()) {
+            '红', '紅' -> return MaterialColorGenerator.Red
+            '蓝', '藍' -> return MaterialColorGenerator.Blue
+            '黄', '黃' -> return MaterialColorGenerator.Yellow
+            '绿', '綠' -> return MaterialColorGenerator.Green
+            '紫' -> return MaterialColorGenerator.DeepPurple
+            '兰' -> return MaterialColorGenerator.LightBlue
+            '青' -> return MaterialColorGenerator.Teal
+            '茶', '粽' -> return MaterialColorGenerator.Brown
+            '橘' -> return MaterialColorGenerator.DeepOrange
+            '桔', '橙' -> return MaterialColorGenerator.Orange
+            '灰' -> return MaterialColorGenerator.BlueGrey
+            '粉' -> return MaterialColorGenerator.Pink
+        }
+        return null
     }
 
     class Status() : Parcelable {
