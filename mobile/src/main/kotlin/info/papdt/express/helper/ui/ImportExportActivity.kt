@@ -44,7 +44,7 @@ class ImportExportActivity : AbsActivity() {
 
 		findViewById<View>(R.id.action_export_list).setOnClickListener {
 			if (database.size() == 0) {
-				Snackbar.make(findViewById(R.id.container)!!, R.string.toast_list_empty, Snackbar.LENGTH_SHORT)
+				Snackbar.make(findViewById(R.id.coordinator_layout)!!, R.string.toast_list_empty, Snackbar.LENGTH_SHORT)
 						.show()
 			} else {
 				ui {
