@@ -137,11 +137,12 @@
 	<string name="pref_request_push">即刻請求推送</string>
 	<string name="pref_whats_this">呢個係乜嘢？</string>
 	<string name="fcm_push_intro_title">基於 FCM 推送服務</string>
-	<string name="fcm_push_intro_msg">我們通過 Firebase 雲通知提供了一個更高效嘅途徑來獲取包裹資料。
+	<string name="fcm_push_intro_msg"><![CDATA[我們通過 Firebase 雲通知提供了一個更高效嘅途徑來獲取包裹資料。
 		你可以喺自己嘅伺服器上運行水錶助手推送服務，然後設定到客戶端中。
-		\n\n客戶端將會同伺服器同步清單。有新訊息來嘅時候，伺服器會通過 FCM 推送通知（客戶端需要 Google 服務框架）。
-		\n\n推送服務程式源代碼 (Node.js) 已經發佈喺 GitHub。你可以將它下載落來運行喺你嘅伺服器入面。
-		\nGitHub: https://github.com/fython/PackageTracker-NodeServer
+		<br><br>客戶端將會同伺服器同步清單。有新訊息來嘅時候，伺服器會通過 FCM 推送通知（客戶端需要 Google 服務框架）。
+		<br><br>推送服務程式源代碼 (Node.js) 已經發佈喺 GitHub。你可以將它下載落來運行喺你嘅伺服器入面。
+		<br>GitHub: <a href="https://github.com/fython/PackageTracker-NodeServer">https://github.com/fython/PackageTracker-NodeServer</a>
+	]]>
 	</string>
 	<string name="fcm_push_no_server_button">冇伺服器？</string>
 	<string name="no_server_message">撳 \"通過支付寶捐贈\" 設定後，你可以用我嘅自建伺服器。</string>

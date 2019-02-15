@@ -174,11 +174,12 @@
 	<string name="pref_request_push">Request push now</string>
 	<string name="pref_whats_this">What\'s this?</string>
 	<string name="fcm_push_intro_title">FCM-Based Push Service</string>
-	<string name="fcm_push_intro_msg">We provide a more effective way to pull the latest status of packages with Firebase Cloud Messaging.
+	<string name="fcm_push_intro_msg"><![CDATA[We provide a more effective way to pull the latest status of packages with Firebase Cloud Messaging.
 		You can run Package Tracker Push Server in your own server and set up in client.
-		\n\nClient will synchronize list to the server. When new status come up, server will push notification through FCM, which is more power-saving push service built in Google Service.
-		\n\nPush Server source code (Node.js) has been published to GitHub. You can download it and run in your own server.
-		\nGitHub: https://github.com/fython/PackageTracker-NodeServer
+		<br><br>Client will synchronize list to the server. When new status come up, server will push notification through FCM, which is more power-saving push service built in Google Service.
+		<br><br>Push Server source code (Node.js) has been published to GitHub. You can download it and run in your own server.
+		<br>GitHub: <a href="https://github.com/fython/PackageTracker-NodeServer">https://github.com/fython/PackageTracker-NodeServer</a>
+	]]>
 	</string>
 	<string name="fcm_push_no_server_button">I don\'t have a server</string>
 	<string name="no_server_message">After clicking \"Donate via Alipay\" in settings, you can use my server.</string>

@@ -5,8 +5,10 @@ import android.content.ComponentName
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.text.method.LinkMovementMethod
 import com.google.android.material.snackbar.Snackbar
 import android.widget.TextView
+import androidx.core.text.HtmlCompat
 import com.google.firebase.iid.FirebaseInstanceId
 import info.papdt.express.helper.BuildConfig
 import info.papdt.express.helper.R
@@ -184,7 +186,7 @@ class SettingsPush : AbsPrefFragment(), Preference.OnPreferenceChangeListener, P
             mPrefWhatsThis -> {
                 activity?.buildAlertDialog {
                     titleRes = R.string.fcm_push_intro_title
-                    messageRes = R.string.fcm_push_intro_msg
+                    setMessage(HtmlCompat.fromHtml(getString(R.string.fcm_push_intro_msg), 0))
                     okButton()
                     /*neutralButton(R.string.fcm_push_no_server_button) { _, _ ->
                         if (SettingsInstance.clickedDonate) {
@@ -197,6 +199,11 @@ class SettingsPush : AbsPrefFragment(), Preference.OnPreferenceChangeListener, P
                             }.show()
                         }
                     }*/
+                }?.apply{
+                    setOnShowListener {
+                        (it as AlertDialog).findViewById<TextView>(android.R.id.message)
+                                .movementMethod = LinkMovementMethod.getInstance()
+                    }
                 }?.show()
                 true
             }
