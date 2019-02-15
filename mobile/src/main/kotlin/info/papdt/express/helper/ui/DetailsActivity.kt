@@ -17,11 +17,9 @@ import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import android.widget.ImageView
-
+import info.papdt.express.helper.*
 import info.papdt.express.helper.R
-import info.papdt.express.helper.REQUEST_DETAILS
-import info.papdt.express.helper.RESULT_DELETED
-import info.papdt.express.helper.RESULT_RENAMED
+
 import info.papdt.express.helper.api.PackageApi
 import info.papdt.express.helper.dao.PackageDatabase
 import info.papdt.express.helper.model.BaseMessage
@@ -67,7 +65,7 @@ class DetailsActivity : AbsActivity() {
 		}
 	}
 
-	private var data: Kuaidi100Package? = null
+	private lateinit var data: Kuaidi100Package
 	private var state: Int = 0
 
 	private val progressDialog: ProgressDialog by lazy {
@@ -126,10 +124,10 @@ class DetailsActivity : AbsActivity() {
 
 	private fun buildItems(): Items {
 		val newItems = Items()
-		newItems.add(DetailsTwoLineItem(DetailsTwoLineItem.TYPE_NAME, data!!.name!!))
-		newItems.add(DetailsTwoLineItem(DetailsTwoLineItem.TYPE_NUMBER, data!!.number!!, data!!.companyChineseName))
+		newItems.add(DetailsTwoLineItem(DetailsTwoLineItem.TYPE_NAME, data.name!!))
+		newItems.add(DetailsTwoLineItem(DetailsTwoLineItem.TYPE_NUMBER, data.number!!, data.companyChineseName))
 		newItems.add(getString(R.string.list_status_subheader))
-		newItems.addAll(data!!.data ?: listOf())
+		newItems.addAll(data.data ?: listOf())
 		return newItems
 	}
 
@@ -145,9 +143,12 @@ class DetailsActivity : AbsActivity() {
                 return true
             }
 			R.id.action_copy_code -> {
-				ClipboardUtils.putString(applicationContext, data!!.number)
-				Snackbar.make(findViewById(R.id.coordinator_layout)!!, R.string.toast_copied_code, Snackbar.LENGTH_LONG)
-						.show()
+				ClipboardUtils.putString(applicationContext, data.number)
+				Snackbar.make(
+						findViewById(R.id.coordinator_layout)!!,
+						R.string.toast_copied_code,
+						Snackbar.LENGTH_LONG
+				).show()
 				return true
 			}
 			R.id.action_share -> {
@@ -159,14 +160,14 @@ class DetailsActivity : AbsActivity() {
 				return true
 			}
 			R.id.action_set_unread -> {
-				data!!.unreadNew = true
+				data.unreadNew = true
 
 				val intent = Intent()
-				intent.putExtra("id", data!!.number)
+				intent.putExtra("id", data.number)
 				setResult(RESULT_RENAMED, intent)
 
 				val db = PackageDatabase.getInstance(applicationContext)
-				db[db.indexOf(data!!.number!!)] = data!!
+				db[db.indexOf(data.number!!)] = data
 
 				finish()
 				return true
@@ -175,13 +176,13 @@ class DetailsActivity : AbsActivity() {
 				ui {
 					progressDialog.show()
 					val result = asyncIO {
-						val newPack = PackageApi.getPackage(data!!.number!!, data!!.companyType)
+						val newPack = PackageApi.getPackage(data.number!!, data.companyType)
 						if (newPack.code != BaseMessage.CODE_OKAY || newPack.data?.data == null) {
 							false
 						} else {
-							data!!.applyNewData(newPack.data)
+							data.applyNewData(newPack.data)
 							val db = PackageDatabase.getInstance(applicationContext)
-							db[db.indexOf(data!!.number!!)] = data!!
+							db[db.indexOf(data.number!!)] = data
 							db.save()
 							true
 						}
@@ -189,7 +190,7 @@ class DetailsActivity : AbsActivity() {
 					progressDialog.dismiss()
 					if (result) {
 						val intent = Intent()
-						intent["id"] = data!!.number
+						intent["id"] = data.number
 						setResult(RESULT_RENAMED, intent)
 						setUpData()
 					}
@@ -201,7 +202,7 @@ class DetailsActivity : AbsActivity() {
 	}
 
 	fun showNameEditDialog() {
-		EditPackageDialog.newInstance(data!!).show(supportFragmentManager, "edit")
+		EditPackageDialog.newInstance(data).show(supportFragmentManager, "edit")
 	}
 
 	private fun showDeleteDialog() {
@@ -210,11 +211,11 @@ class DetailsActivity : AbsActivity() {
 
 	private fun showShareChooser() {
 		val text = getString(R.string.share_info_format,
-				data!!.name,
-				data!!.number,
-				data!!.companyChineseName,
-				if (data!!.data!!.size > 0) data!!.data!![0].context else "Unknown",
-				if (data!!.data!!.size > 0) data!!.data!![0].time else ""
+				data.name,
+				data.number,
+				data.companyChineseName,
+				if (data.data!!.size > 0) data.data!![0].context else "Unknown",
+				if (data.data!!.size > 0) data.data!![0].time else ""
 		)
 
 		val intent = Intent(Intent.ACTION_SEND)
@@ -226,8 +227,8 @@ class DetailsActivity : AbsActivity() {
 	private inner class ListBuildTask : AsyncTask<Void, Void, Items>() {
 
 		override fun doInBackground(vararg voids: Void): Items {
-			if (data == null) {
-				data = Kuaidi100Package.buildFromJson(intent.getStringExtra(EXTRA_PACKAGE_JSON))
+			if (!this@DetailsActivity::data.isInitialized) {
+				data = intent.getParcelableExtra(EXTRA_DATA)
 			}
 
 			return buildItems()
@@ -237,8 +238,8 @@ class DetailsActivity : AbsActivity() {
 			mStatusBinder.setData(data)
 			mAdapter.items = items
 			mStatusBinder.showChiba =
-					(data?.data?.find { it.context!!.contains("佛山") || it.context!!.contains("广州") } != null)
-							&& (data?.companyChineseName?.contains("圆通") == true)
+					(data.data?.find { it.context!!.contains("佛山") || it.context!!.contains("广州") } != null)
+							&& (data.companyChineseName?.contains("圆通") == true)
 			mAdapter.notifyDataSetChanged()
 
 			val color: Int = when (state) {
@@ -246,7 +247,7 @@ class DetailsActivity : AbsActivity() {
 				Kuaidi100Package.STATUS_FAILED -> resources.color[R.color.blue_grey_500]
 				else -> resources.color[R.color.blue_500]
 			}
-            val taskDesc = ActivityManager.TaskDescription(data!!.name, null, color)
+            val taskDesc = ActivityManager.TaskDescription(data.name, null, color)
             setTaskDescription(taskDesc)
 		}
 
@@ -254,16 +255,14 @@ class DetailsActivity : AbsActivity() {
 
 	companion object {
 
-		private const val EXTRA_PACKAGE_JSON = "extra_package_json"
-		private const val EXTRA_STATE = "extra_state"
-
 		fun launch(activity: Activity, p: Kuaidi100Package) {
 			val intent = Intent(activity, DetailsActivity::class.java)
 			intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
-			intent[EXTRA_PACKAGE_JSON] = p.toJsonString()
+			intent[EXTRA_DATA] = p
 			intent[EXTRA_STATE] = p.getState()
 			activity.startActivityForResult(intent, REQUEST_DETAILS)
 		}
+
 	}
 
 }

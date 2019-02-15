@@ -168,6 +168,9 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
                     addButton.performClick()
                 }
             }
+            ACTION_REQUEST_OPEN_DETAILS -> {
+                DetailsActivity.launch(this, intent.getParcelableExtra(EXTRA_DATA))
+            }
             ScannerActivity.ACTION_SCAN_TO_ADD -> {
                 scanButton.performClick()
             }

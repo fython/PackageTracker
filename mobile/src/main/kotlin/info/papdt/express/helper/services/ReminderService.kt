@@ -6,22 +6,21 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
 import android.util.Log
-import info.papdt.express.helper.CHANNEL_ID_PACKAGE_STATUS
+import info.papdt.express.helper.*
+import info.papdt.express.helper.R
 
 import java.text.ParseException
 import java.text.SimpleDateFormat
 
-import info.papdt.express.helper.R
 import info.papdt.express.helper.dao.PackageDatabase
 import info.papdt.express.helper.model.Kuaidi100Package
 import info.papdt.express.helper.support.PushUtils
 import info.papdt.express.helper.support.Settings
 import info.papdt.express.helper.support.SettingsInstance
-import info.papdt.express.helper.ui.DetailsActivity
+import info.papdt.express.helper.ui.HomeActivity
 import info.papdt.express.helper.ui.launcher.AppWidgetProvider
 import moe.feng.kotlinyan.common.*
 import java.util.*
@@ -90,10 +89,7 @@ class ReminderService : IntentService(TAG) {
 			builder.setContentIntent(contentIntent)
 			if (time > 0) builder.setWhen(time)
 			builder.setAutoCancel(true)
-
-			if (Build.VERSION.SDK_INT >= 21) {
-				builder.color = color
-			}
+			builder.color = color
 			n = builder.build()
 
 			return n
@@ -106,10 +102,10 @@ class ReminderService : IntentService(TAG) {
 				val pi = PendingIntent.getActivity(
 						context.applicationContext,
 						position,
-						Intent(context.applicationContext, DetailsActivity::class.java).apply {
+						Intent(context, HomeActivity::class.java).apply {
 							flags = Intent.FLAG_ACTIVITY_SINGLE_TOP
-							this["extra_package_json"] = exp.toJsonString()
-							this["extra_state"] = exp.getState()
+							action = ACTION_REQUEST_OPEN_DETAILS
+							this[EXTRA_DATA] = exp
 						},
 						PendingIntent.FLAG_UPDATE_CURRENT)
 
