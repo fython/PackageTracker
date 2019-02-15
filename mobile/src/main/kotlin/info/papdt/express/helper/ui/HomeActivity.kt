@@ -744,8 +744,10 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
             }
             view.findViewById<Button>(R.id.stepper_add_button).setOnClickListener {
                 result?.name = if (nameEdit.text!!.isNotBlank())
-                    nameEdit.text.toString() else String.format(getString(R.string.package_name_unnamed),
-                        if (number.length >= 4) number.substring(0, 4) else number)
+                    nameEdit.text.toString()
+                else
+                    String.format(getString(R.string.package_name_unnamed), if (number.length >= 4)
+                        number.reversed().substring(0, 4).reversed() else number)
                 ui {
                     detectErrorView.makeGone()
                     detectingLayout.makeVisible()
