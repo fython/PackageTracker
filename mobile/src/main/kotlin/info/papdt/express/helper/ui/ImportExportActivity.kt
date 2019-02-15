@@ -74,7 +74,7 @@ class ImportExportActivity : AbsActivity() {
 				progressDialog?.show()
 				if (BackupApi.backup(data.data!!)) {
 					Snackbar.make(
-							findViewById(R.id.container)!!,
+							findViewById(R.id.coordinator_layout)!!,
 							R.string.toast_backup_succeed,
 							Snackbar.LENGTH_LONG
 					).setAction(R.string.toast_backup_send_action) {
@@ -85,7 +85,7 @@ class ImportExportActivity : AbsActivity() {
 					}.show()
 				} else {
 					Snackbar.make(
-							findViewById(R.id.container)!!,
+							findViewById(R.id.coordinator_layout)!!,
 							R.string.toast_backup_failed,
 							Snackbar.LENGTH_LONG
 					).show()
@@ -117,7 +117,7 @@ class ImportExportActivity : AbsActivity() {
 					}.show()
 				} else {
 					Snackbar.make(
-							findViewById(R.id.container)!!,
+							findViewById(R.id.coordinator_layout)!!,
 							R.string.toast_restore_failed,
 							Snackbar.LENGTH_LONG
 					).show()
