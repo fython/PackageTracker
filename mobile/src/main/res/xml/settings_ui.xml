@@ -10,10 +10,6 @@
             android:entryValues="@array/night_mode_choices_item"
             android:defaultValue="0"/>
 
-        <SwitchPreference android:key="enable_blur_on_add_dialog_background"
-            android:title="@string/pref_enable_blur_on_add_dialog_background"
-            android:summary="@string/pref_enable_blur_on_add_dialog_background_summary"/>
-
         <!-- Preference android:key="show_tips_again"
             android:title="@string/pref_show_tips_again"/> -->
 

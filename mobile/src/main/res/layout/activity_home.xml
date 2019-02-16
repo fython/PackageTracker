@@ -59,23 +59,8 @@
 
         <!-- Add package views -->
 
-        <io.alterac.blurkit.FixedBlurLayout
-            android:id="@+id/bottom_sheet_background_blur"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@android:color/black"
-            android:alpha="0.5"
-            android:clickable="true"
-            android:focusable="true"
-            android:visibility="gone"
-            android:layout_marginTop="-7dp"
-            android:elevation="7dp"
-            app:blk_blurRadius="12"
-            app:blk_downscaleFactor="0.2"
-            app:blk_fps="0"/>
-
         <View
-            android:id="@+id/bottom_sheet_background_normal"
+            android:id="@+id/bottom_sheet_background"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@android:color/black"

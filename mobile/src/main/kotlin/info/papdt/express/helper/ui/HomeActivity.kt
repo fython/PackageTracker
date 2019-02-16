@@ -36,7 +36,6 @@ import info.papdt.express.helper.support.SettingsInstance
 import info.papdt.express.helper.ui.adapter.HomeToolbarSpinnerAdapter
 import info.papdt.express.helper.ui.adapter.HomePackageListAdapter
 import info.papdt.express.helper.ui.common.AbsActivity
-import io.alterac.blurkit.FixedBlurLayout
 import moe.feng.common.stepperview.VerticalStepperItemView
 import moe.feng.kotlinyan.common.*
 
@@ -99,20 +98,9 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
     private val scanButton by lazy<View> { findViewById(R.id.scan_button) }
     private val moreButton by lazy<View> { findViewById(R.id.more_button) }
     private val bottomSheet by lazy<View> { findViewById(R.id.bottom_sheet_add_package) }
-    private val bottomSheetBackgroundBlur by lazy<FixedBlurLayout> {
-        findViewById(R.id.bottom_sheet_background_blur)
+    private val bottomSheetBackground by lazy<View> {
+        findViewById(R.id.bottom_sheet_background)
     }
-    private val bottomSheetBackgroundNormal by lazy<View> {
-        findViewById(R.id.bottom_sheet_background_normal)
-    }
-    private val bottomSheetBackground: View
-        get() {
-            return if (SettingsInstance.enableAddDialogBackgroundBlur) {
-                bottomSheetBackgroundBlur
-            } else {
-                bottomSheetBackgroundNormal
-            }
-        }
 
     private val moreMenu: PopupMenu by lazy {
         PopupMenu(this, moreButton).also {
@@ -207,16 +195,6 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
             tempFilterCategory = if (it.title.isEmpty()) null else it.title
             updateSearchDialogViewsValue()
         }, action = ChooseCategoryDialog.ACTION_CHOOSE_CATEGORY)
-        if (SettingsInstance.enableAddDialogBackgroundBlur) {
-            bottomSheetBackgroundBlur.startBlur()
-        }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        if (SettingsInstance.enableAddDialogBackgroundBlur) {
-            bottomSheetBackgroundBlur.pauseBlur()
-        }
     }
 
     private fun showBottomSheetBackground() {
@@ -552,14 +530,8 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
         override fun onSlide(v: View, slideOffset: Float) {
             val progress = if (slideOffset.isNaN())
                 1f else 1f + Math.max(slideOffset, -1f)
-            if (SettingsInstance.enableAddDialogBackgroundBlur) {
-                bottomSheetBackgroundBlur.post {
-                    bottomSheetBackgroundBlur.alpha = progress
-                }
-            } else {
-                bottomSheetBackgroundNormal.post {
-                    bottomSheetBackgroundNormal.alpha = progress * 0.35f
-                }
+            bottomSheetBackground.post {
+                bottomSheetBackground.alpha = progress * 0.35f
             }
             bottomSheetBackground.postInvalidate()
         }
@@ -602,10 +574,6 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             val layoutManager = recyclerView.layoutManager!! as LinearLayoutManager
             val shouldLift = layoutManager.findFirstCompletelyVisibleItemPosition() != 0
-
-            if (SettingsInstance.enableAddDialogBackgroundBlur) {
-                bottomSheetBackgroundBlur.postInvalidate()
-            }
 
             if (animatorDirection != shouldLift) {
                 if (elevationAnimator?.isRunning == true) {

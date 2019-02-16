@@ -16,7 +16,6 @@ import info.papdt.express.helper.services.ClipboardDetectService
 import info.papdt.express.helper.support.MaterialColorGenerator
 import info.papdt.express.helper.support.Settings
 import info.papdt.express.helper.support.SettingsInstance
-import io.alterac.blurkit.BlurKit
 import io.fabric.sdk.android.Fabric
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -45,7 +44,6 @@ class Application : MultiDexApplication() {
 		// Init Widget components
 		MaterialIcon.init(this)
 		MaterialColorGenerator.init(this)
-		BlurKit.init(this)
 
 		// Init CrashReport
 		Fabric.with(this, Crashlytics())

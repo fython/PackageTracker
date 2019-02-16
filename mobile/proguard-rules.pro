@@ -1,7 +1,5 @@
 -ignorewarn
-
--dontwarn com.tencent.bugly.**
--keep public class com.tencent.bugly.** {*;}
+-dontobfuscate
 -optimizations !code/simplification/arithmetic
 -optimizationpasses 5
 
@@ -32,14 +30,11 @@
 -keep class info.papdt.express.helper.widget.** {*;}
 -keep class info.papdt.express.helper.model.** {*;}
 -keep class info.papdt.express.helper.dao.** {*;}
--keep class info.papdt.express.helper.asynctask.** {*;}
 -keep class info.papdt.express.helper.api.** {*;}
 -keep class info.papdt.express.helper.receiver.** {*;}
 -keep class info.papdt.express.helper.services.** {*;}
 -keep class android.support.** {*;}
 -keep class me.dm7.** {*;}
--keep class com.roughlike.** {*;}
--keep class com.rengwuxian.** {*;}
 -keep class okio.** {*;}
 -keep class com.google.** {*;}
 -keep class moe.feng.alipay.zerosdk.** {*;}

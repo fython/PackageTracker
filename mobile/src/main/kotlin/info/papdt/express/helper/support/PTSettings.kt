@@ -29,11 +29,6 @@ class PTSettings(context: Context): SharedPreferencesProvider(context, "settings
 
 	var usingNewDatabase by booleanValue(defValue = false)
 
-	var enableAddDialogBackgroundBlur by booleanValue(
-            // Default disabled in pre-O devices
-			defValue = Build.VERSION.SDK_INT >= Build.VERSION_CODES.O
-	)
-
     var lastFilter by intValue(defValue = HomePackageListAdapter.FILTER_ON_THE_WAY)
 
     var lastSortBy by intValue(defValue = HomePackageListAdapter.SORT_BY_UPDATE_TIME)
