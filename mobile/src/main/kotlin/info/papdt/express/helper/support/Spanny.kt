@@ -36,9 +36,9 @@ class Spanny : SpannableStringBuilder {
 
     private var flag = Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
 
-    constructor() : super("") {}
+    constructor() : super("")
 
-    constructor(text: CharSequence) : super(text) {}
+    constructor(text: CharSequence) : super(text)
 
     constructor(text: CharSequence, vararg spans: Any) : super(text) {
         for (span in spans) {

@@ -57,7 +57,7 @@ class DetailsActivity : AbsActivity() {
 			messageRes = R.string.dialog_delete_message
 			okButton { _, _ ->
                 val intent = Intent()
-                intent.putExtra("data", data!!)
+                intent.putExtra("data", data)
                 setResult(RESULT_DELETED, intent)
 				finish()
 			}
