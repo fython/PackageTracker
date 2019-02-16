@@ -12,18 +12,16 @@ import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import info.papdt.express.helper.EXTRA_DATA
 import info.papdt.express.helper.R
 import info.papdt.express.helper.RESULT_RENAMED
 import info.papdt.express.helper.dao.PackageDatabase
 import info.papdt.express.helper.dao.SRDatabase
 import info.papdt.express.helper.model.Kuaidi100Package
 import info.papdt.express.helper.model.MaterialIcon
-import info.papdt.express.helper.ui.ChooseIconActivity
 import info.papdt.express.helper.ui.DetailsActivity
 import info.papdt.express.helper.ui.common.AbsDialogFragment
 import moe.feng.kotlinyan.common.*
-import org.jetbrains.anko.bundleOf
-import kotlin.concurrent.thread
 
 class EditPackageDialog : AbsDialogFragment() {
 
@@ -41,7 +39,7 @@ class EditPackageDialog : AbsDialogFragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        data = arguments!!.getParcelable(ARG_DATA)!!
+        data = arguments!!.getParcelable(EXTRA_DATA)!!
         currentCategory = data.categoryTitle
     }
 
@@ -115,13 +113,11 @@ class EditPackageDialog : AbsDialogFragment() {
 
     companion object {
 
-        const val ARG_DATA = "arg_data"
-
-        const val REQUEST_CODE_CHOOSE_ICON = 10
-
         @JvmStatic fun newInstance(data: Kuaidi100Package): EditPackageDialog {
             return EditPackageDialog().apply {
-                arguments = bundleOf(ARG_DATA to Kuaidi100Package(data))
+                arguments = Bundle().apply {
+                    putParcelable(EXTRA_DATA, Kuaidi100Package(data))
+                }
             }
         }
 

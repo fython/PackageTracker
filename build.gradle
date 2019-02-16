@@ -6,6 +6,7 @@ ext {
     kotlinyanVersion = '0.3.0'
     ankoVersion = '0.10.8'
     materialPrefLibVersion = '3.0.0'
+    coroutinesVersion = '0.26.0'
 }
 
 buildscript {
