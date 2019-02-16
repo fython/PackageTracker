@@ -30,6 +30,7 @@ class DetailsTwoLineItem {
 
         const val TYPE_NAME = "name"
         const val TYPE_NUMBER = "number"
+
     }
 
 }

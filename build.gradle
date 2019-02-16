@@ -1,7 +1,7 @@
 ext {
     minSdkVersion = 23
     targetSdkVersion = 28
-    versionCode = 65
+    versionCode = 66
     versionName = '5.0.0'
     kotlinyanVersion = '0.3.0'
     ankoVersion = '0.10.8'
