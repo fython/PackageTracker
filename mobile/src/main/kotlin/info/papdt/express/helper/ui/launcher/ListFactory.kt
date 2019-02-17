@@ -71,7 +71,7 @@ class ListFactory(private val mContext: Context, intent: Intent) : RemoteViewsSe
 		}
 
 		/** Set CircleImageView  */
-		views.setTextViewText(R.id.tv_first_char, p.name!!.substring(0, 1))
+		views.setTextViewText(R.id.tv_first_char, p.getFirstChar())
 		val packagePalette = p.getPaletteFromId()
 		val b = ScreenUtils.drawableToBitmap(ColorDrawable(packagePalette["100"]))
 		views.setImageViewBitmap(R.id.iv_logo, b)

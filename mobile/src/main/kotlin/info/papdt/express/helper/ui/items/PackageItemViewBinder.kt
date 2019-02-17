@@ -94,7 +94,7 @@ object PackageItemViewBinder
                     typeface = Typeface.DEFAULT
                     paint.isFakeBoldText = true
                     if (item.name?.isNotEmpty() == true) {
-                        text = item.name!!.substring(0, 1).toUpperCase()
+                        text = item.getFirstChar()
                     } else if (item.companyChineseName?.isNotEmpty() == true) {
                         text = item.companyChineseName!!.substring(0, 1).toUpperCase()
                     }

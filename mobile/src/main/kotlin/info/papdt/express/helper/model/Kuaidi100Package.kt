@@ -88,6 +88,17 @@ class Kuaidi100Package() : Parcelable {
         data = parcel.createTypedArrayList(Status.CREATOR)
     }
 
+    fun getFirstChar(): String {
+        return try {
+            name?.substring(
+                    name!!.offsetByCodePoints(0, 0),
+                    name!!.offsetByCodePoints(0, 1)
+            )
+        } catch (e: Exception) {
+            name?.substring(0, 1)
+        } ?: ""
+    }
+
     fun getState(): Int {
         return if (state != null) state!!.toInt() else STATUS_FAILED
     }

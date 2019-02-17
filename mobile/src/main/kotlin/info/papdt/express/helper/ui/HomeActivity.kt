@@ -15,7 +15,6 @@ import android.util.Log
 import android.view.*
 import android.widget.*
 import androidx.asynclayoutinflater.view.AsyncLayoutInflater
-import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.snackbar.Snackbar
@@ -86,9 +85,6 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
 
     }
 
-    private val coordinatorLayout by lazy<CoordinatorLayout> {
-        findViewById(R.id.coordinator_layout)
-    }
     private val appBarLayout by lazy<AppBarLayout> { findViewById(R.id.app_bar_layout) }
     private val refreshLayout by lazy<SmartRefreshLayout> { findViewById(R.id.refresh_layout) }
     private val listView by lazy<RecyclerView> { findViewById(android.R.id.list) }
