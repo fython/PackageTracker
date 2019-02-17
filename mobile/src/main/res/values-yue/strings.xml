@@ -353,4 +353,8 @@
 
 	<string name="action_reset_search">重置搜尋</string>
 
+	<string name="dialog_no_documents_app_title">冇「檔案」應用程式</string>
+	<string name="dialog_no_documents_app_summary">唔好意思，你嘅裝置軟體經過唔正當修改，無得從媒體庫入面揀相，請聯絡你嘅裝置製造商搵下解決方案或者換個作業系統。</string>
+	<string name="dialog_no_documents_app_why_i_will_meet_this">點解會遇到佢</string>
+
 </resources>

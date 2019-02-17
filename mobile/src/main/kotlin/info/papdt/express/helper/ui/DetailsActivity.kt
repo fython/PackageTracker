@@ -228,7 +228,10 @@ class DetailsActivity : AbsActivity() {
 
 		override fun doInBackground(vararg voids: Void): Items {
 			if (!this@DetailsActivity::data.isInitialized) {
-				data = intent.getParcelableExtra(EXTRA_DATA)
+				data = intent.getParcelableExtra(EXTRA_DATA) ?: run {
+					finish()
+					return Items()
+				}
 			}
 
 			return buildItems()

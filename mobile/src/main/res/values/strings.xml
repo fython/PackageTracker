@@ -385,4 +385,9 @@
 
 	<string name="action_reset_search">Reset search</string>
 
+	<string name="dialog_no_documents_app_title">No Documents app</string>
+	<string name="dialog_no_documents_app_summary">Sorry, your phone cannot choose images from gallery due to improper modification. Please contact your phone manufacturer or change another OS.</string>
+	<string name="dialog_no_documents_app_why_i_will_meet_this">Why I will meet this</string>
+	<string name="broken_api_post_url" translatable="false">https://feng.moe/archives/46/</string>
+
 </resources>

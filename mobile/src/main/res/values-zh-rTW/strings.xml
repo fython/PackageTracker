@@ -352,5 +352,9 @@
 	<string name="no_category_text">這裡沒有分類，嘗試添加一些來分類你的包裹。</string>
 
 	<string name="action_reset_search">重置搜尋</string>
+
+	<string name="dialog_no_documents_app_title">沒有「檔案」應用程式</string>
+	<string name="dialog_no_documents_app_summary">抱歉，您的裝置軟體經過不正當的修改，無法從媒體庫中選取相片，請聯絡您的裝置製造商尋求解決方案或更換作業系統。</string>
+	<string name="dialog_no_documents_app_why_i_will_meet_this">為什麼會遇到這個</string>
 	
 </resources>

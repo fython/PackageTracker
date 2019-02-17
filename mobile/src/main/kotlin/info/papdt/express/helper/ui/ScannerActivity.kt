@@ -99,7 +99,19 @@ class ScannerActivity : AbsActivity(), ZXingScannerView.ResultHandler, Permissio
 			val intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
 			intent.addCategory(Intent.CATEGORY_OPENABLE)
 			intent.type = "image/*"
-			startActivityForResult(intent, REQUEST_CODE_GALLERY)
+			try {
+				startActivityForResult(intent, REQUEST_CODE_GALLERY)
+			} catch (e: Exception) {
+				buildAlertDialog {
+					titleRes = R.string.dialog_no_documents_app_title
+					messageRes = R.string.dialog_no_documents_app_summary
+					okButton()
+					neutralButton(R.string.dialog_no_documents_app_why_i_will_meet_this) { _, _ ->
+						startActivity(Intent(Intent.ACTION_VIEW)
+								.setData(Uri.parse(getString(R.string.broken_api_post_url))))
+					}
+				}.show()
+			}
 			true
 		}
 		else -> super.onOptionsItemSelected(item)

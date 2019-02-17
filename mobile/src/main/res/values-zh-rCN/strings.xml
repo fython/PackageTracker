@@ -353,4 +353,8 @@
 
 	<string name="action_reset_search">重置搜索</string>
 
+	<string name="dialog_no_documents_app_title">没有 “文档” 应用</string>
+	<string name="dialog_no_documents_app_summary">抱歉，您的手机系统经过不正当的修改，无法从图库中选择图片，请联系您的手机制造商寻找解决方案或更换操作系统。</string>
+	<string name="dialog_no_documents_app_why_i_will_meet_this">为什么会遇到这个</string>
+
 </resources>
