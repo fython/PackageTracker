@@ -238,6 +238,10 @@ class DetailsActivity : AbsActivity() {
 		}
 
 		override fun onPostExecute(items: Items) {
+            if (!this@DetailsActivity::data.isInitialized) {
+                return
+            }
+
 			mStatusBinder.setData(data)
 			mAdapter.items = items
 			mStatusBinder.showChiba =

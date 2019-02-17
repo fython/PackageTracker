@@ -108,11 +108,15 @@ class Kuaidi100Package() : Parcelable {
     }
 
     fun getLastStatusTime(): Calendar {
-        if (data?.isNotEmpty() == true) {
-            val dates = data!!.map {
-                DateHelper.dateToCalendar(DEFAULT_STATUS_TIME_FORMAT.parse(it.ftime!!))
+        try {
+            if (data?.isNotEmpty() == true) {
+                val dates = data!!.map {
+                    DateHelper.dateToCalendar(DEFAULT_STATUS_TIME_FORMAT.parse(it.ftime ?: it.time))
+                }
+                return dates.sorted().last()
             }
-            return dates.sorted().last()
+        } catch (ignored: Exception) {
+
         }
         return Calendar.getInstance().apply { add(Calendar.YEAR, 1) }
     }
