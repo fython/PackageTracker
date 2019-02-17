@@ -29,6 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/edit_package_dialog_category"
+        android:textColor="?android:attr/colorAccent"
         android:textAppearance="@style/TextAppearance.AppCompat.Small"
         android:alpha="0.78"
         android:textSize="12sp"
