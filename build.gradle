@@ -2,11 +2,10 @@ ext {
     minSdkVersion = 23
     targetSdkVersion = 28
     versionCode = 68
-    versionName = '5.0.1'
+    versionName = '5.0.2'
     kotlinyanVersion = '0.3.0'
-    ankoVersion = '0.10.8'
     materialPrefLibVersion = '3.0.0'
-    coroutinesVersion = '0.26.0'
+    coroutinesVersion = '1.1.1'
 }
 
 buildscript {
