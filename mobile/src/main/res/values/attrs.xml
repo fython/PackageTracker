@@ -18,7 +18,6 @@
 		<attr name="rightEnabled" format="boolean"/>
 	</declare-styleable>
 
-	<attr name="bottomBarColor" format="reference"/>
 	<attr name="bottomSheetColor" format="reference"/>
 	<attr name="rootViewBackgroundColor" format="reference"/>
 

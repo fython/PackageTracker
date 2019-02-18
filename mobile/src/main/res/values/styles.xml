@@ -45,18 +45,17 @@
         <item name="android:windowEnterAnimation">@null</item>
     </style>
 
-	<style name="AppTheme.Home" parent="AppTheme">
-        <item name="colorPrimary">@color/grey_100</item>
+	<style name="AppTheme.BottomAppBar" parent="AppTheme">
+        <item name="colorPrimary">@color/pink_500</item>
         <item name="colorPrimaryDark">@color/grey_300</item>
         <item name="android:windowLightStatusBar">true</item>
         <item name="android:windowBackground">?attr/rootViewBackgroundColor</item>
         <item name="android:navigationBarColor">@color/pink_700</item>
 		<item name="rootViewBackgroundColor">@color/grey_100</item>
-        <item name="bottomBarColor">@color/pink_500</item>
         <item name="bottomSheetColor">@android:color/white</item>
     </style>
 
-	<style name="AppTheme.Grey" parent="AppTheme.Home">
+	<style name="AppTheme.BottomBar.Grey" parent="AppTheme.BottomAppBar">
 		<item name="colorPrimary">@color/grey_theme_app_bar</item>
 		<item name="android:navigationBarColor">@color/grey_theme_status_bar</item>
 	</style>

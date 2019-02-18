@@ -193,6 +193,15 @@ class HomeActivity : AbsActivity(), OnRefreshListener {
         }, action = ChooseCategoryDialog.ACTION_CHOOSE_CATEGORY)
     }
 
+    override fun onStop() {
+        super.onStop()
+        try {
+            packageDatabase.save()
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
+    }
+
     private fun showBottomSheetBackground() {
         bottomSheetBackground.makeVisible()
     }

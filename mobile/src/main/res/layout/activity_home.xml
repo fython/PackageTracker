@@ -22,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-            android:background="?android:colorPrimary">
+            android:background="?android:windowBackground">
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
@@ -53,6 +53,7 @@
                 android:id="@android:id/list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:overScrollMode="never"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
         </com.scwang.smartrefresh.layout.SmartRefreshLayout>
@@ -81,7 +82,7 @@
         android:id="@+id/bottom_bar"
         android:layout_width="match_parent"
         android:layout_height="?android:attr/actionBarSize"
-        android:background="?attr/bottomBarColor"
+        android:background="?android:attr/colorPrimary"
         android:orientation="horizontal"
         android:layout_gravity="bottom"
         android:elevation="10dp"
